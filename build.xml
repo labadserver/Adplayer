@@ -1,0 +1,105 @@
+<project name="DASE_WebUI" default="execute" basedir=".">
+    <description>ADTECH - Ad Player build script.</description>
+	
+	<property name="version" value="0.1"/>
+	<property name="jsfilename" value="adplayer-${version}"/>
+	<property name="cssfilename" value="adplayer-${version}"/>
+	
+	<property name="src" location="src"/>
+	<property name="lib" location="lib"/>
+	<property name="bin" location="bin"/>
+		
+	<property name="BROWSER" value="open"/>
+	<!--property name="BROWSER_ARG_OSX" value="-a Firefox"/-->
+	<property name="LOCAL_SITE" value="http://localhost/~csancho/_workspace/PM_AdPlayer/bin/"/>
+	<!--
+		windows build properties::
+		BROWSER:C:\\Program Files\\Internet Explorer\\iexplore.exe
+		BROWSER_ARG_OSX:   #leave blank
+  	-->
+
+	<loadfile property="dist.revision" srcFile="./.svn/entries">
+		<filterchain>
+			<headfilter lines="1" skip="3"/>
+			<deletecharacters chars="\n"/>
+		</filterchain>
+	</loadfile>	
+	
+	<tstamp>
+		<format property="today" pattern="MMddyy" locale="en,UK"/>
+	</tstamp>
+	
+	<target name="init">
+    	<tstamp/>
+    	<mkdir dir="${bin}"/>
+	</target>
+
+	<target name="copy" depends="init" description="copy source to bin">
+  		<copy todir="${bin}" file="index.html" overwrite="true" />
+		<replace file="${bin}/index.html" token="_@ADPLAYER_JS_FILE@_" value="${jsfilename}.js" />
+		<replace file="${bin}/index.html" token="_@ADPLAYER_JS_FILE_MIN@_" value="${jsfilename}.min.js" />
+		<replace file="${bin}/index.html" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}-style.css" />
+		<replace file="${bin}/index.html" token="_@ADPLAYER_CSS-IE_FILE@_" value="${cssfilename}-style-ie.css" />
+		<replace file="${bin}/index.html" token="_@VERSION@_" value="${version}.${dist.revision}.${today}" />
+		<copy tofile="${bin}/js/${jsfilename}.js" file="${src}/AdPlayerManager.js" overwrite="true" />
+  	</target>
+	
+	<target name="compile" depends="copy" description="compile the source">
+		<concat destfile="${bin}/tmp/class_insert.txt" fixlastline="true">	
+			<filelist dir="${src}">
+				<!-- DEFINE Class list order -->
+				<file name="Util.js"/>
+				<file name="URLRequest.js"/>
+				<file name="PrivacyInfo.js"/>
+				<file name="AdEvent.js"/>
+				<file name="PrivacyInfo.js"/>
+				<file name="AdPlayer.js"/>
+			</filelist>
+		</concat>		
+		<loadfile property="CLASS_INSERTS" srcfile="${bin}/tmp/class_insert.txt" />
+		<replace file="${bin}/js/${jsfilename}.js" token="_@VERSION@_" value="${version}.${dist.revision}.${today}" />
+		<replace file="${bin}/js/${jsfilename}.js" token="/*@CLASS_INSERTS@*/" value="${CLASS_INSERTS}" />
+	</target>
+  
+	<target name="js.minify" depends="compile">
+	    <apply executable="java" parallel="false">
+	        <fileset dir="${bin}/js/" includes="${jsfilename}.js"/>
+	        <arg line="-jar"/>
+	        <arg path="tools/yui/yuicompressor-2.4.2.jar"/>
+	        <srcfile/>
+	        <arg line="-o"/>
+	        <mapper type="glob" from="*.js" to="${bin}/tmp/*-min.js"/>
+	        <targetfile/>
+	    </apply>
+		<copy tofile="${bin}/js/${jsfilename}.min.js" file="${bin}/tmp/${jsfilename}-min.js" overwrite="true" />
+	</target>
+
+	<target name="css.minify" depends="js.minify">
+		<mkdir dir="${bin}/css"/>
+	    <apply executable="java" parallel="false">
+	    	<fileset dir="${src}/css/" includes="*.css"/>
+	        <arg line="-jar"/>
+	    	<arg path="tools/yui/yuicompressor-2.4.2.jar"/>
+	        <srcfile/>
+	        <arg line="-o"/>
+	    	<mapper type="glob" from="*.css" to="${bin}/css/${cssfilename}-*.css"/>
+	        <targetfile/>
+	    </apply>
+	</target>
+	
+	<target name="jsdoc" depends="css.minify">
+    	<taskdef name="jsdoctoolkit" classname="uk.co.darrenhurley.ant.tasks.JsDocToolkit" classpath="tools/jsdoc/jsdoc-toolkit-ant-task-1.1.2.jar;tools/jsdoc/jsrun.jar" />
+		<jsdoctoolkit jsdochome="tools/jsdoc/" template="jsdoc" outputdir="${bin}/docs/" includeundocumented="true">
+		<source file="${bin}/js/${jsfilename}.js" />
+		</jsdoctoolkit>
+	</target>
+	
+	<target name="execute" depends="jsdoc" description="execute the source">
+		<delete dir="${bin}/tmp" />
+		<exec executable="${BROWSER}" spawn="yes">
+			<!--arg line="${BROWSER_ARG_OSX}" /-->
+			<arg line="${LOCAL_SITE}" />
+			<arg line="${LOCAL_SITE}/docs" />
+		</exec>
+	</target>
+</project>
