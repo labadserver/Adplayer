@@ -63,21 +63,22 @@ function AdPlayer(adDomElement) {
     return _isLoaded;
   };
 
-  var _isAdChoiceEnabled = false;
+  var _isPrivacyPanelEnabled = false;
   /**
    * @field
    * @description Determines whether ad choice info button is enabled.
    * @returns {Boolean} Returns true or false.
    * @example
    * // Get reference to property
-   * var adChoice = adPlayer.isAdChoiceEnabled();
+   * var adChoice = adPlayer.isPrivacyPanelEnabled();
    * 
    * // Set property's value
-   * adPlayer.isAdChoiceEnabled(true);  
+   * adPlayer.isPrivacyPanelEnabled(true);  
    */
-  this.isAdChoiceEnabled = function(val){
-    if(val) { _isAdChoiceEnabled = val; }
-    return _isAdChoiceEnabled;
+  this.isPrivacyPanelEnabled = function(val){
+    _isPrivacyPanelEnabled = val;
+    //if(val) { _isPrivacyPanelEnabled = val; }
+    return _isPrivacyPanelEnabled;
   };
   
   var _adWidth = null;
@@ -436,39 +437,63 @@ AdPlayer.prototype.addPrivacyInfo = function(adServer, message, url) {
 */
 AdPlayer.prototype.privacyClickBtn;
 
-AdPlayer.prototype.enableAdChoice = function(adServer) {
-  if (!this.isAdChoiceEnabled()) {
+AdPlayer.prototype.enableAdChoice = function() {
+  if (!this.isPrivacyPanelEnabled()) {
     this.privacyClickBtn = document.createElement('button');
-    this.privacyClickBtn.style.position = 'absolute';
-    this.privacyClickBtn.style.zIndex = '9999999999';
-    this.privacyClickBtn.style.top = '0px';
-    this.privacyClickBtn.style.left = '0px';
-    this.privacyClickBtn.style.fontFamily = 'Arial';
-    this.privacyClickBtn.style.fontSize = '10px';
+    this.privacyClickBtn.setAttribute('class', 'privacyButton');
     this.privacyClickBtn.innerHTML = 'Get Info';
-    var parentThis = this;
-    this.privacyClickBtn.onclick = function() { 
-      parentThis.track(AdEvent.PRIVACY_CLICK);
-      if (adServer) {
-        for(i=0; i < parentThis.privacyInfoList().length; i++) {
-          if (parentThis.privacyInfoList()[i].adServer == adServer) {
-            window.open(parentThis.privacyInfoList()[i].url);
-          }
-        }
-      }
-    }
     this.adDomElement().style.position = "relative";
     this.adDomElement().appendChild(this.privacyClickBtn);
-    this.isAdChoiceEnabled(true);
-  }
-};
-/** @description TODO */
-AdPlayer.prototype.disableAdChoice = function() {
-  if (this.isAdChoiceEnabled()) {
-    if(this.privacyClickBtn) {
-      this.adDomElement().removeChild(this.privacyClickBtn);
-      this.isAdChoiceEnabled(false);
+    
+    var parentThis = this;
+    this.privacyClickBtn.onclick = function() {
+      parentThis.showPrivacyInfo();      
+      parentThis.track(AdEvent.PRIVACY_CLICK);
     }
   }
-  
+};
+
+/** @description TODO */
+AdPlayer.prototype.disableAdChoice = function() {
+  if (this.isPrivacyPanelEnabled()) {
+    if(this.privacyClickBtn) {
+      this.adDomElement().removeChild(this.privacyClickBtn);
+    }
+  }
+};
+
+AdPlayer.prototype.privacyPanel;
+
+/** @description TODO */
+AdPlayer.prototype.showPrivacyInfo = function() {
+  if (!this.privacyPanel) {
+    this.privacyPanel = document.createElement('div');
+    this.privacyPanel.setAttribute('class', 'privacyPanel');
+    var privacyPanelList = document.createElement('ul');
+    var privacyPanelClose = document.createElement('button');
+    var parentThis = this;
+    this.privacyPanel.appendChild(privacyPanelList);
+    this.privacyPanel.appendChild(privacyPanelClose);
+    this.adDomElement().appendChild(this.privacyPanel);
+    privacyPanelClose.innerHTML = 'Close';
+    for (var i = 0; i < this.privacyInfoList().length; i++) {
+      var privacyElement =  document.createElement('li');
+      privacyElement.innerHTML = this.privacyInfoList()[i].adServer + '<span>'+this.privacyInfoList()[i].message+'<br/><a href="'+this.privacyInfoList()[i].url+'" target="_blank">Opt Out</a></span>';
+      privacyPanelList.appendChild(privacyElement);
+    }
+    this.isPrivacyPanelEnabled(true);
+    privacyPanelClose.onclick = function() {
+      parentThis.hidePrivacyInfo();      
+      parentThis.track(AdEvent.PRIVACY_CLICK);
+    };    
+  }
+};
+
+/** @description TODO */
+AdPlayer.prototype.hidePrivacyInfo = function() {
+  if (this.privacyPanel) {
+    this.isPrivacyPanelEnabled(false);
+    this.adDomElement().removeChild(this.privacyPanel);
+    this.privacyPanel = null;
+  }
 };
