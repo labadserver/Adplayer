@@ -1,6 +1,7 @@
 /**
  * @class Static - An AdEvent string is dispatched into the event flow whenever an ad event occurs. 
- * @description The <code>AdPlayer.track()</code> method dispatches an AdEvent string to suscribers.
+ * @description The <code>AdPlayer.track()</code> method dispatches an AdEvent string to suscribers.<br/>
+ *              TODO:  The dispatching of "AdEvent.EVENT" will dispatch an AdEventObject instead of a string. More details to follow...
  * 
  * @see AdPlayer#track
  * @see AdPlayer#addAdEvent
@@ -16,6 +17,8 @@
  * @property {string} COUNT The <code>AdEvent.COUNT</code> constant defines the value of a count event string.
  * @property {string} CLICK The <code>AdEvent.CLICK</code> constant defines the value of a click event string.
  * @property {string} PRIVACY_CLICK The <code>AdEvent.PRIVACY_CLICK</code> constant defines the value of a privacy click event string.
+ * @property {string} PRIVACY_OPEN The <code>AdEvent.PRIVACY_CLICK</code> constant defines the value of a privacy open event string.
+ * @property {string} PRIVACY_CLOSE The <code>AdEvent.PRIVACY_CLICK</code> constant defines the value of a privacy close event string.
  *
  * @example
  * var myDomObj = document.getElementById('myTagDivContainer');
@@ -33,7 +36,7 @@
 var AdEvent = new Object();
 
 /** @private */
-var defaultAdEvents = ['LOAD', 'REMOVE', 'SHOW', 'HIDE', 'PROGRESS', 'TRACK', 'COUNT', 'CLICK', 'PRIVACY_CLICK'];
+var defaultAdEvents = ['LOAD', 'REMOVE', 'SHOW', 'HIDE', 'PROGRESS', 'TRACK', 'COUNT', 'CLICK', 'PRIVACY_CLICK', 'PRIVACY_OPEN', 'PRIVACY_CLOSE'];
 AdEvent.list = new Object();
 
 /**

@@ -418,25 +418,16 @@ AdPlayer.prototype.addPrivacyInfo = function(adServer, message, url) {
   privacyInfo.message = message;
   privacyInfo.url = url;
   this.privacyInfoList().push(privacyInfo);
-  
-  // TODO: Apply to AdChoice?
 };
 
-/**
- * @description Enables ad choice info button. Button dispatches an <code>AdEvent.PRIVACY_CLICK</code> when clicked.
- *              <br/><br/>TODO: Add parameters for:
- *                      styling - image url option, xOffset, yOffset 
- *                      position(top-left, top-right, bottom-left, bottom-right)????
- * 
- * @param adServer {String} Optional - Ad server name added to <code>privacyInfoList</code>.
- *                          If defined, ad choice button will clickthrough to associated
- *                          <code>privacyInfo</code> click-through URL.
- * 
- * @see AdPlayer#addPrivacyInfo
- * @see PrivacyInfo
-*/
 AdPlayer.prototype.privacyClickBtn;
 
+/**
+ * @description Enables ad choice info button. Button calls method <code>showPrivacyInfo</code>.
+ * 
+ * @see AdPlayer#showPrivacyInfo
+ * @see PrivacyInfo
+*/
 AdPlayer.prototype.enableAdChoice = function() {
   if (!this.isPrivacyPanelEnabled()) {
     this.privacyClickBtn = document.createElement('button');
@@ -448,12 +439,16 @@ AdPlayer.prototype.enableAdChoice = function() {
     var parentThis = this;
     this.privacyClickBtn.onclick = function() {
       parentThis.showPrivacyInfo();      
-      parentThis.track(AdEvent.PRIVACY_CLICK);
     }
   }
 };
 
-/** @description TODO */
+/**
+ * @description Disables ad choice info button. By default, ad choice button is disabled.
+ * 
+ * @see AdPlayer#enableAdChoice
+ * @see PrivacyInfo
+*/
 AdPlayer.prototype.disableAdChoice = function() {
   if (this.isPrivacyPanelEnabled()) {
     if(this.privacyClickBtn) {
@@ -464,7 +459,20 @@ AdPlayer.prototype.disableAdChoice = function() {
 
 AdPlayer.prototype.privacyPanel;
 
-/** @description TODO */
+/**
+ * @description Convenience function that creates a layer that displays the privacy info added to <code>privacyInfoList</code>. <br/>
+ *              <code>AdEvent.PRIVACY_CLOSE</code> is dispatched when method is called. <br/>
+ *              Layer should be styled to preference using css.
+ *              <ul>
+ *                <li>.privacyPanel</li>
+ *                <li>.privacyPanel ul</li>
+ *                <li>.privacyPanel ul li</li>
+ *                <li>.privacyPanel button</li>
+ *              </ul>
+ * 
+ * @see AdPlayer#privacyInfoList
+ * @see PrivacyInfo
+*/
 AdPlayer.prototype.showPrivacyInfo = function() {
   if (!this.privacyPanel) {
     this.privacyPanel = document.createElement('div');
@@ -478,22 +486,33 @@ AdPlayer.prototype.showPrivacyInfo = function() {
     privacyPanelClose.innerHTML = 'Close';
     for (var i = 0; i < this.privacyInfoList().length; i++) {
       var privacyElement =  document.createElement('li');
-      privacyElement.innerHTML = this.privacyInfoList()[i].adServer + '<span>'+this.privacyInfoList()[i].message+'<br/><a href="'+this.privacyInfoList()[i].url+'" target="_blank">Opt Out</a></span>';
+      privacyClick = function(url) {
+        parentThis.track(AdEvent.PRIVACY_CLICK);
+        window.open(url);
+      }
+      privacyElement.innerHTML = this.privacyInfoList()[i].adServer + '<span>'+this.privacyInfoList()[i].message+'<br/><a href="javascript:privacyClick(\''+this.privacyInfoList()[i].url+'\');" target="_self">Opt Out</a></span>';
       privacyPanelList.appendChild(privacyElement);
     }
     this.isPrivacyPanelEnabled(true);
     privacyPanelClose.onclick = function() {
       parentThis.hidePrivacyInfo();      
-      parentThis.track(AdEvent.PRIVACY_CLICK);
-    };    
+    };
+    this.track(AdEvent.PRIVACY_OPEN);
   }
 };
 
-/** @description TODO */
+/**
+ * @description Used in conjunction with <code>showPrivacyInfo</code> to remove privacy info layer.<br/>
+ *              <code>AdEvent.PRIVACY_CLOSE</code> is dispatched when method is called.
+ * 
+ * @see AdPlayer#showPrivacyInfo
+ * @see PrivacyInfo
+*/
 AdPlayer.prototype.hidePrivacyInfo = function() {
   if (this.privacyPanel) {
     this.isPrivacyPanelEnabled(false);
     this.adDomElement().removeChild(this.privacyPanel);
     this.privacyPanel = null;
+    this.track(AdEvent.PRIVACY_CLOSE);
   }
 };
