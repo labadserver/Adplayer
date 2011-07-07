@@ -8,15 +8,6 @@
 	<property name="src" location="src"/>
 	<property name="lib" location="lib"/>
 	<property name="bin" location="bin"/>
-		
-	<property name="BROWSER" value="open"/>
-	<!--property name="BROWSER_ARG_OSX" value="-a Firefox"/-->
-	<property name="LOCAL_SITE" value="http://localhost/~csancho/_workspace/PM_AdPlayer/bin/"/>
-	<!--
-		windows build properties::
-		BROWSER:C:\\Program Files\\Internet Explorer\\iexplore.exe
-		BROWSER_ARG_OSX:   #leave blank
-  	-->
 
 	<loadfile property="dist.revision" srcFile="./.svn/entries">
 		<filterchain>
@@ -96,10 +87,5 @@
 	
 	<target name="execute" depends="jsdoc" description="execute the source">
 		<delete dir="${bin}/tmp" />
-		<exec executable="${BROWSER}" spawn="yes">
-			<!--arg line="${BROWSER_ARG_OSX}" /-->
-			<arg line="${LOCAL_SITE}" />
-			<arg line="${LOCAL_SITE}/docs" />
-		</exec>
 	</target>
 </project>
