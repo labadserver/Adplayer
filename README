@@ -1,0 +1,22 @@
+AdPlayer v0.1
+Author: christopher.sancho@adtech.com
+
+
+------------------------------------------------------------------------------------------
+Importing AdPlayer Project into Eclipse
+------------------------------------------------------------------------------------------
+
+1) File > Import > General > Existing Projects into Workspace
+2) Check "Select root directory"
+2) Click Browse and select the GIT repository, which should already be cloned to system.
+3) Ensure the directory is selected under the "Projects" section.
+4) Click "Finish"
+5) Project should be imported to current workspace
+
+------------------------------------------------------------------------------------------
+Building AdPlayer Project
+------------------------------------------------------------------------------------------
+1) Right click "build.xml" > Run As > Ant Build
+2) A new "bin" directory will be created contain the Ant build script output.
+3) Note: Eclipse may require you to refresh the project folder's view.
+	This can be done easily by right clicking the project folder and clicking "Refresh."
