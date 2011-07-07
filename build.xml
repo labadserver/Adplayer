@@ -9,12 +9,7 @@
 	<property name="lib" location="lib"/>
 	<property name="bin" location="bin"/>
 
-	<loadfile property="dist.revision" srcFile="./.svn/entries">
-		<filterchain>
-			<headfilter lines="1" skip="3"/>
-			<deletecharacters chars="\n"/>
-		</filterchain>
-	</loadfile>	
+	<property name="dist.revision" value="CONTRIBUTOR"/>
 	
 	<tstamp>
 		<format property="today" pattern="MMddyy" locale="en,UK"/>
