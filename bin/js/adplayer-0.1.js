@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
-* AdPlayer v0.1.720.070611
+* AdPlayer v0.1.CONTRIBUTOR.071111
 * 
 * Author: christopher.sancho@adtech.com
 * ----------------------------------------------------------------------------*/
@@ -155,7 +155,7 @@ if (typeof AdPlayerManager === 'undefined') {
       }
       var uAdId = new Date().getTime();
       var uName = refName + uAdId;
-      document.write('<span id="'+uName+'" />');
+      document.write('<div id="'+uName+'" />');
       var par = document.getElementById(uName).parentNode;
       while ((par.nodeName.toLowerCase() != 'div') || !AdPlayerManager.getAdPlayerById(par.id)) {
         par = par.parentNode;
