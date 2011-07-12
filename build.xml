@@ -9,7 +9,7 @@
 	<property name="lib" location="lib"/>
 	<property name="bin" location="bin"/>
 
-	<property name="dist.revision" value="CONTRIBUTOR"/>
+	<property name="dist.revision" value="dev"/>
 	
 	<tstamp>
 		<format property="today" pattern="MMddyy" locale="en,UK"/>
@@ -26,7 +26,7 @@
 		<replace file="${bin}/index.html" token="_@ADPLAYER_JS_FILE_MIN@_" value="${jsfilename}.min.js" />
 		<replace file="${bin}/index.html" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}-style.css" />
 		<replace file="${bin}/index.html" token="_@ADPLAYER_CSS-IE_FILE@_" value="${cssfilename}-style-ie.css" />
-		<replace file="${bin}/index.html" token="_@VERSION@_" value="${version}-${dist.revision}.${today}" />
+		<replace file="${bin}/index.html" token="_@VERSION@_" value="${version} (${dist.revision}.${today})" />
 		<copy tofile="${bin}/js/${jsfilename}.js" file="${src}/AdPlayerManager.js" overwrite="true" />
   	</target>
 	
