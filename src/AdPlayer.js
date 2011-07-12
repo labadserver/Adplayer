@@ -151,8 +151,8 @@ function AdPlayer(adDomElement) {
  * @see AdPlayer#track
  * 
  * @example
- * function trackEventHandler(adPlayer) {
- *  log('AdEvent.TRACK' has been dispatched');
+ * function trackEventHandler(adEvent) {
+ *  log(adEvent.type() + ' has been dispatched');
  * }
  * adPlayer.addAdEvent(AdEvent.TRACK, trackEventHandler);
  */
@@ -180,11 +180,11 @@ AdPlayer.prototype.addAdEvent = function(adEvent, callback) {
  * @see AdPlayer#track
  * 
  * @example
- * function trackEventHandler(adPlayer) {
+ * function trackEventHandler(adEvent) {
  *  // Remove call-back
- *  adPlayer.removeAdEvent(AdEvent.TRACK, trackEventHandler);
+ *  adEvent.player().removeAdEvent(AdEvent.TRACK, trackEventHandler);
  *  
- *  log('AdEvent.TRACK' has been dispatched');
+ *  log(adEvent.type() + ' has been dispatched');
  * }
  * adPlayer.addAdEvent(AdEvent.TRACK, trackEventHandler); 
  */
@@ -208,7 +208,6 @@ AdPlayer.prototype.removeAdEvent = function(adEvent, callback) {
  *              
  * @param adEvent {AdEvent} The <code>AdEvent</code> to listen to.
  * @param url {String - URL} URL of pixel to call when associated <code>AdEvent</code> is dispatched.
- * @param callback {Function} Optional - The call-back handler to call when an <code>AdEvent</code> is dispatched.
  * @param repeat {Boolean} Optional - Default is 'true.'  If set to 'false,' pixel will only fire once.
  * 
  * @see AdEvent
@@ -221,39 +220,22 @@ AdPlayer.prototype.removeAdEvent = function(adEvent, callback) {
  * 
  * // Adds a tracking pixel that will dispatch only once on AdEvent.TRACK event
  * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', null, false);
- * 
- * // Adds a tracking pixel, with a call-back, and will dispatch on AdEvent.TRACK event until removed
- * function trackEventHandler(adPlayer) {
- *  log('AdEvent.TRACK' has been dispatched');
- * }
- * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', trackEventHandler);
- * 
- * // Adds a tracking pixel, with a call-back, and will dispatch only once on AdEvent.TRACK event
- * function trackEventHandler(adPlayer) {
- *  log('AdEvent.TRACK' has been dispatched');
- * }
- * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', trackEventHandler, false);
  */
-AdPlayer.prototype.addTrackingPixel = function(adEvent, url, callback, repeat) {
+AdPlayer.prototype.addTrackingPixel = function(adEvent, url, repeat) {
   if (!AdEvent.check(adEvent)) { return; }
   if (repeat === undefined) { repeat = true; }
-  
-  if(callback) {
-    this.addAdEvent(adEvent, callback);
-  }
   if (url) {
     /** @private */
-    defaultTrackCallBack = function(adPlayer) {
-      if(adPlayer) {
-        var trackingUrl = url;
-        var urlReq = new URLRequest(trackingUrl);
-        urlReq.load();
-        if(!repeat) {
-          adPlayer.removeAdEvent(adEvent, defaultTrackCallBack);
-        }
+    function defaultTrackCallBack(evt) {
+      var urlReq = new URLRequest(url);
+      urlReq.load();
+      if(!repeat) {
+    	evt.player().removeAdEvent(evt.type(), defaultTrackCallBack);
       }
-      return url;
     }
+    defaultTrackCallBack.url = url;
+    defaultTrackCallBack.repeat = repeat;
+    
     this.addAdEvent(adEvent, defaultTrackCallBack);
   } else {
     log("Parameter 'url' must be defined", "addTrackingEvent");
@@ -275,65 +257,37 @@ AdPlayer.prototype.addTrackingPixel = function(adEvent, url, callback, repeat) {
  *              
  * @param adEvent {AdEvent} The <code>AdEvent</code> to listen to.
  * @param url {String - URL} Optional - URL of pixel to call when associated <code>AdEvent</code> is dispatched.
- * @param callback {Function} Optional - The call-back handler to call when an <code>AdEvent</code> is dispatched.
  * 
  * @see AdEvent
  * @see AdPlayer#addTrackingPixel
  * 
  * @example
- * // Adds a tracking pixel, with a call-back, and will dispatch on AdEvent.TRACK event
- * function trackEventHandler(adPlayer) {
- *  // Removes pixel tracking associated with callback
- *  adPlayer.removeTrackingPixel(AdEvent.TRACK, null, trackEventHandler);
- *  
- *  log('AdEvent.TRACK' has been dispatched');
- * }
- * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', trackEventHandler);
- *
+ * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
+ * adPlayer.addAdEvent(AdEvent.TRACK, removePixels);
  * 
- * // Remove all callbacks associated with pixel url
- * function trackEventHandler1(adPlayer) {
- *  log('AdEvent.TRACK' has been dispatched');
- * }
- * function trackEventHandler2(adPlayer) {
- *  // Removes pixel tracking associated with callback
- *  log('AdEvent.TRACK' has been dispatched');
- * }
- * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', trackEventHandler1);
- * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', trackEventHandler2);
- * 
- * function removePixels() {
- *  // Removes 'trackEventHandler1' and 'trackEventHandler2' from AdEvent.TRACK event flow
+ * function removePixels(adEvent) {
+ *  // Removes url from TRACK event flow.
  *  adPlayer.removeTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
+ *  
  * }
- * 
- * removePixels();
  */
-AdPlayer.prototype.removeTrackingPixel = function(adEvent, url, callback) {
+AdPlayer.prototype.removeTrackingPixel = function(adEvent, url) {
   if (!AdEvent.check(adEvent)) { return; }
   if (this.adEventListObj()[adEvent]) {
     var tmpLen = this.adEventListObj()[adEvent].length;
     var tempLenDiff = 0;
     var index = 0;
     do {
-      // Remove if callback matches and stop loop
-      if (callback) {
-        if (this.adEventListObj()[adEvent][index] == callback ) {
-          this.adEventListObj()[adEvent].splice(index, 1);
-          if (this.adEventListObj()[adEvent].length == 0) {
-            delete this.adEventListObj()[adEvent];
-          }
-          return; 
-        }
-      }  
       // Run through loop and remove all tracking that matches url
       if (url) {
-        if (this.adEventListObj()[adEvent][index](null)) { // remove all
-          if (this.adEventListObj()[adEvent][index](null) == url) {
-            this.adEventListObj()[adEvent].splice(index, 1);
-            if (this.adEventListObj()[adEvent].length == 0) {
-              delete this.adEventListObj()[adEvent];
-              return;
+        if (this.adEventListObj()[adEvent][index].name == 'defaultTrackCallBack') {
+          if (this.adEventListObj()[adEvent][index].url) { // remove all
+            if (this.adEventListObj()[adEvent][index].url == url) {
+              this.adEventListObj()[adEvent].splice(index, 1);
+              if (this.adEventListObj()[adEvent].length == 0) {
+                delete this.adEventListObj()[adEvent];
+                return;
+              }
             }
           }
         }
@@ -356,33 +310,37 @@ AdPlayer.prototype.removeTrackingPixel = function(adEvent, url, callback) {
 };
 
 /** 
- * @description Dispatches an <code>AdEvent</code> string to all suscribers.
+ * @description Dispatches an <code>AdEvent</code> object to all suscribers.
  *              
- * @param adEvent {AdEvent} The <code>AdEvent</code> to listen to.
+ * @param adEventObj {AdEvent} The <code>AdEvent</code> instance to track.
  * @param url {String - URL} Optional - URL of pixel that will be called once with track method.
  * 
  * @example
  * // Dispatches a track event to all suscribers
- * adPlayer.track(AdEvent.TRACK);
+ * adPlayer.track(new AdEvent(AdEvent.TRACK));
  * 
  * // Dispatches a track event to all suscribers and calls URL once.
- * adPlayer.track(AdEvent.TRACK, 'http://my.pixel.url');
+ * adPlayer.track(new AdEvent(AdEvent.TRACK), 'http://my.pixel.url');
  */
-AdPlayer.prototype.track = function(adEvent, url) {
-  if (!AdEvent.check(adEvent)) { return; }
-  log(adEvent, 'track');
-  if (this.adEventListObj()[adEvent]) {
-    var tmpLen = this.adEventListObj()[adEvent].length;
+AdPlayer.prototype.track = function(adEventObj, url) {
+  if (!AdEvent.check(adEventObj.type())) { return; }
+  log(adEventObj.type(), 'track');
+  if (this.adEventListObj()[adEventObj.type()]) {
+    var tmpLen = this.adEventListObj()[adEventObj.type()].length;
     var tempLenDiff = 0;
     var index = 0;
     do {
       // call callback
-      this.adEventListObj()[adEvent][index](this);
+      adEventObj.player(this);
+      if (url) {
+        adEventObj.data().url = url;
+      }
+      this.adEventListObj()[adEventObj.type()][index](adEventObj);
       
       // check if the temp length has changed
-      if(this.adEventListObj()[adEvent]) {
-        tempLenDiff = tmpLen-this.adEventListObj()[adEvent].length;
-        tmpLen = this.adEventListObj()[adEvent].length;
+      if(this.adEventListObj()[adEventObj.type()]) {
+        tempLenDiff = tmpLen-this.adEventListObj()[adEventObj.type()].length;
+        tmpLen = this.adEventListObj()[adEventObj.type()].length;
       } else {
         tmpLen = 0;
       }
@@ -487,7 +445,9 @@ AdPlayer.prototype.showPrivacyInfo = function() {
     for (var i = 0; i < this.privacyInfoList().length; i++) {
       var privacyElement =  document.createElement('li');
       privacyClick = function(url) {
-        parentThis.track(AdEvent.PRIVACY_CLICK);
+        var data = new Object();
+        data.url = url;
+        parentThis.track(new AdEvent(AdEvent.PRIVACY_CLICK, data));
         window.open(url);
       }
       privacyElement.innerHTML = this.privacyInfoList()[i].adServer + '<span>'+this.privacyInfoList()[i].message+'<br/><a href="javascript:privacyClick(\''+this.privacyInfoList()[i].url+'\');" target="_self">Opt Out</a></span>';
@@ -497,7 +457,7 @@ AdPlayer.prototype.showPrivacyInfo = function() {
     privacyPanelClose.onclick = function() {
       parentThis.hidePrivacyInfo();      
     };
-    this.track(AdEvent.PRIVACY_OPEN);
+    this.track(new AdEvent(AdEvent.PRIVACY_OPEN));
   }
 };
 
@@ -513,6 +473,6 @@ AdPlayer.prototype.hidePrivacyInfo = function() {
     this.isPrivacyPanelEnabled(false);
     this.adDomElement().removeChild(this.privacyPanel);
     this.privacyPanel = null;
-    this.track(AdEvent.PRIVACY_CLOSE);
+    this.track(new AdEvent(AdEvent.PRIVACY_CLOSE));
   }
 };
