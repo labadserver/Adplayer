@@ -140,7 +140,7 @@ if (typeof AdPlayerManager === 'undefined') {
      *  &lt;/script&gt;
      *  &lt;script type=&quot;text/javascript&quot; id=&quot;adServerTag&quot;&gt;
      *    // Sample third party response
-     *    AdPlayerManager.getAdPlayerByRefId("uid", function (adPlayer) {
+     *    AdPlayerManager.getAdPlayer("uid", function (adPlayer) {
      *      adPlayer.track(new AdEvent(AdEvent.SHOW));
      *      adPlayer.addPrivacyInfo('3RD_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
      *    }); 
@@ -151,7 +151,7 @@ if (typeof AdPlayerManager === 'undefined') {
      *  console.log(adPlayer.privacyInfoList());
      * &lt;/script&gt;
      */
-    var getAdPlayerByRefId = function(refName, initCallBack) {
+    var getAdPlayer = function(refName, initCallBack) {
       if(!refName) {
         refName = 'refDiv';
       }
@@ -248,7 +248,7 @@ if (typeof AdPlayerManager === 'undefined') {
       register: register,
       unregister: unregister,
       getAdPlayerById: getAdPlayerById,
-      getAdPlayerByRefId: getAdPlayerByRefId
+      getAdPlayer: getAdPlayer
     };
   })();
 

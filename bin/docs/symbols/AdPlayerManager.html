@@ -307,19 +307,19 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;inner&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#-getAdPlayerById">getAdPlayerById</a></b>(id)
+								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#-getAdPlayer">getAdPlayer</a></b>(refName, initCallBack)
 								</div>
-								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with
-             a DOM element.</div>
+								<div class="description">Returns an instance of an <code>AdPlayer</code>.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;inner&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#-getAdPlayerByRefId">getAdPlayerByRefId</a></b>(refName, initCallBack)
+								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#-getAdPlayerById">getAdPlayerById</a></b>(id)
 								</div>
-								<div class="description">Returns an instance of an <code>AdPlayer</code>.</div>
+								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with
+             a DOM element.</div>
 							</td>
 						</tr>
 					
@@ -486,6 +486,78 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 
 					<hr />
 				
+					<a name="-getAdPlayer"> </a>
+					<div class="fixedFont">&lt;inner&gt; 
+					
+					<span class="light">{Adplayer}</span>
+					<b>getAdPlayer</b>(refName, initCallBack)
+					
+					</div>
+					<div class="description">
+						Returns an instance of an <code>AdPlayer</code>. A referral name,
+             specified by a DOM element, is used as a start point of
+             a reverse DOM search of a <code>DIV</code> element previously
+             associated with an <code>AdPlayer</code>.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">&lt;div id=&quot;adPlayerContainer&quot;&gt;
+ &lt;script type=&quot;text/javascript&quot;&gt;
+   var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
+   adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
+ &lt;/script&gt;
+ &lt;script type=&quot;text/javascript&quot; id=&quot;adServerTag&quot;&gt;
+   // Sample third party response
+   AdPlayerManager.getAdPlayer("uid", function (adPlayer) {
+     adPlayer.track(new AdEvent(AdEvent.SHOW));
+     adPlayer.addPrivacyInfo('3RD_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
+   }); 
+ &lt;/script&gt;
+&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+ // Outputs 1ST_SERVER & 3RD_SERVER info
+ console.log(adPlayer.privacyInfoList());
+&lt;/script&gt;</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>refName</b>
+									
+								</dt>
+								<dd>{String} Referral id used to mark the start point of a DOM search.</dd>
+							
+								<dt>
+									<b>initCallBack</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Adplayer}</span> AdPlayer instance associated with id.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
 					<a name="-getAdPlayerById"> </a>
 					<div class="fixedFont">&lt;inner&gt; 
 					
@@ -523,78 +595,6 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 									
 								</dt>
 								<dd>{String} Id of DOM element associated with <code>AdPlayer</code>.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Adplayer}</span> AdPlayer instance associated with id.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="-getAdPlayerByRefId"> </a>
-					<div class="fixedFont">&lt;inner&gt; 
-					
-					<span class="light">{Adplayer}</span>
-					<b>getAdPlayerByRefId</b>(refName, initCallBack)
-					
-					</div>
-					<div class="description">
-						Returns an instance of an <code>AdPlayer</code>. A referral name,
-             specified by a DOM element, is used as a start point of
-             a reverse DOM search of a <code>DIV</code> element previously
-             associated with an <code>AdPlayer</code>.
-						
-						
-					</div>
-					
-					
-					
-					<pre class="code">&lt;div id=&quot;adPlayerContainer&quot;&gt;
- &lt;script type=&quot;text/javascript&quot;&gt;
-   var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
-   adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
- &lt;/script&gt;
- &lt;script type=&quot;text/javascript&quot; id=&quot;adServerTag&quot;&gt;
-   // Sample third party response
-   AdPlayerManager.getAdPlayerByRefId("uid", function (adPlayer) {
-     adPlayer.track(new AdEvent(AdEvent.SHOW));
-     adPlayer.addPrivacyInfo('3RD_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
-   }); 
- &lt;/script&gt;
-&lt;/div&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
- // Outputs 1ST_SERVER & 3RD_SERVER info
- console.log(adPlayer.privacyInfoList());
-&lt;/script&gt;</pre>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>refName</b>
-									
-								</dt>
-								<dd>{String} Referral id used to mark the start point of a DOM search.</dd>
-							
-								<dt>
-									<b>initCallBack</b>
-									
-								</dt>
-								<dd></dd>
 							
 							</dl>
 						
@@ -714,7 +714,7 @@ AdPlayerManager.unregister(myCallBackHandler);</pre>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Jul 12 2011 09:04:14 GMT-0700 (PDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Jul 12 2011 09:33:35 GMT-0700 (PDT)
 		</div>
 	</body>
 </html>

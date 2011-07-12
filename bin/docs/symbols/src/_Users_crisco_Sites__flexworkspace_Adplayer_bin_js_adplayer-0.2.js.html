@@ -147,7 +147,7 @@
 <span class='line'>140</span>      *  &lt;/script&gt;
 <span class='line'>141</span>      *  &lt;script type=&quot;text/javascript&quot; id=&quot;adServerTag&quot;&gt;
 <span class='line'>142</span>      *    // Sample third party response
-<span class='line'>143</span>      *    AdPlayerManager.getAdPlayerByRefId("uid", function (adPlayer) {
+<span class='line'>143</span>      *    AdPlayerManager.getAdPlayer("uid", function (adPlayer) {
 <span class='line'>144</span>      *      adPlayer.track(new AdEvent(AdEvent.SHOW));
 <span class='line'>145</span>      *      adPlayer.addPrivacyInfo('3RD_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
 <span class='line'>146</span>      *    }); 
@@ -158,7 +158,7 @@
 <span class='line'>151</span>      *  console.log(adPlayer.privacyInfoList());
 <span class='line'>152</span>      * &lt;/script&gt;
 <span class='line'>153</span>      */</span><span class="WHIT">
-<span class='line'>154</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">getAdPlayerByRefId</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">refName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">initCallBack</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">getAdPlayer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">refName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">initCallBack</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>155</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">refName</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>156</span> </span><span class="WHIT">        </span><span class="NAME">refName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'refDiv'</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>157</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
@@ -255,7 +255,7 @@
 <span class='line'>248</span> </span><span class="WHIT">      </span><span class="NAME">register</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">register</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>249</span> </span><span class="WHIT">      </span><span class="NAME">unregister</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">unregister</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>250</span> </span><span class="WHIT">      </span><span class="NAME">getAdPlayerById</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">getAdPlayerById</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>251</span> </span><span class="WHIT">      </span><span class="NAME">getAdPlayerByRefId</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">getAdPlayerByRefId</span><span class="WHIT">
+<span class='line'>251</span> </span><span class="WHIT">      </span><span class="NAME">getAdPlayer</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">getAdPlayer</span><span class="WHIT">
 <span class='line'>252</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>253</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>254</span> 
