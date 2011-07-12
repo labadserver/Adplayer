@@ -218,10 +218,10 @@ ul.inheritsList
 				
 				
 			
-				Static - An AdEvent string is dispatched into the event flow whenever an ad event occurs.
+				An AdEvent object is dispatched into the event flow whenever an ad event occurs.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_felixritter_Documents_Adplayer_bin_js_adplayer-0.1.js.html">adplayer-0.1.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_crisco_Sites__flexworkspace_Adplayer_bin_js_adplayer-0.2.js.html">adplayer-0.2.js</a>.
 				
 			</p>
 
@@ -240,9 +240,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/AdEvent.html#constructor">AdEvent</a></b>()
+								<b><a href="../symbols/AdEvent.html#constructor">AdEvent</a></b>(type, data)
 							</div>
-							<div class="description">The <code>AdPlayer.track()</code> method dispatches an AdEvent string to suscribers.</div>
+							<div class="description">The <code>AdPlayer.track()</code> method dispatches an AdEvent object to suscribers.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -287,6 +287,16 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
+								<b><a href="../symbols/AdEvent.html#data">data</a></b>
+								</div>
+								<div class="description">The object containing information associated with an <code>AdEvent</code> instance.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
 								<b><a href="../symbols/AdEvent.html#HIDE">HIDE</a></b>
 								</div>
 								<div class="description">The <code>AdEvent.HIDE constant</code> defines the value of a hide event string.</div>
@@ -300,6 +310,16 @@ ul.inheritsList
 								<b><a href="../symbols/AdEvent.html#LOAD">LOAD</a></b>
 								</div>
 								<div class="description">The <code>AdEvent.LOAD</code> constant defines the value of a select event string.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/AdEvent.html#player">player</a></b>
+								</div>
+								<div class="description">The <code>AdPlayer</code> instance associated with the <code>AdEvent</code> object.</div>
 							</td>
 						</tr>
 					
@@ -373,6 +393,16 @@ ul.inheritsList
 							</td>
 						</tr>
 					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/AdEvent.html#type">type</a></b>
+								</div>
+								<div class="description">The type of <code>AdEvent.EVENT</code> to create.</div>
+							</td>
+						</tr>
+					
 					</tbody>
 				</table>
 				
@@ -429,12 +459,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>AdEvent</b>()
+						<b>AdEvent</b>(type, data)
 				</div>
 				
 				<div class="description">
-					The <code>AdPlayer.track()</code> method dispatches an AdEvent string to suscribers.<br/>
-             TODO:  The dispatching of "AdEvent.EVENT" will dispatch an AdEventObject instead of a string. More details to follow...
+					The <code>AdPlayer.track()</code> method dispatches an AdEvent object to suscribers.<br/>
 					<br /><i>Author: </i>christopher.sancho@adtech.com.
 				</div>
 				
@@ -443,18 +472,48 @@ ul.inheritsList
 				<pre class="code">var myDomObj = document.getElementById('myTagDivContainer');
 var adPlayer = new AdPlayer(myDomObj);
 
+// Example 1:
 // Register countEventHandler() to AdEvent.COUNT event.
 adPlayer.addAdEvent(AdEvent.COUNT, countEventHandler);
-function countEventHandler(adPlayer) {
+function countEventHandler(adEvent) {
   log('COUNT ad event has been dispatched.');
 }
 
 // Dispatch AdEvent.COUNT event to listeners.
-adPlayer.track(AdEvent.COUNT);</pre>
+adPlayer.track(new AdEvent(AdEvent.COUNT));
+
+// Example 2:
+// Dispatch AdEvent.COUNT event to listeners w/ data containing information.
+adPlayer.addAdEvent(AdEvent.COUNT, countEventHandler2);
+function countEventHandler2(adEvent) {
+  log('COUNT ad event has been dispatched.');
+  log('Here is its info:' + adEvent.data.info);
+}
+
+var data = new Object();
+data.info = 'This is custome info';
+adPlayer.track(new AdEvent(AdEvent.COUNT, data));</pre>
 				
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{string}</span>  <b>type</b>
+								
+							</dt>
+								<dd>The type of <code>AdEvent.EVENT</code> to create.</dd>
+						
+							<dt>
+								<span class="light fixedFont">{object}</span>  <b>data</b>
+								
+							</dt>
+								<dd>Optional - The object containing information associated with an <code>AdEvent</code> instance.</dd>
+						
+						</dl>
 					
 					
 					
@@ -484,7 +543,7 @@ adPlayer.track(AdEvent.COUNT);</pre>
 					<a name="CLICK"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
+					<span class="light">{string - Static Const}</span>
 					<b>CLICK</b>
 					
 					</div>
@@ -506,7 +565,7 @@ adPlayer.track(AdEvent.COUNT);</pre>
 					<a name="COUNT"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
+					<span class="light">{string - Static Const}</span>
 					<b>COUNT</b>
 					
 					</div>
@@ -525,10 +584,42 @@ adPlayer.track(AdEvent.COUNT);</pre>
 
 					<hr />
 				
+					<a name="data"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{object}</span>
+					<b>data</b>
+					
+					</div>
+					<div class="description">
+						The object containing information associated with an <code>AdEvent</code> instance.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">// Get reference to property
+var data = adEvent.data();
+
+// Set property's value
+var o = new Object();
+o.hello = "Hello";
+adEvent.data(o);</pre>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="HIDE"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
+					<span class="light">{string - Static Const}</span>
 					<b>HIDE</b>
 					
 					</div>
@@ -550,7 +641,7 @@ adPlayer.track(AdEvent.COUNT);</pre>
 					<a name="LOAD"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
+					<span class="light">{string - Static Const}</span>
 					<b>LOAD</b>
 					
 					</div>
@@ -569,10 +660,41 @@ adPlayer.track(AdEvent.COUNT);</pre>
 
 					<hr />
 				
+					<a name="player"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/AdPlayer.html">AdPlayer</a>}</span>
+					<b>player</b>
+					
+					</div>
+					<div class="description">
+						The <code>AdPlayer</code> instance associated with the <code>AdEvent</code> object.
+				<code>player</code> is set when <code>AdPlayer.track()</code> dispatches the <code>AdEvent</code> object insance.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">// Get reference to property
+var adPlayer = adEvent.player();
+
+// Set property's value
+adEvent.player(adPlayer);</pre>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="PRIVACY_CLICK"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
+					<span class="light">{string - Static Const}</span>
 					<b>PRIVACY_CLICK</b>
 					
 					</div>
@@ -594,7 +716,7 @@ adPlayer.track(AdEvent.COUNT);</pre>
 					<a name="PRIVACY_CLOSE"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
+					<span class="light">{string - Static Const}</span>
 					<b>PRIVACY_CLOSE</b>
 					
 					</div>
@@ -616,7 +738,7 @@ adPlayer.track(AdEvent.COUNT);</pre>
 					<a name="PRIVACY_OPEN"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
+					<span class="light">{string - Static Const}</span>
 					<b>PRIVACY_OPEN</b>
 					
 					</div>
@@ -638,7 +760,7 @@ adPlayer.track(AdEvent.COUNT);</pre>
 					<a name="PROGRESS"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
+					<span class="light">{string - Static Const}</span>
 					<b>PROGRESS</b>
 					
 					</div>
@@ -660,7 +782,7 @@ adPlayer.track(AdEvent.COUNT);</pre>
 					<a name="REMOVE"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
+					<span class="light">{string - Static Const}</span>
 					<b>REMOVE</b>
 					
 					</div>
@@ -682,7 +804,7 @@ adPlayer.track(AdEvent.COUNT);</pre>
 					<a name="SHOW"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
+					<span class="light">{string - Static Const}</span>
 					<b>SHOW</b>
 					
 					</div>
@@ -704,7 +826,7 @@ adPlayer.track(AdEvent.COUNT);</pre>
 					<a name="TRACK"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
+					<span class="light">{string - Static Const}</span>
 					<b>TRACK</b>
 					
 					</div>
@@ -713,6 +835,36 @@ adPlayer.track(AdEvent.COUNT);</pre>
 						
 						
 					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="type"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{string}</span>
+					<b>type</b>
+					
+					</div>
+					<div class="description">
+						The type of <code>AdEvent.EVENT</code> to create.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">// Get reference to property
+var evtType = adEvent.type();
+
+// Set property's value
+adEvent.type(AdEvent.LOAD);</pre>
 					
 					
 
@@ -822,7 +974,7 @@ adPlayer.track(AdEvent.COUNT);</pre>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Jul 11 2011 13:20:02 GMT+0200 (MESZ)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Jul 12 2011 09:04:13 GMT-0700 (PDT)
 		</div>
 	</body>
 </html>

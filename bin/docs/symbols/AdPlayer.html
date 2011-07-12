@@ -221,7 +221,7 @@ ul.inheritsList
 				Main class to be associated with an ad element object.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_felixritter_Documents_Adplayer_bin_js_adplayer-0.1.js.html">adplayer-0.1.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_crisco_Sites__flexworkspace_Adplayer_bin_js_adplayer-0.2.js.html">adplayer-0.2.js</a>.
 				
 			</p>
 
@@ -376,7 +376,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/AdPlayer.html#addTrackingPixel">addTrackingPixel</a></b>(adEvent, url, callback, repeat)
+								<div class="fixedFont"><b><a href="../symbols/AdPlayer.html#addTrackingPixel">addTrackingPixel</a></b>(adEvent, url, repeat)
 								</div>
 								<div class="description">A convenience function that adds a pixel URL to an <code>AdEvent</code> flow.</div>
 							</td>
@@ -421,7 +421,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/AdPlayer.html#removeTrackingPixel">removeTrackingPixel</a></b>(adEvent, url, callback)
+								<div class="fixedFont"><b><a href="../symbols/AdPlayer.html#removeTrackingPixel">removeTrackingPixel</a></b>(adEvent, url)
 								</div>
 								<div class="description">Removes a matching <code>url</code> or <code>callback</code> associated with
              an <code>AdEvent</code> and registered using <code>addTrackingPixel()</code>
@@ -441,9 +441,9 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/AdPlayer.html#track">track</a></b>(adEvent, url)
+								<div class="fixedFont"><b><a href="../symbols/AdPlayer.html#track">track</a></b>(adEventObj, url)
 								</div>
-								<div class="description">Dispatches an <code>AdEvent</code> string to all suscribers.</div>
+								<div class="description">Dispatches an <code>AdEvent</code> object to all suscribers.</div>
 							</td>
 						</tr>
 					
@@ -755,8 +755,8 @@ var privacyList = adPlayer.privacyInfoList();</pre>
 					
 					
 					
-					<pre class="code">function trackEventHandler(adPlayer) {
- log('AdEvent.TRACK' has been dispatched');
+					<pre class="code">function trackEventHandler(adEvent) {
+ log(adEvent.type() + ' has been dispatched');
 }
 adPlayer.addAdEvent(AdEvent.TRACK, trackEventHandler);</pre>
 					
@@ -863,7 +863,7 @@ adPlayer.addAdEvent(AdEvent.TRACK, trackEventHandler);</pre>
 					<div class="fixedFont">
 					
 					
-					<b>addTrackingPixel</b>(adEvent, url, callback, repeat)
+					<b>addTrackingPixel</b>(adEvent, url, repeat)
 					
 					</div>
 					<div class="description">
@@ -878,19 +878,7 @@ adPlayer.addAdEvent(AdEvent.TRACK, trackEventHandler);</pre>
 adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
 
 // Adds a tracking pixel that will dispatch only once on AdEvent.TRACK event
-adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', null, false);
-
-// Adds a tracking pixel, with a call-back, and will dispatch on AdEvent.TRACK event until removed
-function trackEventHandler(adPlayer) {
- log('AdEvent.TRACK' has been dispatched');
-}
-adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', trackEventHandler);
-
-// Adds a tracking pixel, with a call-back, and will dispatch only once on AdEvent.TRACK event
-function trackEventHandler(adPlayer) {
- log('AdEvent.TRACK' has been dispatched');
-}
-adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', trackEventHandler, false);</pre>
+adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', null, false);</pre>
 					
 					
 					
@@ -909,12 +897,6 @@ adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', trackEventHandle
 									
 								</dt>
 								<dd>{String - URL} URL of pixel to call when associated <code>AdEvent</code> is dispatched.</dd>
-							
-								<dt>
-									<b>callback</b>
-									
-								</dt>
-								<dd>{Function} Optional - The call-back handler to call when an <code>AdEvent</code> is dispatched.</dd>
 							
 								<dt>
 									<b>repeat</b>
@@ -1062,11 +1044,11 @@ adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', trackEventHandle
 					
 					
 					
-					<pre class="code">function trackEventHandler(adPlayer) {
+					<pre class="code">function trackEventHandler(adEvent) {
  // Remove call-back
- adPlayer.removeAdEvent(AdEvent.TRACK, trackEventHandler);
+ adEvent.player().removeAdEvent(AdEvent.TRACK, trackEventHandler);
  
- log('AdEvent.TRACK' has been dispatched');
+ log(adEvent.type() + ' has been dispatched');
 }
 adPlayer.addAdEvent(AdEvent.TRACK, trackEventHandler);</pre>
 					
@@ -1112,7 +1094,7 @@ adPlayer.addAdEvent(AdEvent.TRACK, trackEventHandler);</pre>
 					<div class="fixedFont">
 					
 					
-					<b>removeTrackingPixel</b>(adEvent, url, callback)
+					<b>removeTrackingPixel</b>(adEvent, url)
 					
 					</div>
 					<div class="description">
@@ -1133,33 +1115,14 @@ adPlayer.addAdEvent(AdEvent.TRACK, trackEventHandler);</pre>
 					
 					
 					
-					<pre class="code">// Adds a tracking pixel, with a call-back, and will dispatch on AdEvent.TRACK event
-function trackEventHandler(adPlayer) {
- // Removes pixel tracking associated with callback
- adPlayer.removeTrackingPixel(AdEvent.TRACK, null, trackEventHandler);
- 
- log('AdEvent.TRACK' has been dispatched');
-}
-adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', trackEventHandler);
+					<pre class="code">adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
+adPlayer.addAdEvent(AdEvent.TRACK, removePixels);
 
-
-// Remove all callbacks associated with pixel url
-function trackEventHandler1(adPlayer) {
- log('AdEvent.TRACK' has been dispatched');
-}
-function trackEventHandler2(adPlayer) {
- // Removes pixel tracking associated with callback
- log('AdEvent.TRACK' has been dispatched');
-}
-adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', trackEventHandler1);
-adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', trackEventHandler2);
-
-function removePixels() {
- // Removes 'trackEventHandler1' and 'trackEventHandler2' from AdEvent.TRACK event flow
+function removePixels(adEvent) {
+ // Removes url from TRACK event flow.
  adPlayer.removeTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
-}
-
-removePixels();</pre>
+ 
+}</pre>
 					
 					
 					
@@ -1178,12 +1141,6 @@ removePixels();</pre>
 									
 								</dt>
 								<dd>{String - URL} Optional - URL of pixel to call when associated <code>AdEvent</code> is dispatched.</dd>
-							
-								<dt>
-									<b>callback</b>
-									
-								</dt>
-								<dd>{Function} Optional - The call-back handler to call when an <code>AdEvent</code> is dispatched.</dd>
 							
 							</dl>
 						
@@ -1251,11 +1208,11 @@ removePixels();</pre>
 					<div class="fixedFont">
 					
 					
-					<b>track</b>(adEvent, url)
+					<b>track</b>(adEventObj, url)
 					
 					</div>
 					<div class="description">
-						Dispatches an <code>AdEvent</code> string to all suscribers.
+						Dispatches an <code>AdEvent</code> object to all suscribers.
 						
 						
 					</div>
@@ -1263,10 +1220,10 @@ removePixels();</pre>
 					
 					
 					<pre class="code">// Dispatches a track event to all suscribers
-adPlayer.track(AdEvent.TRACK);
+adPlayer.track(new AdEvent(AdEvent.TRACK));
 
 // Dispatches a track event to all suscribers and calls URL once.
-adPlayer.track(AdEvent.TRACK, 'http://my.pixel.url');</pre>
+adPlayer.track(new AdEvent(AdEvent.TRACK), 'http://my.pixel.url');</pre>
 					
 					
 					
@@ -1275,10 +1232,10 @@ adPlayer.track(AdEvent.TRACK, 'http://my.pixel.url');</pre>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>adEvent</b>
+									<b>adEventObj</b>
 									
 								</dt>
-								<dd>{AdEvent} The <code>AdEvent</code> to listen to.</dd>
+								<dd>{AdEvent} The <code>AdEvent</code> instance to track.</dd>
 							
 								<dt>
 									<b>url</b>
@@ -1309,7 +1266,7 @@ adPlayer.track(AdEvent.TRACK, 'http://my.pixel.url');</pre>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Jul 11 2011 13:20:02 GMT+0200 (MESZ)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Jul 12 2011 09:04:14 GMT-0700 (PDT)
 		</div>
 	</body>
 </html>

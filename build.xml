@@ -1,7 +1,7 @@
 <project name="DASE_WebUI" default="execute" basedir=".">
     <description>ADTECH - Ad Player build script.</description>
 	
-	<property name="version" value="0.1"/>
+	<property name="version" value="0.2"/>
 	<property name="jsfilename" value="adplayer-${version}"/>
 	<property name="cssfilename" value="adplayer-${version}"/>
 	
@@ -26,7 +26,7 @@
 		<replace file="${bin}/index.html" token="_@ADPLAYER_JS_FILE_MIN@_" value="${jsfilename}.min.js" />
 		<replace file="${bin}/index.html" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}-style.css" />
 		<replace file="${bin}/index.html" token="_@ADPLAYER_CSS-IE_FILE@_" value="${cssfilename}-style-ie.css" />
-		<replace file="${bin}/index.html" token="_@VERSION@_" value="${version}.${dist.revision}.${today}" />
+		<replace file="${bin}/index.html" token="_@VERSION@_" value="${version}-${dist.revision}.${today}" />
 		<copy tofile="${bin}/js/${jsfilename}.js" file="${src}/AdPlayerManager.js" overwrite="true" />
   	</target>
 	
@@ -75,7 +75,7 @@
 	
 	<target name="jsdoc" depends="css.minify">
     	<taskdef name="jsdoctoolkit" classname="uk.co.darrenhurley.ant.tasks.JsDocToolkit" classpath="tools/jsdoc/jsdoc-toolkit-ant-task-1.1.2.jar;tools/jsdoc/jsrun.jar" />
-		<jsdoctoolkit jsdochome="tools/jsdoc/" template="jsdoc" outputdir="${bin}/docs/" includeundocumented="true">
+		<jsdoctoolkit jsdochome="/tools/jsdoc/" template="jsdoc" outputdir="${bin}/docs/" includeundocumented="true">
 		<source file="${bin}/js/${jsfilename}.js" />
 		</jsdoctoolkit>
 	</target>
