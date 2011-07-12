@@ -140,8 +140,10 @@ if (typeof AdPlayerManager === 'undefined') {
      *  &lt;/script&gt;
      *  &lt;script type=&quot;text/javascript&quot; id=&quot;adServerTag&quot;&gt;
      *    // Sample third party response
-     *    var adPlayer12345 = AdPlayerManager.getAdPlayerByRefId('adServerTag');
-     *    adPlayer12345.addPrivacyInfo('3RD_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
+     *    AdPlayerManager.getAdPlayerByRefId("uid", function (adPlayer) {
+     *      adPlayer.track(new AdEvent(AdEvent.SHOW));
+     *      adPlayer.addPrivacyInfo('3RD_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
+     *    }); 
      *  &lt;/script&gt;
      * &lt;/div&gt;
      * &lt;script type=&quot;text/javascript&quot;&gt;
@@ -149,28 +151,68 @@ if (typeof AdPlayerManager === 'undefined') {
      *  console.log(adPlayer.privacyInfoList());
      * &lt;/script&gt;
      */
-    var getAdPlayerByRefId = function(refName) {
+    var getAdPlayerByRefId = function(refName, initCallBack) {
       if(!refName) {
         refName = 'refDiv';
       }
       var uAdId = new Date().getTime();
       var uName = refName + uAdId;
-      document.write('<div id="'+uName+'" />');
-      var par = document.getElementById(uName).parentNode;
-      while ((par.nodeName.toLowerCase() != 'div') || !AdPlayerManager.getAdPlayerById(par.id)) {
-        par = par.parentNode;
-        parName = par.nodeName.toLowerCase();
-        if ((parName == 'body') || (parName == 'html')) { break; }
-      }
-      var adPlayer = AdPlayerManager.getAdPlayerById(par.id);
-      if(adPlayer) {
-        return adPlayer;
+      
+      document.write('<span id="'+uName+'" style="display:none;"></span>');
+      
+      /** @private */
+      function refWait(refName, callback) {
+        var _interval = setInterval(lookup, 100);
+        var _this = this;
+        function lookup(tar) {
+      	  if (document.getElementById(refName)) {
+            console.log('found ===> ' + refName);
+      	    clearInterval(_interval);
+    	    var par = document.getElementById(refName).parentNode;
+            while ((par.nodeName.toLowerCase() != 'div') || !AdPlayerManager.getAdPlayerById(par.id)) {
+              par = par.parentNode;
+              parName = par.nodeName.toLowerCase();
+              if ((parName == 'body') || (parName == 'html')) { break; }
+            }
+            var adPlayer = AdPlayerManager.getAdPlayerById(par.id);
+            if(adPlayer) {
+              adPlayer.adDomElement().removeChild(document.getElementById(refName));
+              if(callback) {
+            	  callback(adPlayer);
+              }
+              return adPlayer;
+            } else {
+              log('No AdPlayer found!');
+            }      	   
+      	  }
+        }
+      };
+      
+      if (document.getElementById(uName)) {
+        if (document.getElementById(uName)) {
+      	    var par = document.getElementById(uName).parentNode;
+              while ((par.nodeName.toLowerCase() != 'div') || !AdPlayerManager.getAdPlayerById(par.id)) {
+                par = par.parentNode;
+                parName = par.nodeName.toLowerCase();
+                if ((parName == 'body') || (parName == 'html')) { break; }
+              }
+              var adPlayer = AdPlayerManager.getAdPlayerById(par.id);
+              if(adPlayer) {
+                adPlayer.adDomElement().removeChild(document.getElementById(uName));
+                if(initCallBack) {
+                	initCallBack(adPlayer);
+                }
+                return adPlayer;
+              } else {
+                log('No AdPlayer found!');
+              }  
+        }
       } else {
-        log('No AdPlayer found!');
-        return null;
+    	  var refW = refWait(uName, initCallBack);
       }
     };
- 
+    
+    
     /**
      * @private
      * @description Dispatches all call-back function handlers added to the list.
