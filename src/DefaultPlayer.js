@@ -144,6 +144,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
     if (!this.isPrivacyPanelEnabled()) {
       this.privacyClickBtn = document.createElement('button');
       this.privacyClickBtn.setAttribute('class', 'privacyButton');
+      this.privacyClickBtn.setAttribute('className', 'privacyButton'); // IE Fix
       this.privacyClickBtn.innerHTML = 'Get Info';
       this.adDomElement().style.position = "relative";
       this.adDomElement().appendChild(this.privacyClickBtn);
@@ -169,6 +170,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
     if (!this.privacyPanel) {
       this.privacyPanel = document.createElement('div');
       this.privacyPanel.setAttribute('class', 'privacyPanel');
+      this.privacyPanel.setAttribute('className', 'privacyPanel'); // IE fix
       var privacyPanelList = document.createElement('ul');
       var privacyPanelClose = document.createElement('button');
       var parentThis = this;

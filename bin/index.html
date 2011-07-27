@@ -1,11 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>ADTECH - AdPlayer | DAST Demo v0.3 (dev.072611)</title>
+<title>ADTECH - AdPlayer | DAST Demo v0.3 (dev.072711)</title>
 <script type="text/javascript" src="js/adplayer-0.3.js"></script>
 <!-- script type="text/javascript" src="js/adplayer-0.3.min.js"></script-->
 <link rel="stylesheet" type="text/css" href="css/adplayer-0.3-style.css" />
-<!--[if IE]><link rel="stylesheet" type="text/css" href="css/adplayer-0.3-style-ie.css" /><![endif]-->
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="css/adplayer-0.3-style-ie.css" /><![endif]-->
 
 <style>
 #output-box {
@@ -64,13 +64,13 @@ table td {
 			  var outputBox = document.getElementById('output-box');
 			  if (outputBox) {
 				clearInterval(_outInt);
-				outputBox.innerHTML = _msg;
+				outputBox.value = _msg;
 				outputBox.scrollTop = outputBox.scrollHeight;
 			  }
 			}				
 		  	var _outInt = setInterval(writeToOutbox, 100);
 		} else {
-			outputBox.innerHTML = _msg;
+			outputBox.value = _msg;
 			outputBox.scrollTop = outputBox.scrollHeight;
 		}
 	}
@@ -79,7 +79,7 @@ table td {
   		_msgCount = 0;
 		_msg = '';
 		var outputBox = document.getElementById('output-box');
-		outputBox.innerHTML = _msg;
+		outputBox.value = _msg;
 	}
 
 	// AdEvent.PRIVACY_OPEN handler for all Ad Player Examples
@@ -109,14 +109,13 @@ table td {
 
 	// AdEvent.LOAD handler for all Ad Player Examples
 	function adtechPlayerInit(evt) {
-		console.log('AdPlayer: ' + evt.target().uid() + ' initialized '+evt.currentTarget().uid()+'.' + '\n');
 	    logOutput('AdPlayer: ' + evt.target().uid() + ' initialized '+evt.currentTarget().uid()+'.' + '\n');
 	}
 </script>
 <table border="0">
 	<tr>
 		<th colspan="3">
-			<span>ADTECH</span> - AdPlayer | DAST Demo <span class="version">v0.3 (dev.072611)</span>
+			<span>ADTECH</span> - AdPlayer | DAST Demo <span class="version">v0.3 (dev.072711)</span>
 			<span id="info"><a href="docs/" target="_blank">API</a>  |  <a href="docs/readme.txt" target="_blank">README</a></span>
 		</th>
 	</tr>

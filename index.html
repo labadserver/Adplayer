@@ -5,7 +5,7 @@
 <script type="text/javascript" src="js/_@ADPLAYER_JS_FILE@_"></script>
 <!-- script type="text/javascript" src="js/_@ADPLAYER_JS_FILE_MIN@_"></script-->
 <link rel="stylesheet" type="text/css" href="css/_@ADPLAYER_CSS_FILE@_" />
-<!--[if IE]><link rel="stylesheet" type="text/css" href="css/_@ADPLAYER_CSS-IE_FILE@_" /><![endif]-->
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="css/_@ADPLAYER_CSS-IE_FILE@_" /><![endif]-->
 
 <style>
 #output-box {
@@ -64,13 +64,13 @@ table td {
 			  var outputBox = document.getElementById('output-box');
 			  if (outputBox) {
 				clearInterval(_outInt);
-				outputBox.innerHTML = _msg;
+				outputBox.value = _msg;
 				outputBox.scrollTop = outputBox.scrollHeight;
 			  }
 			}				
 		  	var _outInt = setInterval(writeToOutbox, 100);
 		} else {
-			outputBox.innerHTML = _msg;
+			outputBox.value = _msg;
 			outputBox.scrollTop = outputBox.scrollHeight;
 		}
 	}
@@ -79,7 +79,7 @@ table td {
   		_msgCount = 0;
 		_msg = '';
 		var outputBox = document.getElementById('output-box');
-		outputBox.innerHTML = _msg;
+		outputBox.value = _msg;
 	}
 
 	// AdEvent.PRIVACY_OPEN handler for all Ad Player Examples
@@ -109,7 +109,6 @@ table td {
 
 	// AdEvent.LOAD handler for all Ad Player Examples
 	function adtechPlayerInit(evt) {
-		console.log('AdPlayer: ' + evt.target().uid() + ' initialized '+evt.currentTarget().uid()+'.' + '\n');
 	    logOutput('AdPlayer: ' + evt.target().uid() + ' initialized '+evt.currentTarget().uid()+'.' + '\n');
 	}
 </script>

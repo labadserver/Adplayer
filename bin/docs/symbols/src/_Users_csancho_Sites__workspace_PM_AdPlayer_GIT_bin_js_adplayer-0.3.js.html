@@ -6,7 +6,7 @@
 	.REGX {color: #339;}
 	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
 	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/* -----------------------------------------------------------------------------
-<span class='line'>  2</span> * AdPlayer v0.3.dev.072611
+<span class='line'>  2</span> * AdPlayer v0.3.dev.072711
 <span class='line'>  3</span> * 
 <span class='line'>  4</span> * Author: christopher.sancho@adtech.com
 <span class='line'>  5</span> * ----------------------------------------------------------------------------*/</span><span class="WHIT">
@@ -665,603 +665,605 @@
 <span class='line'>658</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this.isPrivacyPanelEnabled</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>659</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyClickBtn</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">'button'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>660</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyClickBtn.setAttribute</span><span class="PUNC">(</span><span class="STRN">'class'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'privacyButton'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>661</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyClickBtn.innerHTML</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'Get Info'</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>662</span> </span><span class="WHIT">      </span><span class="NAME">this.adDomElement</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">style.position</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"relative"</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>663</span> </span><span class="WHIT">      </span><span class="NAME">this.adDomElement</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">appendChild</span><span class="PUNC">(</span><span class="NAME">this.privacyClickBtn</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>664</span> </span><span class="WHIT">      
-<span class='line'>665</span>       </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">parentThis</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>666</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyClickBtn.onclick</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>667</span> </span><span class="WHIT">        </span><span class="NAME">parentThis.showPrivacyInfo</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">      
-<span class='line'>668</span>       </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>669</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>670</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>671</span> 
-<span class='line'>672</span> </span><span class="WHIT">  </span><span class="NAME">_this.disableAdChoice</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>673</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.isPrivacyPanelEnabled</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>674</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">this.privacyClickBtn</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>675</span> </span><span class="WHIT">        </span><span class="NAME">this.adDomElement</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">removeChild</span><span class="PUNC">(</span><span class="NAME">this.privacyClickBtn</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>676</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>677</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>678</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>679</span> 
-<span class='line'>680</span> </span><span class="WHIT">  </span><span class="NAME">_this.privacyPanel</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>681</span> 
-<span class='line'>682</span> </span><span class="WHIT">  </span><span class="NAME">_this.showPrivacyInfo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>683</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this.privacyPanel</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>684</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyPanel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">'div'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>685</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyPanel.setAttribute</span><span class="PUNC">(</span><span class="STRN">'class'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'privacyPanel'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>686</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">privacyPanelList</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">'ul'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>687</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">privacyPanelClose</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">'button'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>688</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">parentThis</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>689</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyPanel.appendChild</span><span class="PUNC">(</span><span class="NAME">privacyPanelList</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>690</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyPanel.appendChild</span><span class="PUNC">(</span><span class="NAME">privacyPanelClose</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>691</span> </span><span class="WHIT">      </span><span class="NAME">this.adDomElement</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">appendChild</span><span class="PUNC">(</span><span class="NAME">this.privacyPanel</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>692</span> </span><span class="WHIT">      </span><span class="NAME">privacyPanelClose.innerHTML</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'Close'</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>693</span> </span><span class="WHIT">      </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">this.privacyInfoList</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">length</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>694</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">privacyElement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">  </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">'li'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>695</span> </span><span class="WHIT">        </span><span class="COMM">/** @private */</span><span class="WHIT">
-<span class='line'>696</span> </span><span class="WHIT">        </span><span class="NAME">privacyClick</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>697</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Object</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>698</span> </span><span class="WHIT">          </span><span class="NAME">data.url</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>699</span> </span><span class="WHIT">          </span><span class="NAME">parentThis.track</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AdEvent</span><span class="PUNC">(</span><span class="NAME">AdEvent.PRIVACY_CLICK</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>700</span> </span><span class="WHIT">          </span><span class="NAME">window.open</span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>701</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>702</span> </span><span class="WHIT">        </span><span class="NAME">privacyElement.innerHTML</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.privacyInfoList</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">adServer</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'&lt;span>'</span><span class="PUNC">+</span><span class="NAME">this.privacyInfoList</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">message</span><span class="PUNC">+</span><span class="STRN">'&lt;br/>&lt;a href="javascript:privacyClick(\''</span><span class="PUNC">+</span><span class="NAME">this.privacyInfoList</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">url</span><span class="PUNC">+</span><span class="STRN">'\');" target="_self">Opt Out&lt;/a>&lt;/span>'</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>703</span> </span><span class="WHIT">        </span><span class="NAME">privacyPanelList.appendChild</span><span class="PUNC">(</span><span class="NAME">privacyElement</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>704</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>705</span> </span><span class="WHIT">      </span><span class="NAME">this.isPrivacyPanelEnabled</span><span class="PUNC">(</span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>706</span> </span><span class="WHIT">      </span><span class="NAME">privacyPanelClose.onclick</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>707</span> </span><span class="WHIT">        </span><span class="NAME">parentThis.hidePrivacyInfo</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">      
-<span class='line'>708</span>       </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>709</span> </span><span class="WHIT">      </span><span class="NAME">this.track</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AdEvent</span><span class="PUNC">(</span><span class="NAME">AdEvent.PRIVACY_OPEN</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>710</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>711</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>712</span> 
-<span class='line'>713</span> </span><span class="WHIT">  </span><span class="NAME">_this.hidePrivacyInfo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>714</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.privacyPanel</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>715</span> </span><span class="WHIT">      </span><span class="NAME">this.isPrivacyPanelEnabled</span><span class="PUNC">(</span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>716</span> </span><span class="WHIT">      </span><span class="NAME">this.adDomElement</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">removeChild</span><span class="PUNC">(</span><span class="NAME">this.privacyPanel</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>717</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyPanel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>718</span> </span><span class="WHIT">      </span><span class="NAME">this.track</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AdEvent</span><span class="PUNC">(</span><span class="NAME">AdEvent.PRIVACY_CLOSE</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>719</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>720</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">  
-<span class='line'>721</span>   
-<span class='line'>722</span>   </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>723</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>724</span> </span><span class="COMM">/** @private */</span><span class="WHIT">
-<span class='line'>725</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>726</span>      * @private
-<span class='line'>727</span>      * @description Returns an instance of an &lt;code>AdPlayer&lt;/code>. A referral name,
-<span class='line'>728</span>      *              specified by a DOM element, is used as a start point of
-<span class='line'>729</span>      *              a reverse DOM search of a &lt;code>DIV&lt;/code> element previously
-<span class='line'>730</span>      *              associated with an &lt;code>AdPlayer&lt;/code>.
-<span class='line'>731</span>      *              
-<span class='line'>732</span>      * @param refName {String} Referral id used to mark the start point of a DOM search. 
-<span class='line'>733</span>      * @return {Adplayer} AdPlayer instance associated with id. 
-<span class='line'>734</span>      * 
-<span class='line'>735</span>      * @example
-<span class='line'>736</span>      * &lt;div id=&quot;adPlayerContainer&quot;&gt;
-<span class='line'>737</span>      *  &lt;script type=&quot;text/javascript&quot;&gt;
-<span class='line'>738</span>      *    var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
-<span class='line'>739</span>      *    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
-<span class='line'>740</span>      *  &lt;/script&gt;
-<span class='line'>741</span>      *  &lt;script type=&quot;text/javascript&quot; id=&quot;adServerTag&quot;&gt;
-<span class='line'>742</span>      *    // Sample third party response
-<span class='line'>743</span>      *    AdPlayerManager.getAdPlayer("uid", function (adPlayer) {
-<span class='line'>744</span>      *      adPlayer.track(new AdEvent(AdEvent.SHOW));
-<span class='line'>745</span>      *      adPlayer.addPrivacyInfo('3RD_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
-<span class='line'>746</span>      *    }); 
-<span class='line'>747</span>      *  &lt;/script&gt;
-<span class='line'>748</span>      * &lt;/div&gt;
-<span class='line'>749</span>      * &lt;script type=&quot;text/javascript&quot;&gt;
-<span class='line'>750</span>      *  // Outputs 1ST_SERVER & 3RD_SERVER info
-<span class='line'>751</span>      *  console.log(adPlayer.privacyInfoList());
-<span class='line'>752</span>      * &lt;/script&gt;
-<span class='line'>753</span>      */</span><span class="WHIT">
-<span class='line'>754</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">PlayerFactory</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>755</span> </span><span class="WHIT">  </span><span class="COMM">/*
-<span class='line'>756</span>    * CASES:
-<span class='line'>757</span>    * 
-<span class='line'>758</span>    * if DOM object &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>759</span>    *    - Lookup List if the DOM has a player &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>760</span>    *      - if yes found in LIST &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>761</span>    *          set player pass to fnInit &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>762</span>    *      - if not found in LIST &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>763</span>    *          Look through DOM page &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>764</span>    *            - Set Ref OBj for scanning &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>765</span>    *              - wait for ref obj to load &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>766</span>    *              - on ref object load... &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>767</span>    *                - if found in DOM page &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>768</span>    *                    set player pass to fnInit &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>769</span>    *                - if not found in DOM page &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>770</span>    *                    create a new player and pass to fnInit &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>771</span>    * Else (NO DOM Obj) &lt;&lt;&lt;&lt;&lt;&lt;&lt;
-<span class='line'>772</span>    *    - Look through DOM page
-<span class='line'>773</span>    *            - Set Ref OBj for scanning
-<span class='line'>774</span>    *              - wait for ref obj to load
-<span class='line'>775</span>    *              - on ref object load...
-<span class='line'>776</span>    *                - if found in DOM page
-<span class='line'>777</span>    *                    set player pass to fnInit
-<span class='line'>778</span>    *                - if not found in DOM page
-<span class='line'>779</span>    *                    create a new player and pass to fnInit
-<span class='line'>780</span>    */</span><span class="WHIT">  
-<span class='line'>781</span>   
-<span class='line'>782</span>   </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_isInIFrame</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">window.location</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="NAME">window.parent.location</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>783</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_isInIFrame</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>784</span> </span><span class="WHIT">    </span><span class="COMM">// TODO: If in iFrame - change to FramePlayer </span><span class="WHIT">
-<span class='line'>785</span> </span><span class="WHIT">    </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">DefaultPlayer</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>786</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>787</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>788</span> </span><span class="WHIT">  
-<span class='line'>789</span>   </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">adDomElement</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>790</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">domPlayer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">AdPlayerManager.getPlayerByDomElement</span><span class="PUNC">(</span><span class="NAME">adDomElement</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>791</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">domPlayer</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>792</span> </span><span class="WHIT">      </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="NAME">domPlayer</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>793</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>794</span> </span><span class="WHIT">      </span><span class="NAME">parentDomSearch</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>795</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>796</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>797</span> </span><span class="WHIT">    </span><span class="NAME">parentDomSearch</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>798</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>799</span> </span><span class="WHIT">  
-<span class='line'>800</span>   </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">parentDomSearch</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>801</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">uAdId</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Date</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">getTime</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>802</span> </span><span class="WHIT">    
-<span class='line'>803</span>     </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">dom</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.getElementById</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>804</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">dom</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>805</span> </span><span class="WHIT">      </span><span class="NAME">log</span><span class="PUNC">(</span><span class="STRN">'WARNING: No valid referral element specified for "'</span><span class="PUNC">+</span><span class="NAME">uid</span><span class="PUNC">+</span><span class="STRN">'". Referral will be created using "document.write"'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'parentDomSearch'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>806</span> </span><span class="WHIT">      </span><span class="NAME">domId</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'ref'</span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">uAdId</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>807</span> </span><span class="WHIT">      </span><span class="NAME">document.write</span><span class="PUNC">(</span><span class="STRN">'&lt;span id="'</span><span class="PUNC">+</span><span class="NAME">domId</span><span class="PUNC">+</span><span class="STRN">'">&lt;/span>'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>808</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>809</span> </span><span class="WHIT">    
-<span class='line'>810</span>     </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">refWait</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">readyFn</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>811</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_interval</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">setInterval</span><span class="PUNC">(</span><span class="NAME">check</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">100</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>812</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>813</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_timeout</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>814</span> </span><span class="WHIT">      </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">check</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>815</span> </span><span class="COMM">//        console.log('finding...'+domId);</span><span class="WHIT">
-<span class='line'>816</span> </span><span class="WHIT">        </span><span class="NAME">_timeout</span><span class="WHIT"> </span><span class="PUNC">++</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>817</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_timeout</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NUMB">10</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>818</span> </span><span class="WHIT">          </span><span class="NAME">clearInterval</span><span class="PUNC">(</span><span class="NAME">_interval</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>819</span> </span><span class="WHIT">          </span><span class="NAME">log</span><span class="PUNC">(</span><span class="STRN">'No Valid Ad Player could be found. Creating default...'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'refWait'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>820</span> </span><span class="WHIT">          </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">DefaultPlayer</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>821</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>822</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">document.getElementById</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>823</span> </span><span class="COMM">//          console.log('found ===> ' + domId);</span><span class="WHIT">
-<span class='line'>824</span> </span><span class="WHIT">          </span><span class="NAME">clearInterval</span><span class="PUNC">(</span><span class="NAME">_interval</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>825</span> </span><span class="WHIT">          </span><span class="NAME">readyFn</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>826</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>827</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>828</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">    
-<span class='line'>829</span>     
-<span class='line'>830</span>     </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">searchDom</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>831</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">par</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.getElementById</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">parentNode</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>832</span> </span><span class="WHIT">      </span><span class="KEYW">while</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">AdPlayerManager.getAdPlayerById</span><span class="PUNC">(</span><span class="NAME">par.id</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>833</span> </span><span class="WHIT">        </span><span class="NAME">par</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">par.parentNode</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>834</span> </span><span class="WHIT">        </span><span class="NAME">parName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">par.nodeName.toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>835</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">parName</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="STRN">'body'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">parName</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="STRN">'html'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>836</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>837</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">par</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>838</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">adPlayer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">AdPlayerManager.getAdPlayerById</span><span class="PUNC">(</span><span class="NAME">par.id</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>839</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">adPlayer</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>840</span> </span><span class="COMM">//          adPlayer.adDomElement().removeChild(document.getElementById(domId));</span><span class="WHIT">
-<span class='line'>841</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>842</span> </span><span class="COMM">//            console.log('Found player at '+adPlayer.adDomElement().id);</span><span class="WHIT">
-<span class='line'>843</span> </span><span class="WHIT">            </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="NAME">adPlayer</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>844</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">  
-<span class='line'>845</span>         </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>846</span> </span><span class="COMM">//          console.log('No AdPlayer found after parent search. Creating new player for '+domId);</span><span class="WHIT">
-<span class='line'>847</span> </span><span class="WHIT">          </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">DefaultPlayer</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>848</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>849</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>850</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>851</span> </span><span class="WHIT">    
-<span class='line'>852</span>     </span><span class="NAME">refWait</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">searchDom</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>853</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>854</span> 
-<span class='line'>855</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>856</span> </span><span class="COMM">/** 
-<span class='line'>857</span>  * @description Logs a message through the console; if available.
-<span class='line'>858</span>  * @param {string} msg The message to log.
-<span class='line'>859</span>  * @param {string} ref Optional - An identifer used to reference the source of a message.
-<span class='line'>860</span>  * 
-<span class='line'>861</span>  * @example
-<span class='line'>862</span>  * // "AdPlayer(God): This is a log output."
-<span class='line'>863</span>  * log('This is a log output', 'God');
-<span class='line'>864</span>  */</span><span class="WHIT">
-<span class='line'>865</span> </span><span class="NAME">log</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ref</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>866</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">console</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">console</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>867</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ref</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>868</span> </span><span class="WHIT">      </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'AdPlayer('</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">ref</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'): '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">msg</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>869</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>870</span> </span><span class="WHIT">      </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'AdPlayer: '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">msg</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>871</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>872</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>873</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>874</span> </span><span class="COMM">/**
-<span class='line'>875</span>  * @name AdPlayer
-<span class='line'>876</span>  * @class Main class to be associated with an ad element object. 
-<span class='line'>877</span>  * @description The &lt;code>AdPlayer&lt;/code> class.
-<span class='line'>878</span>  * 
-<span class='line'>879</span>  * @author christopher.sancho@adtech.com
+<span class='line'>661</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyClickBtn.setAttribute</span><span class="PUNC">(</span><span class="STRN">'className'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'privacyButton'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="COMM">// IE Fix</span><span class="WHIT">
+<span class='line'>662</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyClickBtn.innerHTML</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'Get Info'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>663</span> </span><span class="WHIT">      </span><span class="NAME">this.adDomElement</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">style.position</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"relative"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>664</span> </span><span class="WHIT">      </span><span class="NAME">this.adDomElement</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">appendChild</span><span class="PUNC">(</span><span class="NAME">this.privacyClickBtn</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>665</span> </span><span class="WHIT">      
+<span class='line'>666</span>       </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">parentThis</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>667</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyClickBtn.onclick</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>668</span> </span><span class="WHIT">        </span><span class="NAME">parentThis.showPrivacyInfo</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">      
+<span class='line'>669</span>       </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>670</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>671</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>672</span> 
+<span class='line'>673</span> </span><span class="WHIT">  </span><span class="NAME">_this.disableAdChoice</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>674</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.isPrivacyPanelEnabled</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>675</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">this.privacyClickBtn</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>676</span> </span><span class="WHIT">        </span><span class="NAME">this.adDomElement</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">removeChild</span><span class="PUNC">(</span><span class="NAME">this.privacyClickBtn</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>677</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>678</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>679</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>680</span> 
+<span class='line'>681</span> </span><span class="WHIT">  </span><span class="NAME">_this.privacyPanel</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>682</span> 
+<span class='line'>683</span> </span><span class="WHIT">  </span><span class="NAME">_this.showPrivacyInfo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>684</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this.privacyPanel</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>685</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyPanel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">'div'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>686</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyPanel.setAttribute</span><span class="PUNC">(</span><span class="STRN">'class'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'privacyPanel'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>687</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyPanel.setAttribute</span><span class="PUNC">(</span><span class="STRN">'className'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'privacyPanel'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="COMM">// IE fix</span><span class="WHIT">
+<span class='line'>688</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">privacyPanelList</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">'ul'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>689</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">privacyPanelClose</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">'button'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>690</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">parentThis</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>691</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyPanel.appendChild</span><span class="PUNC">(</span><span class="NAME">privacyPanelList</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>692</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyPanel.appendChild</span><span class="PUNC">(</span><span class="NAME">privacyPanelClose</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>693</span> </span><span class="WHIT">      </span><span class="NAME">this.adDomElement</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">appendChild</span><span class="PUNC">(</span><span class="NAME">this.privacyPanel</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>694</span> </span><span class="WHIT">      </span><span class="NAME">privacyPanelClose.innerHTML</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'Close'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>695</span> </span><span class="WHIT">      </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">this.privacyInfoList</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">length</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>696</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">privacyElement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">  </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">'li'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>697</span> </span><span class="WHIT">        </span><span class="COMM">/** @private */</span><span class="WHIT">
+<span class='line'>698</span> </span><span class="WHIT">        </span><span class="NAME">privacyClick</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>699</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Object</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>700</span> </span><span class="WHIT">          </span><span class="NAME">data.url</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>701</span> </span><span class="WHIT">          </span><span class="NAME">parentThis.track</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AdEvent</span><span class="PUNC">(</span><span class="NAME">AdEvent.PRIVACY_CLICK</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>702</span> </span><span class="WHIT">          </span><span class="NAME">window.open</span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>703</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>704</span> </span><span class="WHIT">        </span><span class="NAME">privacyElement.innerHTML</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.privacyInfoList</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">adServer</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'&lt;span>'</span><span class="PUNC">+</span><span class="NAME">this.privacyInfoList</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">message</span><span class="PUNC">+</span><span class="STRN">'&lt;br/>&lt;a href="javascript:privacyClick(\''</span><span class="PUNC">+</span><span class="NAME">this.privacyInfoList</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">url</span><span class="PUNC">+</span><span class="STRN">'\');" target="_self">Opt Out&lt;/a>&lt;/span>'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>705</span> </span><span class="WHIT">        </span><span class="NAME">privacyPanelList.appendChild</span><span class="PUNC">(</span><span class="NAME">privacyElement</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>706</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>707</span> </span><span class="WHIT">      </span><span class="NAME">this.isPrivacyPanelEnabled</span><span class="PUNC">(</span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>708</span> </span><span class="WHIT">      </span><span class="NAME">privacyPanelClose.onclick</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>709</span> </span><span class="WHIT">        </span><span class="NAME">parentThis.hidePrivacyInfo</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">      
+<span class='line'>710</span>       </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>711</span> </span><span class="WHIT">      </span><span class="NAME">this.track</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AdEvent</span><span class="PUNC">(</span><span class="NAME">AdEvent.PRIVACY_OPEN</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>712</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>713</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>714</span> 
+<span class='line'>715</span> </span><span class="WHIT">  </span><span class="NAME">_this.hidePrivacyInfo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>716</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.privacyPanel</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>717</span> </span><span class="WHIT">      </span><span class="NAME">this.isPrivacyPanelEnabled</span><span class="PUNC">(</span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>718</span> </span><span class="WHIT">      </span><span class="NAME">this.adDomElement</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">removeChild</span><span class="PUNC">(</span><span class="NAME">this.privacyPanel</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>719</span> </span><span class="WHIT">      </span><span class="NAME">this.privacyPanel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>720</span> </span><span class="WHIT">      </span><span class="NAME">this.track</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AdEvent</span><span class="PUNC">(</span><span class="NAME">AdEvent.PRIVACY_CLOSE</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>721</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>722</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">  
+<span class='line'>723</span>   
+<span class='line'>724</span>   </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>725</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>726</span> </span><span class="COMM">/** @private */</span><span class="WHIT">
+<span class='line'>727</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>728</span>      * @private
+<span class='line'>729</span>      * @description Returns an instance of an &lt;code>AdPlayer&lt;/code>. A referral name,
+<span class='line'>730</span>      *              specified by a DOM element, is used as a start point of
+<span class='line'>731</span>      *              a reverse DOM search of a &lt;code>DIV&lt;/code> element previously
+<span class='line'>732</span>      *              associated with an &lt;code>AdPlayer&lt;/code>.
+<span class='line'>733</span>      *              
+<span class='line'>734</span>      * @param refName {String} Referral id used to mark the start point of a DOM search. 
+<span class='line'>735</span>      * @return {Adplayer} AdPlayer instance associated with id. 
+<span class='line'>736</span>      * 
+<span class='line'>737</span>      * @example
+<span class='line'>738</span>      * &lt;div id=&quot;adPlayerContainer&quot;&gt;
+<span class='line'>739</span>      *  &lt;script type=&quot;text/javascript&quot;&gt;
+<span class='line'>740</span>      *    var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
+<span class='line'>741</span>      *    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
+<span class='line'>742</span>      *  &lt;/script&gt;
+<span class='line'>743</span>      *  &lt;script type=&quot;text/javascript&quot; id=&quot;adServerTag&quot;&gt;
+<span class='line'>744</span>      *    // Sample third party response
+<span class='line'>745</span>      *    AdPlayerManager.getAdPlayer("uid", function (adPlayer) {
+<span class='line'>746</span>      *      adPlayer.track(new AdEvent(AdEvent.SHOW));
+<span class='line'>747</span>      *      adPlayer.addPrivacyInfo('3RD_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
+<span class='line'>748</span>      *    }); 
+<span class='line'>749</span>      *  &lt;/script&gt;
+<span class='line'>750</span>      * &lt;/div&gt;
+<span class='line'>751</span>      * &lt;script type=&quot;text/javascript&quot;&gt;
+<span class='line'>752</span>      *  // Outputs 1ST_SERVER & 3RD_SERVER info
+<span class='line'>753</span>      *  console.log(adPlayer.privacyInfoList());
+<span class='line'>754</span>      * &lt;/script&gt;
+<span class='line'>755</span>      */</span><span class="WHIT">
+<span class='line'>756</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">PlayerFactory</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>757</span> </span><span class="WHIT">  </span><span class="COMM">/*
+<span class='line'>758</span>    * CASES:
+<span class='line'>759</span>    * 
+<span class='line'>760</span>    * if DOM object &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>761</span>    *    - Lookup List if the DOM has a player &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>762</span>    *      - if yes found in LIST &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>763</span>    *          set player pass to fnInit &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>764</span>    *      - if not found in LIST &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>765</span>    *          Look through DOM page &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>766</span>    *            - Set Ref OBj for scanning &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>767</span>    *              - wait for ref obj to load &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>768</span>    *              - on ref object load... &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>769</span>    *                - if found in DOM page &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>770</span>    *                    set player pass to fnInit &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>771</span>    *                - if not found in DOM page &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>772</span>    *                    create a new player and pass to fnInit &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>773</span>    * Else (NO DOM Obj) &lt;&lt;&lt;&lt;&lt;&lt;&lt;
+<span class='line'>774</span>    *    - Look through DOM page
+<span class='line'>775</span>    *            - Set Ref OBj for scanning
+<span class='line'>776</span>    *              - wait for ref obj to load
+<span class='line'>777</span>    *              - on ref object load...
+<span class='line'>778</span>    *                - if found in DOM page
+<span class='line'>779</span>    *                    set player pass to fnInit
+<span class='line'>780</span>    *                - if not found in DOM page
+<span class='line'>781</span>    *                    create a new player and pass to fnInit
+<span class='line'>782</span>    */</span><span class="WHIT">  
+<span class='line'>783</span>   
+<span class='line'>784</span>   </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_isInIFrame</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">window.location</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="NAME">window.parent.location</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>785</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_isInIFrame</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>786</span> </span><span class="WHIT">    </span><span class="COMM">// TODO: If in iFrame - change to FramePlayer </span><span class="WHIT">
+<span class='line'>787</span> </span><span class="WHIT">    </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">DefaultPlayer</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>788</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>789</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>790</span> </span><span class="WHIT">  
+<span class='line'>791</span>   </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">adDomElement</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>792</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">domPlayer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">AdPlayerManager.getPlayerByDomElement</span><span class="PUNC">(</span><span class="NAME">adDomElement</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>793</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">domPlayer</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>794</span> </span><span class="WHIT">      </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="NAME">domPlayer</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>795</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>796</span> </span><span class="WHIT">      </span><span class="NAME">parentDomSearch</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>797</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>798</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>799</span> </span><span class="WHIT">    </span><span class="NAME">parentDomSearch</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>800</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>801</span> </span><span class="WHIT">  
+<span class='line'>802</span>   </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">parentDomSearch</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>803</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">uAdId</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Date</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">getTime</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>804</span> </span><span class="WHIT">    
+<span class='line'>805</span>     </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">dom</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.getElementById</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>806</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">dom</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>807</span> </span><span class="WHIT">      </span><span class="NAME">log</span><span class="PUNC">(</span><span class="STRN">'WARNING: No valid referral element specified for "'</span><span class="PUNC">+</span><span class="NAME">uid</span><span class="PUNC">+</span><span class="STRN">'". Referral will be created using "document.write"'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'parentDomSearch'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>808</span> </span><span class="WHIT">      </span><span class="NAME">domId</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'ref'</span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">uAdId</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>809</span> </span><span class="WHIT">      </span><span class="NAME">document.write</span><span class="PUNC">(</span><span class="STRN">'&lt;span id="'</span><span class="PUNC">+</span><span class="NAME">domId</span><span class="PUNC">+</span><span class="STRN">'">&lt;/span>'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>810</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>811</span> </span><span class="WHIT">    
+<span class='line'>812</span>     </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">refWait</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">readyFn</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>813</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_interval</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">setInterval</span><span class="PUNC">(</span><span class="NAME">check</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">100</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>814</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>815</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_timeout</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>816</span> </span><span class="WHIT">      </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">check</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>817</span> </span><span class="COMM">//      log('finding...'+domId);</span><span class="WHIT">
+<span class='line'>818</span> </span><span class="WHIT">        </span><span class="NAME">_timeout</span><span class="WHIT"> </span><span class="PUNC">++</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>819</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_timeout</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NUMB">100</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>820</span> </span><span class="WHIT">          </span><span class="NAME">clearInterval</span><span class="PUNC">(</span><span class="NAME">_interval</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>821</span> </span><span class="WHIT">          </span><span class="NAME">log</span><span class="PUNC">(</span><span class="STRN">'No Valid Ad Player could be found. Creating default...'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'refWait'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>822</span> </span><span class="WHIT">          </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">DefaultPlayer</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>823</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>824</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">document.getElementById</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>825</span> </span><span class="COMM">//        log('found ===> ' + domId);</span><span class="WHIT">
+<span class='line'>826</span> </span><span class="WHIT">          </span><span class="NAME">clearInterval</span><span class="PUNC">(</span><span class="NAME">_interval</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>827</span> </span><span class="WHIT">          </span><span class="NAME">readyFn</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>828</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>829</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>830</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">    
+<span class='line'>831</span>     
+<span class='line'>832</span>     </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">searchDom</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>833</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">par</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.getElementById</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">parentNode</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>834</span> </span><span class="WHIT">      </span><span class="KEYW">while</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">AdPlayerManager.getAdPlayerById</span><span class="PUNC">(</span><span class="NAME">par.id</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>835</span> </span><span class="WHIT">        </span><span class="NAME">par</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">par.parentNode</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>836</span> </span><span class="WHIT">        </span><span class="NAME">parName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">par.nodeName.toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>837</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">parName</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="STRN">'body'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">parName</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="STRN">'html'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>838</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>839</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">par</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>840</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">adPlayer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">AdPlayerManager.getAdPlayerById</span><span class="PUNC">(</span><span class="NAME">par.id</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>841</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">adPlayer</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>842</span> </span><span class="COMM">//          adPlayer.adDomElement().removeChild(document.getElementById(domId));</span><span class="WHIT">
+<span class='line'>843</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>844</span> </span><span class="COMM">//          log('Found player at '+adPlayer.adDomElement().id);</span><span class="WHIT">
+<span class='line'>845</span> </span><span class="WHIT">            </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="NAME">adPlayer</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>846</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">  
+<span class='line'>847</span>         </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>848</span> </span><span class="COMM">//        log('No AdPlayer found after parent search. Creating new player for '+domId);</span><span class="WHIT">
+<span class='line'>849</span> </span><span class="WHIT">          </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">DefaultPlayer</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>850</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>851</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>852</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>853</span> </span><span class="WHIT">    
+<span class='line'>854</span>     </span><span class="NAME">refWait</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">searchDom</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>855</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>856</span> 
+<span class='line'>857</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>858</span> </span><span class="COMM">/** 
+<span class='line'>859</span>  * @description Logs a message through the console; if available.
+<span class='line'>860</span>  * @param {string} msg The message to log.
+<span class='line'>861</span>  * @param {string} ref Optional - An identifer used to reference the source of a message.
+<span class='line'>862</span>  * 
+<span class='line'>863</span>  * @example
+<span class='line'>864</span>  * // "AdPlayer(God): This is a log output."
+<span class='line'>865</span>  * log('This is a log output', 'God');
+<span class='line'>866</span>  */</span><span class="WHIT">
+<span class='line'>867</span> </span><span class="NAME">log</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ref</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>868</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">console</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">console</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>869</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ref</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>870</span> </span><span class="WHIT">      </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'AdPlayer('</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">ref</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'): '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">msg</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>871</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>872</span> </span><span class="WHIT">      </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'AdPlayer: '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">msg</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>873</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>874</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>875</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>876</span> </span><span class="COMM">/**
+<span class='line'>877</span>  * @name AdPlayer
+<span class='line'>878</span>  * @class Main class to be associated with an ad element object. 
+<span class='line'>879</span>  * @description The &lt;code>AdPlayer&lt;/code> class.
 <span class='line'>880</span>  * 
-<span class='line'>881</span>  * @example
-<span class='line'>882</span>  * &lt;div id=&quot;myTagDivContainer&quot;&gt;&lt;br/>  &lt;div&gt;-----TODO----&lt;/div&gt;&lt;br/>  &lt;div&gt;-----TODO----&lt;/div&gt;&lt;br/>&lt;/div&gt;
-<span class='line'>883</span>  * 
-<span class='line'>884</span>  * var myDomObj = document.getElementById('myTagDivContainer');
-<span class='line'>885</span>  * var adPlayer = new AdPlayer(myDomObj);
-<span class='line'>886</span>  */</span><span class="WHIT">
-<span class='line'>887</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">AdPlayer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>888</span> </span><span class="WHIT">  
-<span class='line'>889</span>   </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.getElementById</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>890</span> </span><span class="WHIT">  </span><span class="COMM">/*
-<span class='line'>891</span>   if (document.getElementById(domId)) {
-<span class='line'>892</span>     var adDomElement = document.getElementById(domId);
-<span class='line'>893</span>   } else {
-<span class='line'>894</span>     log('WARNING: No valid referral element specified. Referral will be created using "document.write"', 'AdPlayer');
-<span class='line'>895</span>   }*/</span><span class="WHIT">
-<span class='line'>896</span> 
-<span class='line'>897</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_que</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>898</span> </span><span class="WHIT">  
-<span class='line'>899</span>   </span><span class="COMM">/** @private */</span><span class="WHIT"> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AbstractPlayer</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>881</span>  * @author christopher.sancho@adtech.com
+<span class='line'>882</span>  * 
+<span class='line'>883</span>  * @example
+<span class='line'>884</span>  * &lt;div id=&quot;myTagDivContainer&quot;&gt;&lt;br/>  &lt;div&gt;-----TODO----&lt;/div&gt;&lt;br/>  &lt;div&gt;-----TODO----&lt;/div&gt;&lt;br/>&lt;/div&gt;
+<span class='line'>885</span>  * 
+<span class='line'>886</span>  * var myDomObj = document.getElementById('myTagDivContainer');
+<span class='line'>887</span>  * var adPlayer = new AdPlayer(myDomObj);
+<span class='line'>888</span>  */</span><span class="WHIT">
+<span class='line'>889</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">AdPlayer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>890</span> </span><span class="WHIT">  
+<span class='line'>891</span>   </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.getElementById</span><span class="PUNC">(</span><span class="NAME">domId</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>892</span> </span><span class="WHIT">  </span><span class="COMM">/*
+<span class='line'>893</span>   if (document.getElementById(domId)) {
+<span class='line'>894</span>     var adDomElement = document.getElementById(domId);
+<span class='line'>895</span>   } else {
+<span class='line'>896</span>     log('WARNING: No valid referral element specified. Referral will be created using "document.write"', 'AdPlayer');
+<span class='line'>897</span>   }*/</span><span class="WHIT">
+<span class='line'>898</span> 
+<span class='line'>899</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_que</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>900</span> </span><span class="WHIT">  
-<span class='line'>901</span>   </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_player</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>902</span> </span><span class="WHIT">  </span><span class="NAME">_this.player</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>903</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>904</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>905</span> </span><span class="WHIT">  
-<span class='line'>906</span>   </span><span class="COMM">/**
-<span class='line'>907</span>    * @name AdPlayer#adDomElement
-<span class='line'>908</span>    * @field
-<span class='line'>909</span>    * @description The associated ad's parent DOM object. 
-<span class='line'>910</span>    * @returns {DOM Object} The associated ad's parent DOM object.
-<span class='line'>911</span>    * @example
-<span class='line'>912</span>    * // Get reference to property
-<span class='line'>913</span>    * var myDomElement = adPlayer.adDomElement();
-<span class='line'>914</span>    * 
-<span class='line'>915</span>    * // Set property's value
-<span class='line'>916</span>    * adPlayer.adDomElement(document.getElementById('myTagDivContainer'));  
-<span class='line'>917</span>    */</span><span class="WHIT">
-<span class='line'>918</span> </span><span class="WHIT">  </span><span class="NAME">_this.adDomElement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">dom</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>919</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.adDomElement</span><span class="PUNC">(</span><span class="NAME">dom</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>920</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>921</span> 
-<span class='line'>922</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>923</span>    * @name AdPlayer#adEventListObj
-<span class='line'>924</span>    * @field
-<span class='line'>925</span>    * @description The associated ad's event object containg a set of events
-<span class='line'>926</span>    *              registered to an instance of &lt;code>AdPlayer&lt;/code>. 
-<span class='line'>927</span>    * @returns {Object - Read Only} Returns an object.
-<span class='line'>928</span>    * @see AdEvent
-<span class='line'>929</span>    * @example
-<span class='line'>930</span>    * // Get reference to property
-<span class='line'>931</span>    * var eventList = adPlayer.adEventListObj();
-<span class='line'>932</span>    */</span><span class="WHIT">  
-<span class='line'>933</span>   </span><span class="NAME">_this.adEventListObj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>934</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.adEventListObj</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>935</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>936</span> 
-<span class='line'>937</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>938</span>    * @name AdPlayer#isLoaded
-<span class='line'>939</span>    * @field
-<span class='line'>940</span>    * @description The associated ad's load status, which is usually set by ad or ad delivery code.
-<span class='line'>941</span>    * @returns {Boolean} Returns true or false.
-<span class='line'>942</span>    * @example
-<span class='line'>943</span>    * // Get reference to property
-<span class='line'>944</span>    * var loadStatus = adPlayer.isLoaded();
-<span class='line'>945</span>    * 
-<span class='line'>946</span>    * // Set property's value
-<span class='line'>947</span>    * adPlayer.isLoaded(true);  
-<span class='line'>948</span>    */</span><span class="WHIT">  
-<span class='line'>949</span>   </span><span class="NAME">_this.isLoaded</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>950</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.isLoaded</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>951</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>952</span> 
-<span class='line'>953</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>954</span>    * @name AdPlayer#isPrivacyPanelEnabled
-<span class='line'>955</span>    * @field
-<span class='line'>956</span>    * @description Determines whether ad choice info button is enabled.
-<span class='line'>957</span>    * @returns {Boolean} Returns true or false.
-<span class='line'>958</span>    * @example
-<span class='line'>959</span>    * // Get reference to property
-<span class='line'>960</span>    * var adChoice = adPlayer.isPrivacyPanelEnabled();
-<span class='line'>961</span>    * 
-<span class='line'>962</span>    * // Set property's value
-<span class='line'>963</span>    * adPlayer.isPrivacyPanelEnabled(true);  
-<span class='line'>964</span>    */</span><span class="WHIT">  
-<span class='line'>965</span>   </span><span class="NAME">_this.isPrivacyPanelEnabled</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>966</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.isPrivacyPanelEnabled</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>967</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>968</span> 
-<span class='line'>969</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>970</span>    * @name AdPlayer#adWidth
-<span class='line'>971</span>    * @field
-<span class='line'>972</span>    * @description The associated ad's width size, which is usually set by ad or ad delivery code.
-<span class='line'>973</span>    * @returns {Number} Returns a number.
-<span class='line'>974</span>    * @example
-<span class='line'>975</span>    * // Get reference to property
-<span class='line'>976</span>    * var w = adPlayer.adWidth();
-<span class='line'>977</span>    * 
-<span class='line'>978</span>    * // Set property's value
-<span class='line'>979</span>    * adPlayer.adWidth(300);  
-<span class='line'>980</span>    */</span><span class="WHIT">  
-<span class='line'>981</span>   </span><span class="NAME">_this.adWidth</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">num</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>982</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.adWidth</span><span class="PUNC">(</span><span class="NAME">num</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>983</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>984</span> 
-<span class='line'>985</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>986</span>    * @name AdPlayer#adHeight
-<span class='line'>987</span>    * @field
-<span class='line'>988</span>    * @description The associated ad's height size, which is usually set by ad or ad delivery code.
-<span class='line'>989</span>    * @returns {Number} Returns a number.
-<span class='line'>990</span>    * @example
-<span class='line'>991</span>    * // Get reference to property
-<span class='line'>992</span>    * var w = adPlayer.adHeight();
-<span class='line'>993</span>    * 
-<span class='line'>994</span>    * // Set property's value
-<span class='line'>995</span>    * adPlayer.adHeight(250);  
-<span class='line'>996</span>    */</span><span class="WHIT">  
-<span class='line'>997</span>   </span><span class="NAME">_this.adHeight</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">num</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>998</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.adHeight</span><span class="PUNC">(</span><span class="NAME">num</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>999</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1000</span> 
-<span class='line'>1001</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>1002</span>    * @name AdPlayer#privacyInfoList
-<span class='line'>1003</span>    * @field
-<span class='line'>1004</span>    * @description List that contains instances of &lt;code>PrivacyInfo&lt;/code>.  
-<span class='line'>1005</span>    * @returns {Array - Read Only} Returns an object.
-<span class='line'>1006</span>    * @see AdPlayer#addPrivacyInfo
-<span class='line'>1007</span>    * @see PrivacyInfo
-<span class='line'>1008</span>    * @example
-<span class='line'>1009</span>    * // Get reference to property
-<span class='line'>1010</span>    * var privacyList = adPlayer.privacyInfoList();
-<span class='line'>1011</span>    */</span><span class="WHIT">  
-<span class='line'>1012</span>   </span><span class="NAME">_this.privacyInfoList</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1013</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.privacyInfoList</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1014</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1015</span> </span><span class="WHIT">  
-<span class='line'>1016</span>   </span><span class="COMM">/** @private */</span><span class="WHIT">
-<span class='line'>1017</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_queue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1018</span> </span><span class="WHIT">  
-<span class='line'>1019</span>   </span><span class="COMM">// -------------------------------------------------------------------------------------------------</span><span class="WHIT">
-<span class='line'>1020</span> </span><span class="WHIT">  </span><span class="COMM">// METHODS</span><span class="WHIT">
-<span class='line'>1021</span> </span><span class="WHIT">  </span><span class="COMM">// -------------------------------------------------------------------------------------------------</span><span class="WHIT">
-<span class='line'>1022</span> </span><span class="WHIT">  
-<span class='line'>1023</span>   </span><span class="COMM">/** @private */</span><span class="WHIT">
-<span class='line'>1024</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="NAME">fnName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">params</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1025</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">_player</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1026</span> </span><span class="WHIT">      </span><span class="NAME">_queue.push</span><span class="PUNC">(</span><span class="NAME">wrapFunction</span><span class="PUNC">(</span><span class="NAME">_this</span><span class="PUNC">[</span><span class="NAME">fnName</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">params</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1027</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1028</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>1029</span> </span><span class="WHIT">    </span><span class="NAME">_player</span><span class="PUNC">[</span><span class="NAME">fnName</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">apply</span><span class="PUNC">(</span><span class="NAME">_this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">params</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1030</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>1031</span> 
-<span class='line'>1032</span> </span><span class="WHIT">  </span><span class="COMM">/** @private */</span><span class="WHIT">
-<span class='line'>1033</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">wrapFunction</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">fn</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">context</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">params</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1034</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1035</span> </span><span class="WHIT">        </span><span class="NAME">fn.apply</span><span class="PUNC">(</span><span class="NAME">context</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">params</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1036</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1037</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">    
-<span class='line'>1038</span>   
-<span class='line'>1039</span>   </span><span class="COMM">/** 
-<span class='line'>1040</span>    * @name AdPlayer#addEventListener
-<span class='line'>1041</span>    * @function
-<span class='line'>1042</span>    * @description Adds a callback function to an &lt;code>AdEvent&lt;/code> flow. Call-back handler function 
-<span class='line'>1043</span>    *              must expect a parameter that accepts an &lt;code>AdPlayer&lt;/code> instance.
-<span class='line'>1044</span>    *              
-<span class='line'>1045</span>    * @param adEvent {AdEvent} The &lt;code>AdEvent&lt;/code> to listen to.
-<span class='line'>1046</span>    * @param callback {Function} The call-back handler to call when an &lt;code>AdEvent&lt;/code> is dispatched. 
-<span class='line'>1047</span>    * 
-<span class='line'>1048</span>    * @see AdEvent
-<span class='line'>1049</span>    * @see AdPlayer#track
-<span class='line'>1050</span>    * 
-<span class='line'>1051</span>    * @example
-<span class='line'>1052</span>    * function trackEventHandler(adEvent) {
-<span class='line'>1053</span>    *  log(adEvent.type() + ' has been dispatched');
-<span class='line'>1054</span>    * }
-<span class='line'>1055</span>    * adPlayer.addEventListener(AdEvent.TRACK, trackEventHandler);
-<span class='line'>1056</span>    */</span><span class="WHIT">
-<span class='line'>1057</span> </span><span class="WHIT">  </span><span class="NAME">_this.addEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1058</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'addEventListener'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1059</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1060</span> </span><span class="WHIT">  
-<span class='line'>1061</span>   </span><span class="COMM">/** 
-<span class='line'>1062</span>    * @name AdPlayer#removeEventListener
-<span class='line'>1063</span>    * @function
-<span class='line'>1064</span>    * @description Removes a callback function registered to an &lt;code>AdEvent&lt;/code> flow.
-<span class='line'>1065</span>    * @param adEvent {AdEvent} The &lt;code>AdEvent&lt;/code> to listen to.
-<span class='line'>1066</span>    * @param callback {Function} The call-back handler being called when an &lt;code>AdEvent&lt;/code> is dispatched. 
-<span class='line'>1067</span>    * 
-<span class='line'>1068</span>    * @see AdEvent
-<span class='line'>1069</span>    * @see AdPlayer#track
-<span class='line'>1070</span>    * 
-<span class='line'>1071</span>    * @example
-<span class='line'>1072</span>    * function trackEventHandler(adEvent) {
-<span class='line'>1073</span>    *  // Remove call-back
-<span class='line'>1074</span>    *  adEvent.player().removeEventListener(AdEvent.TRACK, trackEventHandler);
-<span class='line'>1075</span>    *  
-<span class='line'>1076</span>    *  log(adEvent.type() + ' has been dispatched');
-<span class='line'>1077</span>    * }
-<span class='line'>1078</span>    * adPlayer.addEventListener(AdEvent.TRACK, trackEventHandler); 
-<span class='line'>1079</span>    */</span><span class="WHIT">  
-<span class='line'>1080</span>   </span><span class="NAME">_this.removeEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1081</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'removeEventListener'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1082</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1083</span> 
-<span class='line'>1084</span> </span><span class="WHIT">  </span><span class="COMM">/** 
-<span class='line'>1085</span>    * @name AdPlayer#addTrackingPixel
-<span class='line'>1086</span>    * @function
-<span class='line'>1087</span>    * @description A convenience function that adds a pixel URL to an &lt;code>AdEvent&lt;/code> flow.  
-<span class='line'>1088</span>    *              
-<span class='line'>1089</span>    * @param adEvent {AdEvent} The &lt;code>AdEvent&lt;/code> to listen to.
-<span class='line'>1090</span>    * @param url {String - URL} URL of pixel to call when associated &lt;code>AdEvent&lt;/code> is dispatched.
-<span class='line'>1091</span>    * @param repeat {Boolean} Optional - Default is 'true.'  If set to 'false,' pixel will only fire once.
-<span class='line'>1092</span>    * 
-<span class='line'>1093</span>    * @see AdEvent
-<span class='line'>1094</span>    * @see AdPlayer#track
-<span class='line'>1095</span>    * @see URLRequest#load
-<span class='line'>1096</span>    * 
-<span class='line'>1097</span>    * @example
-<span class='line'>1098</span>    * // Adds a tracking pixel that will dispatch on AdEvent.TRACK event
-<span class='line'>1099</span>    * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
-<span class='line'>1100</span>    * 
-<span class='line'>1101</span>    * // Adds a tracking pixel that will dispatch only once on AdEvent.TRACK event
-<span class='line'>1102</span>    * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', null, false);
-<span class='line'>1103</span>    */</span><span class="WHIT">  
-<span class='line'>1104</span>   </span><span class="NAME">_this.addTrackingPixel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">repeat</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1105</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'addTrackingPixel'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">repeat</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1106</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1107</span> 
-<span class='line'>1108</span> </span><span class="WHIT">  </span><span class="COMM">/** 
-<span class='line'>1109</span>    * @name AdPlayer#removeTrackingPixel
-<span class='line'>1110</span>    * @function
-<span class='line'>1111</span>    * @description Removes a matching &lt;code>url&lt;/code> or &lt;code>callback&lt;/code> associated with
-<span class='line'>1112</span>    *              an &lt;code>AdEvent&lt;/code> and registered using &lt;code>addTrackingPixel()&lt;/code>
-<span class='line'>1113</span>    *              method.
-<span class='line'>1114</span>    *              &lt;ul>
-<span class='line'>1115</span>    *                &lt;li>If a &lt;code>callback&lt;/code> and a &lt;code>url&lt;/code> are both defined,
-<span class='line'>1116</span>    *                    method will remove the &lt;code>AdEvent&lt;/code> associated with the callback.&lt;/li>
-<span class='line'>1117</span>    *                &lt;li>If only a &lt;code>callback&lt;/code> is defined method will remove the
-<span class='line'>1118</span>    *                    &lt;code>AdEvent&lt;/code> associated with the callback.&lt;/li>
-<span class='line'>1119</span>    *                &lt;li>If only a &lt;code>url&lt;/code> is defined, method will remove all &lt;code>AdEvent&lt;/code>
-<span class='line'>1120</span>    *                    callbacks containing a matching &lt;code>url&lt;/code> property.&lt;/li>
-<span class='line'>1121</span>    *              &lt;/ul>
-<span class='line'>1122</span>    *              
-<span class='line'>1123</span>    * @param adEvent {AdEvent} The &lt;code>AdEvent&lt;/code> to listen to.
-<span class='line'>1124</span>    * @param url {String - URL} Optional - URL of pixel to call when associated &lt;code>AdEvent&lt;/code> is dispatched.
-<span class='line'>1125</span>    * 
-<span class='line'>1126</span>    * @see AdEvent
-<span class='line'>1127</span>    * @see AdPlayer#addTrackingPixel
-<span class='line'>1128</span>    * 
-<span class='line'>1129</span>    * @example
-<span class='line'>1130</span>    * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
-<span class='line'>1131</span>    * adPlayer.addEventListener(AdEvent.TRACK, removePixels);
-<span class='line'>1132</span>    * 
-<span class='line'>1133</span>    * function removePixels(adEvent) {
-<span class='line'>1134</span>    *  // Removes url from TRACK event flow.
-<span class='line'>1135</span>    *  adPlayer.removeTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
-<span class='line'>1136</span>    *  
-<span class='line'>1137</span>    * }
-<span class='line'>1138</span>    */</span><span class="WHIT">  
-<span class='line'>1139</span>   </span><span class="NAME">_this.removeTrackingPixel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1140</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'removeTrackingPixel'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1141</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1142</span> 
-<span class='line'>1143</span> </span><span class="WHIT">  </span><span class="COMM">/** 
-<span class='line'>1144</span>    * @name AdPlayer#track
-<span class='line'>1145</span>    * @function
-<span class='line'>1146</span>    * @description Dispatches an &lt;code>AdEvent&lt;/code> object to all suscribers.
-<span class='line'>1147</span>    *              
-<span class='line'>1148</span>    * @param adEventObj {AdEvent} The &lt;code>AdEvent&lt;/code> instance to track.
-<span class='line'>1149</span>    * @param url {String - URL} Optional - URL of pixel that will be called once with track method.
-<span class='line'>1150</span>    * 
-<span class='line'>1151</span>    * @example
-<span class='line'>1152</span>    * // Dispatches a track event to all suscribers
-<span class='line'>1153</span>    * adPlayer.track(new AdEvent(AdEvent.TRACK));
-<span class='line'>1154</span>    * 
-<span class='line'>1155</span>    * // Dispatches a track event to all suscribers and calls URL once.
-<span class='line'>1156</span>    * adPlayer.track(new AdEvent(AdEvent.TRACK), 'http://my.pixel.url');
-<span class='line'>1157</span>    */</span><span class="WHIT">  
-<span class='line'>1158</span>   </span><span class="NAME">_this.track</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adEventObj</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1159</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'track'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">adEventObj</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1160</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1161</span> 
-<span class='line'>1162</span> </span><span class="WHIT">  </span><span class="COMM">/** 
-<span class='line'>1163</span>    * @name AdPlayer#addPrivacyInfo
-<span class='line'>1164</span>    * @function
-<span class='line'>1165</span>    * @description Creates a &lt;code>PrivacyInfo&lt;/code> instance and adds it to &lt;code>privacyInfoList&lt;/code>
-<span class='line'>1166</span>    *              
-<span class='line'>1167</span>    * @param adServer {String} Ad server name. 
-<span class='line'>1168</span>    * @param message {String} Privacy information message.
-<span class='line'>1169</span>    * @param url {String - URL} Click-through url of privacy page.
-<span class='line'>1170</span>    * 
-<span class='line'>1171</span>    * @see PrivacyInfo
-<span class='line'>1172</span>    * @see AdPlayer#privacyInfoList
-<span class='line'>1173</span>    * 
-<span class='line'>1174</span>    * @example
-<span class='line'>1175</span>    * adPlayer.addPrivacyInfo("MyAdServer",  "This is my privacy message.", "http://adplayer.aboutthisad.com");
-<span class='line'>1176</span>    */</span><span class="WHIT">  
-<span class='line'>1177</span>   </span><span class="NAME">_this.addPrivacyInfo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adServer</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1178</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'addPrivacyInfo'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">adServer</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1179</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1180</span> 
-<span class='line'>1181</span> 
-<span class='line'>1182</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>1183</span>    * @name AdPlayer#enableAdChoice
-<span class='line'>1184</span>    * @function
-<span class='line'>1185</span>    * @description Enables ad choice info button. Button calls method &lt;code>showPrivacyInfo&lt;/code>.
-<span class='line'>1186</span>    * 
-<span class='line'>1187</span>    * @see AdPlayer#showPrivacyInfo
-<span class='line'>1188</span>    * @see PrivacyInfo
-<span class='line'>1189</span>   */</span><span class="WHIT">  
-<span class='line'>1190</span>   </span><span class="NAME">_this.enableAdChoice</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1191</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'enableAdChoice'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1192</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1193</span> 
-<span class='line'>1194</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>1195</span>    * @name AdPlayer#disableAdChoice
-<span class='line'>1196</span>    * @function
-<span class='line'>1197</span>    * @description Disables ad choice info button. By default, ad choice button is disabled.
-<span class='line'>1198</span>    * 
-<span class='line'>1199</span>    * @see AdPlayer#enableAdChoice
-<span class='line'>1200</span>    * @see PrivacyInfo
-<span class='line'>1201</span>   */</span><span class="WHIT">  
-<span class='line'>1202</span>   </span><span class="NAME">_this.disableAdChoice</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1203</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'disableAdChoice'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1204</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1205</span> </span><span class="WHIT">  
-<span class='line'>1206</span>   </span><span class="COMM">/**
-<span class='line'>1207</span>    * @name AdPlayer#showPrivacyInfo
-<span class='line'>1208</span>    * @function
-<span class='line'>1209</span>    * @description Convenience function that creates a layer that displays the privacy info added to &lt;code>privacyInfoList&lt;/code>. &lt;br/>
-<span class='line'>1210</span>    *              &lt;code>AdEvent.PRIVACY_CLOSE&lt;/code> is dispatched when method is called. &lt;br/>
-<span class='line'>1211</span>    *              Layer should be styled to preference using css.
-<span class='line'>1212</span>    *              &lt;ul>
-<span class='line'>1213</span>    *                &lt;li>.privacyPanel&lt;/li>
-<span class='line'>1214</span>    *                &lt;li>.privacyPanel ul&lt;/li>
-<span class='line'>1215</span>    *                &lt;li>.privacyPanel ul li&lt;/li>
-<span class='line'>1216</span>    *                &lt;li>.privacyPanel button&lt;/li>
-<span class='line'>1217</span>    *              &lt;/ul>
-<span class='line'>1218</span>    * 
-<span class='line'>1219</span>    * @see AdPlayer#privacyInfoList
-<span class='line'>1220</span>    * @see PrivacyInfo
-<span class='line'>1221</span>   */</span><span class="WHIT">  
-<span class='line'>1222</span>   </span><span class="NAME">_this.showPrivacyInfo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1223</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'showPrivacyInfo'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1224</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1225</span> 
-<span class='line'>1226</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>1227</span>    * @name AdPlayer#hidePrivacyInfo
-<span class='line'>1228</span>    * @function
-<span class='line'>1229</span>    * @description Used in conjunction with &lt;code>showPrivacyInfo&lt;/code> to remove privacy info layer.&lt;br/>
-<span class='line'>1230</span>    *              &lt;code>AdEvent.PRIVACY_CLOSE&lt;/code> is dispatched when method is called.
-<span class='line'>1231</span>    * 
-<span class='line'>1232</span>    * @see AdPlayer#showPrivacyInfo
-<span class='line'>1233</span>    * @see PrivacyInfo
-<span class='line'>1234</span>   */</span><span class="WHIT">  
-<span class='line'>1235</span>   </span><span class="NAME">_this.hidePrivacyInfo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1236</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'hidePrivacyInfo'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1237</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1238</span> 
-<span class='line'>1239</span> </span><span class="WHIT">  </span><span class="COMM">/** @private */</span><span class="WHIT">
-<span class='line'>1240</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">init</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1241</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">factory</span><span class="WHIT">  </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">PlayerFactory</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">playerIinit</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1242</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">playerIinit</span><span class="PUNC">(</span><span class="NAME">player</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1243</span> </span><span class="WHIT">      </span><span class="NAME">_player</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">player</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1244</span> </span><span class="WHIT">      </span><span class="NAME">AdPlayerManager.addAdPlayer</span><span class="PUNC">(</span><span class="NAME">_player</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1245</span> 
-<span class='line'>1246</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1247</span> </span><span class="WHIT">        </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="NAME">_this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">  
-<span class='line'>1248</span>       </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>1249</span> </span><span class="WHIT">      </span><span class="NAME">_player.track</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AdEvent</span><span class="PUNC">(</span><span class="NAME">AdEvent.INIT</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">      
-<span class='line'>1250</span>       </span><span class="KEYW">while</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_queue.length</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1251</span> </span><span class="WHIT">        </span><span class="PUNC">(</span><span class="NAME">_queue.shift</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">   
-<span class='line'>1252</span>       </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>1253</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>1254</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">  
-<span class='line'>1255</span>   
-<span class='line'>1256</span>   </span><span class="NAME">init</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1257</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1258</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1259</span> 
-<span class='line'>1260</span> </span><span class="PUNC">}</span></pre></body></html>
+<span class='line'>901</span>   </span><span class="COMM">/** @private */</span><span class="WHIT"> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AbstractPlayer</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>902</span> </span><span class="WHIT">  
+<span class='line'>903</span>   </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_player</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>904</span> </span><span class="WHIT">  </span><span class="NAME">_this.player</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>905</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>906</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>907</span> </span><span class="WHIT">  
+<span class='line'>908</span>   </span><span class="COMM">/**
+<span class='line'>909</span>    * @name AdPlayer#adDomElement
+<span class='line'>910</span>    * @field
+<span class='line'>911</span>    * @description The associated ad's parent DOM object. 
+<span class='line'>912</span>    * @returns {DOM Object} The associated ad's parent DOM object.
+<span class='line'>913</span>    * @example
+<span class='line'>914</span>    * // Get reference to property
+<span class='line'>915</span>    * var myDomElement = adPlayer.adDomElement();
+<span class='line'>916</span>    * 
+<span class='line'>917</span>    * // Set property's value
+<span class='line'>918</span>    * adPlayer.adDomElement(document.getElementById('myTagDivContainer'));  
+<span class='line'>919</span>    */</span><span class="WHIT">
+<span class='line'>920</span> </span><span class="WHIT">  </span><span class="NAME">_this.adDomElement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">dom</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>921</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.adDomElement</span><span class="PUNC">(</span><span class="NAME">dom</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>922</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>923</span> 
+<span class='line'>924</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>925</span>    * @name AdPlayer#adEventListObj
+<span class='line'>926</span>    * @field
+<span class='line'>927</span>    * @description The associated ad's event object containg a set of events
+<span class='line'>928</span>    *              registered to an instance of &lt;code>AdPlayer&lt;/code>. 
+<span class='line'>929</span>    * @returns {Object - Read Only} Returns an object.
+<span class='line'>930</span>    * @see AdEvent
+<span class='line'>931</span>    * @example
+<span class='line'>932</span>    * // Get reference to property
+<span class='line'>933</span>    * var eventList = adPlayer.adEventListObj();
+<span class='line'>934</span>    */</span><span class="WHIT">  
+<span class='line'>935</span>   </span><span class="NAME">_this.adEventListObj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>936</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.adEventListObj</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>937</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>938</span> 
+<span class='line'>939</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>940</span>    * @name AdPlayer#isLoaded
+<span class='line'>941</span>    * @field
+<span class='line'>942</span>    * @description The associated ad's load status, which is usually set by ad or ad delivery code.
+<span class='line'>943</span>    * @returns {Boolean} Returns true or false.
+<span class='line'>944</span>    * @example
+<span class='line'>945</span>    * // Get reference to property
+<span class='line'>946</span>    * var loadStatus = adPlayer.isLoaded();
+<span class='line'>947</span>    * 
+<span class='line'>948</span>    * // Set property's value
+<span class='line'>949</span>    * adPlayer.isLoaded(true);  
+<span class='line'>950</span>    */</span><span class="WHIT">  
+<span class='line'>951</span>   </span><span class="NAME">_this.isLoaded</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>952</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.isLoaded</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>953</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>954</span> 
+<span class='line'>955</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>956</span>    * @name AdPlayer#isPrivacyPanelEnabled
+<span class='line'>957</span>    * @field
+<span class='line'>958</span>    * @description Determines whether ad choice info button is enabled.
+<span class='line'>959</span>    * @returns {Boolean} Returns true or false.
+<span class='line'>960</span>    * @example
+<span class='line'>961</span>    * // Get reference to property
+<span class='line'>962</span>    * var adChoice = adPlayer.isPrivacyPanelEnabled();
+<span class='line'>963</span>    * 
+<span class='line'>964</span>    * // Set property's value
+<span class='line'>965</span>    * adPlayer.isPrivacyPanelEnabled(true);  
+<span class='line'>966</span>    */</span><span class="WHIT">  
+<span class='line'>967</span>   </span><span class="NAME">_this.isPrivacyPanelEnabled</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>968</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.isPrivacyPanelEnabled</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>969</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>970</span> 
+<span class='line'>971</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>972</span>    * @name AdPlayer#adWidth
+<span class='line'>973</span>    * @field
+<span class='line'>974</span>    * @description The associated ad's width size, which is usually set by ad or ad delivery code.
+<span class='line'>975</span>    * @returns {Number} Returns a number.
+<span class='line'>976</span>    * @example
+<span class='line'>977</span>    * // Get reference to property
+<span class='line'>978</span>    * var w = adPlayer.adWidth();
+<span class='line'>979</span>    * 
+<span class='line'>980</span>    * // Set property's value
+<span class='line'>981</span>    * adPlayer.adWidth(300);  
+<span class='line'>982</span>    */</span><span class="WHIT">  
+<span class='line'>983</span>   </span><span class="NAME">_this.adWidth</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">num</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>984</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.adWidth</span><span class="PUNC">(</span><span class="NAME">num</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>985</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>986</span> 
+<span class='line'>987</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>988</span>    * @name AdPlayer#adHeight
+<span class='line'>989</span>    * @field
+<span class='line'>990</span>    * @description The associated ad's height size, which is usually set by ad or ad delivery code.
+<span class='line'>991</span>    * @returns {Number} Returns a number.
+<span class='line'>992</span>    * @example
+<span class='line'>993</span>    * // Get reference to property
+<span class='line'>994</span>    * var w = adPlayer.adHeight();
+<span class='line'>995</span>    * 
+<span class='line'>996</span>    * // Set property's value
+<span class='line'>997</span>    * adPlayer.adHeight(250);  
+<span class='line'>998</span>    */</span><span class="WHIT">  
+<span class='line'>999</span>   </span><span class="NAME">_this.adHeight</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">num</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1000</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.adHeight</span><span class="PUNC">(</span><span class="NAME">num</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1001</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1002</span> 
+<span class='line'>1003</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>1004</span>    * @name AdPlayer#privacyInfoList
+<span class='line'>1005</span>    * @field
+<span class='line'>1006</span>    * @description List that contains instances of &lt;code>PrivacyInfo&lt;/code>.  
+<span class='line'>1007</span>    * @returns {Array - Read Only} Returns an object.
+<span class='line'>1008</span>    * @see AdPlayer#addPrivacyInfo
+<span class='line'>1009</span>    * @see PrivacyInfo
+<span class='line'>1010</span>    * @example
+<span class='line'>1011</span>    * // Get reference to property
+<span class='line'>1012</span>    * var privacyList = adPlayer.privacyInfoList();
+<span class='line'>1013</span>    */</span><span class="WHIT">  
+<span class='line'>1014</span>   </span><span class="NAME">_this.privacyInfoList</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1015</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_player.privacyInfoList</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1016</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1017</span> </span><span class="WHIT">  
+<span class='line'>1018</span>   </span><span class="COMM">/** @private */</span><span class="WHIT">
+<span class='line'>1019</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_queue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1020</span> </span><span class="WHIT">  
+<span class='line'>1021</span>   </span><span class="COMM">// -------------------------------------------------------------------------------------------------</span><span class="WHIT">
+<span class='line'>1022</span> </span><span class="WHIT">  </span><span class="COMM">// METHODS</span><span class="WHIT">
+<span class='line'>1023</span> </span><span class="WHIT">  </span><span class="COMM">// -------------------------------------------------------------------------------------------------</span><span class="WHIT">
+<span class='line'>1024</span> </span><span class="WHIT">  
+<span class='line'>1025</span>   </span><span class="COMM">/** @private */</span><span class="WHIT">
+<span class='line'>1026</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="NAME">fnName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">params</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1027</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">_player</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1028</span> </span><span class="WHIT">      </span><span class="NAME">_queue.push</span><span class="PUNC">(</span><span class="NAME">wrapFunction</span><span class="PUNC">(</span><span class="NAME">_this</span><span class="PUNC">[</span><span class="NAME">fnName</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">params</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1029</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1030</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>1031</span> </span><span class="WHIT">    </span><span class="NAME">_player</span><span class="PUNC">[</span><span class="NAME">fnName</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">apply</span><span class="PUNC">(</span><span class="NAME">_this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">params</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1032</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>1033</span> 
+<span class='line'>1034</span> </span><span class="WHIT">  </span><span class="COMM">/** @private */</span><span class="WHIT">
+<span class='line'>1035</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">wrapFunction</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">fn</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">context</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">params</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1036</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1037</span> </span><span class="WHIT">        </span><span class="NAME">fn.apply</span><span class="PUNC">(</span><span class="NAME">context</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">params</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1038</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1039</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">    
+<span class='line'>1040</span>   
+<span class='line'>1041</span>   </span><span class="COMM">/** 
+<span class='line'>1042</span>    * @name AdPlayer#addEventListener
+<span class='line'>1043</span>    * @function
+<span class='line'>1044</span>    * @description Adds a callback function to an &lt;code>AdEvent&lt;/code> flow. Call-back handler function 
+<span class='line'>1045</span>    *              must expect a parameter that accepts an &lt;code>AdPlayer&lt;/code> instance.
+<span class='line'>1046</span>    *              
+<span class='line'>1047</span>    * @param adEvent {AdEvent} The &lt;code>AdEvent&lt;/code> to listen to.
+<span class='line'>1048</span>    * @param callback {Function} The call-back handler to call when an &lt;code>AdEvent&lt;/code> is dispatched. 
+<span class='line'>1049</span>    * 
+<span class='line'>1050</span>    * @see AdEvent
+<span class='line'>1051</span>    * @see AdPlayer#track
+<span class='line'>1052</span>    * 
+<span class='line'>1053</span>    * @example
+<span class='line'>1054</span>    * function trackEventHandler(adEvent) {
+<span class='line'>1055</span>    *  log(adEvent.type() + ' has been dispatched');
+<span class='line'>1056</span>    * }
+<span class='line'>1057</span>    * adPlayer.addEventListener(AdEvent.TRACK, trackEventHandler);
+<span class='line'>1058</span>    */</span><span class="WHIT">
+<span class='line'>1059</span> </span><span class="WHIT">  </span><span class="NAME">_this.addEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1060</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'addEventListener'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1061</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1062</span> </span><span class="WHIT">  
+<span class='line'>1063</span>   </span><span class="COMM">/** 
+<span class='line'>1064</span>    * @name AdPlayer#removeEventListener
+<span class='line'>1065</span>    * @function
+<span class='line'>1066</span>    * @description Removes a callback function registered to an &lt;code>AdEvent&lt;/code> flow.
+<span class='line'>1067</span>    * @param adEvent {AdEvent} The &lt;code>AdEvent&lt;/code> to listen to.
+<span class='line'>1068</span>    * @param callback {Function} The call-back handler being called when an &lt;code>AdEvent&lt;/code> is dispatched. 
+<span class='line'>1069</span>    * 
+<span class='line'>1070</span>    * @see AdEvent
+<span class='line'>1071</span>    * @see AdPlayer#track
+<span class='line'>1072</span>    * 
+<span class='line'>1073</span>    * @example
+<span class='line'>1074</span>    * function trackEventHandler(adEvent) {
+<span class='line'>1075</span>    *  // Remove call-back
+<span class='line'>1076</span>    *  adEvent.player().removeEventListener(AdEvent.TRACK, trackEventHandler);
+<span class='line'>1077</span>    *  
+<span class='line'>1078</span>    *  log(adEvent.type() + ' has been dispatched');
+<span class='line'>1079</span>    * }
+<span class='line'>1080</span>    * adPlayer.addEventListener(AdEvent.TRACK, trackEventHandler); 
+<span class='line'>1081</span>    */</span><span class="WHIT">  
+<span class='line'>1082</span>   </span><span class="NAME">_this.removeEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1083</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'removeEventListener'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1084</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1085</span> 
+<span class='line'>1086</span> </span><span class="WHIT">  </span><span class="COMM">/** 
+<span class='line'>1087</span>    * @name AdPlayer#addTrackingPixel
+<span class='line'>1088</span>    * @function
+<span class='line'>1089</span>    * @description A convenience function that adds a pixel URL to an &lt;code>AdEvent&lt;/code> flow.  
+<span class='line'>1090</span>    *              
+<span class='line'>1091</span>    * @param adEvent {AdEvent} The &lt;code>AdEvent&lt;/code> to listen to.
+<span class='line'>1092</span>    * @param url {String - URL} URL of pixel to call when associated &lt;code>AdEvent&lt;/code> is dispatched.
+<span class='line'>1093</span>    * @param repeat {Boolean} Optional - Default is 'true.'  If set to 'false,' pixel will only fire once.
+<span class='line'>1094</span>    * 
+<span class='line'>1095</span>    * @see AdEvent
+<span class='line'>1096</span>    * @see AdPlayer#track
+<span class='line'>1097</span>    * @see URLRequest#load
+<span class='line'>1098</span>    * 
+<span class='line'>1099</span>    * @example
+<span class='line'>1100</span>    * // Adds a tracking pixel that will dispatch on AdEvent.TRACK event
+<span class='line'>1101</span>    * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
+<span class='line'>1102</span>    * 
+<span class='line'>1103</span>    * // Adds a tracking pixel that will dispatch only once on AdEvent.TRACK event
+<span class='line'>1104</span>    * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', null, false);
+<span class='line'>1105</span>    */</span><span class="WHIT">  
+<span class='line'>1106</span>   </span><span class="NAME">_this.addTrackingPixel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">repeat</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1107</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'addTrackingPixel'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">repeat</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1108</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1109</span> 
+<span class='line'>1110</span> </span><span class="WHIT">  </span><span class="COMM">/** 
+<span class='line'>1111</span>    * @name AdPlayer#removeTrackingPixel
+<span class='line'>1112</span>    * @function
+<span class='line'>1113</span>    * @description Removes a matching &lt;code>url&lt;/code> or &lt;code>callback&lt;/code> associated with
+<span class='line'>1114</span>    *              an &lt;code>AdEvent&lt;/code> and registered using &lt;code>addTrackingPixel()&lt;/code>
+<span class='line'>1115</span>    *              method.
+<span class='line'>1116</span>    *              &lt;ul>
+<span class='line'>1117</span>    *                &lt;li>If a &lt;code>callback&lt;/code> and a &lt;code>url&lt;/code> are both defined,
+<span class='line'>1118</span>    *                    method will remove the &lt;code>AdEvent&lt;/code> associated with the callback.&lt;/li>
+<span class='line'>1119</span>    *                &lt;li>If only a &lt;code>callback&lt;/code> is defined method will remove the
+<span class='line'>1120</span>    *                    &lt;code>AdEvent&lt;/code> associated with the callback.&lt;/li>
+<span class='line'>1121</span>    *                &lt;li>If only a &lt;code>url&lt;/code> is defined, method will remove all &lt;code>AdEvent&lt;/code>
+<span class='line'>1122</span>    *                    callbacks containing a matching &lt;code>url&lt;/code> property.&lt;/li>
+<span class='line'>1123</span>    *              &lt;/ul>
+<span class='line'>1124</span>    *              
+<span class='line'>1125</span>    * @param adEvent {AdEvent} The &lt;code>AdEvent&lt;/code> to listen to.
+<span class='line'>1126</span>    * @param url {String - URL} Optional - URL of pixel to call when associated &lt;code>AdEvent&lt;/code> is dispatched.
+<span class='line'>1127</span>    * 
+<span class='line'>1128</span>    * @see AdEvent
+<span class='line'>1129</span>    * @see AdPlayer#addTrackingPixel
+<span class='line'>1130</span>    * 
+<span class='line'>1131</span>    * @example
+<span class='line'>1132</span>    * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
+<span class='line'>1133</span>    * adPlayer.addEventListener(AdEvent.TRACK, removePixels);
+<span class='line'>1134</span>    * 
+<span class='line'>1135</span>    * function removePixels(adEvent) {
+<span class='line'>1136</span>    *  // Removes url from TRACK event flow.
+<span class='line'>1137</span>    *  adPlayer.removeTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
+<span class='line'>1138</span>    *  
+<span class='line'>1139</span>    * }
+<span class='line'>1140</span>    */</span><span class="WHIT">  
+<span class='line'>1141</span>   </span><span class="NAME">_this.removeTrackingPixel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1142</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'removeTrackingPixel'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">adEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1143</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1144</span> 
+<span class='line'>1145</span> </span><span class="WHIT">  </span><span class="COMM">/** 
+<span class='line'>1146</span>    * @name AdPlayer#track
+<span class='line'>1147</span>    * @function
+<span class='line'>1148</span>    * @description Dispatches an &lt;code>AdEvent&lt;/code> object to all suscribers.
+<span class='line'>1149</span>    *              
+<span class='line'>1150</span>    * @param adEventObj {AdEvent} The &lt;code>AdEvent&lt;/code> instance to track.
+<span class='line'>1151</span>    * @param url {String - URL} Optional - URL of pixel that will be called once with track method.
+<span class='line'>1152</span>    * 
+<span class='line'>1153</span>    * @example
+<span class='line'>1154</span>    * // Dispatches a track event to all suscribers
+<span class='line'>1155</span>    * adPlayer.track(new AdEvent(AdEvent.TRACK));
+<span class='line'>1156</span>    * 
+<span class='line'>1157</span>    * // Dispatches a track event to all suscribers and calls URL once.
+<span class='line'>1158</span>    * adPlayer.track(new AdEvent(AdEvent.TRACK), 'http://my.pixel.url');
+<span class='line'>1159</span>    */</span><span class="WHIT">  
+<span class='line'>1160</span>   </span><span class="NAME">_this.track</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adEventObj</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1161</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'track'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">adEventObj</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1162</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1163</span> 
+<span class='line'>1164</span> </span><span class="WHIT">  </span><span class="COMM">/** 
+<span class='line'>1165</span>    * @name AdPlayer#addPrivacyInfo
+<span class='line'>1166</span>    * @function
+<span class='line'>1167</span>    * @description Creates a &lt;code>PrivacyInfo&lt;/code> instance and adds it to &lt;code>privacyInfoList&lt;/code>
+<span class='line'>1168</span>    *              
+<span class='line'>1169</span>    * @param adServer {String} Ad server name. 
+<span class='line'>1170</span>    * @param message {String} Privacy information message.
+<span class='line'>1171</span>    * @param url {String - URL} Click-through url of privacy page.
+<span class='line'>1172</span>    * 
+<span class='line'>1173</span>    * @see PrivacyInfo
+<span class='line'>1174</span>    * @see AdPlayer#privacyInfoList
+<span class='line'>1175</span>    * 
+<span class='line'>1176</span>    * @example
+<span class='line'>1177</span>    * adPlayer.addPrivacyInfo("MyAdServer",  "This is my privacy message.", "http://adplayer.aboutthisad.com");
+<span class='line'>1178</span>    */</span><span class="WHIT">  
+<span class='line'>1179</span>   </span><span class="NAME">_this.addPrivacyInfo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adServer</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1180</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'addPrivacyInfo'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">adServer</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1181</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1182</span> 
+<span class='line'>1183</span> 
+<span class='line'>1184</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>1185</span>    * @name AdPlayer#enableAdChoice
+<span class='line'>1186</span>    * @function
+<span class='line'>1187</span>    * @description Enables ad choice info button. Button calls method &lt;code>showPrivacyInfo&lt;/code>.
+<span class='line'>1188</span>    * 
+<span class='line'>1189</span>    * @see AdPlayer#showPrivacyInfo
+<span class='line'>1190</span>    * @see PrivacyInfo
+<span class='line'>1191</span>   */</span><span class="WHIT">  
+<span class='line'>1192</span>   </span><span class="NAME">_this.enableAdChoice</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1193</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'enableAdChoice'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1194</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1195</span> 
+<span class='line'>1196</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>1197</span>    * @name AdPlayer#disableAdChoice
+<span class='line'>1198</span>    * @function
+<span class='line'>1199</span>    * @description Disables ad choice info button. By default, ad choice button is disabled.
+<span class='line'>1200</span>    * 
+<span class='line'>1201</span>    * @see AdPlayer#enableAdChoice
+<span class='line'>1202</span>    * @see PrivacyInfo
+<span class='line'>1203</span>   */</span><span class="WHIT">  
+<span class='line'>1204</span>   </span><span class="NAME">_this.disableAdChoice</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1205</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'disableAdChoice'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1206</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1207</span> </span><span class="WHIT">  
+<span class='line'>1208</span>   </span><span class="COMM">/**
+<span class='line'>1209</span>    * @name AdPlayer#showPrivacyInfo
+<span class='line'>1210</span>    * @function
+<span class='line'>1211</span>    * @description Convenience function that creates a layer that displays the privacy info added to &lt;code>privacyInfoList&lt;/code>. &lt;br/>
+<span class='line'>1212</span>    *              &lt;code>AdEvent.PRIVACY_CLOSE&lt;/code> is dispatched when method is called. &lt;br/>
+<span class='line'>1213</span>    *              Layer should be styled to preference using css.
+<span class='line'>1214</span>    *              &lt;ul>
+<span class='line'>1215</span>    *                &lt;li>.privacyPanel&lt;/li>
+<span class='line'>1216</span>    *                &lt;li>.privacyPanel ul&lt;/li>
+<span class='line'>1217</span>    *                &lt;li>.privacyPanel ul li&lt;/li>
+<span class='line'>1218</span>    *                &lt;li>.privacyPanel button&lt;/li>
+<span class='line'>1219</span>    *              &lt;/ul>
+<span class='line'>1220</span>    * 
+<span class='line'>1221</span>    * @see AdPlayer#privacyInfoList
+<span class='line'>1222</span>    * @see PrivacyInfo
+<span class='line'>1223</span>   */</span><span class="WHIT">  
+<span class='line'>1224</span>   </span><span class="NAME">_this.showPrivacyInfo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1225</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'showPrivacyInfo'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1226</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1227</span> 
+<span class='line'>1228</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>1229</span>    * @name AdPlayer#hidePrivacyInfo
+<span class='line'>1230</span>    * @function
+<span class='line'>1231</span>    * @description Used in conjunction with &lt;code>showPrivacyInfo&lt;/code> to remove privacy info layer.&lt;br/>
+<span class='line'>1232</span>    *              &lt;code>AdEvent.PRIVACY_CLOSE&lt;/code> is dispatched when method is called.
+<span class='line'>1233</span>    * 
+<span class='line'>1234</span>    * @see AdPlayer#showPrivacyInfo
+<span class='line'>1235</span>    * @see PrivacyInfo
+<span class='line'>1236</span>   */</span><span class="WHIT">  
+<span class='line'>1237</span>   </span><span class="NAME">_this.hidePrivacyInfo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1238</span> </span><span class="WHIT">    </span><span class="NAME">queueCmd</span><span class="PUNC">(</span><span class="STRN">'hidePrivacyInfo'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="KEYW">this</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1239</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1240</span> 
+<span class='line'>1241</span> </span><span class="WHIT">  </span><span class="COMM">/** @private */</span><span class="WHIT">
+<span class='line'>1242</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">init</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1243</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">factory</span><span class="WHIT">  </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">PlayerFactory</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">adDomElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">playerIinit</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1244</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">playerIinit</span><span class="PUNC">(</span><span class="NAME">player</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1245</span> </span><span class="WHIT">      </span><span class="NAME">_player</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">player</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1246</span> </span><span class="WHIT">      </span><span class="NAME">AdPlayerManager.addAdPlayer</span><span class="PUNC">(</span><span class="NAME">_player</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1247</span> 
+<span class='line'>1248</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1249</span> </span><span class="WHIT">        </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="NAME">_this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">  
+<span class='line'>1250</span>       </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>1251</span> </span><span class="WHIT">      </span><span class="NAME">_player.track</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AdEvent</span><span class="PUNC">(</span><span class="NAME">AdEvent.INIT</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">      
+<span class='line'>1252</span>       </span><span class="KEYW">while</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_queue.length</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1253</span> </span><span class="WHIT">        </span><span class="PUNC">(</span><span class="NAME">_queue.shift</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">   
+<span class='line'>1254</span>       </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>1255</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>1256</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">  
+<span class='line'>1257</span>   
+<span class='line'>1258</span>   </span><span class="NAME">init</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1259</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1260</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1261</span> 
+<span class='line'>1262</span> </span><span class="PUNC">}</span></pre></body></html>

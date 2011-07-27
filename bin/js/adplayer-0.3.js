@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
-* AdPlayer v0.3.dev.072611
+* AdPlayer v0.3.dev.072711
 * 
 * Author: christopher.sancho@adtech.com
 * ----------------------------------------------------------------------------*/
@@ -658,6 +658,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
     if (!this.isPrivacyPanelEnabled()) {
       this.privacyClickBtn = document.createElement('button');
       this.privacyClickBtn.setAttribute('class', 'privacyButton');
+      this.privacyClickBtn.setAttribute('className', 'privacyButton'); // IE Fix
       this.privacyClickBtn.innerHTML = 'Get Info';
       this.adDomElement().style.position = "relative";
       this.adDomElement().appendChild(this.privacyClickBtn);
@@ -683,6 +684,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
     if (!this.privacyPanel) {
       this.privacyPanel = document.createElement('div');
       this.privacyPanel.setAttribute('class', 'privacyPanel');
+      this.privacyPanel.setAttribute('className', 'privacyPanel'); // IE fix
       var privacyPanelList = document.createElement('ul');
       var privacyPanelClose = document.createElement('button');
       var parentThis = this;
@@ -812,15 +814,15 @@ var PlayerFactory = (function(uid, domId, adDomElement, fnInit){
       var _this = this;
       var _timeout = 0;
       function check() {
-//        console.log('finding...'+domId);
+//      log('finding...'+domId);
         _timeout ++;
-        if (_timeout == 10) {
+        if (_timeout == 100) {
           clearInterval(_interval);
           log('No Valid Ad Player could be found. Creating default...', 'refWait');
           fnInit(new DefaultPlayer(uid, adDomElement));
         }
         if (document.getElementById(domId)) {
-//          console.log('found ===> ' + domId);
+//        log('found ===> ' + domId);
           clearInterval(_interval);
           readyFn(domId);
         }
@@ -839,11 +841,11 @@ var PlayerFactory = (function(uid, domId, adDomElement, fnInit){
         if(adPlayer) {
 //          adPlayer.adDomElement().removeChild(document.getElementById(domId));
           if(fnInit) {
-//            console.log('Found player at '+adPlayer.adDomElement().id);
+//          log('Found player at '+adPlayer.adDomElement().id);
             fnInit(adPlayer);
           }  
         } else {
-//          console.log('No AdPlayer found after parent search. Creating new player for '+domId);
+//        log('No AdPlayer found after parent search. Creating new player for '+domId);
           fnInit(new DefaultPlayer(uid, adDomElement));
         }
       }
