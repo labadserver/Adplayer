@@ -221,7 +221,7 @@ ul.inheritsList
 				Global Static Class - Manages all created <code>AdPlayer</code> instances.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_csancho_Sites__workspace_PM_AdPlayer_GIT_bin_js_adplayer-0.2.js.html">adplayer-0.2.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_csancho_Sites__workspace_PM_AdPlayer_GIT_bin_js_adplayer-0.3.js.html">adplayer-0.3.js</a>.
 				
 			</p>
 
@@ -264,10 +264,10 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/AdPlayerManager.html#-list">list</a></b>
+								<b><a href="../symbols/AdPlayerManager.html#list">list</a></b>
 								</div>
 								<div class="description">List that contains instances of <code>AdPlayer</code>
              added to the manager.</div>
@@ -296,27 +296,28 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#-addAdPlayer">addAdPlayer</a></b>(adPlayer)
+								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#addAdPlayer">addAdPlayer</a></b>(adPlayer)
 								</div>
 								<div class="description">Adds an <code>AdPlayer</code> instance to the management list.</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#-getAdPlayer">getAdPlayer</a></b>(refName, initCallBack)
+								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#getAdPlayerById">getAdPlayerById</a></b>(id)
 								</div>
-								<div class="description">Returns an instance of an <code>AdPlayer</code>.</div>
+								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with
+             a DOM element id name</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#-getAdPlayerById">getAdPlayerById</a></b>(id)
+								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#getPlayerByDomElement">getPlayerByDomElement</a></b>(dom)
 								</div>
 								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with
              a DOM element.</div>
@@ -324,9 +325,9 @@ ul.inheritsList
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#-register">register</a></b>(callback)
+								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#register">register</a></b>(callback)
 								</div>
 								<div class="description">Registers a function that will be called when an <code>AdPlayer</code> instance
              is created.</div>
@@ -334,9 +335,9 @@ ul.inheritsList
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;inner&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#-unregister">unregister</a></b>(callback)
+								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#unregister">unregister</a></b>(callback)
 								</div>
 								<div class="description">Un-Registers a function added to the manager list.</div>
 							</td>
@@ -390,8 +391,8 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name="-list"> </a>
-					<div class="fixedFont">&lt;inner&gt; 
+					<a name="list"> </a>
+					<div class="fixedFont">
 					
 					<span class="light">{Array - Read Only}</span>
 					<b>list</b>
@@ -417,7 +418,7 @@ var adPlayerList = AdPlayerManager.list();</pre>
 							<dl class="detailList">
 							<dt class="heading">See:</dt>
 							
-							<dd>AdPlayerManager#register</dd>
+							<dd><a href="../symbols/AdPlayerManager.html#register">AdPlayerManager#register</a></dd>
 							
 							</dl>
 						
@@ -433,8 +434,8 @@ var adPlayerList = AdPlayerManager.list();</pre>
 					Method Detail
 				</div>
 				
-					<a name="-addAdPlayer"> </a>
-					<div class="fixedFont">&lt;inner&gt; 
+					<a name="addAdPlayer"> </a>
+					<div class="fixedFont">
 					
 					
 					<b>addAdPlayer</b>(adPlayer)
@@ -486,80 +487,8 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 
 					<hr />
 				
-					<a name="-getAdPlayer"> </a>
-					<div class="fixedFont">&lt;inner&gt; 
-					
-					<span class="light">{Adplayer}</span>
-					<b>getAdPlayer</b>(refName, initCallBack)
-					
-					</div>
-					<div class="description">
-						Returns an instance of an <code>AdPlayer</code>. A referral name,
-             specified by a DOM element, is used as a start point of
-             a reverse DOM search of a <code>DIV</code> element previously
-             associated with an <code>AdPlayer</code>.
-						
-						
-					</div>
-					
-					
-					
-					<pre class="code">&lt;div id=&quot;adPlayerContainer&quot;&gt;
- &lt;script type=&quot;text/javascript&quot;&gt;
-   var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
-   adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
- &lt;/script&gt;
- &lt;script type=&quot;text/javascript&quot; id=&quot;adServerTag&quot;&gt;
-   // Sample third party response
-   AdPlayerManager.getAdPlayer("uid", function (adPlayer) {
-     adPlayer.track(new AdEvent(AdEvent.SHOW));
-     adPlayer.addPrivacyInfo('3RD_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
-   }); 
- &lt;/script&gt;
-&lt;/div&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
- // Outputs 1ST_SERVER & 3RD_SERVER info
- console.log(adPlayer.privacyInfoList());
-&lt;/script&gt;</pre>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>refName</b>
-									
-								</dt>
-								<dd>{String} Referral id used to mark the start point of a DOM search.</dd>
-							
-								<dt>
-									<b>initCallBack</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Adplayer}</span> AdPlayer instance associated with id.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="-getAdPlayerById"> </a>
-					<div class="fixedFont">&lt;inner&gt; 
+					<a name="getAdPlayerById"> </a>
+					<div class="fixedFont">
 					
 					<span class="light">{Adplayer}</span>
 					<b>getAdPlayerById</b>(id)
@@ -567,7 +496,7 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					</div>
 					<div class="description">
 						Returns an instance of an <code>AdPlayer</code> associated with
-             a DOM element.
+             a DOM element id name
 						
 						
 					</div>
@@ -614,8 +543,64 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 
 					<hr />
 				
-					<a name="-register"> </a>
-					<div class="fixedFont">&lt;inner&gt; 
+					<a name="getPlayerByDomElement"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Adplayer}</span>
+					<b>getPlayerByDomElement</b>(dom)
+					
+					</div>
+					<div class="description">
+						Returns an instance of an <code>AdPlayer</code> associated with
+             a DOM element.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">&lt;div id=&quot;adPlayerContainer&quot;&gt;
+ &lt;script type=&quot;text/javascript&quot;&gt;
+   var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
+   adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
+ &lt;/script&gt;
+&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+ var adPlayer = AdPlayerManager.getPlayerByDomElement('adPlayerContainer');
+&lt;/script&gt;</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>dom</b>
+									
+								</dt>
+								<dd>{String} DOM element object associated with <code>AdPlayer</code>.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Adplayer}</span> AdPlayer instance associated with dom element.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="register"> </a>
+					<div class="fixedFont">
 					
 					
 					<b>register</b>(callback)
@@ -659,8 +644,8 @@ AdPlayerManager.register(myCallBackHandler);</pre>
 
 					<hr />
 				
-					<a name="-unregister"> </a>
-					<div class="fixedFont">&lt;inner&gt; 
+					<a name="unregister"> </a>
+					<div class="fixedFont">
 					
 					
 					<b>unregister</b>(callback)
@@ -714,7 +699,7 @@ AdPlayerManager.unregister(myCallBackHandler);</pre>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Jul 12 2011 12:44:05 GMT-0700 (PDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Jul 26 2011 18:08:02 GMT-0700 (PDT)
 		</div>
 	</body>
 </html>

@@ -1,4 +1,5 @@
 /**
+ * @name PrivacyInfo
  * @class Contains reference to a party's ad privacy information.
  * @description Contains reference to a party's ad privacy information.
  * 
@@ -12,22 +13,29 @@
  * myPrivacyInfo.message = "This is my privacy message.";
  * myPrivacyInfo.url = "http://adplayer.aboutthisad.com";
  */
-function PrivacyInfo() {
+var PrivacyInfo = (function () {
+  /** @private */ var _this = {};
+  
   /**
+   * @name PrivacyInfo#adServer
    * @description Ad server name.
    * @type String
    */
-  this.adServer = '';
+  _this.adServer = '';
   
-   /**
-    * @description Privacy information message. 
-    * @type String
-    */
-   this.message = '';
+  /**
+   * @name PrivacyInfo#message
+   * @description Privacy information message. 
+   * @type String
+   */
+  _this.message = '';
    
-   /**
-    * @description Click-through url of privacy page.
-    * @type String - URL
-    */
-   this.url = '';   
-}
+  /**
+   * @name PrivacyInfo#url
+   * @description Click-through url of privacy page.
+   * @type String - URL
+   */
+  _this.url = '';
+   
+  return _this;
+});

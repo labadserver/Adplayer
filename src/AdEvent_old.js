@@ -7,18 +7,17 @@
  * 
  * @author christopher.sancho@adtech.com
  * 
- * @property {string - Static Const} INIT The <code>AdEvent.INIT</code> constant defines the value of a initialize event.
- * @property {string - Static Const} LOAD The <code>AdEvent.LOAD</code> constant defines the value of a load event.
- * @property {string - Static Const} REMOVE The <code>AdEvent.REMOVE</code> constant defines the value of a remove event.
- * @property {string - Static Const} SHOW The <code>AdEvent.SHOW constant</code> defines the value of a show event.
- * @property {string - Static Const} HIDE The <code>AdEvent.HIDE constant</code> defines the value of a hide event.
- * @property {string - Static Const} PROGRESS The <code>AdEvent.PROGRESS</code> constant defines the value of a progress event.
- * @property {string - Static Const} TRACK The <code>AdEvent.TRACK</code> constant defines the value of a track event.
- * @property {string - Static Const} COUNT The <code>AdEvent.COUNT</code> constant defines the value of a count event.
- * @property {string - Static Const} CLICK The <code>AdEvent.CLICK</code> constant defines the value of a click event.
- * @property {string - Static Const} PRIVACY_CLICK The <code>AdEvent.PRIVACY_CLICK</code> constant defines the value of a privacy click event.
- * @property {string - Static Const} PRIVACY_OPEN The <code>AdEvent.PRIVACY_CLICK</code> constant defines the value of a privacy open event.
- * @property {string - Static Const} PRIVACY_CLOSE The <code>AdEvent.PRIVACY_CLICK</code> constant defines the value of a privacy close event.
+ * @property {string - Static Const} LOAD The <code>AdEvent.LOAD</code> constant defines the value of a select event string.
+ * @property {string - Static Const} REMOVE The <code>AdEvent.REMOVE</code> constant defines the value of a remove event string.
+ * @property {string - Static Const} SHOW The <code>AdEvent.SHOW constant</code> defines the value of a show event string.
+ * @property {string - Static Const} HIDE The <code>AdEvent.HIDE constant</code> defines the value of a hide event string.
+ * @property {string - Static Const} PROGRESS The <code>AdEvent.PROGRESS</code> constant defines the value of a progress event string.
+ * @property {string - Static Const} TRACK The <code>AdEvent.TRACK</code> constant defines the value of a track event string.
+ * @property {string - Static Const} COUNT The <code>AdEvent.COUNT</code> constant defines the value of a count event string.
+ * @property {string - Static Const} CLICK The <code>AdEvent.CLICK</code> constant defines the value of a click event string.
+ * @property {string - Static Const} PRIVACY_CLICK The <code>AdEvent.PRIVACY_CLICK</code> constant defines the value of a privacy click event string.
+ * @property {string - Static Const} PRIVACY_OPEN The <code>AdEvent.PRIVACY_CLICK</code> constant defines the value of a privacy open event string.
+ * @property {string - Static Const} PRIVACY_CLOSE The <code>AdEvent.PRIVACY_CLICK</code> constant defines the value of a privacy close event string.
  *
  * @param {string} type The type of <code>AdEvent.EVENT</code> to create.
  * @param {object} data Optional - The object containing information associated with an <code>AdEvent</code> instance.
@@ -64,15 +63,15 @@ function AdEvent(type, data) {
    * adEvent.type(AdEvent.LOAD);  
    */
   this.type = function(val){
-    if(val) { _type = val; }
+	  if(val) { _type = val; }
       return _type;
   };
   if (type) { _type = type; }
   
-  var _currentTarget = {};
-  this.currentTarget = function(val){
-    if(val) { _currentTarget = val; }
-      return _currentTarget;
+  var _source = {};
+  this.source = function(val){
+    if(val) { _source = val; }
+      return _source;
   };  
   
   var _data = new Object();
@@ -90,16 +89,16 @@ function AdEvent(type, data) {
    * adEvent.data(o);
    */
   this.data = function(val){
-    if(val) { _data = val; }
+	  if(val) { _data = val; }
       return _data;
   };
   if (data) { _data = data; }
-  
-  var _target;
+	
+  var _player;
   /**
    * @field
    * @description The <code>AdPlayer</code> instance associated with the <code>AdEvent</code> object.
-   *        <code>player</code> is set when <code>AdPlayer.track()</code> dispatches the <code>AdEvent</code> object insance.
+   * 				<code>player</code> is set when <code>AdPlayer.track()</code> dispatches the <code>AdEvent</code> object insance.
    * @returns {AdPlayer} Returns <code>AdPlayer</code> instance associated with the an <code>AdEvent</code> instance.
    * @example
    * // Get reference to property
@@ -108,14 +107,14 @@ function AdEvent(type, data) {
    * // Set property's value
    * adEvent.player(adPlayer); 
    */
-  this.target = function(val){
-    if(val) { _target = val; }
-      return _target;
+  this.player = function(val){
+	  if(val) { _player = val; }
+      return _player;
   };
 }
 
 /** @private */
-var defaultAdEvents = ['INIT', 'LOAD', 'REMOVE', 'SHOW', 'HIDE', 'PROGRESS', 'TRACK', 'COUNT', 'CLICK', 'PRIVACY_CLICK', 'PRIVACY_OPEN', 'PRIVACY_CLOSE'];
+var defaultAdEvents = ['LOAD', 'REMOVE', 'SHOW', 'HIDE', 'PROGRESS', 'TRACK', 'COUNT', 'CLICK', 'PRIVACY_CLICK', 'PRIVACY_OPEN', 'PRIVACY_CLOSE'];
 AdEvent.list = new Object();
 
 /**

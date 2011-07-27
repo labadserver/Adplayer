@@ -5,6 +5,7 @@
 * ----------------------------------------------------------------------------*/
 if (typeof AdPlayerManager === 'undefined') {
   /**
+   * @name AdPlayerManager
    * @class Global Static Class - Manages all created <code>AdPlayer</code> instances.
    * @description Globally Manages all created <code>AdPlayer</code> instances.
    *              <code>AdPlayerManager</code> is a singleton class and ensures it
@@ -14,9 +15,12 @@ if (typeof AdPlayerManager === 'undefined') {
    * @author christopher.sancho@adtech.com
    */
   var AdPlayerManager = (function () {
-    var _adPlayerList = [];
-    var _callBackList = [];
+    /** @private */ var _this = {};
+    /** @private */ var _adPlayerList = [];
+    /** @private */ var _callBackList = [];
+    
     /**
+     * @name AdPlayerManager#list
      * @field
      * @description List that contains instances of <code>AdPlayer</code>
      *              added to the manager.  
@@ -26,11 +30,12 @@ if (typeof AdPlayerManager === 'undefined') {
      * // Get reference to property
      * var adPlayerList = AdPlayerManager.list();
     */    
-    var list = function() {
+    _this.list = function() {
       return _adPlayerList;
     };    
     
     /**
+     * @name AdPlayerManager#addAdPlayer
      * @function
      * @description Adds an <code>AdPlayer</code> instance to the management list.  When a new
      *              <code>AdPlayer</code> instance is created, it is automatically passed to
@@ -46,12 +51,13 @@ if (typeof AdPlayerManager === 'undefined') {
      * var adPlayer = new AdPlayer(document.getElementById('myTagDivContainer'));
      * AdPlayerManager.addAdPlayer(adPlayer);
     */
-    var addAdPlayer = function(adPlayer) {
+    _this.addAdPlayer = function(adPlayer) {
       _adPlayerList.push(adPlayer);
       _dispatchCallBacks(adPlayer);
     };
     
     /**
+     * @name AdPlayerManager#register
      * @function
      * @description Registers a function that will be called when an <code>AdPlayer</code> instance
      *              is created. Call-back handler function must expect a parameter that accepts
@@ -65,11 +71,12 @@ if (typeof AdPlayerManager === 'undefined') {
      * }
      * AdPlayerManager.register(myCallBackHandler);
      */
-    var register = function(callback) {
+    _this.register = function(callback) {
       _callBackList.push(callback);
     };
     
     /**
+     * @name AdPlayerManager#unregister
      * @function
      * @description Un-Registers a function added to the manager list.
      * 
@@ -81,7 +88,7 @@ if (typeof AdPlayerManager === 'undefined') {
      * }
      * AdPlayerManager.unregister(myCallBackHandler);
      */
-    var unregister = function(callback) {
+    _this.unregister = function(callback) {
       for (var i = 0; i < _callBackList.length; i++) {
         if (_callBackList[i] == callback) {
           _callBackList.shift(i, 1);
@@ -91,9 +98,10 @@ if (typeof AdPlayerManager === 'undefined') {
     };
     
     /**
+     * @name AdPlayerManager#getAdPlayerById
      * @function
      * @description Returns an instance of an <code>AdPlayer</code> associated with
-     *              a DOM element. 
+     *              a DOM element id name
      * 
      * @param id {String} Id of DOM element associated with <code>AdPlayer</code>.
      * @return {Adplayer} AdPlayer instance associated with id. 
@@ -109,7 +117,7 @@ if (typeof AdPlayerManager === 'undefined') {
      *  var adPlayer = AdPlayerManager.getAdPlayerById('adPlayerContainer');
      * &lt;/script&gt;
      */
-    var getAdPlayerById = function(id) {
+    _this.getAdPlayerById = function(id) {
       for (var i = 0; i < _adPlayerList.length; i++) {
         if (_adPlayerList[i].adDomElement()) {
           if (_adPlayerList[i].adDomElement().id == id) {
@@ -121,16 +129,15 @@ if (typeof AdPlayerManager === 'undefined') {
       }
       return null;
     };
-    
+
     /**
-     * @function 
-     * @description Returns an instance of an <code>AdPlayer</code>. A referral name,
-     *              specified by a DOM element, is used as a start point of
-     *              a reverse DOM search of a <code>DIV</code> element previously
-     *              associated with an <code>AdPlayer</code>.
-     *              
-     * @param refName {String} Referral id used to mark the start point of a DOM search. 
-     * @return {Adplayer} AdPlayer instance associated with id. 
+     * @name AdPlayerManager#getPlayerByDomElement
+     * @function
+     * @description Returns an instance of an <code>AdPlayer</code> associated with
+     *              a DOM element. 
+     * 
+     * @param dom {String} DOM element object associated with <code>AdPlayer</code>.
+     * @return {Adplayer} AdPlayer instance associated with dom element. 
      * 
      * @example
      * &lt;div id=&quot;adPlayerContainer&quot;&gt;
@@ -138,80 +145,23 @@ if (typeof AdPlayerManager === 'undefined') {
      *    var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
      *    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
      *  &lt;/script&gt;
-     *  &lt;script type=&quot;text/javascript&quot; id=&quot;adServerTag&quot;&gt;
-     *    // Sample third party response
-     *    AdPlayerManager.getAdPlayer("uid", function (adPlayer) {
-     *      adPlayer.track(new AdEvent(AdEvent.SHOW));
-     *      adPlayer.addPrivacyInfo('3RD_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
-     *    }); 
-     *  &lt;/script&gt;
      * &lt;/div&gt;
      * &lt;script type=&quot;text/javascript&quot;&gt;
-     *  // Outputs 1ST_SERVER & 3RD_SERVER info
-     *  console.log(adPlayer.privacyInfoList());
+     *  var adPlayer = AdPlayerManager.getPlayerByDomElement('adPlayerContainer');
      * &lt;/script&gt;
      */
-    var getAdPlayer = function(refName, initCallBack) {
-      if(!refName) {
-        refName = 'refDiv';
-      }
-      var uAdId = new Date().getTime();
-      var uName = refName + uAdId;
-      
-      document.write('<span id="'+uName+'" style="display:none;"></span>');
-      
-      /** @private */
-      function refWait(refName, callback) {
-        var _interval = setInterval(lookup, 100);
-        var _this = this;
-        function lookup(tar) {
-      	  if (document.getElementById(refName)) {
-            console.log('found ===> ' + refName);
-      	    clearInterval(_interval);
-    	    var par = document.getElementById(refName).parentNode;
-            while ((par.nodeName.toLowerCase() != 'div') || !AdPlayerManager.getAdPlayerById(par.id)) {
-              par = par.parentNode;
-              parName = par.nodeName.toLowerCase();
-              if ((parName == 'body') || (parName == 'html')) { break; }
-            }
-            var adPlayer = AdPlayerManager.getAdPlayerById(par.id);
-            if(adPlayer) {
-              adPlayer.adDomElement().removeChild(document.getElementById(refName));
-              if(callback) {
-            	  callback(adPlayer);
-              }
-              return adPlayer;
-            } else {
-              log('No AdPlayer found!');
-            }      	   
-      	  }
+    _this.getPlayerByDomElement = function(dom) {
+      for (var i = 0; i < _adPlayerList.length; i++) {
+        if (_adPlayerList[i].adDomElement()) {
+          if (_adPlayerList[i].adDomElement() == dom) {
+            return _adPlayerList[i];
+          }
+        } else {
+          log('DOM element is not properly specified.','getPlayerByDomElement');
         }
-      };
-      
-      if (document.getElementById(uName)) {
-        if (document.getElementById(uName)) {
-      	    var par = document.getElementById(uName).parentNode;
-              while ((par.nodeName.toLowerCase() != 'div') || !AdPlayerManager.getAdPlayerById(par.id)) {
-                par = par.parentNode;
-                parName = par.nodeName.toLowerCase();
-                if ((parName == 'body') || (parName == 'html')) { break; }
-              }
-              var adPlayer = AdPlayerManager.getAdPlayerById(par.id);
-              if(adPlayer) {
-                adPlayer.adDomElement().removeChild(document.getElementById(uName));
-                if(initCallBack) {
-                	initCallBack(adPlayer);
-                }
-                return adPlayer;
-              } else {
-                log('No AdPlayer found!');
-              }  
-        }
-      } else {
-    	  var refW = refWait(uName, initCallBack);
       }
-    };
-    
+      return null;
+    };    
     
     /**
      * @private
@@ -242,14 +192,7 @@ if (typeof AdPlayerManager === 'undefined') {
       } while(index < tmpLen);
     };
   
-    return {
-      addAdPlayer: addAdPlayer,
-      list: list,
-      register: register,
-      unregister: unregister,
-      getAdPlayerById: getAdPlayerById,
-      getAdPlayer: getAdPlayer
-    };
+    return _this;
   })();
 
 /*@CLASS_INSERTS@*/
