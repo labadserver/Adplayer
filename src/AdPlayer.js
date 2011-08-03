@@ -11,18 +11,9 @@
  * var myDomObj = document.getElementById('myTagDivContainer');
  * var adPlayer = new AdPlayer(myDomObj);
  */
-var AdPlayer = (function (uid, domId, fnInit) {
-  
-  var adDomElement = document.getElementById(domId);
-  /*
-  if (document.getElementById(domId)) {
-    var adDomElement = document.getElementById(domId);
-  } else {
-    log('WARNING: No valid referral element specified. Referral will be created using "document.write"', 'AdPlayer');
-  }*/
-
-  var _que = [];
-  
+var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
+  /** @private */ var adDomElement = document.getElementById(domId);
+  /** @private */ var _que = [];
   /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
   
   var _player;
@@ -365,15 +356,16 @@ var AdPlayer = (function (uid, domId, fnInit) {
 
   /** @private */
   function init() {
-    var factory  = new PlayerFactory(uid, domId, adDomElement, playerIinit);
-    function playerIinit(player) {
+    var factory  = new PlayerFactory(uid, domId, adDomElement, playerInit, refAdPlayer);
+    function playerInit(player) {
       _player = player;
-      AdPlayerManager.addAdPlayer(_player);
-
+      
+      _this.adDomElement(adDomElement);
+      AdPlayerManager.addAdPlayer(_this);
       if (fnInit) {
         fnInit(_this);  
       }
-      _player.track(new AdEvent(AdEvent.INIT), null, _this);      
+      _player.track(new AdEvent(AdEvent.INIT), null, _this);
       while (_queue.length > 0) {
         (_queue.shift())();   
       }

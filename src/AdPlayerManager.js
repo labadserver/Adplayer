@@ -52,6 +52,11 @@ if (typeof AdPlayerManager === 'undefined') {
      * AdPlayerManager.addAdPlayer(adPlayer);
     */
     _this.addAdPlayer = function(adPlayer) {
+      for (var i=0; i < _adPlayerList.length; i++) {
+        if(_adPlayerList[i].adDomElement().id == adPlayer.adDomElement().id) {
+          return;
+        }
+      }
       _adPlayerList.push(adPlayer);
       _dispatchCallBacks(adPlayer);
     };

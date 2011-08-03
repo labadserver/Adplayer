@@ -1,4 +1,4 @@
-AdPlayer v0.3.1
+AdPlayer v0.3.2
 Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
 
 Note: The test page (index.html) currently uses static ADTECH test tags.

@@ -28,7 +28,7 @@
      *  console.log(adPlayer.privacyInfoList());
      * &lt;/script&gt;
      */
-var PlayerFactory = (function(uid, domId, adDomElement, fnInit){
+var PlayerFactory = (function(uid, domId, adDomElement, fnInit, refAdPlayer){
   /*
    * CASES:
    * 
@@ -62,7 +62,30 @@ var PlayerFactory = (function(uid, domId, adDomElement, fnInit){
     fnInit(new DefaultPlayer(uid, adDomElement));
     return;
   }
-  
+
+  if(refAdPlayer) {
+    function refAdPlayerWait(refAdPlayer) {
+      var _interval = setInterval(check, 100);
+      var _this = this;
+      var _timeout = 0;
+      function check() {
+        _timeout ++;
+        if (_timeout == 100) {
+          clearInterval(_interval);
+          log('No Valid AdPlayer for "' +uid+ '" could be found from referral player. Creating default...', 'refAdPlayerWait');
+          fnInit(new DefaultPlayer(uid, document.getElementById(domId)));
+        }
+        if (document.getElementById(domId)) {
+          log('Found referral AdPlayer ===> '+ refAdPlayer.uid() + ' from: ' + uid);
+          clearInterval(_interval);
+          fnInit(new ReferencePlayer(uid, document.getElementById(domId), refAdPlayer));
+        }
+      }
+    }    
+    refAdPlayerWait(refAdPlayer);
+    return;
+  }
+
   if (adDomElement) {
     var domPlayer = AdPlayerManager.getPlayerByDomElement(adDomElement);
     if(domPlayer) {
@@ -106,6 +129,7 @@ var PlayerFactory = (function(uid, domId, adDomElement, fnInit){
     
     function searchDom(domId){
       var par = document.getElementById(domId).parentNode;
+      log('-------ABOUT TO SEARCH------FROM: '+domId);
       while (!AdPlayerManager.getAdPlayerById(par.id)) {
         par = par.parentNode;
         parName = par.nodeName.toLowerCase();
@@ -116,11 +140,11 @@ var PlayerFactory = (function(uid, domId, adDomElement, fnInit){
         if(adPlayer) {
 //          adPlayer.adDomElement().removeChild(document.getElementById(domId));
           if(fnInit) {
-//          log('Found player at '+adPlayer.adDomElement().id);
+          log('Found player at '+adPlayer.adDomElement().id);
             fnInit(adPlayer);
           }  
         } else {
-//        log('No AdPlayer found after parent search. Creating new player for '+domId);
+        log('No AdPlayer found after parent search. Creating new player for '+domId);
           fnInit(new DefaultPlayer(uid, adDomElement));
         }
       }

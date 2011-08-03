@@ -142,6 +142,11 @@ var DefaultPlayer = (function (uid, adDomElement) {
 
   _this.enableAdChoice = function() {
     if (!this.isPrivacyPanelEnabled()) {
+      for (var i=0; i < this.adDomElement().getElementsByTagName('button').length; i++) {
+        if(this.adDomElement().getElementsByTagName('button')[0].className == 'privacyButton');
+        return;
+      }
+      
       this.privacyClickBtn = document.createElement('button');
       this.privacyClickBtn.setAttribute('class', 'privacyButton');
       this.privacyClickBtn.setAttribute('className', 'privacyButton'); // IE Fix

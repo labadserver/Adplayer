@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
-* AdPlayer v0.3.1.dev.072711
+* AdPlayer v0.3.2.dev.080211
 * 
 * Author: christopher.sancho@adtech.com
 * ----------------------------------------------------------------------------*/
@@ -52,6 +52,11 @@ if (typeof AdPlayerManager === 'undefined') {
      * AdPlayerManager.addAdPlayer(adPlayer);
     */
     _this.addAdPlayer = function(adPlayer) {
+      for (var i=0; i < _adPlayerList.length; i++) {
+        if(_adPlayerList[i].adDomElement().id == adPlayer.adDomElement().id) {
+          return;
+        }
+      }
       _adPlayerList.push(adPlayer);
       _dispatchCallBacks(adPlayer);
     };
@@ -656,6 +661,11 @@ var DefaultPlayer = (function (uid, adDomElement) {
 
   _this.enableAdChoice = function() {
     if (!this.isPrivacyPanelEnabled()) {
+      for (var i=0; i < this.adDomElement().getElementsByTagName('button').length; i++) {
+        if(this.adDomElement().getElementsByTagName('button')[0].className == 'privacyButton');
+        return;
+      }
+      
       this.privacyClickBtn = document.createElement('button');
       this.privacyClickBtn.setAttribute('class', 'privacyButton');
       this.privacyClickBtn.setAttribute('className', 'privacyButton'); // IE Fix
@@ -724,6 +734,54 @@ var DefaultPlayer = (function (uid, adDomElement) {
   return _this;
 });
 /** @private */
+var ReferencePlayer = (function (uid, adDomElement, refAdPlayer) {
+  /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
+  /** @private */ var _defaultPlayer = new DefaultPlayer(uid, adDomElement);
+  
+  function updateRef(fnName, params){
+    _defaultPlayer[fnName].apply(_this, params);
+    refAdPlayer[fnName].apply(_this, params);
+  }
+  
+  _this.addEventListener = function(adEvent, callback) {
+    updateRef('addEventListener', [adEvent, callback, this]);    
+  };
+
+  _this.removeEventListener = function(adEvent, callback) {
+    updateRef('removeEventListener', [adEvent, callback, this]);    
+  };
+
+  _this.addTrackingPixel = function(adEvent, url, repeat) {
+    updateRef('addTrackingPixel', [adEvent, url, repeat, this]);    
+  };
+
+  _this.removeTrackingPixel = function(adEvent, url) {
+    updateRef('removeTrackingPixel', [adEvent, url, this]);
+  };
+
+  _this.track = function(adEventObj, url, currentPlayer) {
+    updateRef('track', [adEventObj, url, currentPlayer, this]);
+  };
+
+  _this.addPrivacyInfo = function(adServer, message, url) {
+    updateRef('addPrivacyInfo', [adServer, message, url, this]);
+  };
+
+  _this.enableAdChoice = function() {
+    updateRef('enableAdChoice', [this]);
+  };
+
+  _this.showPrivacyInfo = function() {
+    updateRef('showPrivacyInfo', [this]);    
+  };
+
+  _this.hidePrivacyInfo = function() {
+    updateRef('hidePrivacyInfo', [this]);    
+  };  
+  
+  return _this;
+});
+/** @private */
     /**
      * @private
      * @description Returns an instance of an <code>AdPlayer</code>. A referral name,
@@ -753,7 +811,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
      *  console.log(adPlayer.privacyInfoList());
      * &lt;/script&gt;
      */
-var PlayerFactory = (function(uid, domId, adDomElement, fnInit){
+var PlayerFactory = (function(uid, domId, adDomElement, fnInit, refAdPlayer){
   /*
    * CASES:
    * 
@@ -787,7 +845,30 @@ var PlayerFactory = (function(uid, domId, adDomElement, fnInit){
     fnInit(new DefaultPlayer(uid, adDomElement));
     return;
   }
-  
+
+  if(refAdPlayer) {
+    function refAdPlayerWait(refAdPlayer) {
+      var _interval = setInterval(check, 100);
+      var _this = this;
+      var _timeout = 0;
+      function check() {
+        _timeout ++;
+        if (_timeout == 100) {
+          clearInterval(_interval);
+          log('No Valid AdPlayer for "' +uid+ '" could be found from referral player. Creating default...', 'refAdPlayerWait');
+          fnInit(new DefaultPlayer(uid, document.getElementById(domId)));
+        }
+        if (document.getElementById(domId)) {
+          log('Found referral AdPlayer ===> '+ refAdPlayer.uid() + ' from: ' + uid);
+          clearInterval(_interval);
+          fnInit(new ReferencePlayer(uid, document.getElementById(domId), refAdPlayer));
+        }
+      }
+    }    
+    refAdPlayerWait(refAdPlayer);
+    return;
+  }
+
   if (adDomElement) {
     var domPlayer = AdPlayerManager.getPlayerByDomElement(adDomElement);
     if(domPlayer) {
@@ -831,6 +912,7 @@ var PlayerFactory = (function(uid, domId, adDomElement, fnInit){
     
     function searchDom(domId){
       var par = document.getElementById(domId).parentNode;
+      log('-------ABOUT TO SEARCH------FROM: '+domId);
       while (!AdPlayerManager.getAdPlayerById(par.id)) {
         par = par.parentNode;
         parName = par.nodeName.toLowerCase();
@@ -841,11 +923,11 @@ var PlayerFactory = (function(uid, domId, adDomElement, fnInit){
         if(adPlayer) {
 //          adPlayer.adDomElement().removeChild(document.getElementById(domId));
           if(fnInit) {
-//          log('Found player at '+adPlayer.adDomElement().id);
+          log('Found player at '+adPlayer.adDomElement().id);
             fnInit(adPlayer);
           }  
         } else {
-//        log('No AdPlayer found after parent search. Creating new player for '+domId);
+        log('No AdPlayer found after parent search. Creating new player for '+domId);
           fnInit(new DefaultPlayer(uid, adDomElement));
         }
       }
@@ -886,18 +968,9 @@ log = function(msg, ref) {
  * var myDomObj = document.getElementById('myTagDivContainer');
  * var adPlayer = new AdPlayer(myDomObj);
  */
-var AdPlayer = (function (uid, domId, fnInit) {
-  
-  var adDomElement = document.getElementById(domId);
-  /*
-  if (document.getElementById(domId)) {
-    var adDomElement = document.getElementById(domId);
-  } else {
-    log('WARNING: No valid referral element specified. Referral will be created using "document.write"', 'AdPlayer');
-  }*/
-
-  var _que = [];
-  
+var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
+  /** @private */ var adDomElement = document.getElementById(domId);
+  /** @private */ var _que = [];
   /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
   
   var _player;
@@ -1240,15 +1313,16 @@ var AdPlayer = (function (uid, domId, fnInit) {
 
   /** @private */
   function init() {
-    var factory  = new PlayerFactory(uid, domId, adDomElement, playerIinit);
-    function playerIinit(player) {
+    var factory  = new PlayerFactory(uid, domId, adDomElement, playerInit, refAdPlayer);
+    function playerInit(player) {
       _player = player;
-      AdPlayerManager.addAdPlayer(_player);
-
+      
+      _this.adDomElement(adDomElement);
+      AdPlayerManager.addAdPlayer(_this);
       if (fnInit) {
         fnInit(_this);  
       }
-      _player.track(new AdEvent(AdEvent.INIT), null, _this);      
+      _player.track(new AdEvent(AdEvent.INIT), null, _this);
       while (_queue.length > 0) {
         (_queue.shift())();   
       }
