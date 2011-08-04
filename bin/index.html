@@ -1,11 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>ADTECH - AdPlayer | DAST Demo v0.3.2 (dev.080211)</title>
-<script type="text/javascript" src="js/adplayer-0.3.2.js"></script>
-<!-- script type="text/javascript" src="js/adplayer-0.3.2.min.js"></script-->
-<link rel="stylesheet" type="text/css" href="css/adplayer-0.3.2-style.css" />
-<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="css/adplayer-0.3.2-style-ie.css" /><![endif]-->
+<title>ADTECH - AdPlayer | DAST Demo v0.3.3 (dev.080411)</title>
+<script type="text/javascript" src="js/adplayer-0.3.3.js"></script>
+<!-- script type="text/javascript" src="js/adplayer-0.3.3.min.js"></script-->
+<link rel="stylesheet" type="text/css" href="css/adplayer-0.3.3-style.css" />
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="css/adplayer-0.3.3-style-ie.css" /><![endif]-->
 
 <style>
 body {
@@ -113,13 +113,14 @@ table td {
 
 	// AdEvent.LOAD handler for all Ad Player Examples
 	function adtechPlayerInit(evt) {
+		//console.log(evt.target().uid());
 	    logOutput('AdPlayer: ' + evt.target().uid() + ' initialized '+evt.currentTarget().uid()+'.' + '\n');
 	}
 </script>
 <table border="0">
 	<tr>
 		<th colspan="4">
-			<span>ADTECH</span> - AdPlayer | DAST Demo <span class="version">v0.3.2 (dev.080211)</span>
+			<span>ADTECH</span> - AdPlayer | DAST Demo <span class="version">v0.3.3 (dev.080411)</span>
 			<span id="info"><a href="docs/" target="_blank">API</a>  |  <a href="docs/readme.txt" target="_blank">README</a></span>
 		</th>
 	</tr>
@@ -205,13 +206,18 @@ table td {
 				<script type="text/javascript">
 					var adTechAdPlayer4A = new AdPlayer('POST_CONTENT_ADPLAYER', 'post-content-adplayer');
 					adTechAdPlayer4A.addPrivacyInfo('ADTECH-POST_CONTENT_PLAYER', 'Post-Content message...', 'http:/postcontent.adtech.com');
-					adTechAdPlayer4A.enableAdChoice();
+					//adTechAdPlayer4A.enableAdChoice();
 
-					// Add Event handlers to player #1
+					// Add Event handlers to player #3
 					adTechAdPlayer4A.addEventListener(AdEvent.INIT, adtechPlayerInit);
 					adTechAdPlayer4A.addEventListener(AdEvent.PRIVACY_OPEN, adtechPlayerPrivacyOpen);
 					adTechAdPlayer4A.addEventListener(AdEvent.PRIVACY_CLOSE, adtechPlayerPrivacyClose);
-					adTechAdPlayer4A.addEventListener(AdEvent.PRIVACY_CLICK, adtechPlayerInfoClick);					
+					adTechAdPlayer4A.addEventListener(AdEvent.PRIVACY_CLICK, adtechPlayerInfoClick);
+
+					function adtechPlayerLOADDD(evt) {
+						console.log('LOAD!');
+					}
+					adTechAdPlayer4A.addEventListener(AdEvent.LOAD, adtechPlayerLOADDD);
 				</script>
 				<div id="post-load-container"></div>
 			</div>
@@ -229,8 +235,14 @@ table td {
 	<p id="post-status">Moving post-content...</p>
 	<!--JavaScript Tag // Tag for network 5071: DEVELOPER TEST - Sancho // Website: AdPlayer Test // Page: Page 1 // Placement: Outermost (2132472) // created at: Jun 30, 2011 4:49:15 PM-->
 	<script language="javascript">
-		var adTechAdPlayer4B = new AdPlayer('POST_CONTENT_REF_PLAYER', "post-content-ref-container", null, adTechAdPlayer4A);
+		var adTechAdPlayer4B = new AdPlayer('POST_CONTENT_REF_PLAYER', 'post-content-ref-container', null, adTechAdPlayer4A);
+
+		adTechAdPlayer4B.enableAdChoice();
 		adTechAdPlayer4B.addPrivacyInfo('POST_CONTENT_REF_PLAYER', 'Post-Content-Ref message...', 'http:/postcontent.adtech.com');
+		adTechAdPlayer4B.addEventListener(AdEvent.INIT, adtechPlayerInit);
+		adTechAdPlayer4B.addEventListener(AdEvent.PRIVACY_OPEN, adtechPlayerPrivacyOpen);
+		adTechAdPlayer4B.addEventListener(AdEvent.PRIVACY_CLOSE, adtechPlayerPrivacyClose);
+		adTechAdPlayer4B.addEventListener(AdEvent.PRIVACY_CLICK, adtechPlayerInfoClick);
 	</script>
 	<div id="post-load-content" >
 		<!--JavaScript Tag // Tag for network 5071: DEVELOPER TEST - Sancho // Website: AdPlayer Test // Page: Page 1 // Placement: Outermost (2132472) // created at: Jun 30, 2011 4:49:15 PM-->

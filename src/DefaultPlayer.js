@@ -146,7 +146,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
         if(this.adDomElement().getElementsByTagName('button')[0].className == 'privacyButton');
         return;
       }
-      
+      this.isAdChoiceEnabled(true);
       this.privacyClickBtn = document.createElement('button');
       this.privacyClickBtn.setAttribute('class', 'privacyButton');
       this.privacyClickBtn.setAttribute('className', 'privacyButton'); // IE Fix
@@ -164,6 +164,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
   _this.disableAdChoice = function() {
     if (this.isPrivacyPanelEnabled()) {
       if(this.privacyClickBtn) {
+        this.isAdChoiceEnabled(false);
         this.adDomElement().removeChild(this.privacyClickBtn);
       }
     }

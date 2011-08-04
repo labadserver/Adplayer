@@ -18,6 +18,7 @@ if (typeof AdPlayerManager === 'undefined') {
     /** @private */ var _this = {};
     /** @private */ var _adPlayerList = [];
     /** @private */ var _callBackList = [];
+    /** @private */ var _queue = [];
     
     /**
      * @name AdPlayerManager#list
@@ -33,6 +34,20 @@ if (typeof AdPlayerManager === 'undefined') {
     _this.list = function() {
       return _adPlayerList;
     };    
+    
+    var _domIdList = [];
+    _this.domIdList = function() {
+      return _domIdList;
+    }; 
+    
+    _this.searchCount = 0;
+    _this.isSearching = function(val) {
+      if (_this.searchCount == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    }    
     
     /**
      * @name AdPlayerManager#addAdPlayer

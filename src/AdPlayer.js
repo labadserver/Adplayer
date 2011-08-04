@@ -12,9 +12,8 @@
  * var adPlayer = new AdPlayer(myDomObj);
  */
 var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
-  /** @private */ var adDomElement = document.getElementById(domId);
-  /** @private */ var _que = [];
-  /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
+  /** @private */ var _this = new AbstractPlayer(uid, null);
+  /** @private */ var _queue = [];
   
   var _player;
   _this.player = function() {
@@ -130,9 +129,6 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   _this.privacyInfoList = function() {
     return _player.privacyInfoList();
   };
-  
-  /** @private */
-  var _queue = [];
   
   // -------------------------------------------------------------------------------------------------
   // METHODS
@@ -356,12 +352,11 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
 
   /** @private */
   function init() {
-    var factory  = new PlayerFactory(uid, domId, adDomElement, playerInit, refAdPlayer);
+    var factory  = new PlayerFactory(uid, domId, playerInit, refAdPlayer);
     function playerInit(player) {
       _player = player;
-      
-      _this.adDomElement(adDomElement);
-      AdPlayerManager.addAdPlayer(_this);
+
+      AdPlayerManager.addAdPlayer(_player);
       if (fnInit) {
         fnInit(_this);  
       }

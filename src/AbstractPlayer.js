@@ -37,6 +37,12 @@ AbstractPlayer = (function(uid, adDomElement) {
     return _isPrivacyPanelEnabled;
   };
   
+  var _isAdChoiceEnabled = false;
+  _this.isAdChoiceEnabled = function(val){
+    if(val) { _isAdChoiceEnabled = val; }
+    return _isAdChoiceEnabled;
+  };  
+  
   var _adWidth = null;
   _this.adWidth = function(num){
     if(num) { 

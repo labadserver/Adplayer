@@ -33,7 +33,10 @@ var ReferencePlayer = (function (uid, adDomElement, refAdPlayer) {
   };
 
   _this.enableAdChoice = function() {
-    updateRef('enableAdChoice', [this]);
+    if (!refAdPlayer.isAdChoiceEnabled()) {
+      refAdPlayer['enableAdChoice'].apply(_this, [this]);
+      //updateRef('enableAdChoice', [this]);
+    }
   };
 
   _this.showPrivacyInfo = function() {
