@@ -68,7 +68,7 @@ AbstractPlayer = (function(uid, adDomElement) {
   
   /* Abstract Implementation */
   _this.addEventListener = function(adEvent, callback) {}
-  _this.removeEventListener = function(adEvent, callback) {}
+  _this.removeEventListener = function(adEvent, callback, uidName) {}
   _this.addTrackingPixel = function(adEvent, url, repeat) {}
   _this.removeTrackingPixel = function(adEvent, url) {}
   _this.track = function(adEventObj, url) {}

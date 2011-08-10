@@ -4,6 +4,8 @@
 * Author: christopher.sancho@adtech.com
 * ----------------------------------------------------------------------------*/
 if (typeof AdPlayerManager === 'undefined') {
+  /*@CLASS_INSERTS@*/
+  
   /**
    * @name AdPlayerManager
    * @class Global Static Class - Manages all created <code>AdPlayer</code> instances.
@@ -19,6 +21,11 @@ if (typeof AdPlayerManager === 'undefined') {
     /** @private */ var _adPlayerList = [];
     /** @private */ var _callBackList = [];
     /** @private */ var _queue = [];
+    
+    _this.isIE  = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;
+    _this.isWin = (navigator.appVersion.toLowerCase().indexOf("win") != -1) ? true : false;
+    _this.isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;      
+    _this.isFF = (navigator.userAgent.indexOf("Firefox") != -1) ? true : false;    
     
     /**
      * @name AdPlayerManager#list
@@ -183,6 +190,17 @@ if (typeof AdPlayerManager === 'undefined') {
       return null;
     };    
     
+    _this.getPlayerByUID = function (uid) {
+      for (var i = 0; i < _adPlayerList.length; i++) {
+        if (_adPlayerList[i].uid()) {
+          if (_adPlayerList[i].uid() == uid) {
+            return _adPlayerList[i];
+          }
+        }
+      }
+      return null;      
+    };    
+    
     /**
      * @private
      * @description Dispatches all call-back function handlers added to the list.
@@ -211,9 +229,17 @@ if (typeof AdPlayerManager === 'undefined') {
         }
       } while(index < tmpLen);
     };
-  
+    
+    function init() {
+      var postMessageManager = new PostMessageManager();
+    }
+    // ------------- IFRAME STUFF ---------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------    
+
+    // ------------- IFRAME STUFF ---------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
+    
+    init();
     return _this;
   })();
-
-/*@CLASS_INSERTS@*/
 }

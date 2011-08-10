@@ -16,17 +16,26 @@ var DefaultPlayer = (function (uid, adDomElement) {
     this.adEventListObj()[adEvent].push(callback);
   };
 
-  _this.removeEventListener = function(adEvent, callback) {
+  _this.removeEventListener = function(adEvent, callback, uidName) {
     if (!AdEvent.check(adEvent)) { return; }
     if (this.adEventListObj()[adEvent]) {
       for (var i = 0; i < this.adEventListObj()[adEvent].length; i++) {
-        if (this.adEventListObj()[adEvent][i] == callback ) {
-          this.adEventListObj()[adEvent].splice(i, 1);
-          if (this.adEventListObj()[adEvent].length == 0) {
-            delete this.adEventListObj()[adEvent];
+        if (uidName) {
+          if (uidName == this.adEventListObj()[adEvent][i].uidName) {
+            this.adEventListObj()[adEvent].splice(i, 1);
+//            console.log('REMOVING!:'+callback);
+            break;            
           }
-          return;      
+        } else {
+          if (this.adEventListObj()[adEvent][i] == callback ) {
+            this.adEventListObj()[adEvent].splice(i, 1);
+//            console.log('REMOVING!:'+callback);
+            break;      
+          }
         }
+      }
+      if (this.adEventListObj()[adEvent].length == 0) {
+        delete this.adEventListObj()[adEvent];
       }
     }
   };
@@ -40,13 +49,12 @@ var DefaultPlayer = (function (uid, adDomElement) {
         var urlReq = new URLRequest(url);
         urlReq.load();
         if(!repeat) {
-        evt.player().removeEventListener(evt.type(), defaultTrackCallBack);
+          _this.removeEventListener(evt.type(), defaultTrackCallBack);
         }
       }
       defaultTrackCallBack.url = url;
       defaultTrackCallBack.repeat = repeat;
-      
-      this.addEventListener(adEvent, defaultTrackCallBack);
+      this.addEventListener(adEvent, defaultTrackCallBack, false);
     } else {
       log("Parameter 'url' must be defined", "addTrackingEvent");
     }
@@ -92,7 +100,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
 
   _this.track = function(adEventObj, url, currentPlayer) {
     if (!AdEvent.check(adEventObj.type())) { return; }
-    log(adEventObj.type(), 'track');
+//    log(adEventObj.type(), 'track');
     if (this.adEventListObj()[adEventObj.type()]) {
       var tmpLen = this.adEventListObj()[adEventObj.type()].length;
       var tempLenDiff = 0;
@@ -149,10 +157,23 @@ var DefaultPlayer = (function (uid, adDomElement) {
       this.isAdChoiceEnabled(true);
       this.privacyClickBtn = document.createElement('button');
       this.privacyClickBtn.setAttribute('class', 'privacyButton');
-      this.privacyClickBtn.setAttribute('className', 'privacyButton'); // IE Fix
+      if (AdPlayerManager.isIE) {
+        this.privacyClickBtn.setAttribute('className', 'privacyButton'); // IE Fix
+      }
       this.privacyClickBtn.innerHTML = 'Get Info';
-      this.adDomElement().style.position = "relative";
-      this.adDomElement().appendChild(this.privacyClickBtn);
+      
+//      if (AdPlayerManager.isFF) {
+//        var ffDiv = document.createElement('div');
+//        // Fixes known firefox issue that causes swf to reload when applying css position
+//        ffDiv.setAttribute('class', 'privacyButtonDiv');
+//        ffDiv.appendChild(this.privacyClickBtn);
+//        ffDiv.style.position = "relative";
+//        ffDiv.style.cssFloat = "left";
+//        this.adDomElement().appendChild(ffDiv);
+//      } else {
+        this.adDomElement().style.position = "relative";
+        this.adDomElement().appendChild(this.privacyClickBtn);        
+//      }
       
       var parentThis = this;
       this.privacyClickBtn.onclick = function() {
@@ -182,7 +203,18 @@ var DefaultPlayer = (function (uid, adDomElement) {
       var parentThis = this;
       this.privacyPanel.appendChild(privacyPanelList);
       this.privacyPanel.appendChild(privacyPanelClose);
-      this.adDomElement().appendChild(this.privacyPanel);
+      
+//      if (AdPlayerManager.isFF) {
+//        for (var i=0; i < this.adDomElement().getElementsByTagName('div').length; i++) {
+//            if(this.adDomElement().getElementsByTagName('div')[i].className == 'privacyButtonDiv') {
+//              this.adDomElement().getElementsByTagName('div')[i].appendChild(this.privacyPanel);
+//            break;
+//          }
+//        }        
+//      } else {
+        this.adDomElement().appendChild(this.privacyPanel);
+//      }
+      
       privacyPanelClose.innerHTML = 'Close';
       for (var i = 0; i < this.privacyInfoList().length; i++) {
         var privacyElement =  document.createElement('li');
@@ -207,7 +239,16 @@ var DefaultPlayer = (function (uid, adDomElement) {
   _this.hidePrivacyInfo = function() {
     if (this.privacyPanel) {
       this.isPrivacyPanelEnabled(false);
-      this.adDomElement().removeChild(this.privacyPanel);
+//      if (AdPlayerManager.isFF) {
+//        for (var i=0; i < this.adDomElement().getElementsByTagName('div').length; i++) {
+//            if(this.adDomElement().getElementsByTagName('div')[i].className == 'privacyButtonDiv') {
+//              this.adDomElement().getElementsByTagName('div')[i].removeChild(this.privacyPanel);
+//            break;
+//          }
+//        }        
+//      } else {
+        this.adDomElement().removeChild(this.privacyPanel);
+//      }      
       this.privacyPanel = null;
       this.track(new AdEvent(AdEvent.PRIVACY_CLOSE));
     }

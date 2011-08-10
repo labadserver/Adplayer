@@ -32,28 +32,22 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    if(!uid) { log('Unique ID is required.', 'AdPlayer'); return; }
    //if(!document.getElementById(domId)) { log('Dom element does not exist in document.', 'AdPlayer'); return; }
    
+   /* TODO: Clean wait and search into single method and share with PostMessageManager */
+   
    // uid, domId, null, refAdPlayer
    // uid, domId, null, null
    // uid, null, null, refAdPlayer
    // uid, null, null, null
-    
+   var _isInIFrame = (window.location != window.parent.location) ? true : false;
+   
    function init() {
-
-       /*
-      var _isInIFrame = (window.location != window.parent.location) ? true : false;
-      if (_isInIFrame) {
-        // TODO: If in iFrame - change to FramePlayer 
-        fnInit(new DefaultPlayer(uid, adDomElement));
-        return;
-      }
-    */
-     
-     
      if (domRefId && !refAdPlayer) {
        if(checkAdMgrDomList(domRefId)) {
+         //onReady(wrapFunction(AdPlayerManager.getAdPlayerById, [domRefId]), fnInit, [AdPlayerManager.getAdPlayerById(domRef)], returnDefault, [uid, domRefId, fnInit]);
          domRefObjWait(AdPlayerManager.isSearching(), domRefPlayerWait, returnDefault, [domRefId, fnInit, returnDefault]);
        } else {
          addToAdMgrList(domRefId);
+         //onReady(wrapFunction(document.getElementById, [domRefId]), parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
          if (AdPlayerManager.isSearching()) {
            domRefObjWait(AdPlayerManager.isSearching(), domRefObjWait, returnDefault, [document.getElementById(domRefId), parentDomSearch, returnDefault, [uid, domRefId, fnInit]]);
          } else {
@@ -131,13 +125,17 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
        if(adPlayer) {
 //         adPlayer.adDomElement().removeChild(document.getElementById(domRef));
          if(fnInit) {
-           log('Found player at '+adPlayer.adDomElement().id);
-           fnInit(adPlayer);
+//           log('Found player at '+adPlayer.adDomElement().id);
+           fnInit(adPlayer);  
          }
          removeFromAdMgrList(domRef);
        } else {
-         log('No AdPlayer found after parent search. Creating new player for ' + uid);
-         fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));
+//         log('No AdPlayer found after parent search. Creating new player for ' + uid);
+         if (_isInIFrame) {
+           fnInit(new IframePlayer(uid, document.getElementById(domRefId)));
+         } else {
+           fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));  
+         }         
          removeFromAdMgrList(domRef);
        }
      }     
@@ -147,8 +145,45 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
      fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));
    }
    
+/*
+   function wrapFunction (fn, params) {
+     return function() {
+         fn.apply(_this, params);
+     };
+   }   
+   
+   function onReady(obj, readyFn, readyParams, errorFn, errorParams, search) {
+     if(!search) { search = 1; }
+
+     if (search == 1) {
+       waitTimer(AdPlayerManager.isSearching(), waitTimer(obj, readyFn, readyParams, errorFn, errorParams), readyParams, errorFn, errorParams);
+     } else {
+       waitTimer(obj, readyFn, params, errorFn);
+     }
+     
+     function waitTimer(waitObj, rdyFn, par, errFn, errPar) {
+       AdPlayerManager.searchCount++;
+       var _interval = setInterval(check, 100);
+       var _this = this;
+       var _timeout = 0;
+       function check() {
+         _timeout ++;
+         if (_timeout == 100) {
+           clearInterval(_interval);
+           AdPlayerManager.searchCount--;
+           errFn.apply(_this, errPar);
+         }
+         if (waitObj) {
+           clearInterval(_interval);
+           AdPlayerManager.searchCount--;
+           rdyFn.apply(_this, par);
+         }
+       }        
+     }
+     
+   }
+*/   
    function domRefObjWait(waitObj, readyFn, errorFn, params) {
-     //AdPlayerManager.isSearching = true;
      AdPlayerManager.searchCount++;
      var _interval = setInterval(check, 100);
      var _this = this;
@@ -172,9 +207,7 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    }
    
    function domRefPlayerWait(domRef, readyFn, errorFn) {
-     //AdPlayerManager.isSearching = true;
      AdPlayerManager.searchCount++;
-     console.log('DOM REF PLAYER WIAT!');
      var _interval = setInterval(check, 100);
      var _this = this;
      var _timeout = 0;
@@ -182,15 +215,13 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
        _timeout ++;
        if (_timeout == 100) {
          clearInterval(_interval);
-         console.log('Could not find a player: ' + domRef);
-         //AdPlayerManager.isSearching = false;
+         //console.log('Could not find a player: ' + domRef);
          AdPlayerManager.searchCount--;
          errorFn.apply(_this, [uid, domRef, fnInit]);
        }
        if (AdPlayerManager.getAdPlayerById(domRef)) {
          clearInterval(_interval);
-         console.log('Found adplayer:' + domRef);
-         //AdPlayerManager.isSearching = false;
+         //console.log('Found adplayer:' + domRef);
          AdPlayerManager.searchCount--;
          readyFn.apply(_this, [AdPlayerManager.getAdPlayerById(domRef)]);
        }
@@ -208,14 +239,12 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
        if (_timeout == 100) {
          clearInterval(_interval);
 //         console.log('Could not find a player: ' + refPlayer);
-         //AdPlayerManager.isSearching = false;
          AdPlayerManager.searchCount--;
          errorFn.apply(_this, [uid, domRef, fnInit]);
        }
        if (refPlayer) {
          clearInterval(_interval);
 //         console.log('Found adplayer ('+refPlayer.uid()+') from ref player wait:' + uid);
-         //AdPlayerManager.isSearching = false;
          AdPlayerManager.searchCount--;
          if (document.getElementById(domRefId)) {
            readyFn.apply(_this, [new ReferencePlayer(uid, document.getElementById(domRefId), refPlayer)]);

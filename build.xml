@@ -1,7 +1,7 @@
 <project name="DASE_WebUI" default="execute" basedir=".">
     <description>ADTECH - Ad Player build script.</description>
 	
-	<property name="version" value="0.3.3"/>
+	<property name="version" value="0.3.4"/>
 	<property name="jsfilename" value="adplayer-${version}"/>
 	<property name="cssfilename" value="adplayer-${version}"/>
 	
@@ -27,6 +27,14 @@
 		<replace file="${bin}/index.html" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}-style.css" />
 		<replace file="${bin}/index.html" token="_@ADPLAYER_CSS-IE_FILE@_" value="${cssfilename}-style-ie.css" />
 		<replace file="${bin}/index.html" token="_@VERSION@_" value="${version} (${dist.revision}.${today})" />
+		
+  		<copy todir="${bin}" file="iframe.html" overwrite="true" />
+		<replace file="${bin}/iframe.html" token="_@ADPLAYER_JS_FILE@_" value="${jsfilename}.js" />
+		<replace file="${bin}/iframe.html" token="_@ADPLAYER_JS_FILE_MIN@_" value="${jsfilename}.min.js" />
+		<replace file="${bin}/iframe.html" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}-style.css" />
+		<replace file="${bin}/iframe.html" token="_@ADPLAYER_CSS-IE_FILE@_" value="${cssfilename}-style-ie.css" />
+		<replace file="${bin}/iframe.html" token="_@VERSION@_" value="${version} (${dist.revision}.${today})" />		
+		
 		<copy tofile="${bin}/js/${jsfilename}.js" file="${src}/AdPlayerManager.js" overwrite="true" />
   	</target>
 	
@@ -34,12 +42,15 @@
 		<concat destfile="${bin}/tmp/class_insert.txt" fixlastline="true">	
 			<filelist dir="${src}">
 				<!-- DEFINE Class list order -->
+				<file name="PostMessage.js"/>
+				<file name="PostMessageManager.js"/>
 				<file name="PrivacyInfo.js"/>
 				<file name="URLRequest.js"/>
 				<file name="AdEvent.js"/>
 				<file name="AbstractPlayer.js"/>
 				<file name="DefaultPlayer.js"/>
 				<file name="ReferencePlayer.js"/>
+				<file name="IframePlayer.js"/>
 				<file name="PlayerFactory.js"/>
 				<file name="Util.js"/>
 				<file name="AdPlayer.js"/>

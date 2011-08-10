@@ -65,7 +65,7 @@ function AdEvent(type, data) {
    */
   this.type = function(val){
     if(val) { _type = val; }
-      return _type;
+    return _type;
   };
   if (type) { _type = type; }
   

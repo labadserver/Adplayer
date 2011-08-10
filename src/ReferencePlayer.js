@@ -12,8 +12,8 @@ var ReferencePlayer = (function (uid, adDomElement, refAdPlayer) {
     updateRef('addEventListener', [adEvent, callback, this]);    
   };
 
-  _this.removeEventListener = function(adEvent, callback) {
-    updateRef('removeEventListener', [adEvent, callback, this]);    
+  _this.removeEventListener = function(adEvent, callback, uidName) {
+    updateRef('removeEventListener', [adEvent, callback, uidName, this]);    
   };
 
   _this.addTrackingPixel = function(adEvent, url, repeat) {

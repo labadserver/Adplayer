@@ -148,7 +148,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
     return function() {
         fn.apply(context, params);
     };
-  }    
+  }
   
   /** 
    * @name AdPlayer#addEventListener
@@ -191,8 +191,8 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * }
    * adPlayer.addEventListener(AdEvent.TRACK, trackEventHandler); 
    */  
-  _this.removeEventListener = function(adEvent, callback) {
-    queueCmd('removeEventListener', [adEvent, callback, this]);
+  _this.removeEventListener = function(adEvent, callback, uidName) {
+    queueCmd('removeEventListener', [adEvent, callback, uidName, this]);
   };
 
   /** 
@@ -357,6 +357,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
       _player = player;
 
       AdPlayerManager.addAdPlayer(_player);
+      
       if (fnInit) {
         fnInit(_this);  
       }

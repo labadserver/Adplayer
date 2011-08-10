@@ -1,220 +1,182 @@
 /* -----------------------------------------------------------------------------
-* AdPlayer v0.3.2.dev.080411
+* AdPlayer v0.3.4.dev.080911
 * 
 * Author: christopher.sancho@adtech.com
 * ----------------------------------------------------------------------------*/
 if (typeof AdPlayerManager === 'undefined') {
-  /**
-   * @name AdPlayerManager
-   * @class Global Static Class - Manages all created <code>AdPlayer</code> instances.
-   * @description Globally Manages all created <code>AdPlayer</code> instances.
-   *              <code>AdPlayerManager</code> is a singleton class and ensures it
-   *              is the only available <code>AdPlayerManager</code> throughout a
-   *              ad delivery flow.  
-   *
-   * @author christopher.sancho@adtech.com
-   */
-  var AdPlayerManager = (function () {
-    /** @private */ var _this = {};
-    /** @private */ var _adPlayerList = [];
-    /** @private */ var _callBackList = [];
-    /** @private */ var _queue = [];
-    
-    /**
-     * @name AdPlayerManager#list
-     * @field
-     * @description List that contains instances of <code>AdPlayer</code>
-     *              added to the manager.  
-     * @returns {Array - Read Only} Returns a list list of <code>AdPlayer</code> instances.
-     * @see AdPlayerManager#register
-     * @example
-     * // Get reference to property
-     * var adPlayerList = AdPlayerManager.list();
-    */    
-    _this.list = function() {
-      return _adPlayerList;
-    };    
-    
-    var _domIdList = [];
-    _this.domIdList = function() {
-      return _domIdList;
-    }; 
-    
-    _this.searchCount = 0;
-    _this.isSearching = function(val) {
-      if (_this.searchCount == 0) {
-        return false;
-      } else {
-        return true;
-      }
-    }    
-    
-    /**
-     * @name AdPlayerManager#addAdPlayer
-     * @function
-     * @description Adds an <code>AdPlayer</code> instance to the management list.  When a new
-     *              <code>AdPlayer</code> instance is created, it is automatically passed to
-     *              this method.  Immediately following, all call-backs, registerd through
-     *              <code>AdPlayerManger.register(adPlayer)</code> are dispatched and passed
-     *              with the newly created <code>AdPlayer</code>.
-     *              
-     * @param adPlayer {AdPlayer} <code>AdPlayer</code> instance to add to management list.
-     * @see AdPlayerManger#register
-     * 
-     * @example
-     * // Add an AdPlayer instance to the manager.
-     * var adPlayer = new AdPlayer(document.getElementById('myTagDivContainer'));
-     * AdPlayerManager.addAdPlayer(adPlayer);
-    */
-    _this.addAdPlayer = function(adPlayer) {
-      for (var i=0; i < _adPlayerList.length; i++) {
-        if(_adPlayerList[i].adDomElement().id == adPlayer.adDomElement().id) {
-          return;
-        }
-      }
-      _adPlayerList.push(adPlayer);
-      _dispatchCallBacks(adPlayer);
-    };
-    
-    /**
-     * @name AdPlayerManager#register
-     * @function
-     * @description Registers a function that will be called when an <code>AdPlayer</code> instance
-     *              is created. Call-back handler function must expect a parameter that accepts
-     *              an <code>AdPlayer</code> instance.
-     * 
-     * @param callback {function} The call-back handler function.
-     * 
-     * @example
-     * function myCallBackHandler(adPlayer) {
-     *   adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');
-     * }
-     * AdPlayerManager.register(myCallBackHandler);
-     */
-    _this.register = function(callback) {
-      _callBackList.push(callback);
-    };
-    
-    /**
-     * @name AdPlayerManager#unregister
-     * @function
-     * @description Un-Registers a function added to the manager list.
-     * 
-     * @param callback {function} The call-back handler function.
-     * 
-     * @example
-     * function myCallBackHandler(adPlayer) {
-     *   adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');
-     * }
-     * AdPlayerManager.unregister(myCallBackHandler);
-     */
-    _this.unregister = function(callback) {
-      for (var i = 0; i < _callBackList.length; i++) {
-        if (_callBackList[i] == callback) {
-          _callBackList.shift(i, 1);
-          return;
-        }
-      }
-    };
-    
-    /**
-     * @name AdPlayerManager#getAdPlayerById
-     * @function
-     * @description Returns an instance of an <code>AdPlayer</code> associated with
-     *              a DOM element id name
-     * 
-     * @param id {String} Id of DOM element associated with <code>AdPlayer</code>.
-     * @return {Adplayer} AdPlayer instance associated with id. 
-     * 
-     * @example
-     * &lt;div id=&quot;adPlayerContainer&quot;&gt;
-     *  &lt;script type=&quot;text/javascript&quot;&gt;
-     *    var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
-     *    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
-     *  &lt;/script&gt;
-     * &lt;/div&gt;
-     * &lt;script type=&quot;text/javascript&quot;&gt;
-     *  var adPlayer = AdPlayerManager.getAdPlayerById('adPlayerContainer');
-     * &lt;/script&gt;
-     */
-    _this.getAdPlayerById = function(id) {
-      for (var i = 0; i < _adPlayerList.length; i++) {
-        if (_adPlayerList[i].adDomElement()) {
-          if (_adPlayerList[i].adDomElement().id == id) {
-            return _adPlayerList[i];
-          }
-        } else {
-          log('DOM element is not properly specified.','getPlayerById');
-        }
-      }
-      return null;
-    };
+  var PostMessage = (function () {
+	var _this = {};
+	_this.OUTGOING = 'PostMessage.Outgoing';
+	_this.INCOMING = 'PostMessage.Incoming';
+	_this.FUNCTION = 'PostMessage.Function: ';
+	_this.ADEVENT = 'PostMessage.ADEVENT: ';
+	return _this;
+})();
+var PostMessageManager = (function () {
+  var _this = {};
 
-    /**
-     * @name AdPlayerManager#getPlayerByDomElement
-     * @function
-     * @description Returns an instance of an <code>AdPlayer</code> associated with
-     *              a DOM element. 
-     * 
-     * @param dom {String} DOM element object associated with <code>AdPlayer</code>.
-     * @return {Adplayer} AdPlayer instance associated with dom element. 
-     * 
-     * @example
-     * &lt;div id=&quot;adPlayerContainer&quot;&gt;
-     *  &lt;script type=&quot;text/javascript&quot;&gt;
-     *    var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
-     *    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
-     *  &lt;/script&gt;
-     * &lt;/div&gt;
-     * &lt;script type=&quot;text/javascript&quot;&gt;
-     *  var adPlayer = AdPlayerManager.getPlayerByDomElement('adPlayerContainer');
-     * &lt;/script&gt;
-     */
-    _this.getPlayerByDomElement = function(dom) {
-      for (var i = 0; i < _adPlayerList.length; i++) {
-        if (_adPlayerList[i].adDomElement()) {
-          if (_adPlayerList[i].adDomElement() == dom) {
-            return _adPlayerList[i];
-          }
-        } else {
-          log('DOM element is not properly specified.','getPlayerByDomElement');
-        }
-      }
-      return null;
-    };    
-    
-    /**
-     * @private
-     * @description Dispatches all call-back function handlers added to the list.
-     */
-    function _dispatchCallBacks(adPlayer) {
-      var tmpLen = _callBackList.length;
-      var tempLenDiff = 0;
-      var index = 0;
-      do {
-        // call callback
-        if(typeof _callBackList[index] == 'function') {
-          _callBackList[index](adPlayer);
-        }
-        
-        // check if the temp length has changed
-        if(_callBackList > 0) {
-          tempLenDiff = tmpLen-_callBackList.length;
-          tmpLen = _callBackList.length;
-        } else {
-          tmpLen = 0;
-        }
-        
-        // if no difference then proceed to next index
-        if (tempLenDiff == 0) {
-          index++;
-        }
-      } while(index < tmpLen);
-    };
+  /* TODO: Clean dom search and share with PlayerFactory searching */
   
-    return _this;
-  })();
+  _this.getPlayerByDomSearch = function (dom) {
+    var par = dom.parentNode;
+    while (!AdPlayerManager.getAdPlayerById(par.id)) {
+      par = par.parentNode;
+      parName = par.nodeName.toLowerCase();
+      if ((parName == 'body') || (parName == 'html')) { break; }
+    }
+    if(par) {
+      var adPlayer = AdPlayerManager.getAdPlayerById(par.id);
+      if(adPlayer) {
+        //if(fnInit) {
+//          log('Found player at '+adPlayer.adDomElement().id);
+          return(adPlayer);
+        //}
+        //removeFromAdMgrList(domRef);
+      } else {
+//        log('No AdPlayer found after parent search. Creating new player for ' + dom.id);
+        //fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));
+        //removeFromAdMgrList(domRef);
+        return null;
+      }
+    }     
+  }    
+    
+    _this.domRefPlayerWait = function (dom, msg, iframe, readyFn, errorFn) {
+      AdPlayerManager.searchCount++;
+      var _interval = setInterval(check, 100);
+      var _this = this;
+      var _timeout = 0;
+      function check() {
+        _timeout ++;
+        if (_timeout == 100) {
+          clearInterval(_interval);
+//          console.log('Could not find a player: ' + domRef);
+          AdPlayerManager.searchCount--;
+          //errorFn.apply(_this, [uid, domRef, fnInit]);
+        }
+        if (dom) {
+          clearInterval(_interval);
+//          console.log('Found adplayer:' + dom.id);
+          AdPlayerManager.searchCount--;
+          readyTest(_this.getPlayerByDomSearch(dom),msg,iframe);
+        }
+      }
+    }
+    
+    _this.errorFn = function (){
+//      console.log('BLAHG!!!');
+    }
+  
+    function readyTest(player, msg, iframe) {
+      if (player) {
+        var jsonValue = (new Function( "return( " + msg + " );" ))();
+        var params = jsonValue.params.split(',');
+        for (var t=0; t < params.length; t++) {
+          // CHECKS if any contains a function to properly wrap and send off
+          switch (jsonValue.fn){
+            case 'addEventListener':
+              if (unescape(params[t]).match(PostMessage.FUNCTION)) {
+                var funcN = unescape(params[t]).slice(PostMessage.FUNCTION.length);
+                function funcMe (evt) {
+                  var jsonString = '{ "postType":"'+PostMessage.INCOMING+'", "uid":"'+jsonValue.uid+'", "fn":"'+funcN+'", "evtType":"'+evt.type()+'", "uidName:":"'+jsonValue.uidName+'"}';
+                  iframe.contentWindow.postMessage (jsonString, "*");
+                }
+                funcMe.uidName = jsonValue.uidName;
+                params[t] = funcMe;
+              }
+              break;
+          }
+        }
+        
+        // console.log(player.uid() +': '+jsonValue.fn);
+        switch (jsonValue.fn){
+          case 'removeEventListener':
+              params.push(jsonValue.uidName.toString());
+            break;
+          case 'track':
+            //console.log(params[0]);
+            adEvtObj = new AdEvent(params[0]);
+            adEvtObj.target(player);
+            adEvtObj.currentTarget(player);
+            player.track(new AdEvent(params[0]), params[1]);
+            return;
+            break;
+          case 'addTrackingPixel':
+            //console.log(params);
+            break;
+        }
 
+        player[jsonValue.fn].apply(player, params);
+      }
+    }      
+    
+    
+  function messageHandler(evt) {
+    //console.log(evt.source.location);
+    //console.log(evt.source);
+    //console.log(event.origin);
+    var json = (new Function( "return( " + evt.data + " );" ))();
+    if(json.postType == PostMessage.OUTGOING) {
+      outMsgHandler(evt);
+    } else if (json.postType == PostMessage.INCOMING){
+      inMsgHandler(evt)
+    }
+  } 
+  
+  function outMsgHandler(evt) {
+    for (var i=0; i < document.getElementsByTagName('iframe').length; i++){
+      if(document.getElementsByTagName('iframe')[i].contentWindow == evt.source) {
+        var iframe = document.getElementsByTagName('iframe')[i];
+        _this.domRefPlayerWait(iframe, evt.data, iframe, readyTest, _this.erroFn);          
+        break;
+      }      
+      /*if(evt.source.frameElement) {
+        if(document.getElementsByTagName('iframe')[i] == evt.source.frameElement) {
+          var iframe = document.getElementsByTagName('iframe')[i];
+          _this.domRefPlayerWait(iframe, evt.data, iframe, readyTest, _this.erroFn);          
+          break;
+        }
+      } else if((document.getElementsByTagName('iframe')[i].src).match(evt.origin)) {
+        var iframe = document.getElementsByTagName('iframe')[i];
+        _this.domRefPlayerWait(iframe, evt.data, iframe, readyTest, _this.erroFn);          
+        break;        
+      }*/
+    }      
+  }
+  
+  function inMsgHandler(evt) {
+    var json = (new Function( "return( " + evt.data + " );" ))();
+    var player = AdPlayerManager.getPlayerByUID(json.uid);
+    
+    switch (json.fn){
+      case 'defaultTrackCallBack':
+      break;
+    default: 
+      var func = (new Function( "return( " + json.fn + " );" ))();
+      // NEED TO TARGET THE CURRENT PLAYER THEN SEND BACK
+      if (player){
+        var event = new AdEvent(json.evtType);
+        event.target(player);
+        func(event);
+      }
+      break;
+    }
+  }    
+    
+  function init() {
+    if (window.addEventListener) {  // all browsers except IE before version 9
+        window.addEventListener ("message", messageHandler, false);
+    }
+    else {
+        if (window.attachEvent) {   // IE before version 9
+            window.attachEvent("onmessage", messageHandler);
+        }
+    }    
+  }
+  
+  init();
+  return _this;
+});
 /**
  * @name PrivacyInfo
  * @class Contains reference to a party's ad privacy information.
@@ -374,7 +336,7 @@ function AdEvent(type, data) {
    */
   this.type = function(val){
     if(val) { _type = val; }
-      return _type;
+    return _type;
   };
   if (type) { _type = type; }
   
@@ -526,7 +488,7 @@ AbstractPlayer = (function(uid, adDomElement) {
   
   /* Abstract Implementation */
   _this.addEventListener = function(adEvent, callback) {}
-  _this.removeEventListener = function(adEvent, callback) {}
+  _this.removeEventListener = function(adEvent, callback, uidName) {}
   _this.addTrackingPixel = function(adEvent, url, repeat) {}
   _this.removeTrackingPixel = function(adEvent, url) {}
   _this.track = function(adEventObj, url) {}
@@ -556,17 +518,26 @@ var DefaultPlayer = (function (uid, adDomElement) {
     this.adEventListObj()[adEvent].push(callback);
   };
 
-  _this.removeEventListener = function(adEvent, callback) {
+  _this.removeEventListener = function(adEvent, callback, uidName) {
     if (!AdEvent.check(adEvent)) { return; }
     if (this.adEventListObj()[adEvent]) {
       for (var i = 0; i < this.adEventListObj()[adEvent].length; i++) {
-        if (this.adEventListObj()[adEvent][i] == callback ) {
-          this.adEventListObj()[adEvent].splice(i, 1);
-          if (this.adEventListObj()[adEvent].length == 0) {
-            delete this.adEventListObj()[adEvent];
+        if (uidName) {
+          if (uidName == this.adEventListObj()[adEvent][i].uidName) {
+            this.adEventListObj()[adEvent].splice(i, 1);
+//            console.log('REMOVING!:'+callback);
+            break;            
           }
-          return;      
+        } else {
+          if (this.adEventListObj()[adEvent][i] == callback ) {
+            this.adEventListObj()[adEvent].splice(i, 1);
+//            console.log('REMOVING!:'+callback);
+            break;      
+          }
         }
+      }
+      if (this.adEventListObj()[adEvent].length == 0) {
+        delete this.adEventListObj()[adEvent];
       }
     }
   };
@@ -580,13 +551,12 @@ var DefaultPlayer = (function (uid, adDomElement) {
         var urlReq = new URLRequest(url);
         urlReq.load();
         if(!repeat) {
-        evt.player().removeEventListener(evt.type(), defaultTrackCallBack);
+          _this.removeEventListener(evt.type(), defaultTrackCallBack);
         }
       }
       defaultTrackCallBack.url = url;
       defaultTrackCallBack.repeat = repeat;
-      
-      this.addEventListener(adEvent, defaultTrackCallBack);
+      this.addEventListener(adEvent, defaultTrackCallBack, false);
     } else {
       log("Parameter 'url' must be defined", "addTrackingEvent");
     }
@@ -632,7 +602,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
 
   _this.track = function(adEventObj, url, currentPlayer) {
     if (!AdEvent.check(adEventObj.type())) { return; }
-    log(adEventObj.type(), 'track');
+//    log(adEventObj.type(), 'track');
     if (this.adEventListObj()[adEventObj.type()]) {
       var tmpLen = this.adEventListObj()[adEventObj.type()].length;
       var tempLenDiff = 0;
@@ -689,10 +659,23 @@ var DefaultPlayer = (function (uid, adDomElement) {
       this.isAdChoiceEnabled(true);
       this.privacyClickBtn = document.createElement('button');
       this.privacyClickBtn.setAttribute('class', 'privacyButton');
-      this.privacyClickBtn.setAttribute('className', 'privacyButton'); // IE Fix
+      if (AdPlayerManager.isIE) {
+        this.privacyClickBtn.setAttribute('className', 'privacyButton'); // IE Fix
+      }
       this.privacyClickBtn.innerHTML = 'Get Info';
-      this.adDomElement().style.position = "relative";
-      this.adDomElement().appendChild(this.privacyClickBtn);
+      
+//      if (AdPlayerManager.isFF) {
+//        var ffDiv = document.createElement('div');
+//        // Fixes known firefox issue that causes swf to reload when applying css position
+//        ffDiv.setAttribute('class', 'privacyButtonDiv');
+//        ffDiv.appendChild(this.privacyClickBtn);
+//        ffDiv.style.position = "relative";
+//        ffDiv.style.cssFloat = "left";
+//        this.adDomElement().appendChild(ffDiv);
+//      } else {
+        this.adDomElement().style.position = "relative";
+        this.adDomElement().appendChild(this.privacyClickBtn);        
+//      }
       
       var parentThis = this;
       this.privacyClickBtn.onclick = function() {
@@ -722,7 +705,18 @@ var DefaultPlayer = (function (uid, adDomElement) {
       var parentThis = this;
       this.privacyPanel.appendChild(privacyPanelList);
       this.privacyPanel.appendChild(privacyPanelClose);
-      this.adDomElement().appendChild(this.privacyPanel);
+      
+//      if (AdPlayerManager.isFF) {
+//        for (var i=0; i < this.adDomElement().getElementsByTagName('div').length; i++) {
+//            if(this.adDomElement().getElementsByTagName('div')[i].className == 'privacyButtonDiv') {
+//              this.adDomElement().getElementsByTagName('div')[i].appendChild(this.privacyPanel);
+//            break;
+//          }
+//        }        
+//      } else {
+        this.adDomElement().appendChild(this.privacyPanel);
+//      }
+      
       privacyPanelClose.innerHTML = 'Close';
       for (var i = 0; i < this.privacyInfoList().length; i++) {
         var privacyElement =  document.createElement('li');
@@ -747,7 +741,16 @@ var DefaultPlayer = (function (uid, adDomElement) {
   _this.hidePrivacyInfo = function() {
     if (this.privacyPanel) {
       this.isPrivacyPanelEnabled(false);
-      this.adDomElement().removeChild(this.privacyPanel);
+//      if (AdPlayerManager.isFF) {
+//        for (var i=0; i < this.adDomElement().getElementsByTagName('div').length; i++) {
+//            if(this.adDomElement().getElementsByTagName('div')[i].className == 'privacyButtonDiv') {
+//              this.adDomElement().getElementsByTagName('div')[i].removeChild(this.privacyPanel);
+//            break;
+//          }
+//        }        
+//      } else {
+        this.adDomElement().removeChild(this.privacyPanel);
+//      }      
       this.privacyPanel = null;
       this.track(new AdEvent(AdEvent.PRIVACY_CLOSE));
     }
@@ -769,8 +772,8 @@ var ReferencePlayer = (function (uid, adDomElement, refAdPlayer) {
     updateRef('addEventListener', [adEvent, callback, this]);    
   };
 
-  _this.removeEventListener = function(adEvent, callback) {
-    updateRef('removeEventListener', [adEvent, callback, this]);    
+  _this.removeEventListener = function(adEvent, callback, uidName) {
+    updateRef('removeEventListener', [adEvent, callback, uidName, this]);    
   };
 
   _this.addTrackingPixel = function(adEvent, url, repeat) {
@@ -802,6 +805,148 @@ var ReferencePlayer = (function (uid, adDomElement, refAdPlayer) {
 
   _this.hidePrivacyInfo = function() {
     updateRef('hidePrivacyInfo', [this]);    
+  };  
+  
+  return _this;
+});
+/** @private */
+var IframePlayer = (function (uid, adDomElement) {
+  /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
+  /** @private */ var _defaultPlayer = new DefaultPlayer(uid, adDomElement);
+  
+  function updateRef(fnName, params){
+    _defaultPlayer[fnName].apply(_this, params);
+  }
+  
+  function sendToParentFrame(fn, params, json) {
+    jsonString = '{ "postType":"'+PostMessage.OUTGOING+'", "uid":"'+uid+'", "fn":"'+fn+'", "params":"'+params.toString()+'" '
+    if(json) { jsonString += (', ' + json); }
+    jsonString += '}';
+    parent.postMessage (jsonString, "*");
+  }
+  
+  function getFunctionName(funcStr) {
+    var funcStrClean = funcStr.replace(/\s+/g, " ");
+    if (funcStrClean.search(/function /i, "") == 0) {
+      funcStartPos = funcStrClean.search(/function /i, "");
+      funcEndPos = 0;
+      funcLen = 9;
+      funcEndPos = funcStartPos + funcLen;
+      startPos = funcEndPos;
+      endPos = funcStrClean.search(/\(/);
+    } else {
+      if (funcStrClean.search(/var /i, "") == 0) {
+          varLen = 4;
+          startPos = 4;
+      } else {
+          varLen = 0;
+          startPos = 0;
+      }
+      endPos = funcStrClean.search(/\=/);
+    }
+    funcName = funcStrClean.substring(startPos,endPos).replace(/\s+/g, "");
+    return escape(PostMessage.FUNCTION + funcName);
+  }  
+  
+  _this.addEventListener = function(adEvent, callback) {
+    callback.uidName = uid + new Date().getTime();
+    updateRef('addEventListener', [adEvent, callback, this]);
+    sendToParentFrame('addEventListener', [adEvent, getFunctionName(callback.toString())], '"uidName":"'+callback.uidName+'"');
+  };
+
+  _this.removeEventListener = function(adEvent, callback, uidName) {
+    updateRef('removeEventListener', [adEvent, callback, uidName, this]);
+    sendToParentFrame('removeEventListener', [adEvent, getFunctionName(callback.toString())], '"uidName":"'+callback.uidName+'"');
+  };
+
+  _this.addTrackingPixel = function(adEvent, url, repeat) {
+    if (!AdEvent.check(adEvent)) { return; }
+    if (repeat === undefined) { repeat = true; }
+    if (url) {
+      /** @private */
+      function defaultTrackCallBack(evt) {
+        var urlReq = new URLRequest(url);
+        urlReq.load();
+        if(!repeat) {
+          _this.removeEventListener(evt.type(), defaultTrackCallBack);
+        }
+      }
+      defaultTrackCallBack.url = url;
+      defaultTrackCallBack.repeat = repeat;
+      this.addEventListener(adEvent, defaultTrackCallBack, false);
+    } else {
+      log("Parameter 'url' must be defined", "addTrackingEvent");
+    }    
+    //updateRef('addTrackingPixel', [adEvent, url, repeat, this]);
+    //sendToParentFrame('addTrackingPixel', [adEvent, url, repeat]);
+  };
+
+  _this.removeTrackingPixel = function(adEvent, url) {
+    if (!AdEvent.check(adEvent)) { return; }
+    if (this.adEventListObj()[adEvent]) {
+      var tmpLen = this.adEventListObj()[adEvent].length;
+      var tempLenDiff = 0;
+      var index = 0;
+      do {
+        // Run through loop and remove all tracking that matches url
+        if (url) {
+          if (this.adEventListObj()[adEvent][index].name == 'defaultTrackCallBack') {
+            if (this.adEventListObj()[adEvent][index].url) { // remove all
+              if (this.adEventListObj()[adEvent][index].url == url) {
+                this.adEventListObj()[adEvent].splice(index, 1);
+                if (this.adEventListObj()[adEvent].length == 0) {
+                  delete this.adEventListObj()[adEvent];
+                  return;
+                }
+              }
+            }
+          }
+        }
+        
+        // check if the temp length has changed
+        if(this.adEventListObj()[adEvent]) {
+          tempLenDiff = tmpLen-this.adEventListObj()[adEvent].length;
+          tmpLen = this.adEventListObj()[adEvent].length;
+        } else {
+          tmpLen = 0;
+        }
+        
+        // if no difference then proceed to next index
+        if (tempLenDiff == 0) {
+          index++;
+        }
+      } while(index < tmpLen);
+    }    
+    //updateRef('removeTrackingPixel', [adEvent, url, this]);
+    //sendToParentFrame('removeTrackingPixel', [adEvent, url]);
+  };
+
+  _this.track = function(adEventObj, url, currentPlayer) {
+    updateRef('track', [adEventObj, url, currentPlayer, this]);
+    
+
+    // TODO: Temporarily passes string value
+    sendToParentFrame('track', [adEventObj.type(), url, 'null']);
+  };
+
+  _this.addPrivacyInfo = function(adServer, message, url) {
+    updateRef('addPrivacyInfo', [adServer, message, url, this]);
+    sendToParentFrame('addPrivacyInfo', [adServer, message, url]);
+  };
+
+  _this.enableAdChoice = function() {
+    //updateRef('enableAdChoice', []);
+    sendToParentFrame('enableAdChoice', []);
+  };
+
+  _this.showPrivacyInfo = function() {
+    updateRef('showPrivacyInfo', [this]);
+    sendToParentFrame('showPrivacyInfo', [null]);
+  };
+
+  _this.hidePrivacyInfo = function() {
+    updateRef('hidePrivacyInfo', [this]);
+    sendToParentFrame('hidePrivacyInfo', [null]);
   };  
   
   return _this;
@@ -840,28 +985,22 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    if(!uid) { log('Unique ID is required.', 'AdPlayer'); return; }
    //if(!document.getElementById(domId)) { log('Dom element does not exist in document.', 'AdPlayer'); return; }
    
+   /* TODO: Clean wait and search into single method and share with PostMessageManager */
+   
    // uid, domId, null, refAdPlayer
    // uid, domId, null, null
    // uid, null, null, refAdPlayer
    // uid, null, null, null
-    
+   var _isInIFrame = (window.location != window.parent.location) ? true : false;
+   
    function init() {
-
-       /*
-      var _isInIFrame = (window.location != window.parent.location) ? true : false;
-      if (_isInIFrame) {
-        // TODO: If in iFrame - change to FramePlayer 
-        fnInit(new DefaultPlayer(uid, adDomElement));
-        return;
-      }
-    */
-     
-     
      if (domRefId && !refAdPlayer) {
        if(checkAdMgrDomList(domRefId)) {
+         //onReady(wrapFunction(AdPlayerManager.getAdPlayerById, [domRefId]), fnInit, [AdPlayerManager.getAdPlayerById(domRef)], returnDefault, [uid, domRefId, fnInit]);
          domRefObjWait(AdPlayerManager.isSearching(), domRefPlayerWait, returnDefault, [domRefId, fnInit, returnDefault]);
        } else {
          addToAdMgrList(domRefId);
+         //onReady(wrapFunction(document.getElementById, [domRefId]), parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
          if (AdPlayerManager.isSearching()) {
            domRefObjWait(AdPlayerManager.isSearching(), domRefObjWait, returnDefault, [document.getElementById(domRefId), parentDomSearch, returnDefault, [uid, domRefId, fnInit]]);
          } else {
@@ -939,13 +1078,17 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
        if(adPlayer) {
 //         adPlayer.adDomElement().removeChild(document.getElementById(domRef));
          if(fnInit) {
-           log('Found player at '+adPlayer.adDomElement().id);
-           fnInit(adPlayer);
+//           log('Found player at '+adPlayer.adDomElement().id);
+           fnInit(adPlayer);  
          }
          removeFromAdMgrList(domRef);
        } else {
-         log('No AdPlayer found after parent search. Creating new player for ' + uid);
-         fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));
+//         log('No AdPlayer found after parent search. Creating new player for ' + uid);
+         if (_isInIFrame) {
+           fnInit(new IframePlayer(uid, document.getElementById(domRefId)));
+         } else {
+           fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));  
+         }         
          removeFromAdMgrList(domRef);
        }
      }     
@@ -955,8 +1098,45 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
      fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));
    }
    
+/*
+   function wrapFunction (fn, params) {
+     return function() {
+         fn.apply(_this, params);
+     };
+   }   
+   
+   function onReady(obj, readyFn, readyParams, errorFn, errorParams, search) {
+     if(!search) { search = 1; }
+
+     if (search == 1) {
+       waitTimer(AdPlayerManager.isSearching(), waitTimer(obj, readyFn, readyParams, errorFn, errorParams), readyParams, errorFn, errorParams);
+     } else {
+       waitTimer(obj, readyFn, params, errorFn);
+     }
+     
+     function waitTimer(waitObj, rdyFn, par, errFn, errPar) {
+       AdPlayerManager.searchCount++;
+       var _interval = setInterval(check, 100);
+       var _this = this;
+       var _timeout = 0;
+       function check() {
+         _timeout ++;
+         if (_timeout == 100) {
+           clearInterval(_interval);
+           AdPlayerManager.searchCount--;
+           errFn.apply(_this, errPar);
+         }
+         if (waitObj) {
+           clearInterval(_interval);
+           AdPlayerManager.searchCount--;
+           rdyFn.apply(_this, par);
+         }
+       }        
+     }
+     
+   }
+*/   
    function domRefObjWait(waitObj, readyFn, errorFn, params) {
-     //AdPlayerManager.isSearching = true;
      AdPlayerManager.searchCount++;
      var _interval = setInterval(check, 100);
      var _this = this;
@@ -980,9 +1160,7 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    }
    
    function domRefPlayerWait(domRef, readyFn, errorFn) {
-     //AdPlayerManager.isSearching = true;
      AdPlayerManager.searchCount++;
-     console.log('DOM REF PLAYER WIAT!');
      var _interval = setInterval(check, 100);
      var _this = this;
      var _timeout = 0;
@@ -990,15 +1168,13 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
        _timeout ++;
        if (_timeout == 100) {
          clearInterval(_interval);
-         console.log('Could not find a player: ' + domRef);
-         //AdPlayerManager.isSearching = false;
+         //console.log('Could not find a player: ' + domRef);
          AdPlayerManager.searchCount--;
          errorFn.apply(_this, [uid, domRef, fnInit]);
        }
        if (AdPlayerManager.getAdPlayerById(domRef)) {
          clearInterval(_interval);
-         console.log('Found adplayer:' + domRef);
-         //AdPlayerManager.isSearching = false;
+         //console.log('Found adplayer:' + domRef);
          AdPlayerManager.searchCount--;
          readyFn.apply(_this, [AdPlayerManager.getAdPlayerById(domRef)]);
        }
@@ -1016,14 +1192,12 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
        if (_timeout == 100) {
          clearInterval(_interval);
 //         console.log('Could not find a player: ' + refPlayer);
-         //AdPlayerManager.isSearching = false;
          AdPlayerManager.searchCount--;
          errorFn.apply(_this, [uid, domRef, fnInit]);
        }
        if (refPlayer) {
          clearInterval(_interval);
 //         console.log('Found adplayer ('+refPlayer.uid()+') from ref player wait:' + uid);
-         //AdPlayerManager.isSearching = false;
          AdPlayerManager.searchCount--;
          if (document.getElementById(domRefId)) {
            readyFn.apply(_this, [new ReferencePlayer(uid, document.getElementById(domRefId), refPlayer)]);
@@ -1212,7 +1386,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
     return function() {
         fn.apply(context, params);
     };
-  }    
+  }
   
   /** 
    * @name AdPlayer#addEventListener
@@ -1255,8 +1429,8 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * }
    * adPlayer.addEventListener(AdEvent.TRACK, trackEventHandler); 
    */  
-  _this.removeEventListener = function(adEvent, callback) {
-    queueCmd('removeEventListener', [adEvent, callback, this]);
+  _this.removeEventListener = function(adEvent, callback, uidName) {
+    queueCmd('removeEventListener', [adEvent, callback, uidName, this]);
   };
 
   /** 
@@ -1421,6 +1595,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
       _player = player;
 
       AdPlayerManager.addAdPlayer(_player);
+      
       if (fnInit) {
         fnInit(_this);  
       }
@@ -1435,4 +1610,241 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   return _this;
 });
 
+  
+  /**
+   * @name AdPlayerManager
+   * @class Global Static Class - Manages all created <code>AdPlayer</code> instances.
+   * @description Globally Manages all created <code>AdPlayer</code> instances.
+   *              <code>AdPlayerManager</code> is a singleton class and ensures it
+   *              is the only available <code>AdPlayerManager</code> throughout a
+   *              ad delivery flow.  
+   *
+   * @author christopher.sancho@adtech.com
+   */
+  var AdPlayerManager = (function () {
+    /** @private */ var _this = {};
+    /** @private */ var _adPlayerList = [];
+    /** @private */ var _callBackList = [];
+    /** @private */ var _queue = [];
+    
+    _this.isIE  = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;
+    _this.isWin = (navigator.appVersion.toLowerCase().indexOf("win") != -1) ? true : false;
+    _this.isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;      
+    _this.isFF = (navigator.userAgent.indexOf("Firefox") != -1) ? true : false;    
+    
+    /**
+     * @name AdPlayerManager#list
+     * @field
+     * @description List that contains instances of <code>AdPlayer</code>
+     *              added to the manager.  
+     * @returns {Array - Read Only} Returns a list list of <code>AdPlayer</code> instances.
+     * @see AdPlayerManager#register
+     * @example
+     * // Get reference to property
+     * var adPlayerList = AdPlayerManager.list();
+    */    
+    _this.list = function() {
+      return _adPlayerList;
+    };    
+    
+    var _domIdList = [];
+    _this.domIdList = function() {
+      return _domIdList;
+    }; 
+    
+    _this.searchCount = 0;
+    _this.isSearching = function(val) {
+      if (_this.searchCount == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    }    
+    
+    /**
+     * @name AdPlayerManager#addAdPlayer
+     * @function
+     * @description Adds an <code>AdPlayer</code> instance to the management list.  When a new
+     *              <code>AdPlayer</code> instance is created, it is automatically passed to
+     *              this method.  Immediately following, all call-backs, registerd through
+     *              <code>AdPlayerManger.register(adPlayer)</code> are dispatched and passed
+     *              with the newly created <code>AdPlayer</code>.
+     *              
+     * @param adPlayer {AdPlayer} <code>AdPlayer</code> instance to add to management list.
+     * @see AdPlayerManger#register
+     * 
+     * @example
+     * // Add an AdPlayer instance to the manager.
+     * var adPlayer = new AdPlayer(document.getElementById('myTagDivContainer'));
+     * AdPlayerManager.addAdPlayer(adPlayer);
+    */
+    _this.addAdPlayer = function(adPlayer) {
+      for (var i=0; i < _adPlayerList.length; i++) {
+        if(_adPlayerList[i].adDomElement().id == adPlayer.adDomElement().id) {
+          return;
+        }
+      }
+      _adPlayerList.push(adPlayer);
+      _dispatchCallBacks(adPlayer);
+    };
+    
+    /**
+     * @name AdPlayerManager#register
+     * @function
+     * @description Registers a function that will be called when an <code>AdPlayer</code> instance
+     *              is created. Call-back handler function must expect a parameter that accepts
+     *              an <code>AdPlayer</code> instance.
+     * 
+     * @param callback {function} The call-back handler function.
+     * 
+     * @example
+     * function myCallBackHandler(adPlayer) {
+     *   adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');
+     * }
+     * AdPlayerManager.register(myCallBackHandler);
+     */
+    _this.register = function(callback) {
+      _callBackList.push(callback);
+    };
+    
+    /**
+     * @name AdPlayerManager#unregister
+     * @function
+     * @description Un-Registers a function added to the manager list.
+     * 
+     * @param callback {function} The call-back handler function.
+     * 
+     * @example
+     * function myCallBackHandler(adPlayer) {
+     *   adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');
+     * }
+     * AdPlayerManager.unregister(myCallBackHandler);
+     */
+    _this.unregister = function(callback) {
+      for (var i = 0; i < _callBackList.length; i++) {
+        if (_callBackList[i] == callback) {
+          _callBackList.shift(i, 1);
+          return;
+        }
+      }
+    };
+    
+    /**
+     * @name AdPlayerManager#getAdPlayerById
+     * @function
+     * @description Returns an instance of an <code>AdPlayer</code> associated with
+     *              a DOM element id name
+     * 
+     * @param id {String} Id of DOM element associated with <code>AdPlayer</code>.
+     * @return {Adplayer} AdPlayer instance associated with id. 
+     * 
+     * @example
+     * &lt;div id=&quot;adPlayerContainer&quot;&gt;
+     *  &lt;script type=&quot;text/javascript&quot;&gt;
+     *    var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
+     *    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
+     *  &lt;/script&gt;
+     * &lt;/div&gt;
+     * &lt;script type=&quot;text/javascript&quot;&gt;
+     *  var adPlayer = AdPlayerManager.getAdPlayerById('adPlayerContainer');
+     * &lt;/script&gt;
+     */
+    _this.getAdPlayerById = function(id) {
+      for (var i = 0; i < _adPlayerList.length; i++) {
+        if (_adPlayerList[i].adDomElement()) {
+          if (_adPlayerList[i].adDomElement().id == id) {
+            return _adPlayerList[i];
+          }
+        } else {
+          log('DOM element is not properly specified.','getPlayerById');
+        }
+      }
+      return null;
+    };
+
+    /**
+     * @name AdPlayerManager#getPlayerByDomElement
+     * @function
+     * @description Returns an instance of an <code>AdPlayer</code> associated with
+     *              a DOM element. 
+     * 
+     * @param dom {String} DOM element object associated with <code>AdPlayer</code>.
+     * @return {Adplayer} AdPlayer instance associated with dom element. 
+     * 
+     * @example
+     * &lt;div id=&quot;adPlayerContainer&quot;&gt;
+     *  &lt;script type=&quot;text/javascript&quot;&gt;
+     *    var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
+     *    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
+     *  &lt;/script&gt;
+     * &lt;/div&gt;
+     * &lt;script type=&quot;text/javascript&quot;&gt;
+     *  var adPlayer = AdPlayerManager.getPlayerByDomElement('adPlayerContainer');
+     * &lt;/script&gt;
+     */
+    _this.getPlayerByDomElement = function(dom) {
+      for (var i = 0; i < _adPlayerList.length; i++) {
+        if (_adPlayerList[i].adDomElement()) {
+          if (_adPlayerList[i].adDomElement() == dom) {
+            return _adPlayerList[i];
+          }
+        } else {
+          log('DOM element is not properly specified.','getPlayerByDomElement');
+        }
+      }
+      return null;
+    };    
+    
+    _this.getPlayerByUID = function (uid) {
+      for (var i = 0; i < _adPlayerList.length; i++) {
+        if (_adPlayerList[i].uid()) {
+          if (_adPlayerList[i].uid() == uid) {
+            return _adPlayerList[i];
+          }
+        }
+      }
+      return null;      
+    };    
+    
+    /**
+     * @private
+     * @description Dispatches all call-back function handlers added to the list.
+     */
+    function _dispatchCallBacks(adPlayer) {
+      var tmpLen = _callBackList.length;
+      var tempLenDiff = 0;
+      var index = 0;
+      do {
+        // call callback
+        if(typeof _callBackList[index] == 'function') {
+          _callBackList[index](adPlayer);
+        }
+        
+        // check if the temp length has changed
+        if(_callBackList > 0) {
+          tempLenDiff = tmpLen-_callBackList.length;
+          tmpLen = _callBackList.length;
+        } else {
+          tmpLen = 0;
+        }
+        
+        // if no difference then proceed to next index
+        if (tempLenDiff == 0) {
+          index++;
+        }
+      } while(index < tmpLen);
+    };
+    
+    function init() {
+      var postMessageManager = new PostMessageManager();
+    }
+    // ------------- IFRAME STUFF ---------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------    
+
+    // ------------- IFRAME STUFF ---------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------
+    
+    init();
+    return _this;
+  })();
 }
