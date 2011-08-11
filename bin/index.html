@@ -1,11 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>ADTECH - AdPlayer | DAST Demo v0.3.4 (dev.080911)</title>
-<script type="text/javascript" src="js/adplayer-0.3.4.js"></script>
-<!-- script type="text/javascript" src="js/adplayer-0.3.4.min.js"></script-->
-<link rel="stylesheet" type="text/css" href="css/adplayer-0.3.4-style.css" />
-<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="css/adplayer-0.3.4-style-ie.css" /><![endif]-->
+<title>ADTECH - AdPlayer | DAST Demo v0.3.45 (dev.081011)</title>
+<script type="text/javascript" src="js/adplayer-0.3.45.js"></script>
+<!-- script type="text/javascript" src="js/adplayer-0.3.45.min.js"></script-->
+<link rel="stylesheet" type="text/css" href="css/adplayer-0.3.45-style.css" />
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="css/adplayer-0.3.45-style-ie.css" /><![endif]-->
 
 <style>
 body {
@@ -124,7 +124,7 @@ table td {
 <table border="0">
 	<tr>
 		<th colspan="3">
-			<span>ADTECH</span> - AdPlayer | DAST Demo <span class="version">v0.3.4 (dev.080911)</span>
+			<span>ADTECH</span> - AdPlayer | DAST Demo <span class="version">v0.3.45 (dev.081011)</span>
 			<span id="info"><a href="docs/" target="_blank">API</a>  |  <a href="docs/readme.txt" target="_blank">README</a></span>
 		</th>
 	</tr>
@@ -236,6 +236,7 @@ table td {
 				<script language="javascript"><!--
 					var iframeAdPlayer = new AdPlayer('IFRAME_CONTAINER', 'ad-iframe-container');
 					iframeAdPlayer.addPrivacyInfo('IFRAME_CONTAINER', 'Iframe container message...', 'http://www.adtech.com/iframecontainer');
+					iframeAdPlayer.addPrivacyInfo('IFRAME_CONTAINER_BOX', 'Used to simple show info box overlapping iframe.', 'http://www.adtech.com/iframecontainer');					
 
 					function iframeCountHandler(evt) {
 					  iframeAdPlayer.removeEventListener(AdEvent.COUNT, iframeCountHandler);
@@ -256,6 +257,13 @@ table td {
 			<!-- END IFRAME EXAMPLE ==========================================================
 			===============================================================================-->
 		</td>
+		<td>
+			<!-- IFRAME EXAMPLE No Parent Player =============================================
+			===============================================================================-->		
+			<iframe id="noParentFrame" src="iframe.html" width="300" height="250" border="0" scrolling="no"></iframe>
+			<!-- END IFRAME EXAMPLE No Parent Player =========================================
+			===============================================================================-->
+		</td>		
 	</tr>
 	<tr>
 		<td colspan="3" align="center">

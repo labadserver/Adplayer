@@ -236,6 +236,7 @@ table td {
 				<script language="javascript"><!--
 					var iframeAdPlayer = new AdPlayer('IFRAME_CONTAINER', 'ad-iframe-container');
 					iframeAdPlayer.addPrivacyInfo('IFRAME_CONTAINER', 'Iframe container message...', 'http://www.adtech.com/iframecontainer');
+					iframeAdPlayer.addPrivacyInfo('IFRAME_CONTAINER_BOX', 'Used to simple show info box overlapping iframe.', 'http://www.adtech.com/iframecontainer');					
 
 					function iframeCountHandler(evt) {
 					  iframeAdPlayer.removeEventListener(AdEvent.COUNT, iframeCountHandler);
@@ -256,6 +257,13 @@ table td {
 			<!-- END IFRAME EXAMPLE ==========================================================
 			===============================================================================-->
 		</td>
+		<td>
+			<!-- IFRAME EXAMPLE No Parent Player =============================================
+			===============================================================================-->		
+			<iframe id="noParentFrame" src="iframe.html" width="300" height="250" border="0" scrolling="no"></iframe>
+			<!-- END IFRAME EXAMPLE No Parent Player =========================================
+			===============================================================================-->
+		</td>		
 	</tr>
 	<tr>
 		<td colspan="3" align="center">

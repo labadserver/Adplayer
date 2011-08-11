@@ -29,6 +29,8 @@
      * &lt;/script&gt;
      */
 var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
+   var _this = {};
+  
    if(!uid) { log('Unique ID is required.', 'AdPlayer'); return; }
    //if(!document.getElementById(domId)) { log('Dom element does not exist in document.', 'AdPlayer'); return; }
    
@@ -114,6 +116,8 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    }
    
    function parentDomSearch(uid, domRef, fnInit) {
+     AdPlayerManager.searchCount++;
+     
      var par = document.getElementById(domRef).parentNode;
      while (!AdPlayerManager.getAdPlayerById(par.id)) {
        par = par.parentNode;
@@ -125,21 +129,55 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
        if(adPlayer) {
 //         adPlayer.adDomElement().removeChild(document.getElementById(domRef));
          if(fnInit) {
-//           log('Found player at '+adPlayer.adDomElement().id);
-           fnInit(adPlayer);  
+           log('Found player at '+adPlayer.adDomElement().id);
+           AdPlayerManager.searchCount--;
+              fnInit(adPlayer);  
          }
          removeFromAdMgrList(domRef);
        } else {
-//         log('No AdPlayer found after parent search. Creating new player for ' + uid);
-         if (_isInIFrame) {
-           fnInit(new IframePlayer(uid, document.getElementById(domRefId)));
+         
+         
+         log('No AdPlayer found after parent search. Creating new player for ' + uid);
+          if (_isInIFrame) {
+            AdPlayerManager.searchCount--;
+            var iframePlayer = new IframePlayer(uid, document.getElementById(domRef));
+            fnInit(iframePlayer);
+            
+            // CHECK parent frame
+            // temporarily add this factory to the player list with a UID
+            var uAdId = uid + new Date().getTime();
+            _this.uid = function() {
+              return uAdId;
+            }
+            AdPlayerManager.factoryList().push(_this);            
+            
+            var jsonVal = '{ "postType":"'+PostMessage.OUTGOING+'", "uid":"'+_this.uid()+'", "fn":"iframePlayerVerify"}';
+            parent.postMessage (jsonVal, "*");
+            
+            _this.setIframePlayerType = function(json) {
+              AdPlayerManager.searchCount--;
+              for (var i = 0; i < AdPlayerManager.list().length; i++) {
+                if (AdPlayerManager.list()[i].uid() == _this.uid()) {
+                  AdPlayerManager.list().splice(i, 1);
+                  break;
+                }
+              }              
+              
+              if (json.params == 'true') {
+                iframePlayer.disableAdChoice();
+              } 
+            }              
+         
          } else {
+           AdPlayerManager.searchCount--;
            fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));  
          }         
          removeFromAdMgrList(domRef);
        }
      }     
    }
+   
+
    
    function returnDefault(uid, domRef, fnInit) {
      fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));
@@ -264,4 +302,6 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    }
 
    init();
+   
+   return _this;
 });

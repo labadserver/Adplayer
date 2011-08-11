@@ -2,13 +2,13 @@
 var IframePlayer = (function (uid, adDomElement) {
   /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
   /** @private */ var _defaultPlayer = new DefaultPlayer(uid, adDomElement);
-  
+
   function updateRef(fnName, params){
     _defaultPlayer[fnName].apply(_this, params);
   }
   
   function sendToParentFrame(fn, params, json) {
-    jsonString = '{ "postType":"'+PostMessage.OUTGOING+'", "uid":"'+uid+'", "fn":"'+fn+'", "params":"'+params.toString()+'" '
+    jsonString = '{ "postType":"'+PostMessage.OUTGOING+'", "uid":"'+uid+'", "fn":"'+fn+'", "params":"'+params.toString()+'" ';
     if(json) { jsonString += (', ' + json); }
     jsonString += '}';
     parent.postMessage (jsonString, "*");
@@ -122,9 +122,13 @@ var IframePlayer = (function (uid, adDomElement) {
     updateRef('addPrivacyInfo', [adServer, message, url, this]);
     sendToParentFrame('addPrivacyInfo', [adServer, message, url]);
   };
-
+  
+  _this.disableAdChoice = function() {
+    updateRef('disableAdChoice', []);
+  };  
+  
   _this.enableAdChoice = function() {
-    //updateRef('enableAdChoice', []);
+    updateRef('enableAdChoice', []);
     sendToParentFrame('enableAdChoice', []);
   };
 

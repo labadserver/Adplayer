@@ -183,12 +183,12 @@ var DefaultPlayer = (function (uid, adDomElement) {
   };
 
   _this.disableAdChoice = function() {
-    if (this.isPrivacyPanelEnabled()) {
+//    if (this.isPrivacyPanelEnabled()) {
       if(this.privacyClickBtn) {
         this.isAdChoiceEnabled(false);
         this.adDomElement().removeChild(this.privacyClickBtn);
       }
-    }
+//    }
   };
 
   _this.privacyPanel;

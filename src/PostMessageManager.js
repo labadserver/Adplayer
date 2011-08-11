@@ -4,6 +4,8 @@ var PostMessageManager = (function () {
   /* TODO: Clean dom search and share with PlayerFactory searching */
   
   _this.getPlayerByDomSearch = function (dom) {
+    
+    AdPlayerManager.searchCount++;
     var par = dom.parentNode;
     while (!AdPlayerManager.getAdPlayerById(par.id)) {
       par = par.parentNode;
@@ -15,13 +17,13 @@ var PostMessageManager = (function () {
       if(adPlayer) {
         //if(fnInit) {
 //          log('Found player at '+adPlayer.adDomElement().id);
+          AdPlayerManager.searchCount--;
           return(adPlayer);
         //}
         //removeFromAdMgrList(domRef);
       } else {
-//        log('No AdPlayer found after parent search. Creating new player for ' + dom.id);
-        //fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));
-        //removeFromAdMgrList(domRef);
+//        log('No AdPlayer found after parent search for "' + dom.id + '."');
+        AdPlayerManager.searchCount--;
         return null;
       }
     }     
@@ -42,15 +44,32 @@ var PostMessageManager = (function () {
         }
         if (dom) {
           clearInterval(_interval);
-//          console.log('Found adplayer:' + dom.id);
+//        console.log('Found adplayer:' + dom.id);
+          
+          var json = (new Function( "return( " + msg + " );" ))();          
+          var player = _this.getPlayerByDomSearch(dom);
+          if (player) {
+            if (json.fn == "iframePlayerVerify") {
+              var jsonVal = '{ "postType":"'+PostMessage.INCOMING+'", "uid":"'+json.uid+'", "fn":"iframePlayerVerify", "params":"true" }';
+              iframe.contentWindow.postMessage (jsonVal, "*");            
+              return;
+            }
+            readyTest(player,msg,iframe);
+          } else {
+            var jsonVal = '{ "postType":"'+PostMessage.INCOMING+'", "uid":"'+json.uid+'", "fn":"iframePlayerVerify", "params":"false" }';
+            dom.contentWindow.postMessage (jsonVal, "*");
+          }
           AdPlayerManager.searchCount--;
-          readyTest(_this.getPlayerByDomSearch(dom),msg,iframe);
+          
+          
+          
+          
         }
       }
     }
     
     _this.errorFn = function (){
-//      console.log('BLAHG!!!');
+//      console.log('Error');
     }
   
     function readyTest(player, msg, iframe) {
@@ -64,8 +83,8 @@ var PostMessageManager = (function () {
               if (unescape(params[t]).match(PostMessage.FUNCTION)) {
                 var funcN = unescape(params[t]).slice(PostMessage.FUNCTION.length);
                 function funcMe (evt) {
-                  var jsonString = '{ "postType":"'+PostMessage.INCOMING+'", "uid":"'+jsonValue.uid+'", "fn":"'+funcN+'", "evtType":"'+evt.type()+'", "uidName:":"'+jsonValue.uidName+'"}';
-                  iframe.contentWindow.postMessage (jsonString, "*");
+                  var jsonVal = '{ "postType":"'+PostMessage.INCOMING+'", "uid":"'+jsonValue.uid+'", "fn":"'+funcN+'", "evtType":"'+evt.type()+'", "uidName:":"'+jsonValue.uidName+'"}';
+                  iframe.contentWindow.postMessage (jsonVal, "*");
                 }
                 funcMe.uidName = jsonValue.uidName;
                 params[t] = funcMe;
@@ -74,21 +93,16 @@ var PostMessageManager = (function () {
           }
         }
         
-        // console.log(player.uid() +': '+jsonValue.fn);
         switch (jsonValue.fn){
           case 'removeEventListener':
               params.push(jsonValue.uidName.toString());
             break;
           case 'track':
-            //console.log(params[0]);
             adEvtObj = new AdEvent(params[0]);
             adEvtObj.target(player);
             adEvtObj.currentTarget(player);
             player.track(new AdEvent(params[0]), params[1]);
             return;
-            break;
-          case 'addTrackingPixel':
-            //console.log(params);
             break;
         }
 
@@ -116,31 +130,33 @@ var PostMessageManager = (function () {
         _this.domRefPlayerWait(iframe, evt.data, iframe, readyTest, _this.erroFn);          
         break;
       }      
-      /*if(evt.source.frameElement) {
-        if(document.getElementsByTagName('iframe')[i] == evt.source.frameElement) {
-          var iframe = document.getElementsByTagName('iframe')[i];
-          _this.domRefPlayerWait(iframe, evt.data, iframe, readyTest, _this.erroFn);          
-          break;
-        }
-      } else if((document.getElementsByTagName('iframe')[i].src).match(evt.origin)) {
-        var iframe = document.getElementsByTagName('iframe')[i];
-        _this.domRefPlayerWait(iframe, evt.data, iframe, readyTest, _this.erroFn);          
-        break;        
-      }*/
     }      
   }
   
   function inMsgHandler(evt) {
     var json = (new Function( "return( " + evt.data + " );" ))();
-    var player = AdPlayerManager.getPlayerByUID(json.uid);
     
     switch (json.fn){
+      case 'iframePlayerVerify':
+        var factoryPlayer; 
+        for (var i = 0; i < AdPlayerManager.factoryList().length; i++) {
+          if (AdPlayerManager.factoryList()[i].uid() == json.uid) {
+            factoryPlayer = AdPlayerManager.factoryList()[i];
+            break;
+          }
+        }
+        if (factoryPlayer) {
+          factoryPlayer.setIframePlayerType(json);
+        }
+        return;
+      break;      
       case 'defaultTrackCallBack':
       break;
     default: 
       var func = (new Function( "return( " + json.fn + " );" ))();
+      var player = AdPlayerManager.getPlayerByUID(json.uid);  
       // NEED TO TARGET THE CURRENT PLAYER THEN SEND BACK
-      if (player){
+      if (player) {
         var event = new AdEvent(json.evtType);
         event.target(player);
         func(event);
