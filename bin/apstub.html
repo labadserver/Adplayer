@@ -1,0 +1,38 @@
+<!--
+   -------------------------------------------------------------------------------------------
+   AdPlayer v0.5.0.dev.100511
+   Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
+   -------------------------------------------------------------------------------------------
+  
+   This file is part of AdPlayer v0.5.0.dev.100511.
+   AdPlayer is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+ 
+   AdPlayer is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+ 
+   You should have received a copy of the GNU General Public License
+   along with AdPlayer.  If not, see <http://www.gnu.org/licenses/>.
+  
+  --------------------------------------------------------------------------------------------
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <script type="text/javascript" src="js/adplayer-0.5.0.js"></script>
+  <!-- script type="text/javascript" src="js/adplayer-0.5.0.min.js"></script-->
+  <style> html, body {margin:0px;} </style>
+</head>	
+<body>
+  <script type="text/javascript">
+  	if(window.location.hash) {
+    	var p=/\#\{(.*?)\}/;var c=p.exec(unescape(window.location.hash))[1].replace(/\s+/g,"");var apobj=PostMessage.deserialize(PostMessage.serialize(c.split(",")));
+		document.write("<scr"+'ipt type="text/javascript" src="'+apobj.adloc+'"></scri'+"pt>")
+  	}    
+  </script>
+</body>
+</html>

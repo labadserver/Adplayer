@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <script type="text/javascript" src="js/_@ADPLAYER_JS_FILE@_"></script>
+  <!-- script type="text/javascript" src="js/_@ADPLAYER_JS_FILE_MIN@_"></script-->
+  <style> html, body {margin:0px;} </style>
+</head>	
+<body>
+  <script type="text/javascript">
+  	if(window.location.hash) {
+    	var p=/\#\{(.*?)\}/;var c=p.exec(unescape(window.location.hash))[1].replace(/\s+/g,"");var apobj=PostMessage.deserialize(PostMessage.serialize(c.split(",")));
+		document.write("<scr"+'ipt type="text/javascript" src="'+apobj.adloc+'"></scri'+"pt>")
+  	}    
+  </script>
+</body>
+</html>

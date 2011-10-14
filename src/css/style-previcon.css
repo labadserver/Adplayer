@@ -1,0 +1,178 @@
+body, html {
+  font-family: 'Arial'; 
+}
+
+.privacyButton {
+  position: absolute;
+  background: url('rarrow.png') no-repeat #cccccc 0px center !important; 
+  font-size: 10px;
+  border: none;
+  background: #cccccc;
+  padding: 3px 3px 3px 15px;
+  width: auto;
+  height: 15px;
+}
+
+.privacyButton .icon {
+  display: none !important;
+}
+
+.privacyButton .text {
+  display: inline !important;
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  width: auto !important;
+  cursor: pointer;
+  padding-right: 3px !important;
+  font-weight: normal !important;
+}
+
+.privacyButton.top-left {
+  top: 0 !important;
+  left: 0 !important;  
+  border-radius: 0 0 5px 0;
+  -moz-border-radius: 0 0 5px 0;
+}
+
+.privacyButton.top-left-out {
+  top: -22px !important;
+  left: 0 !important;  
+  border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+}
+
+.privacyButton.top-right {
+  top: 0 !important;
+  right: 0 !important;  
+  border-radius: 0 0 0 5px ;
+  -moz-border-radius: 0 0 0 5px;
+}
+
+.privacyButton.top-right-out {
+  top: -22px !important;
+  right: 0 !important;  
+  border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+}
+
+.privacyButton.bottom-left {
+  top: auto !important;
+  bottom: 0 !important;
+  left: 0 !important;  
+  border-radius: 0 5px 0 0;
+  -moz-border-radius: 0 5px 0 0;
+}
+
+.privacyButton.bottom-right {
+  top: auto !important;
+  bottom: 0 !important;
+  right: 0 !important;  
+  border-radius: 5px 0 0 0 0;
+  -moz-border-radius: 5px 0 0 0;
+}
+
+.privacyButton.bottom-left-out {
+  top: auto !important;
+  bottom: -22px !important;
+  left: 0 !important;  
+  border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+}
+
+.privacyButton.bottom-right-out {
+  top: auto !important;
+  bottom: -22px !important;
+  right: 0 !important;  
+  border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+}
+
+.privacyPanel {
+  font-family: Calibri, Ariel Bold, Sans-Serif, Geneva;
+  font-size: 12px;
+  background:#ffffff;
+  border: 1px solid #cccccc;
+  padding: 5px 5px 0 5px;
+  width: 250px;
+  border-radius: 0 0 5px 0;
+  -moz-border-radius: 0 0 5px 0;
+  box-shadow: 2px 2px 2px #333;
+  -moz-box-shadow: 2px 2px 2px #333;
+  -webkit-box-shadow: 2px 2px 2px #333;
+  text-align: left;
+  min-height: 25px;
+}
+
+.privacyPanel.bottom-left, .privacyPanel.bottom-left-out {
+  top: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+}
+
+.privacyPanel.bottom-right, .privacyPanel.bottom-right-out {
+  top: 0 !important;
+  bottom: auto !important;
+  right: 0 !important;
+}
+
+.privacyPanel div.header {
+  text-align: left;
+  font-size: 12px;
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}
+
+.privacyPanel div.footer {
+  text-align: left;
+  font-size: 10px;
+  padding: 5px;
+  border-top: 1px solid #ccc;
+  margin: 0px;
+  height: auto;
+}
+
+.privacyPanel div.list {
+  margin: 10px 5px;
+}
+
+.privacyPanel div.list div.item {
+  margin-bottom: 10px;
+}
+
+.privacyPanel div.list div.item {
+  margin: 0 0 8px 0;
+  padding: 0;
+}
+
+.privacyPanel div.list div.item h4 span {
+  font-weight: bold !important;
+}
+
+.privacyPanel div.list div.item p {
+  border: none;
+  margin: 0 0 0 5px;
+  padding: 0;
+}
+
+.privacyPanel div.close {
+  cursor: pointer;
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  font-size: 10px;
+  border: none;
+  background: #cccccc;
+  padding: 5px;
+  border-radius: 0 5px 0 5px;
+  -moz-border-radius: 0 5px 0 5px;
+}
+
+.privacyPanel p {
+  text-align: left;
+  font-size: 12px;
+  font-weight: normal;
+  padding: 5px;
+  border-top: 1px solid #ccc;
+}
