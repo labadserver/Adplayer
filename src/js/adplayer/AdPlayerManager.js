@@ -44,15 +44,6 @@ var AdPlayerManager = (function () {
     return _domIdList;
   }; 
   
-  /** @private */ _this.searchCount = 0;
-  /** @private */ _this.isSearching = function(val) {
-    if (_this.searchCount == 0) {
-      return false;
-    } else {
-      return true;
-    }
-  }    
-  
   /**
    * @name AdPlayerManager#addAdPlayer
    * @function

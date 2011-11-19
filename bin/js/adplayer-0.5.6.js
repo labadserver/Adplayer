@@ -1,6 +1,6 @@
 /*
    -------------------------------------------------------------------------------------------
-   AdPlayer v0.5.5 (dev.111811)
+   AdPlayer v0.5.6 (dev.111811)
    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
    -------------------------------------------------------------------------------------------
   
@@ -54,8 +54,7 @@ var Util = (function () {
     if (_this.isIE) { domObj.setAttribute('className', className); } // IE Fix        
   }
   
-  _this.ready = function(testFn, context, readyFn, readyParams, errorFn, errorParams, search) {
-    if(!search) { search = false; }
+  _this.ready = function(testFn, context, readyFn, readyParams, errorFn, errorParams) {
     function waitTimer(fn, cTxt, rdyFn, rdyPar, errFn, errPar) {
       var _timeout = 0;
       function check() {
@@ -1572,41 +1571,33 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    function init() {
      if (domRefId && !refAdPlayer) {
        if(checkAdMgrDomList(domRefId)) {
-         Util.ready(function(){return AdPlayerManager.getAdPlayerById(domRefId);}, _this, domRefAdPlayerInit, [domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], true);
+         Util.ready(function(){return AdPlayerManager.getAdPlayerById(domRefId);}, _this, domRefAdPlayerInit, [domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        } else {
          addToAdMgrList(domRefId);
-         if (AdPlayerManager.isSearching()) {
-           Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], true);
-         } else {
-           Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], false);
-         }
+         Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        }
      }
      else if (domRefId && refAdPlayer) {
        if(checkAdMgrDomList(domRefId)) {
-         Util.ready(function(){return refAdPlayer;}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], false);         
+         Util.ready(function(){return refAdPlayer;}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);         
        } else {
          addToAdMgrList(domRefId);
-         Util.ready(function(){return document.getElementById(domRefId);}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], false);
+         Util.ready(function(){return document.getElementById(domRefId);}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        }
 
      }     
      else if(!domRefId && refAdPlayer) {
        domRefId = setDocWriteRef();
        addToAdMgrList(domRefId);
-       Util.ready(function(){return document.getElementById(domRefId);}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], true);
+       Util.ready(function(){return document.getElementById(domRefId);}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
      }
      else if(!domRefId && !refAdPlayer) {
        domRefId = setDocWriteRef();
        if(checkAdMgrDomList(domRefId)) {
-         Util.ready(function(){return AdPlayerManager.getAdPlayerById(domRefId);}, _this, domRefAdPlayerInit, [domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], true);
+         Util.ready(function(){return AdPlayerManager.getAdPlayerById(domRefId);}, _this, domRefAdPlayerInit, [domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        } else {
          addToAdMgrList(domRefId);
-         if (AdPlayerManager.isSearching()) {
-           Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], true);
-         } else {
-           Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], false);
-         }
+         Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        }       
      }
    }
@@ -2232,15 +2223,6 @@ var AdPlayerManager = (function () {
   _this.domIdList = function() {
     return _domIdList;
   }; 
-  
-  /** @private */ _this.searchCount = 0;
-  /** @private */ _this.isSearching = function(val) {
-    if (_this.searchCount == 0) {
-      return false;
-    } else {
-      return true;
-    }
-  }    
   
   /**
    * @name AdPlayerManager#addAdPlayer

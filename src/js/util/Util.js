@@ -31,8 +31,7 @@ var Util = (function () {
     if (_this.isIE) { domObj.setAttribute('className', className); } // IE Fix        
   }
   
-  _this.ready = function(testFn, context, readyFn, readyParams, errorFn, errorParams, search) {
-    if(!search) { search = false; }
+  _this.ready = function(testFn, context, readyFn, readyParams, errorFn, errorParams) {
     function waitTimer(fn, cTxt, rdyFn, rdyPar, errFn, errPar) {
       var _timeout = 0;
       function check() {
