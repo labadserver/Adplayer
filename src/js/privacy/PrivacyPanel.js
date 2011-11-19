@@ -73,32 +73,32 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
   
   function init() {
     _this.panel = document.createElement('div');
-    AdPlayerManager.setClassName(_this.panel, _privPanelClassName);
+    Util.setClassName(_this.panel, _privPanelClassName);
     
     _closeTxtObj = document.createElement('div');
-    AdPlayerManager.setClassName(_closeTxtObj, 'close');
+    Util.setClassName(_closeTxtObj, 'close');
     _closeTxtObj.innerHTML = _this.closeTxt(closeTxt);
     _closeTxtObj.onclick = closeCallback;
     _this.panel.appendChild(_closeTxtObj);
     
     _headerTxtObj = document.createElement('div');
-    AdPlayerManager.setClassName(_headerTxtObj, 'header');
+    Util.setClassName(_headerTxtObj, 'header');
     _this.headerTxt(headerTxt);
 
     _listObj = document.createElement('div');
-    AdPlayerManager.setClassName(_listObj, 'list');
+    Util.setClassName(_listObj, 'list');
     _this.panel.appendChild(_listObj);
     _this.infoList(infoList);
     
     _footerTxtObj = document.createElement('div');
-    AdPlayerManager.setClassName(_footerTxtObj, 'footer');
+    Util.setClassName(_footerTxtObj, 'footer');
     _this.footerTxt(footerTxt);
   }
   
   function addPrivacyInfo(privacyInfoObj) {
     var privacyObj =  document.createElement('div');
     privacyObj.setAttribute('class', 'item');
-    if (AdPlayerManager.isIE) { privacyObj.setAttribute('className', 'item'); } // IE Fix        
+    if (Util.isIE) { privacyObj.setAttribute('className', 'item'); } // IE Fix        
     privacyClick = function(url) {
       var data = new Object();
       data.url = url;
@@ -144,7 +144,7 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
         break;
     }
     
-    AdPlayerManager.setClassName(_this.panel, _privPanelClassName + ' ' + pos);
+    Util.setClassName(_this.panel, _privPanelClassName + ' ' + pos);
   }    
     
   

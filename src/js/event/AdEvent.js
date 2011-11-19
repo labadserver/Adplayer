@@ -31,7 +31,7 @@
  * // Register countEventHandler() to AdEvent.COUNT event.
  * adPlayer.addEventListener(AdEvent.COUNT, countEventHandler);
  * function countEventHandler(adEvent) {
- *   log('COUNT ad event has been dispatched.');
+ *   Util.log('COUNT ad event has been dispatched.');
  * }
  * 
  * // Dispatch AdEvent.COUNT event to listeners.
@@ -41,8 +41,8 @@
  * // Dispatch AdEvent.COUNT event to listeners w/ data containing information.
  * adPlayer.addEventListener(AdEvent.COUNT, countEventHandler2);
  * function countEventHandler2(adEvent) {
- *   log('COUNT ad event has been dispatched.');
- *   log('Here is its info:' + adEvent.data.info);
+ *   Util.log('COUNT ad event has been dispatched.');
+ *   Util.log('Here is data.info:' + adEvent.data.info);
  * }
  * 
  * var data = new Object();
@@ -130,7 +130,7 @@ AdEvent.check = function(val) {
       return true;
     }
   }
-  log('Ad Event type is not valid: ' + val, 'AdEvent');
+  Util.log('Ad Event type is not valid: ' + val, 'AdEvent');
   return false;
 }
 

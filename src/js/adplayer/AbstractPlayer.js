@@ -1,4 +1,11 @@
-/** @private */
+/**
+ * @private
+ * @name AbstractPlayer
+ * @class Base class for all ad player types.
+ * @description Base class for all ad player types.
+ * 
+ * @author christopher.sancho@adtech.com
+ */
 AbstractPlayer = (function(uid, adDomElement) {
   /** @private */ var _this = {};
   
@@ -45,18 +52,18 @@ AbstractPlayer = (function(uid, adDomElement) {
   
   var _adWidth = null;
   _this.adWidth = function(num){
-    if(num) { 
+    if(num && !isNan(num)) { 
       _adWidth = num;
-      this.adDomElement().style.width = _adWidth + 'px';
+      this.adDomElement().style.width = _adWidth;
     }
     return _adWidth;
   };
   
   var _adHeight = null;
   _this.adHeight = function(num){
-    if(num) { 
+    if(num && !isNan(num)) { 
       _adHeight = num;
-      this.adDomElement().style.height = _adHeight + 'px';
+      this.adDomElement().style.height = _adHeight;
     }
     return _adHeight;
   };

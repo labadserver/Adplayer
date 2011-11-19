@@ -1,4 +1,11 @@
-/** @private */
+/**
+ * @private
+ * @name DefaultPlayer
+ * @class Default player returned
+ * @description DESCRIPTION NEEDED
+ * 
+ * @author christopher.sancho@adtech.com
+ */
 var DefaultPlayer = (function (uid, adDomElement) {
   /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
   
@@ -23,13 +30,13 @@ var DefaultPlayer = (function (uid, adDomElement) {
         if (uidName) {
           if (uidName == _this.adEventListObj()[adEvent][i].uidName) {
             _this.adEventListObj()[adEvent].splice(i, 1);
-//            console.log('REMOVING!:'+callback);
+            // Util.log('Removing from event list:'+callback);
             break;            
           }
         } else {
           if (_this.adEventListObj()[adEvent][i] == callback ) {
             _this.adEventListObj()[adEvent].splice(i, 1);
-//            console.log('REMOVING!:'+callback);
+            // Util.log('Removing from event list:'+callback);
             break;      
           }
         }
@@ -46,7 +53,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
     if (url) {
       /** @private */
       function defaultTrackCallBack(evt) {
-        var urlReq = new URLRequest(url);
+        var urlReq = new PixelRequest(url);
         urlReq.load();
         if(!repeat) {
           _this.removeEventListener(evt.type(), defaultTrackCallBack);
@@ -56,7 +63,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
       defaultTrackCallBack.repeat = repeat;
       _this.addEventListener(adEvent, defaultTrackCallBack, false);
     } else {
-      log("Parameter 'url' must be defined", "addTrackingEvent");
+      Util.log("Parameter 'url' must be defined", "addTrackingEvent");
     }
   };
 
@@ -100,7 +107,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
 
   _this.track = function(adEventObj, url, currentPlayer) {
     try { if (!AdEvent.check(adEventObj.type())) { return; } } catch(e) { return; }
-//    log(adEventObj.type(), 'track');
+//    Util.log(adEventObj.type(), 'track');
     if (_this.adEventListObj()[adEventObj.type()]) {
       var tmpLen = _this.adEventListObj()[adEventObj.type()].length;
       var tempLenDiff = 0;
@@ -133,7 +140,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
       } while(index < tmpLen);
     }
     if (url) {
-      var urlReq = new URLRequest(url);
+      var urlReq = new PixelRequest(url);
       urlReq.load();
     }
   };
@@ -204,20 +211,13 @@ var DefaultPlayer = (function (uid, adDomElement) {
   
   _this.disableAdChoice = function() {
     _this.isAdChoiceEnabled(false);
-    //if (_this.isPrivacyPanelEnabled()) {
-      //  if(_this.privacyInfoBtn) {
-    //if(_this.isAdChoiceEnabled() === true) {
-          _this.adDomElement().removeChild(_this.privacyInfoBtn.button);
-    //}
-    //}
+    _this.adDomElement().removeChild(_this.privacyInfoBtn.button);
   };
 
   _this.showPrivacyInfo = function() {
-//    if (!_this.isPrivacyPanelEnabled()) {
-      _this.adDomElement().appendChild(_this.privacyPanel.panel);
-      _this.isPrivacyPanelEnabled(true);
-      _this.track(new AdEvent(AdEvent.PRIVACY_OPEN));
-//    }
+    _this.adDomElement().appendChild(_this.privacyPanel.panel);
+    _this.isPrivacyPanelEnabled(true);
+    _this.track(new AdEvent(AdEvent.PRIVACY_OPEN));
   };
 
   _this.hidePrivacyInfo = function() {

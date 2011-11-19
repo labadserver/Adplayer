@@ -1,7 +1,7 @@
 <project name="DASE_WebUI" default="execute" basedir=".">
   <description>ADTECH - Ad Player build script.</description>
 
-  <property name="version" value="0.5.0"/>
+  <property name="version" value="0.5.5"/>
   <property name="jsfilename" value="adplayer-${version}"/>
   <property name="cssfilename" value="adplayer-${version}"/>
 
@@ -30,13 +30,14 @@
       <fileset dir="${src}/html/demo" includes="*.html" />	
     </copy>
     <copy tofile="${bin}/tmp/README.txt" file="README.txt" overwrite="true" />
-    <copy tofile="${bin}/tmp/${jsfilename}.js" file="${src}/js/adplayer/AdPlayerManager.js" overwrite="true" />
+  	<copy tofile="${bin}/tmp/${jsfilename}.js" file="${src}/js/adplayer/AdPlayerManager.js" overwrite="true" />
     <copy todir="${bin}/css" overwrite="true">
       <fileset dir="${src}/css" includes="*.jpg" />  
     </copy>
     <copy todir="${bin}/css" overwrite="true">
       <fileset dir="${src}/css" includes="*.png" />  
     </copy>
+  	<copy tofile="${bin}/js/json2.min.js" file="${src}/js/lib/json2.min.js" overwrite="true" />
   	<replace dir="${bin}" token="_@ADPLAYER_JS_FILE@_" value="${jsfilename}.js" />
     <replace dir="${bin}" token="_@ADPLAYER_JS_FILE_MIN@_" value="${jsfilename}.min.js" />
     <replace dir="${bin}" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}-style.css" />
@@ -49,7 +50,6 @@
       <filelist dir="${src}">
         <!-- DEFINE Class list order -->
       	<file name="js/util/Util.js"/>
-      	<file name="js/util/QueueItem.js"/>
         <file name="js/postmessage/AbstractPostMsg.js"/>
         <file name="js/postmessage/PostMsgDefault.js"/>
         <file name="js/postmessage/PostMessageHandler.js"/>
@@ -57,7 +57,7 @@
         <file name="js/privacy/PrivacyInfoButton.js"/>
         <file name="js/privacy/PrivacyPanel.js"/>
         <file name="js/privacy/PrivacyInfo.js"/>
-        <file name="js/util/URLRequest.js"/>
+        <file name="js/util/PixelRequest.js"/>
         <file name="js/event/AdEvent.js"/>
         <file name="js/adplayer/AbstractPlayer.js"/>
         <file name="js/adplayer/DefaultPlayer.js"/>
