@@ -8,11 +8,17 @@ var IframePlayer = (function (uid, adDomElement) {
   }
   
   function sendToParentFrame(fn, params, json) {
-    var jsonArr = ['postType:'+PostMessage.OUTGOING, 'uid:'+uid, "fn:"+fn, "params:"+params.toString()];
-    if(json) {
-      jsonArr = jsonArr.concat(json);
+    var obj;
+    if (json) {
+      obj = json;
+    } else {
+      obj = new Object();
     }
-    PostMessage.send(jsonArr, parent);
+    obj.postType = PostMessage.OUTGOING;
+    obj.uid = uid;
+    obj.fn = fn;
+    obj.params = params.toString();
+    PostMessage.send(obj, parent);
   }
   
   function getFunctionName(funcStr) {
@@ -78,12 +84,16 @@ var IframePlayer = (function (uid, adDomElement) {
   _this.addEventListener = function(adEvent, callback) {
     callback.uidName = uid + new Date().getTime();
     updateRef('addEventListener', [adEvent, callback, this]);
-    sendToParentFrame('addEventListener', [adEvent, getFunctionName(callback.toString())], ['uidName:'+callback.uidName]);
+    var obj = new Object();
+    obj.uidName = callback.uidName;
+    sendToParentFrame('addEventListener', [adEvent, getFunctionName(callback.toString())], obj);
   };
 
   _this.removeEventListener = function(adEvent, callback, uidName) {
     updateRef('removeEventListener', [adEvent, callback, uidName, this]);
-    sendToParentFrame('removeEventListener', [adEvent, getFunctionName(callback.toString())], ['uidName:'+callback.uidName]);
+    var obj = new Object();
+    obj.uidName = callback.uidName;
+    sendToParentFrame('removeEventListener', [adEvent, getFunctionName(callback.toString())], obj);
   };
 
   _this.addTrackingPixel = function(adEvent, url, repeat) {
@@ -92,7 +102,7 @@ var IframePlayer = (function (uid, adDomElement) {
     if (url) {
       /** @private */
       function defaultTrackCallBack(evt) {
-        var urlReq = new URLRequest(url);
+        var urlReq = new PixelRequest(url);
         urlReq.load();
         if(!repeat) {
           _this.removeEventListener(evt.type(), defaultTrackCallBack);
@@ -102,7 +112,7 @@ var IframePlayer = (function (uid, adDomElement) {
       defaultTrackCallBack.repeat = repeat;
       this.addEventListener(adEvent, defaultTrackCallBack, false);
     } else {
-      log("Parameter 'url' must be defined", "addTrackingEvent");
+      Util.log("Parameter 'url' must be defined", "addTrackingEvent");
     }    
     //updateRef('addTrackingPixel', [adEvent, url, repeat, this]);
     //sendToParentFrame('addTrackingPixel', [adEvent, url, repeat]);

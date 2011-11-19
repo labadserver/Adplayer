@@ -24,14 +24,14 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
     _this.openBtnTxt(openBtnTxt);
     
     _this.button = document.createElement('div');
-    AdPlayerManager.setClassName(_this.button, _privBtnClassName);
+    Util.setClassName(_this.button, _privBtnClassName);
     
     _openBtnIcon = document.createElement('div');
-    AdPlayerManager.setClassName(_openBtnIcon, 'icon');
+    Util.setClassName(_openBtnIcon, 'icon');
     _this.button.appendChild(_openBtnIcon);
     
     _openBtnTxtObj = document.createElement('div');
-    AdPlayerManager.setClassName(_openBtnTxtObj, 'text');
+    Util.setClassName(_openBtnTxtObj, 'text');
     _openBtnTxtObj.style.display = "none";
     _this.button.appendChild(_openBtnTxtObj);
     _openBtnTxtObj.innerHTML = _this.openBtnTxt();
@@ -151,7 +151,7 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
         break;
     }
     
-    AdPlayerManager.setClassName(_this.button, _privBtnClassName + ' ' + pos);
+    Util.setClassName(_this.button, _privBtnClassName + ' ' + pos);
   }    
   
   init();

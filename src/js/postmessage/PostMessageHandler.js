@@ -1,33 +1,34 @@
 // TODO: Add error callback for queue routine
 
 var PostMessageHandler = (function () {
-  var _this = new QueueItem();
+  var _this = {};
 
   _this.domRefPlayerWait = function (dom, json) {
     _this.dom = dom;
     _this.json = json;
     
     function iframeVerify(dom, json) {
-      var jsonArr = ['postType:'+PostMessage.INCOMING, 'uid:'+json.uid, 'fn:iframePlayerVerify']; 
-      
+      var obj = new Object();
+      obj.postType = PostMessage.INCOMING;
+      obj.uid = json.uid;
+      obj.fn = 'iframePlayerVerify';      
       var player = _this.getPlayerByDomSearch(dom);
       if (player) {
         if (json.fn == "iframePlayerVerify") {
-          jsonArr.push("params:true");
-          PostMessage.send(jsonArr, dom.contentWindow);   
+          obj.params = true;
+          PostMessage.send(obj, dom.contentWindow);   
           return;
         }
         readyTest(dom, json, player);
       } else {
-        jsonArr.push("params:false");
-        PostMessage.send(jsonArr, dom.contentWindow);          
+        obj.params = false;
+        PostMessage.send(obj, dom.contentWindow);          
       }
     }
-    _this.onReady('_this.dom', this, iframeVerify, [_this.dom, _this.json], null, null);
-  }  
+    Util.ready(function(){return _this.dom;}, this, iframeVerify, [_this.dom, _this.json], null, null);
+  }
 
   _this.getPlayerByDomSearch = function (dom) {
-    AdPlayerManager.searchCount++;
     var par = dom.parentNode;
     while (!AdPlayerManager.getAdPlayerById(par.id)) {
       par = par.parentNode;
@@ -37,12 +38,10 @@ var PostMessageHandler = (function () {
     if(par) {
       var adPlayer = AdPlayerManager.getAdPlayerById(par.id);
       if(adPlayer) {
-        log('Found player at '+adPlayer.adDomElement().id);
-          AdPlayerManager.searchCount--;
+        Util.log('Found player at '+adPlayer.adDomElement().id);
           return(adPlayer);
       } else {
-        log('No AdPlayer found after parent search for "' + dom.id + '."');
-        AdPlayerManager.searchCount--;
+        Util.log('No AdPlayer found after parent search for "' + dom.id + '."');
         return null;
       }
     }     
@@ -58,10 +57,13 @@ var PostMessageHandler = (function () {
             if (unescape(params[t]).match(PostMessage.FUNCTION)) {
               var funcN = unescape(params[t]).slice(PostMessage.FUNCTION.length);
               function funcMe (evt) {
-                var jsonArr = ['postType:'+PostMessage.INCOMING, 'uid:'+json.uid, 'fn:'+funcN, 'evtType:'+evt.type(), 'uidName:'+json.uidName];
-                //var jsonVal = '{ "postType":"'+PostMessage.INCOMING+'", "uid":"'+json.uid+'", "fn":"'+funcN+'", "evtType":"'+evt.type()+'", "uidName:":"'+json.uidName+'"}';
-                PostMessage.send(jsonArr, iframe.contentWindow);
-                //iframe.contentWindow.postMessage (jsonVal, "*");
+                var obj = new Object();
+                obj.postType = PostMessage.INCOMING;
+                obj.uid = json.uid;
+                obj.fn = funcN;
+                obj.evtType = evt.type();
+                obj.uidName = json.uidName;
+                PostMessage.send(obj, iframe.contentWindow);
               }
               funcMe.uidName = json.uidName;
               params[t] = funcMe;

@@ -17,19 +17,19 @@ var PostMsgDefault = (function(){
   };
 
   _this.receive = function(evt) {
-    json = PostMessage.deserialize(evt.data);
-    
-    if(json.postType == PostMessage.OUTGOING) {
-      for (var i=0; i < document.getElementsByTagName('iframe').length; i++){
-        if(document.getElementsByTagName('iframe')[i].contentWindow == evt.source) {
-          var iframe = document.getElementsByTagName('iframe')[i];
-          PostMessageHandler.domRefPlayerWait(iframe, json);          
-          break;
-        }      
-      }
-    } else if (json.postType == PostMessage.INCOMING){
-      PostMessageHandler.inMsgHandler(json)
-    }    
+    Util.jsonParse(evt.data, null, function(json){      
+      if(json.postType == PostMessage.OUTGOING) {
+        for (var i=0; i < document.getElementsByTagName('iframe').length; i++){
+          if(document.getElementsByTagName('iframe')[i].contentWindow == evt.source) {
+            var iframe = document.getElementsByTagName('iframe')[i];
+            PostMessageHandler.domRefPlayerWait(iframe, json);          
+            break;
+          }      
+        }
+      } else if (json.postType == PostMessage.INCOMING){
+        PostMessageHandler.inMsgHandler(json)
+      }      
+    });
   };
   
 

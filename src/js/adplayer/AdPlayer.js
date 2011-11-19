@@ -14,7 +14,6 @@
 var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   /** @private */ var _this = new AbstractPlayer(uid, null);
   /** @private */ var _queue = [];
-  AdPlayerManager.searchCount++;
   
   /**
    * @name AdPlayer#player
@@ -27,7 +26,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * @example
    * // Get reference to property
    * var adPlayerParent = adPlayer.player();  
-   */  
+   */
   var _player;
   _this.player = function() {
     return _player;
@@ -184,8 +183,8 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * 
    * @example
    * function trackEventHandler(adEvent) {
-   *  log(adEvent.type() + ' has been dispatched');
-   *  log(adEvent.data().message);
+   *  Util.log(adEvent.type() + ' has been dispatched');
+   *  Util.log(adEvent.data().message);
    * }
    * adPlayer.addEventListener(AdEvent.TRACK, trackEventHandler);
    * 
@@ -215,7 +214,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    *  // Alternate
    *  // adPlayer.removeEventListener(AdEvent.TRACK, trackEventHandler); 
    *  
-   *  log(adEvent.type() + ' has been dispatched');
+   *  Util.log(adEvent.type() + ' has been dispatched');
    * }
    * adPlayer.addEventListener(AdEvent.TRACK, trackEventHandler); 
    */  
@@ -234,7 +233,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * 
    * @see AdEvent
    * @see AdPlayer#track
-   * @see URLRequest#load
+   * @see PixelRequest#load
    * 
    * @example
    * // Adds a tracking pixel that will dispatch on AdEvent.TRACK event
@@ -440,8 +439,6 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
       while (_queue.length > 0) {
         (_queue.shift())();   
       }
-      
-      AdPlayerManager.searchCount--;
     }
   }  
   
