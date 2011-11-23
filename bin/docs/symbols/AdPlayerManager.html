@@ -58,7 +58,7 @@ pre.code
 #content
 {
 	margin-left: 190px;
-	width: 600px;
+	width: 800px;
 }
 
 .classList
@@ -199,7 +199,11 @@ ul.inheritsList
 	
 	<li><a href="../symbols/PixelRequest.html">PixelRequest</a></li>
 	
+	<li><a href="../symbols/PostMessage.html">PostMessage</a></li>
+	
 	<li><a href="../symbols/PrivacyInfo.html">PrivacyInfo</a></li>
+	
+	<li><a href="../symbols/Util.html">Util</a></li>
 	
 </ul>
 <hr />
@@ -221,7 +225,7 @@ ul.inheritsList
 				Global Static Class - Manages all created <code>AdPlayer</code> instances.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_csancho_Sites__workspace_PM_AdPlayer_GIT_bin_js_adplayer-0.5.5.js.html">adplayer-0.5.5.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_csancho_Sites__workspace_PM_AdPlayer_GIT_bin_js_adplayer-0.5.7.js.html">adplayer-0.5.7.js</a>.
 				
 			</p>
 
@@ -327,6 +331,16 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#getPlayerByUID">getPlayerByUID</a></b>(uid)
+								</div>
+								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with
+             a UID string.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#register">register</a></b>(callback)
 								</div>
 								<div class="description">Registers a function that will be called when an <code>AdPlayer</code> instance
@@ -366,8 +380,8 @@ ul.inheritsList
 				<div class="description">
 					Globally Manages all created <code>AdPlayer</code> instances.
              <code>AdPlayerManager</code> is a singleton class and ensures it
-             is the only available <code>AdPlayerManager</code> throughout a
-             ad delivery flow.
+             is the only available <code>AdPlayerManager</code> throughout an
+             ad delivery flow.</br>
 					<br /><i>Author: </i>christopher.sancho@adtech.com.
 				</div>
 				
@@ -394,7 +408,7 @@ ul.inheritsList
 					<a name="list"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Array - Read Only}</span>
+					<span class="light">{array - read only}</span>
 					<b>list</b>
 					
 					</div>
@@ -464,10 +478,10 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>adPlayer</b>
+									<span class="light fixedFont">{adplayer}</span> <b>adPlayer</b>
 									
 								</dt>
-								<dd>{AdPlayer} <code>AdPlayer</code> instance to add to management list.</dd>
+								<dd><code>AdPlayer</code> instance to add to management list.</dd>
 							
 							</dl>
 						
@@ -490,7 +504,7 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					<a name="getAdPlayerById"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Adplayer}</span>
+					<span class="light">{adplayer}</span>
 					<b>getAdPlayerById</b>(id)
 					
 					</div>
@@ -520,10 +534,10 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>id</b>
+									<span class="light fixedFont">{string}</span> <b>id</b>
 									
 								</dt>
-								<dd>{String} Id of DOM element associated with <code>AdPlayer</code>.</dd>
+								<dd>Id of DOM element associated with <code>AdPlayer</code>.</dd>
 							
 							</dl>
 						
@@ -534,7 +548,7 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{Adplayer}</span> AdPlayer instance associated with id.</dd>
+								<dd><span class="light fixedFont">{adplayer}</span> AdPlayer instance associated with id.</dd>
 							
 							</dl>
 						
@@ -546,7 +560,7 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					<a name="getPlayerByDomElement"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Adplayer}</span>
+					<span class="light">{adplayer}</span>
 					<b>getPlayerByDomElement</b>(dom)
 					
 					</div>
@@ -576,10 +590,10 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>dom</b>
+									<span class="light fixedFont">{string}</span> <b>dom</b>
 									
 								</dt>
-								<dd>{String} DOM element object associated with <code>AdPlayer</code>.</dd>
+								<dd>DOM element object associated with <code>AdPlayer</code>.</dd>
 							
 							</dl>
 						
@@ -590,7 +604,55 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{Adplayer}</span> AdPlayer instance associated with dom element.</dd>
+								<dd><span class="light fixedFont">{adplayer}</span> AdPlayer instance associated with dom element.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getPlayerByUID"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{adplayer}</span>
+					<b>getPlayerByUID</b>(uid)
+					
+					</div>
+					<div class="description">
+						Returns an instance of an <code>AdPlayer</code> associated with
+             a UID string.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code"></pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>uid</b>
+									
+								</dt>
+								<dd>UID string associated with <code>AdPlayer</code>.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{adplayer}</span> AdPlayer instance associated with dom element.</dd>
 							
 							</dl>
 						
@@ -628,10 +690,10 @@ AdPlayerManager.register(myCallBackHandler);</pre>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>callback</b>
+									<span class="light fixedFont">{function}</span> <b>callback</b>
 									
 								</dt>
-								<dd>{function} The call-back handler function.</dd>
+								<dd>The call-back handler function.</dd>
 							
 							</dl>
 						
@@ -671,10 +733,10 @@ AdPlayerManager.unregister(myCallBackHandler);</pre>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>callback</b>
+									<span class="light fixedFont">{function}</span> <b>callback</b>
 									
 								</dt>
-								<dd>{function} The call-back handler function.</dd>
+								<dd>The call-back handler function.</dd>
 							
 							</dl>
 						
@@ -699,7 +761,7 @@ AdPlayerManager.unregister(myCallBackHandler);</pre>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Nov 18 2011 16:33:24 GMT-0800 (PST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Nov 23 2011 13:59:56 GMT-0800 (PST)
 		</div>
 	</body>
 </html>

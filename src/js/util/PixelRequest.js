@@ -1,14 +1,9 @@
 /**
-* @class Responsible for handling the loading and referencing of a URL request.
-* @description A pixel is requested by dynamically generating an <code>img</code>
-*              element, which is appended to the document.  After appending is complete,
-*              the <code>img</code> element is cleared from the document.
-* 
+* @class Responsible for handling the loading and referencing of a pixel request.
+* @description Responsible for handling the loading and referencing of a pixel request.
 * @author christopher.sancho@adtech.com
-* 
 * @param {string} url Optional - URL of the pixel to request.
 * @property {string} url URL of the pixel to request.
-* 
 * @example
 * var pixelRequest = new PixelRequest('http://my.pixel-url.com');
 * pixelRequest.load();
@@ -28,7 +23,7 @@ var PixelRequest = (function (url) {
   /**
    * @name PixelRequest#load
    * @function
-   * @description Requests a pixel using the <code>url</code> property. 
+   * @description Requests a pixel using the <code>url</code> property.
    */
    _this.load = function() {
     if(_this.url) {

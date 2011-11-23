@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - PixelRequest</title>
+		<title>JsDoc Reference - PostMessage</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -214,7 +214,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class PixelRequest
+				Class PostMessage
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -222,7 +222,7 @@ ul.inheritsList
 				
 				
 			
-				Responsible for handling the loading and referencing of a pixel request.
+				Static class for PostMessage communication.
 				
 				
 					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_csancho_Sites__workspace_PM_AdPlayer_GIT_bin_js_adplayer-0.5.7.js.html">adplayer-0.5.7.js</a>.
@@ -231,7 +231,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class PixelRequest.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class PostMessage.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -244,9 +244,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/PixelRequest.html#constructor">PixelRequest</a></b>(url)
+								<b><a href="../symbols/PostMessage.html#constructor">PostMessage</a></b>()
 							</div>
-							<div class="description">Responsible for handling the loading and referencing of a pixel request.</div>
+							<div class="description">Static class for PostMessage communication.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -257,7 +257,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class PixelRequest.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class PostMessage.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -271,9 +271,29 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/PixelRequest.html#url">url</a></b>
+								<b><a href="../symbols/PostMessage.html#FUNCTION">FUNCTION</a></b>
 								</div>
-								<div class="description">URL of the pixel to request.</div>
+								<div class="description">The <code>PostMessage.Function</code> constant defines the value of a 'function' message.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/PostMessage.html#INCOMING">INCOMING</a></b>
+								</div>
+								<div class="description">The <code>PostMessage.Incoming</code> constant defines the value of an 'incoming' message.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/PostMessage.html#OUTGOING">OUTGOING</a></b>
+								</div>
+								<div class="description">The <code>PostMessage.Outgoing</code> constant defines the value of an 'outgoing' message.</div>
 							</td>
 						</tr>
 					
@@ -288,7 +308,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class PixelRequest.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class PostMessage.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -301,9 +321,10 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/PixelRequest.html#load">load</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/PostMessage.html#send">send</a></b>(msg, target)
 								</div>
-								<div class="description">Requests a pixel using the <code>url</code> property.</div>
+								<div class="description">Stringifies a JSON object and sends it to the appropriate 
+             PostMessage channel detected at initialization.</div>
 							</td>
 						</tr>
 					
@@ -324,38 +345,21 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>PixelRequest</b>(url)
+						<b>PostMessage</b>()
 				</div>
 				
 				<div class="description">
-					Responsible for handling the loading and referencing of a pixel request.
+					Static class for PostMessage communication. Implementation
+             only supports postMessage for "modern-based" browsers.  No alternate 
+             communication ability is setup for older browsers at this time using
+             a data funnel solution similar to postMessage.  Please see the 
+             <code>apstub.html</code> for other iframe communication techniques.</br>
 					<br /><i>Author: </i>christopher.sancho@adtech.com.
 				</div>
 				
 				
 				
-				<pre class="code">var pixelRequest = new PixelRequest('http://my.pixel-url.com');
-pixelRequest.load();
-
-// Alternate
-var pixelRequest2 = new PixelRequest();
-pixelRequest2.url = 'http://my.pixel-url.com';
-pixelRequest2.load();</pre>
 				
-				
-				
-				
-					
-						<dl class="detailList">
-						<dt class="heading">Parameters:</dt>
-						
-							<dt>
-								<span class="light fixedFont">{string}</span>  <b>url</b>
-								
-							</dt>
-								<dd>Optional - URL of the pixel to request.</dd>
-						
-						</dl>
 					
 					
 					
@@ -373,15 +377,59 @@ pixelRequest2.load();</pre>
 					Field Detail
 				</div>
 				
-					<a name="url"> </a>
+					<a name="FUNCTION"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{string}</span>
-					<b>url</b>
+					<span class="light">{string - Static Const}</span>
+					<b>FUNCTION</b>
 					
 					</div>
 					<div class="description">
-						URL of the pixel to request.
+						The <code>PostMessage.Function</code> constant defines the value of a 'function' message.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="INCOMING"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{string - Static Const}</span>
+					<b>INCOMING</b>
+					
+					</div>
+					<div class="description">
+						The <code>PostMessage.Incoming</code> constant defines the value of an 'incoming' message.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="OUTGOING"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{string - Static Const}</span>
+					<b>OUTGOING</b>
+					
+					</div>
+					<div class="description">
+						The <code>PostMessage.Outgoing</code> constant defines the value of an 'outgoing' message.
 						
 						
 					</div>
@@ -403,15 +451,16 @@ pixelRequest2.load();</pre>
 					Method Detail
 				</div>
 				
-					<a name="load"> </a>
+					<a name="send"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>load</b>()
+					<b>send</b>(msg, target)
 					
 					</div>
 					<div class="description">
-						Requests a pixel using the <code>url</code> property.
+						Stringifies a JSON object and sends it to the appropriate 
+             PostMessage channel detected at initialization.
 						
 						
 					</div>
@@ -419,11 +468,35 @@ pixelRequest2.load();</pre>
 					
 					
 						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>msg</b>
+									
+								</dt>
+								<dd>JSON string message to send to receiver.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{object}</span> <b>target</b>
+									
+								</dt>
+								<dd>The target receiver to send the message string to.</dd>
+							
+							</dl>
 						
 						
 						
 						
 						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd><a href="../symbols/Util.html#jsonStringify">Util#jsonStringify</a></dd>
+							
+							</dl>
 						
 
 					

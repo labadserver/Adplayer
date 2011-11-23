@@ -1,7 +1,7 @@
 <project name="DASE_WebUI" default="execute" basedir=".">
   <description>ADTECH - Ad Player build script.</description>
 
-  <property name="version" value="0.5.5"/>
+  <property name="version" value="0.5.7"/>
   <property name="jsfilename" value="adplayer-${version}"/>
   <property name="cssfilename" value="adplayer-${version}"/>
 

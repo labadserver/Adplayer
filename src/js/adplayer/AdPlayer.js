@@ -6,10 +6,12 @@
  * @author christopher.sancho@adtech.com
  * 
  * @example
- * &lt;div id=&quot;myTagDivContainer&quot;&gt;<br/>  &lt;div&gt;-----TODO----&lt;/div&gt;<br/>  &lt;div&gt;-----TODO----&lt;/div&gt;<br/>&lt;/div&gt;
- * 
- * var myDomObj = document.getElementById('myTagDivContainer');
- * var adPlayer = new AdPlayer(myDomObj);
+ * &lt;div id=&quot;ad-container&quot;&gt;
+ *   &lt;!-- creative --&gt;
+ * &lt;/div&gt;
+ * &lt;script type=&quot;text/javascript&quot;&gt;
+ *   var adPlayer = new AdPlayer('placement123', 'ad-container');
+ * &lt;/script&gt;
  */
 var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   /** @private */ var _this = new AbstractPlayer(uid, null);
@@ -142,10 +144,6 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   _this.privacyInfoList = function() {
     return _player.privacyInfoList();
   };
-  
-  // -------------------------------------------------------------------------------------------------
-  // METHODS
-  // -------------------------------------------------------------------------------------------------
   
   /** @private */
   function queueCmd(fnName, params) {

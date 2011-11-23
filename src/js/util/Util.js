@@ -1,21 +1,71 @@
+/**
+ * @name Util
+ * @class Static class for all common methods.
+ * @description The Util class provides common methods used across AdPlayer.
+ * 
+ * @author christopher.sancho@adtech.com
+ */
 var Util = (function () {
-  var _this = {};
+  /** @private */ var _this = {};
   
+  /**
+   * @name Util#jsonUrl
+   * @field
+   * @description Location of the external JSON framework script needed for browsers 
+   *              that do not natively support JSON. By default, <code>Util.jsonUrl</code>
+   *              is set to look for the script in a relative path: </code>js/json2.min.js</code>
+   * @example
+   * // Get reference to property
+   * Util.log(Util.jsonUrl);
+   * 
+   * // Set property's value
+   * Util.jsonUrl = "http://new.uri.of.json.script";  
+   */
   _this.jsonUrl = 'js/json2.min.js';
+  
+  /**
+   * @name Util#isIE
+   * @field
+   * @description Returns <code>true</code> if browser is Internet Explorer. 
+   * @example
+   * if (Util.isIE) {
+   *  Util.log('The current browser is Internet Explorer.');
+   * }
+   */
   _this.isIE  = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;
-  _this.isWin = (navigator.appVersion.toLowerCase().indexOf("win") != -1) ? true : false;
+
+  /**
+   * @name Util#isOpera
+   * @field
+   * @description Returns <code>true</code> if browser is Opera. 
+   * @example
+   * if (Util.isOpera) {
+   *  Util.log('The current browser is Opera.');
+   * }
+   */
   _this.isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;      
+
+  /**
+   * @name Util#isFF
+   * @field
+   * @description Returns <code>true</code> if browser is Firefox. 
+   * @example
+   * if (Util.isFF) {
+   *  Util.log('The current browser is Firefox.');
+   * }
+   */  
   _this.isFF = (navigator.userAgent.indexOf("Firefox") != -1) ? true : false;    
   
-  /** 
-  * @description Logs a message through the console; if available.
-  * @param {string} msg The message to log.
-  * @param {string} ref Optional - An identifer used to reference the source of a message.
-  * 
-  * @example
-  * // "AdPlayer(God): This is a log output."
-  * Util.log('This is a log output', 'God');
-  */
+  /**
+   * @name Util#log
+   * @function
+   * @description Logs a message through the console; if available.
+   * @param {string} msg The message to log.
+   * @param {string} ref Optional - An identifer used to reference the source of a message.
+   * @example
+   * // "AdPlayer(Parent): This is a log output."
+   *  Util.log('This is a log output', 'Parent');  
+   */
   _this.log = function(msg, ref) {
     if(typeof(console) !== 'undefined' && console != null) {
       if (ref) {
@@ -26,13 +76,44 @@ var Util = (function () {
     }
   };
 
+  /**
+   * @name Util#setClassName
+   * @function
+   * @description Sets a cross-browser compatible class attribute to a DOM object. 
+   * @param {dom} domObj DOM object that class attribute will be set. 
+   * @param {string} className Value of the class attribute.
+   * @example
+   * var a = document.getElementById('dom-container');
+   * Util.setClassName(a, 'ad-container');  
+   */ 
   _this.setClassName = function (domObj, className) {
     domObj.setAttribute('class', className);
     if (_this.isIE) { domObj.setAttribute('className', className); } // IE Fix        
   }
-  
-  _this.ready = function(testFn, context, readyFn, readyParams, errorFn, errorParams, search) {
-    if(!search) { search = false; }
+
+  /**
+   * @name Util#ready
+   * @function
+   * @description Executes a callback function when an object, being returned in a <code>testFn</code>, is valid.
+   * @param {function} testFn Function that returns object to test against. Note: Implemented to avoid use of eval();
+   * @param {object} context Context of where <code>readyFn</code> & <code>errorFn</code> are located. 
+   * @param {function} readyFn Function called when object being tested returns <code>true</code>.
+   * @param {array} readyParams Array of parameters to pass at the time <code>readyFn</code> is called.
+   * @param {function} errorFn Function called when object being tested can not be found. 
+   *                           Method times out at a count of 100 at 100ms intervals.
+   * @param {Array} errorParams Array of parameters to pass at the time <code>errorFn</code> is called.
+   * @example
+   * function onReady(msg, num) {
+   *   Util.log(msg + ':' + num);
+   * }
+   * 
+   * function onError(msg) {
+   *   Util.log(msg);
+   * }
+   * 
+   * Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], onError, ['Error...']);
+   */
+  _this.ready = function(testFn, context, readyFn, readyParams, errorFn, errorParams) {
     function waitTimer(fn, cTxt, rdyFn, rdyPar, errFn, errPar) {
       var _timeout = 0;
       function check() {
@@ -53,26 +134,31 @@ var Util = (function () {
     waitTimer(testFn, context, readyFn, readyParams, errorFn, errorParams);
   }
   
-  /** 
-  * List containing IDs of scripts being loaded.
-  **/
+  
+  /** @private List containing IDs of scripts being currently loaded. **/
   var _loadList = [];
 
   /**
-  * Checks if obj is loaded or in process of being loaded, executes callback.
-  *
-  * @param objId        Id used to identify script.
-              Note: Implemented to avoid use of eval();
-  * @param objReturnFn  Function that returns object to check against.  
-              Note: Implemented to avoid use of eval();
-  * @param scriptSrc    The url of the script to load.
-  * @param objId        The handler to be executed when script load is complete.
-  */
+   * @name Util#loadScript
+   * @function
+   * @description Loads an external script & executes a callback function when an object, located in the 
+   *              external script & is returned in a <code>testFn</code>, is valid. 
+   * @param {string} objId Id used to identify script. Note: Implemented to avoid use of eval();
+   * @param {function} objReturnFn  Function that returns object to check against. Note: Implemented to avoid use of eval();
+   * @param {url} scriptSrc The url of the script to load.
+   * @param {string} callback The handler to be executed when script load is complete.
+   * @example
+   * Util.loadScript('ExtScriptObj', function(){return ExtScriptObj;}, 'http://the.script.url/extobj.js', 
+   *   function(){
+   *      Util.log('External script is done loading.');
+   *   }
+   * );
+   */  
   _this.loadScript = function (objId, objReturnFn, scriptSrc, callback) {
     var jsIntv;
     var obj;
 
-    /* If script is not currently being loaded, attempt to load. */
+    /** If script is not currently being loaded, attempt to load. **/
     var init = function() {
       if (checkList(objId)) {
         function wait() {
@@ -88,7 +174,7 @@ var Util = (function () {
       }
     }
 
-    /* Attempts to create script element if object does not exist. */
+    /** Attempts to create script element if object does not exist. **/
     var setScript = function() {
       if(!checkObj()) {
         var js = document.createElement('script');
@@ -102,7 +188,7 @@ var Util = (function () {
       } 
     }
 
-    /* Remove from check list execute callback. */
+    /** Remove from check list executes callback. **/
     var setObj = function() {
       if(checkObj()) {
         clearInterval(jsIntv);
@@ -111,7 +197,7 @@ var Util = (function () {
       }
     };
 
-    /* Checks if function returns valid object. */
+    /** Checks if function returns valid object. **/
     var checkObj = function() { 
       try { 
           if(objReturnFn()) {
@@ -124,9 +210,7 @@ var Util = (function () {
 
     /**
      * Checks loadList for curreent IDs.
-     * 
-     * @param id   The string ID to check.
-     *
+     * @param {string} id String ID to check.
      * @return Boolean
      */
      var checkList = function(id) {
@@ -140,8 +224,7 @@ var Util = (function () {
      
      /**
      * Removes an ID from loadList.
-     * 
-     * @param id   The string ID to remove.
+     * @param {string} id The string ID to remove.
      */
      var removeFromList = function(id) {
        for(var i=0; i < _loadList.length; i++) {
@@ -155,6 +238,24 @@ var Util = (function () {
     init();
   }
 
+  /**
+   * @name Util#jsonParse
+   * @function
+   * @description  Method first checks if JSON is natively available in the browser. If not,
+   *               it will attempt to load an external JSON framework script.
+   *               Finally it will initialize a callback when a successful parse is complete.
+   * @param {string} txt A valid JSON string to parse.
+   * @param {function} reviver Function called for every key value from parsed result. 
+   * @param {function} rdyFn Callback function called and passed the parsed JSON object. 
+   * @see Util#jsonUrl
+   * @example
+   * var str = '{"hello":"world"}';
+   * Util.jsonParse(str, null, 
+   *   function(json) {
+   *     Util.log(json.hello);
+   *   }
+   * );
+   */  
   _this.jsonParse = function(txt, reviver, rdyFn) {
     if(typeof JSON !== 'undefined') {
       rdyFn(JSON.parse(txt, reviver));  
@@ -166,7 +267,26 @@ var Util = (function () {
       );
     }
   }
-  
+
+  /**
+   * @name Util#jsonStringify
+   * @function
+   * @description  Method first checks if JSON is natively available in the browser. If not,
+   *               it will attempt to load an external JSON framework script.
+   *               Finally it will initialize a callback when a successful stringify is complete.
+   * @param {object} obj An object to convert to a JSON string.
+   * @param {function} replacer Function called for every object values. 
+   * @param {function} rdyFn Callback function called and passed the JSON string. 
+   * @see Util#jsonUrl
+   * @example
+   * var obj = new Object();
+   * ob.hello = "world";
+   * Util.jsonStringify(obj, null, 
+   *   function(str) {
+   *     Util.log(str);
+   *   }
+   * );
+   */  
   _this.jsonStringify = function(obj, replacer, rdyFn) {
     if(typeof JSON !== 'undefined') {
       rdyFn(JSON.stringify(obj, replacer));  

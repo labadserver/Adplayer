@@ -1,6 +1,6 @@
 /*
    -------------------------------------------------------------------------------------------
-   AdPlayer v0.5.5 (dev.111811)
+   AdPlayer v0.5.7 (dev.112311)
    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
    -------------------------------------------------------------------------------------------
   
@@ -21,24 +21,74 @@
   --------------------------------------------------------------------------------------------
 */
 if (typeof AdPlayerManager === 'undefined') {
+/**
+ * @name Util
+ * @class Static class for all common methods.
+ * @description The Util class provides common methods used across AdPlayer.
+ * 
+ * @author christopher.sancho@adtech.com
+ */
 var Util = (function () {
-  var _this = {};
+  /** @private */ var _this = {};
   
+  /**
+   * @name Util#jsonUrl
+   * @field
+   * @description Location of the external JSON framework script needed for browsers 
+   *              that do not natively support JSON. By default, <code>Util.jsonUrl</code>
+   *              is set to look for the script in a relative path: </code>js/json2.min.js</code>
+   * @example
+   * // Get reference to property
+   * Util.log(Util.jsonUrl);
+   * 
+   * // Set property's value
+   * Util.jsonUrl = "http://new.uri.of.json.script";  
+   */
   _this.jsonUrl = 'js/json2.min.js';
+  
+  /**
+   * @name Util#isIE
+   * @field
+   * @description Returns <code>true</code> if browser is Internet Explorer. 
+   * @example
+   * if (Util.isIE) {
+   *  Util.log('The current browser is Internet Explorer.');
+   * }
+   */
   _this.isIE  = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;
-  _this.isWin = (navigator.appVersion.toLowerCase().indexOf("win") != -1) ? true : false;
+
+  /**
+   * @name Util#isOpera
+   * @field
+   * @description Returns <code>true</code> if browser is Opera. 
+   * @example
+   * if (Util.isOpera) {
+   *  Util.log('The current browser is Opera.');
+   * }
+   */
   _this.isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;      
+
+  /**
+   * @name Util#isFF
+   * @field
+   * @description Returns <code>true</code> if browser is Firefox. 
+   * @example
+   * if (Util.isFF) {
+   *  Util.log('The current browser is Firefox.');
+   * }
+   */  
   _this.isFF = (navigator.userAgent.indexOf("Firefox") != -1) ? true : false;    
   
-  /** 
-  * @description Logs a message through the console; if available.
-  * @param {string} msg The message to log.
-  * @param {string} ref Optional - An identifer used to reference the source of a message.
-  * 
-  * @example
-  * // "AdPlayer(God): This is a log output."
-  * Util.log('This is a log output', 'God');
-  */
+  /**
+   * @name Util#log
+   * @function
+   * @description Logs a message through the console; if available.
+   * @param {string} msg The message to log.
+   * @param {string} ref Optional - An identifer used to reference the source of a message.
+   * @example
+   * // "AdPlayer(Parent): This is a log output."
+   *  Util.log('This is a log output', 'Parent');  
+   */
   _this.log = function(msg, ref) {
     if(typeof(console) !== 'undefined' && console != null) {
       if (ref) {
@@ -49,13 +99,44 @@ var Util = (function () {
     }
   };
 
+  /**
+   * @name Util#setClassName
+   * @function
+   * @description Sets a cross-browser compatible class attribute to a DOM object. 
+   * @param {dom} domObj DOM object that class attribute will be set. 
+   * @param {string} className Value of the class attribute.
+   * @example
+   * var a = document.getElementById('dom-container');
+   * Util.setClassName(a, 'ad-container');  
+   */ 
   _this.setClassName = function (domObj, className) {
     domObj.setAttribute('class', className);
     if (_this.isIE) { domObj.setAttribute('className', className); } // IE Fix        
   }
-  
-  _this.ready = function(testFn, context, readyFn, readyParams, errorFn, errorParams, search) {
-    if(!search) { search = false; }
+
+  /**
+   * @name Util#ready
+   * @function
+   * @description Executes a callback function when an object, being returned in a <code>testFn</code>, is valid.
+   * @param {function} testFn Function that returns object to test against. Note: Implemented to avoid use of eval();
+   * @param {object} context Context of where <code>readyFn</code> & <code>errorFn</code> are located. 
+   * @param {function} readyFn Function called when object being tested returns <code>true</code>.
+   * @param {array} readyParams Array of parameters to pass at the time <code>readyFn</code> is called.
+   * @param {function} errorFn Function called when object being tested can not be found. 
+   *                           Method times out at a count of 100 at 100ms intervals.
+   * @param {Array} errorParams Array of parameters to pass at the time <code>errorFn</code> is called.
+   * @example
+   * function onReady(msg, num) {
+   *   Util.log(msg + ':' + num);
+   * }
+   * 
+   * function onError(msg) {
+   *   Util.log(msg);
+   * }
+   * 
+   * Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], onError, ['Error...']);
+   */
+  _this.ready = function(testFn, context, readyFn, readyParams, errorFn, errorParams) {
     function waitTimer(fn, cTxt, rdyFn, rdyPar, errFn, errPar) {
       var _timeout = 0;
       function check() {
@@ -76,26 +157,31 @@ var Util = (function () {
     waitTimer(testFn, context, readyFn, readyParams, errorFn, errorParams);
   }
   
-  /** 
-  * List containing IDs of scripts being loaded.
-  **/
+  
+  /** @private List containing IDs of scripts being currently loaded. **/
   var _loadList = [];
 
   /**
-  * Checks if obj is loaded or in process of being loaded, executes callback.
-  *
-  * @param objId        Id used to identify script.
-              Note: Implemented to avoid use of eval();
-  * @param objReturnFn  Function that returns object to check against.  
-              Note: Implemented to avoid use of eval();
-  * @param scriptSrc    The url of the script to load.
-  * @param objId        The handler to be executed when script load is complete.
-  */
+   * @name Util#loadScript
+   * @function
+   * @description Loads an external script & executes a callback function when an object, located in the 
+   *              external script & is returned in a <code>testFn</code>, is valid. 
+   * @param {string} objId Id used to identify script. Note: Implemented to avoid use of eval();
+   * @param {function} objReturnFn  Function that returns object to check against. Note: Implemented to avoid use of eval();
+   * @param {url} scriptSrc The url of the script to load.
+   * @param {string} callback The handler to be executed when script load is complete.
+   * @example
+   * Util.loadScript('ExtScriptObj', function(){return ExtScriptObj;}, 'http://the.script.url/extobj.js', 
+   *   function(){
+   *      Util.log('External script is done loading.');
+   *   }
+   * );
+   */  
   _this.loadScript = function (objId, objReturnFn, scriptSrc, callback) {
     var jsIntv;
     var obj;
 
-    /* If script is not currently being loaded, attempt to load. */
+    /** If script is not currently being loaded, attempt to load. **/
     var init = function() {
       if (checkList(objId)) {
         function wait() {
@@ -111,7 +197,7 @@ var Util = (function () {
       }
     }
 
-    /* Attempts to create script element if object does not exist. */
+    /** Attempts to create script element if object does not exist. **/
     var setScript = function() {
       if(!checkObj()) {
         var js = document.createElement('script');
@@ -125,7 +211,7 @@ var Util = (function () {
       } 
     }
 
-    /* Remove from check list execute callback. */
+    /** Remove from check list executes callback. **/
     var setObj = function() {
       if(checkObj()) {
         clearInterval(jsIntv);
@@ -134,7 +220,7 @@ var Util = (function () {
       }
     };
 
-    /* Checks if function returns valid object. */
+    /** Checks if function returns valid object. **/
     var checkObj = function() { 
       try { 
           if(objReturnFn()) {
@@ -147,9 +233,7 @@ var Util = (function () {
 
     /**
      * Checks loadList for curreent IDs.
-     * 
-     * @param id   The string ID to check.
-     *
+     * @param {string} id String ID to check.
      * @return Boolean
      */
      var checkList = function(id) {
@@ -163,8 +247,7 @@ var Util = (function () {
      
      /**
      * Removes an ID from loadList.
-     * 
-     * @param id   The string ID to remove.
+     * @param {string} id The string ID to remove.
      */
      var removeFromList = function(id) {
        for(var i=0; i < _loadList.length; i++) {
@@ -178,6 +261,24 @@ var Util = (function () {
     init();
   }
 
+  /**
+   * @name Util#jsonParse
+   * @function
+   * @description  Method first checks if JSON is natively available in the browser. If not,
+   *               it will attempt to load an external JSON framework script.
+   *               Finally it will initialize a callback when a successful parse is complete.
+   * @param {string} txt A valid JSON string to parse.
+   * @param {function} reviver Function called for every key value from parsed result. 
+   * @param {function} rdyFn Callback function called and passed the parsed JSON object. 
+   * @see Util#jsonUrl
+   * @example
+   * var str = '{"hello":"world"}';
+   * Util.jsonParse(str, null, 
+   *   function(json) {
+   *     Util.log(json.hello);
+   *   }
+   * );
+   */  
   _this.jsonParse = function(txt, reviver, rdyFn) {
     if(typeof JSON !== 'undefined') {
       rdyFn(JSON.parse(txt, reviver));  
@@ -189,7 +290,26 @@ var Util = (function () {
       );
     }
   }
-  
+
+  /**
+   * @name Util#jsonStringify
+   * @function
+   * @description  Method first checks if JSON is natively available in the browser. If not,
+   *               it will attempt to load an external JSON framework script.
+   *               Finally it will initialize a callback when a successful stringify is complete.
+   * @param {object} obj An object to convert to a JSON string.
+   * @param {function} replacer Function called for every object values. 
+   * @param {function} rdyFn Callback function called and passed the JSON string. 
+   * @see Util#jsonUrl
+   * @example
+   * var obj = new Object();
+   * ob.hello = "world";
+   * Util.jsonStringify(obj, null, 
+   *   function(str) {
+   *     Util.log(str);
+   *   }
+   * );
+   */  
   _this.jsonStringify = function(obj, replacer, rdyFn) {
     if(typeof JSON !== 'undefined') {
       rdyFn(JSON.stringify(obj, replacer));  
@@ -206,16 +326,51 @@ var Util = (function () {
 })();
 
 
+/**
+ * @private
+ * @name AbstractPostMsg
+ * @class Base class for all post method implementations.
+ * @description Base class for all post method implementations.
+ * 
+ * @author christopher.sancho@adtech.com
+ */
 var AbstractPostMsg = (function(){
-  var _this = {};
-  var json;
+  /** @private */ var _this = {};
+  /** @private */ var json;
+
+  /**
+   * @name AbstractPostMsg#send
+   * @function
+   * @description Sends a string message to an object using PostMessage.
+   * @param {string} msg JSON string message to send to receiver. 
+   * @param {object} target The target receiver to send the message string to.
+   */  
   _this.send = function(msg, target) {};
+  
+  /**
+   * @name AbstractPostMsg#receive
+   * @function
+   * @description Targets and passes message to the appropriate receiver.
+   * @param {string} evt PostMessage data object.
+   */  
   _this.receive = function(evt) {};
   return _this;
 });
+/**
+ * @private
+ * @name PostMsgDefault
+ * @class 
+ * @description Handles communication for postMessage supported browsers.
+ * @author christopher.sancho@adtech.com
+ */
 var PostMsgDefault = (function(){
-  var _this = new AbstractPostMsg();
+  /** @private */ var _this = new AbstractPostMsg();
   
+  /**
+   * @private
+   * @function 
+   * @description Attaches a message listener on initialization.
+   */  
   function init() {
     if (window.addEventListener) {  // all browsers except IE before version 9
       window.addEventListener ("message", _this.receive, false);
@@ -227,6 +382,10 @@ var PostMsgDefault = (function(){
     }
   }
 
+  /*
+   * Override concrete implementation 
+   */
+  
   _this.send = function(msg, target) {
     target.postMessage(msg, "*");
   };
@@ -251,11 +410,24 @@ var PostMsgDefault = (function(){
   init();
   return _this;
 });
-// TODO: Add error callback for queue routine
-
+/**
+ * @private
+ * @name PostMessageHandler
+ * @class 
+ * @description Handles both incoming and outgoing messages from <code>PostMessage</code>.
+ * @author christopher.sancho@adtech.com
+ */
 var PostMessageHandler = (function () {
-  var _this = {};
+  /** @private */ var _this = {};
 
+  /**
+   * @name PostMessageHandler#domRefPlayerWait
+   * @function
+   * @description Waits for DOM element to become available and then determines if iframe
+   *              verification is needed or message can be processed.
+   * @param {dom} dom DOM object this needs to be checked.
+   * @param {object} json JSON object to check or pass through.
+   */
   _this.domRefPlayerWait = function (dom, json) {
     _this.dom = dom;
     _this.json = json;
@@ -278,9 +450,18 @@ var PostMessageHandler = (function () {
         PostMessage.send(obj, dom.contentWindow);          
       }
     }
-    Util.ready(function(){return _this.dom;}, this, iframeVerify, [_this.dom, _this.json], null, null);
+    function iframeVerifyErr() {
+      Util.log('Could not verify a parent iframe AdPlayer.');
+    }
+    Util.ready(function(){return _this.dom;}, this, iframeVerify, [_this.dom, _this.json], iframeVerifyErr, null);
   }
 
+  /**
+   * @name PostMessageHandler#getPlayerByDomSearch
+   * @function
+   * @description Attempts to locate a parent AdPlayer from a DOM reference point.
+   * @param {dom} dom DOM object that needs to be checked.
+   */
   _this.getPlayerByDomSearch = function (dom) {
     var par = dom.parentNode;
     while (!AdPlayerManager.getAdPlayerById(par.id)) {
@@ -300,11 +481,19 @@ var PostMessageHandler = (function () {
     }     
   }    
 
+  /**
+   * @name PostMessageHandler#readyTest
+   * @function
+   * @description Parses JSON object and executes requests.
+   * @param {dom} iframe Target iframe to communicate with.
+   * @param {object} json JSON object.
+   * @param {adplayer} player Current AdPlayer.
+   */
   function readyTest(iframe, json, player) {
     if (player) {
       var params = json.params.split(',');
       for (var t=0; t < params.length; t++) {
-        // CHECKS if any contains a function to properly wrap and send off
+        // Checks if it contains a function, which is needs to be properly wrapped and send off
         switch (json.fn){
           case 'addEventListener':
             if (unescape(params[t]).match(PostMessage.FUNCTION)) {
@@ -342,6 +531,12 @@ var PostMessageHandler = (function () {
     }
   }      
   
+  /**
+   * @name PostMessageHandler#inMsgHandler
+   * @function
+   * @description Handles specific incoming messages.
+   * @param {object} json JSON object evaluate.
+   */
   _this.inMsgHandler = function (json) {
     switch (json.fn){
       case 'iframePlayerVerify':
@@ -362,7 +557,7 @@ var PostMessageHandler = (function () {
     default: 
       var func = (new Function( "return( " + json.fn + " );" ))();
       var player = AdPlayerManager.getPlayerByUID(json.uid);  
-      // NEED TO TARGET THE CURRENT PLAYER THEN SEND BACK
+      // Need to target the current player and send back
       if (player) {
         var event = new AdEvent(json.evtType);
         event.target(player);
@@ -370,17 +565,37 @@ var PostMessageHandler = (function () {
       }
       break;
     }
-  }  
-return _this;
+  }
+  
+  return _this;
 })();
+/**
+ * @name PostMessage
+ * @class Static class for PostMessage communication.
+ * @description Static class for PostMessage communication. Implementation
+ *              only supports postMessage for "modern-based" browsers.  No alternate 
+ *              communication ability is setup for older browsers at this time using
+ *              a data funnel solution similar to postMessage.  Please see the 
+ *              <code>apstub.html</code> for other iframe communication techniques.</br>
+ * @property {string - Static Const} OUTGOING The <code>PostMessage.Outgoing</code> constant defines the value of an 'outgoing' message.
+ * @property {string - Static Const} INCOMING The <code>PostMessage.Incoming</code> constant defines the value of an 'incoming' message.
+ * @property {string - Static Const} FUNCTION The <code>PostMessage.Function</code> constant defines the value of a 'function' message.
+ * @author christopher.sancho@adtech.com
+ */
 var PostMessage = (function () {
-    var _this = {};
-    var _postMsg;
-    
+  /** @private */ var _this = {};
+  /** @private */ var _postMsg;
+
   _this.OUTGOING = 'PostMessage.Outgoing';
   _this.INCOMING = 'PostMessage.Incoming';
   _this.FUNCTION = 'PostMessage.Function: ';
   
+  /**
+   * @private
+   * @name PostMessage#init
+   * @function
+   * @description Detects whether current window supports postMessage.
+   */
   function init() {
     if (typeof(window.postMessage) == typeof(Function)) {
       _postMsg = new PostMsgDefault();
@@ -389,6 +604,15 @@ var PostMessage = (function () {
     }
   }
 
+  /**
+   * @name PostMessage#send
+   * @function
+   * @description Stringifies a JSON object and sends it to the appropriate 
+   *              PostMessage channel detected at initialization.
+   * @param {string} msg JSON string message to send to receiver. 
+   * @param {object} target The target receiver to send the message string to.
+   * @see Util#jsonStringify
+   */  
   _this.send = function(obj, target) {
     obj.pmsgid = new Date().getTime(); 
     Util.jsonStringify(obj, null, function(msg){
@@ -399,18 +623,42 @@ var PostMessage = (function () {
   init();
   return _this;
 })();
-/** @private */
+/**
+ * @private
+ * @name PrivacyInfoButton
+ * @class 
+ * @description Handles display of privacy information button for current <code>AdPlayer</code> instance.
+ * @param {function} callback Function to execute when button is clicked.
+ * @param {string} openBtnTxt Optional - Text to use for button.
+ * @author christopher.sancho@adtech.com
+ */
 var PrivacyInfoButton = (function (callback, openBtnTxt) {
   /** @private */ var _this = {};
-  
-  _this.button;
-  _this.iconPos = 'top-right';
+  /** @private */ var _openBtnIcon;
+  /** @private */ var _openBtnTxtObj;
+  /** @private */ var _privBtnClassName = 'privacyButton';
 
-  var _openBtnIcon;
-  var _openBtnTxtObj;
-  var _openBtnTxt = 'Get Info';
-  var _privBtnClassName = 'privacyButton';
+  /**
+   * @name PrivacyInfoButton#button
+   * @field
+   * @description DOM object of current privacy button.
+   * @example
+   */ 
+  _this.button;
   
+  /**
+   * @name PrivacyInfoButton#openBtnTxt
+   * @field 
+   * @description 
+   * @param {string} val
+   * @example
+   * // Get reference to property
+   * var txt = privacyButton.openBtnTxt();
+   * 
+   * // Set property's value
+   * privacyButton.openBtnTxt('Open');  
+   */ 
+  var _openBtnTxt = 'Get Info';
   _this.openBtnTxt = function(val) {
     if(val) {
       _openBtnTxt = val;
@@ -421,6 +669,11 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
     return _openBtnTxt;
   } 
 
+  /**
+   * @private
+   * @function
+   * @description Creates DOM elements along with its attributes.  
+   */
   function init() {
     _this.openBtnTxt(openBtnTxt);
     
@@ -438,7 +691,6 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
     _openBtnTxtObj.innerHTML = _this.openBtnTxt();
        
     _this.button.onclick = callback;
-    //_openBtnIcon.onclick = callback;
     
     _openBtnIcon.onmouseover = function() {
       _openBtnTxtObj.style.display = "block";
@@ -447,7 +699,24 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
       _openBtnTxtObj.style.display = "none";
     };
   }
-  
+
+  /**
+   * @name PrivacyInfoButton#setPosition
+   * @function
+   * @description Sets the position of the button relative to its parent DOM element.
+   * @param {string} pos Position where to set panel.</br>  
+   *                 Valid values:
+   *                 <ul>
+   *                   <li>top-left</li>
+   *                   <li>top-right</li>
+   *                   <li>top-left-out</li>
+   *                   <li>top-right-out</li>
+   *                   <li>bottom-left</li>
+   *                   <li>bottom-right</li>
+   *                   <li>bottom-left-out</li>
+   *                   <li>bottom-right-out</li>
+   *                 </ul>
+   */
   _this.setPosition = function (pos) {
     _this.button.setAttribute('style', '');
     _openBtnIcon.setAttribute('style', '');
@@ -558,16 +827,48 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
   init();
   return _this;
 });
-/** @private */
-var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCallback, trackCallback) {
+/**
+ * @private
+ * @name PrivacyPanel
+ * @class 
+ * @description Handles display of all privacy information passed to current <code>AdPlayer</code> instance.
+ * @param {array} infoList List containing <code>PrivacyInfo</code> objects. 
+ * @param {string} closeTxt Optional - Close button text. 'X' is default value.
+ * @param {string} headerTxt Optional - Header text.
+ * @param {string} footerTxt Optional - Footer text.
+ * @param {string} closeCallback Function to call when close button is clicked.
+ * @param {string} trackCallback Function to call when link is clicked.  <code>trackCallback</code> passes an
+ *                  a new <code>Advent.PRIVACY_CLICK</code> instance.
+ * @see PrivacyInfo
+ * @see AdEvent
+ * @author christopher.sancho@adtech.com
+ */
+var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, headerTxt, footerTxt) {
   /** @private */ var _this = {};
+  /** @private */ var _listObj;
+  /** @private */ var _infoList;
+  /** @private */ var _privPanelClassName = 'privacyPanel';
   
+  /**
+   * @name PrivacyPanel#panel
+   * @field
+   * @description DOM object of current privacy panel.
+   * @example
+   */ 
   _this.panel;
-
-  var _listObj;
-  var _infoList;
-  var _privPanelClassName = 'privacyPanel';
-    
+  
+  /**
+   * @name PrivacyPanel#infoList
+   * @field
+   * @description List containing <code>PrivacyInfo</code> objects. 
+   * @param {string} val List to set, which contains <code>PrivacyInfo</code> objects.
+   * @example
+   * // Get reference to property
+   * var infoList = privacyPanel.infoList();
+   * 
+   * // Set property's value
+   * privacyPanel.infoList(objList);  
+   */ 
   _this.infoList = function(val) {
     if(val) {
       _infoList = val;
@@ -580,7 +881,19 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     }
     return _infoList;    
   }
-  
+
+ /**
+  * @name PrivacyPanel#closeTxt
+  * @field
+  * @description Close button text. 'X' is default value. 
+  * @param {string} val Close button text.
+  * @example
+  * // Get reference to property
+  * var txt = privacyPanel.closeTxt();
+  * 
+  * // Set property's value
+  * privacyPanel.closeTxt('Close');  
+  */
   var _closeTxtObj;
   var _closeTxt = 'X';
     _this.closeTxt = function(val) {
@@ -592,7 +905,19 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     }
     return _closeTxt;
   }  
-  
+
+  /**
+   * @name PrivacyPanel#headerTxt
+   * @field
+   * @description Header text positioned above ad privacy list. 
+   * @param {string} val Header text.
+   * @example
+   * // Get reference to property
+   * var txt = privacyPanel.headerTxt();
+   * 
+   * // Set property's value
+   * privacyPanel.headerTxt('Hello world!');  
+   */
   var _headerTxtObj;
   var _headerTxt = '';
     _this.headerTxt = function(val) {
@@ -614,6 +939,18 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     return _headerTxt;
   }
   
+  /**
+   * @name PrivacyPanel#footerTxt
+   * @field
+   * @description Footer text positioned below ad privacy list. 
+   * @param {string} val Footer text.
+   * @example
+   * // Get reference to property
+   * var txt = privacyPanel.footerTxt();
+   * 
+   * // Set property's value
+   * privacyPanel.footerTxt('Hello world!');  
+   */
   var _footerTxtObj;
   var _footerTxt = '';
     _this.footerTxt = function(val) {
@@ -631,6 +968,11 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     return _headerTxt;
   }  
   
+  /**
+   * @private
+   * @function
+   * @description Creates DOM elements along with its attributes.  
+   */
   function init() {
     _this.panel = document.createElement('div');
     Util.setClassName(_this.panel, _privPanelClassName);
@@ -655,6 +997,13 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     _this.footerTxt(footerTxt);
   }
   
+  /**
+   * @name PrivacyPanel#addPrivacyInfo
+   * @function
+   * @description Adds <code>PrivacyInfo</code> to privacy DOM panel.
+   * @param {object} privacyInfoObj <code>PrivacyInfo</code> object.
+   * @see PrivacyInfo
+   */
   function addPrivacyInfo(privacyInfoObj) {
     var privacyObj =  document.createElement('div');
     privacyObj.setAttribute('class', 'item');
@@ -669,6 +1018,13 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     _listObj.appendChild(privacyObj);
   }
   
+  /**
+   * @name PrivacyPanel#checkPanel
+   * @function
+   * @description Checks if panel contains a certain element with a defined class name.
+   * @param {string} tagName DOM element.
+   * @param {className} Class name.
+   */
   function checkPanel(tagName, className) {
     for (var i = 0; i < _this.panel.getElementsByTagName(tagName).length; i++) {
       if (_this.panel.getElementsByTagName(tagName)[i].className == className){
@@ -678,6 +1034,23 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     return null;
   }
   
+  /**
+   * @name PrivacyPanel#setPosition
+   * @function
+   * @description Sets the position of the panel relative to its parent DOM element.
+   * @param {string} pos Position where to set panel.</br>  
+   *                 Valid values:
+   *                 <ul>
+   *                   <li>top-left</li>
+   *                   <li>top-right</li>
+   *                   <li>top-left-out</li>
+   *                   <li>top-right-out</li>
+   *                   <li>bottom-left</li>
+   *                   <li>bottom-right</li>
+   *                   <li>bottom-left-out</li>
+   *                   <li>bottom-right-out</li>
+   *                 </ul>
+   */
   _this.setPosition = function (pos) {
     _this.panel.setAttribute('style', '');
     _this.panel.style.position = "absolute";
@@ -760,16 +1133,11 @@ var PrivacyInfo = (function () {
   return _this;
 });
 /**
-* @class Responsible for handling the loading and referencing of a URL request.
-* @description A pixel is requested by dynamically generating an <code>img</code>
-*              element, which is appended to the document.  After appending is complete,
-*              the <code>img</code> element is cleared from the document.
-* 
+* @class Responsible for handling the loading and referencing of a pixel request.
+* @description Responsible for handling the loading and referencing of a pixel request.
 * @author christopher.sancho@adtech.com
-* 
 * @param {string} url Optional - URL of the pixel to request.
 * @property {string} url URL of the pixel to request.
-* 
 * @example
 * var pixelRequest = new PixelRequest('http://my.pixel-url.com');
 * pixelRequest.load();
@@ -789,7 +1157,7 @@ var PixelRequest = (function (url) {
   /**
    * @name PixelRequest#load
    * @function
-   * @description Requests a pixel using the <code>url</code> property. 
+   * @description Requests a pixel using the <code>url</code> property.
    */
    _this.load = function() {
     if(_this.url) {
@@ -847,7 +1215,7 @@ var PixelRequest = (function (url) {
  * adPlayer.addEventListener(AdEvent.COUNT, countEventHandler2);
  * function countEventHandler2(adEvent) {
  *   Util.log('COUNT ad event has been dispatched.');
- *   Util.log('Here is data.info:' + adEvent.data.info);
+ *   Util.log('Here is data info:' + adEvent.target().data().info);
  * }
  * 
  * var data = new Object();
@@ -856,8 +1224,8 @@ var PixelRequest = (function (url) {
  * 
  */
 function AdEvent(type, data) {
-  var _type = '';
   /**
+   * @name AdEvent#type
    * @field
    * @description The type of <code>AdEvent.EVENT</code> to create.
    * @returns {string} Returns the <code>AdEvent</code> type.
@@ -868,19 +1236,33 @@ function AdEvent(type, data) {
    * // Set property's value
    * adEvent.type(AdEvent.LOAD);  
    */
+  var _type = '';
   this.type = function(val){
     if(val) { _type = val; }
     return _type;
   };
   if (type) { _type = type; }
   
+  /**
+   * @name AdEvent#currentTarget 
+   * @field
+   * @description The current <code>AdPlayer</code> instance associated with the <code>AdEvent</code> object. The current target
+   *           usually refers to the original AdPlayer dispatching the event. 
+   *           <code>currentTarget</code> is set when <code>AdPlayer.track()</code> dispatches the <code>AdEvent</code> object insance. 
+   * @returns {adplayer} Returns <code>AdPlayer</code> instance associated with the an <code>AdEvent</code> instance.
+   * @example
+   * // Get reference to property
+   * var adPlayer = adEvent.currentTarget();
+   * 
+   * // Set property's value
+   * adEvent.currentTarget(adPlayer);
+  */
   var _currentTarget = {};
   this.currentTarget = function(val){
     if(val) { _currentTarget = val; }
-      return _currentTarget;
+    return _currentTarget;
   };  
   
-  var _data = new Object();
   /**
    * @field
    * @description The object containing information associated with an <code>AdEvent</code> instance.
@@ -894,25 +1276,26 @@ function AdEvent(type, data) {
    * o.hello = "Hello";
    * adEvent.data(o);
    */
+  var _data = new Object();
   this.data = function(val){
     if(val) { _data = val; }
-      return _data;
+    return _data;
   };
   if (data) { _data = data; }
   
-  var _target;
   /**
    * @field
    * @description The <code>AdPlayer</code> instance associated with the <code>AdEvent</code> object.
-   *        <code>player</code> is set when <code>AdPlayer.track()</code> dispatches the <code>AdEvent</code> object insance.
-   * @returns {AdPlayer} Returns <code>AdPlayer</code> instance associated with the an <code>AdEvent</code> instance.
+   *              <code>target</code> is set when <code>AdPlayer.track()</code> dispatches the <code>AdEvent</code> object insance.
+   * @returns {adplayer} Returns <code>AdPlayer</code> instance associated with the an <code>AdEvent</code> instance.
    * @example
    * // Get reference to property
-   * var adPlayer = adEvent.player();
+   * var adPlayer = adEvent.target();
    * 
    * // Set property's value
-   * adEvent.player(adPlayer); 
+   * adEvent.target(adPlayer); 
    */
+  var _target;
   this.target = function(val){
     if(val) { _target = val; }
       return _target;
@@ -925,6 +1308,7 @@ AdEvent.list = new Object();
 
 /**
  * @description Checks if a certain event has been mapped to the <code>AdEvent</code> class.
+ * @function
  * @param {string} val The string value to check.
  * @returns {Boolean} Returns true or false.
  */
@@ -941,6 +1325,7 @@ AdEvent.check = function(val) {
 
 /** 
  * @description Dynamically maps a string value to the <code>AdEvent</code> class.
+ * @function
  * @param {string} val The string value to map.
  */
 AdEvent.map = function(val) {
@@ -948,7 +1333,7 @@ AdEvent.map = function(val) {
   AdEvent[val] = 'AdEvent.' + val;
 }
 
-// Setup default Ad Events
+/* Setup default Ad Events */
 for (var dae = 0; dae < defaultAdEvents.length; dae++) {
   AdEvent.map(defaultAdEvents[dae]);
 }
@@ -1043,15 +1428,18 @@ AbstractPlayer = (function(uid, adDomElement) {
   return _this;
 });
 /**
- * @private
+ * @private 
  * @name DefaultPlayer
- * @class Default player returned
- * @description DESCRIPTION NEEDED
+ * @class Default <code>AdPlayer</code> implementation.
  * 
  * @author christopher.sancho@adtech.com
  */
 var DefaultPlayer = (function (uid, adDomElement) {
   /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
+  
+  /*
+   * Override concrete implementation 
+   */  
   
   _this.addEventListener = function(adEvent, callback) {
     if (!AdEvent.check(adEvent)) { return; }
@@ -1209,7 +1597,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
 
   _this.enableAdChoice = function(openBtnTxt, closeTxt, headerTxt, footerTxt, iconPos) {
     if(!_this.privacyPanel) {
-      _this.privacyPanel = new PrivacyPanel(_this.privacyInfoList(), closeTxt, headerTxt, footerTxt, _this.toggle, _this.track);
+      _this.privacyPanel = new PrivacyPanel(_this.privacyInfoList(), _this.toggle, _this.track, closeTxt, headerTxt, footerTxt);
     } else {
       _this.privacyPanel.infoList(_this.privacyInfoList());
       _this.privacyPanel.closeTxt(closeTxt);
@@ -1274,15 +1662,34 @@ var DefaultPlayer = (function (uid, adDomElement) {
   
   return _this;
 });
-/** @private */
+/**
+ * @private 
+ * @name ReferencePlayer
+ * @class <code>AdPlayer</code> implementation responsible for players being referenced through 
+ *        another <code>AdPlayer</code> instance.
+ * 
+ * @author christopher.sancho@adtech.com
+ */
 var ReferencePlayer = (function (uid, adDomElement, refAdPlayer) {
   /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
   /** @private */ var _defaultPlayer = new DefaultPlayer(uid, adDomElement);
   
+  /**
+   * @name ReferencePlayer#updateRef
+   * @function
+   * @description Updates the default player in order to keep information
+   *              synced between related <code>AdPlayers</code>.
+   * @param {string} fnName Function name that will be executed.
+   * @param {array} params The parameters to pass to the executed function.
+   */  
   function updateRef(fnName, params){
     _defaultPlayer[fnName].apply(_this, params);
     refAdPlayer[fnName].apply(_this, params);
   }
+  
+  /*
+   * Override concrete implementation 
+   */  
   
   _this.addEventListener = function(adEvent, callback) {
     updateRef('addEventListener', [adEvent, callback, this]);    
@@ -1310,7 +1717,6 @@ var ReferencePlayer = (function (uid, adDomElement, refAdPlayer) {
   };
 
   _this.enableAdChoice = function(openBtnTxt, closeTxt, headerTxt, footerTxt, iconPos) {
-    // refAdPlayer['enableAdChoice'].apply(_this, [openBtnTxt, closeTxt, headerTxt, footerTxt, iconPos, this]);
     _defaultPlayer.isAdChoiceEnabled(false);
     updateRef('enableAdChoice', [openBtnTxt, closeTxt, headerTxt, footerTxt, iconPos, this]);
   };
@@ -1329,15 +1735,39 @@ var ReferencePlayer = (function (uid, adDomElement, refAdPlayer) {
   
   return _this;
 });
-/** @private */
+/**
+ * @private 
+ * @name IframePlayer
+ * @class <code>AdPlayer</code> implementation responsible for iFrame communication using <code>PostMessage</code>.
+ * 
+ * @author christopher.sancho@adtech.com
+ */
 var IframePlayer = (function (uid, adDomElement) {
   /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
   /** @private */ var _defaultPlayer = new DefaultPlayer(uid, adDomElement);
-
+  
+  /**
+   * @name IframePlayer#updateRef
+   * @function
+   * @description Updates the default player in order to keep information
+   *              synced between related <code>AdPlayers</code>. 
+   * @param {string} fnName Function name that will be executed.
+   * @param {array} params The parameters to pass to the executed function.
+   */ 
   function updateRef(fnName, params){
     return _defaultPlayer[fnName].apply(_this, params);
   }
   
+  /**
+   * @name IframePlayer#sendToParentFrame
+   * @function
+   * @description Sends a response to the PostMessage class.
+   * @param {string} fn Function name that will passed through.  This is used to identify 
+   *                    the correct function to execute on the incoming side.
+   * @param {array} params The parameters to pass to the function being executed on the other end.
+   * @param {object} json JSON object to pass through PostMessage.  Object will be
+   *                      stringified before delivery.
+   */
   function sendToParentFrame(fn, params, json) {
     var obj;
     if (json) {
@@ -1352,6 +1782,12 @@ var IframePlayer = (function (uid, adDomElement) {
     PostMessage.send(obj, parent);
   }
   
+  /**
+   * @name IframePlayer#getFunctionName
+   * @function
+   * @description Parses a function string and extracts its name.
+   * @param {string} funcStr Function converted to a string to be parsed.
+   */
   function getFunctionName(funcStr) {
     var funcStrClean = funcStr.replace(/\s+/g, " ");
     if (funcStrClean.search(/function /i, "") == 0) {
@@ -1374,6 +1810,10 @@ var IframePlayer = (function (uid, adDomElement) {
     funcName = funcStrClean.substring(startPos,endPos).replace(/\s+/g, "");
     return escape(PostMessage.FUNCTION + funcName);
   }  
+  
+  /*
+   * Override concrete implementation 
+   */
   
   _this.uid = function(val) {
     return updateRef('uid', [val]);
@@ -1445,8 +1885,6 @@ var IframePlayer = (function (uid, adDomElement) {
     } else {
       Util.log("Parameter 'url' must be defined", "addTrackingEvent");
     }    
-    //updateRef('addTrackingPixel', [adEvent, url, repeat, this]);
-    //sendToParentFrame('addTrackingPixel', [adEvent, url, repeat]);
   };
 
   _this.removeTrackingPixel = function(adEvent, url) {
@@ -1485,8 +1923,6 @@ var IframePlayer = (function (uid, adDomElement) {
         }
       } while(index < tmpLen);
     }    
-    //updateRef('removeTrackingPixel', [adEvent, url, this]);
-    //sendToParentFrame('removeTrackingPixel', [adEvent, url]);
   };
 
   _this.track = function(adEventObj, url, currentPlayer) {
@@ -1529,100 +1965,103 @@ var IframePlayer = (function (uid, adDomElement) {
 });
 /**
  * @private
- * @description Returns an instance of an <code>AdPlayer</code>. A referral name,
- *              specified by a DOM element, is used as a start point of
- *              a reverse DOM search of a <code>DIV</code> element previously
- *              associated with an <code>AdPlayer</code>.
- *              
- * @param refName {String} Referral id used to mark the start point of a DOM search. 
- * @return {Adplayer} AdPlayer instance associated with id. 
- * 
- * @example
- * &lt;div id=&quot;adPlayerContainer&quot;&gt;
- *  &lt;script type=&quot;text/javascript&quot;&gt;
- *    var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
- *    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
- *  &lt;/script&gt;
- *  &lt;script type=&quot;text/javascript&quot; id=&quot;adServerTag&quot;&gt;
- *    // Sample third party response
- *    AdPlayerManager.getAdPlayer("uid", function (adPlayer) {
- *      adPlayer.track(new AdEvent(AdEvent.SHOW));
- *      adPlayer.addPrivacyInfo('3RD_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
- *    }); 
- *  &lt;/script&gt;
- * &lt;/div&gt;
- * &lt;script type=&quot;text/javascript&quot;&gt;
- *  // Outputs 1ST_SERVER & 3RD_SERVER info
- *  Util.log(adPlayer.privacyInfoList());
- * &lt;/script&gt;
+ * @name PlayerFactory
+ * @class Returns an instance of an <code>AdPlayer</code>.
+ * @description Returns an instance of an <code>AdPlayer</code>.</br>
+ * @param {string} uid Unique ID used to identify an <code>AdPlayer</code>.
+ * @param {string} domRefId DOM ID used to mark the start point of a DOM search.
+ * @param {function} fnInit Callback executed when an <code>AdPlayer</code> is created.
+ * @param {adplayer} refAdPlayer Optional - When defined, sets <code>refAdPlayer</code> 
+ *                   as the primary <code>AdPlayer</code>. 
+ * @return {adplayer} AdPlayer instance created through the factory search logic.
+ * @author christopher.sancho@adtech.com
  */
 var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
-   var _this = {};
+   /** @private */ var _this = {};
    if(!uid) { Util.log('Unique ID is required.', 'AdPlayer'); return; }
- 
-   /* 
-    * Check Order:
+
+   /** @private */ var _isInIFrame = (window.location != window.parent.location) ? true : false;
+
+   /**
+    * @private
+    * @function
+    * @description
+    * Attempts to search for an <code>AdPlayer</code> using the following conditional order:
     * 1) uid, domId, null, refAdPlayer
     * 2) uid, domId, null, null
     * 3) uid, null, null, refAdPlayer
     * 4) uid, null, null, null 
-   */
-   var _isInIFrame = (window.location != window.parent.location) ? true : false;
-   
+    */
    function init() {
      if (domRefId && !refAdPlayer) {
        if(checkAdMgrDomList(domRefId)) {
-         Util.ready(function(){return AdPlayerManager.getAdPlayerById(domRefId);}, _this, domRefAdPlayerInit, [domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], true);
+         Util.ready(function(){return AdPlayerManager.getAdPlayerById(domRefId);}, _this, domRefAdPlayerInit, [domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        } else {
          addToAdMgrList(domRefId);
-         if (AdPlayerManager.isSearching()) {
-           Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], true);
-         } else {
-           Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], false);
-         }
+         Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        }
      }
      else if (domRefId && refAdPlayer) {
        if(checkAdMgrDomList(domRefId)) {
-         Util.ready(function(){return refAdPlayer;}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], false);         
+         Util.ready(function(){return refAdPlayer;}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);         
        } else {
          addToAdMgrList(domRefId);
-         Util.ready(function(){return document.getElementById(domRefId);}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], false);
+         Util.ready(function(){return document.getElementById(domRefId);}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        }
 
      }     
      else if(!domRefId && refAdPlayer) {
        domRefId = setDocWriteRef();
        addToAdMgrList(domRefId);
-       Util.ready(function(){return document.getElementById(domRefId);}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], true);
+       Util.ready(function(){return document.getElementById(domRefId);}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
      }
      else if(!domRefId && !refAdPlayer) {
        domRefId = setDocWriteRef();
        if(checkAdMgrDomList(domRefId)) {
-         Util.ready(function(){return AdPlayerManager.getAdPlayerById(domRefId);}, _this, domRefAdPlayerInit, [domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], true);
+         Util.ready(function(){return AdPlayerManager.getAdPlayerById(domRefId);}, _this, domRefAdPlayerInit, [domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        } else {
          addToAdMgrList(domRefId);
-         if (AdPlayerManager.isSearching()) {
-           Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], true);
-         } else {
-           Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit], false);
-         }
+         Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        }       
      }
    }
    
-   function refAdPlayerInit(refPlayer, uid, domRefId, fnInit) {   
-     if (document.getElementById(domRefId)) {
-       fnInit(new ReferencePlayer(uid, document.getElementById(domRefId), refPlayer));
+   /**
+    * @name PlayerFactory#refAdPlayerInit
+    * @function
+    * @description Executes a callback function with a reference <code>AdPlayer</code>.
+    * @param {adplayer} refPlayer Primary <code>AdPlayer</code>. to use.
+    * @param {string} uid Unique ID used to identify an <code>AdPlayer</code>.
+    * @param {string} domRef domRef DOM ID used to mark the start point of a DOM search.
+    * @param {function} fnInit Callback executed when a reference <code>AdPlayer</code> is created.
+    */
+   function refAdPlayerInit(refPlayer, uid, domRef, fnInit) {   
+     if (document.getElementById(domRef)) {
+       fnInit(new ReferencePlayer(uid, document.getElementById(domRef), refPlayer));
      } else {
        fnInit(new ReferencePlayer(uid, refPlayer.adDomElement(), refPlayer));
      }     
    }
 
-   function domRefAdPlayerInit(domRefId, fnInit) {   
-     fnInit(AdPlayerManager.getAdPlayerById(domRefId));   
+   /**
+    * @name PlayerFactory#domRefAdPlayerInit
+    * @function
+    * @description Executes a callback function when an <code>AdPlayer</code> is found by <code>AdPlayerManager.getAdPlayerById</code>.
+    * @param {string} domRef domRef DOM ID used to mark the start point of a DOM search.
+    * @param {function} fnInit Callback executed when an <code>AdPlayer</code> is located by <code>AdPlayerManager.getAdPlayerById</code>.
+    * @see AdPlayerManager#getAdPlayerById 
+    */
+   function domRefAdPlayerInit(domRef, fnInit) {   
+     fnInit(AdPlayerManager.getAdPlayerById(domRef));   
    }   
-   
+
+   /**
+    * @name PlayerFactory#checkAdMgrDomList
+    * @function
+    * @description Checks if a DOM ID is located in <code>AdPlayerManager.domIdList</code>.
+    * @param {string} domRef DOM ID used to mark the start point of a DOM search.
+    * @see AdPlayerManager#domIdList
+    */
    function checkAdMgrDomList(domRef) {
      var isListed = false;
      for (var i=0; i < AdPlayerManager.domIdList().length; i++) {
@@ -1634,24 +2073,46 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
      return isListed;
    }
 
-   function addToAdMgrList(id) {
+   /**
+    * @name PlayerFactory#addToAdMgrList
+    * @function
+    * @description Adds a DOM ID to <code>AdPlayerManager.domIdList</code>.
+    * @param {string} domRef DOM ID used to mark the start point of a DOM search.
+    * @see AdPlayerManager#domIdList
+    */
+   function addToAdMgrList(domRef) {
      for (var i=0; i < AdPlayerManager.domIdList().length; i++) {
-       if(AdPlayerManager.domIdList()[i] == id) {
+       if(AdPlayerManager.domIdList()[i] == domRef) {
          return;
        }
      }
-     AdPlayerManager.domIdList().push(id);
+     AdPlayerManager.domIdList().push(domRef);
    }   
-   
-   function removeFromAdMgrList(id) {
+
+   /**
+    * @name PlayerFactory#removeFromAdMgrList
+    * @function
+    * @description Removes a DOM ID from <code>AdPlayerManager.domIdList</code>.
+    * @param {string} domRef DOM ID used to mark the start point of a DOM search.
+    * @see AdPlayerManager#domIdList
+    */
+   function removeFromAdMgrList(domRef) {
      for (var i=0; i < AdPlayerManager.domIdList().length; i++) {
-       if(AdPlayerManager.domIdList()[i] == id) {
+       if(AdPlayerManager.domIdList()[i] == domRef) {
          AdPlayerManager.domIdList().splice(i, 1);
          break;
        }
      }
    }
-   
+
+   /**
+    * @name PlayerFactory#parentDomSearch
+    * @function
+    * @description Attempts to locate a parent AdPlayer from a DOM reference point.
+    * @param {string} uid Unique ID used to identify an <code>AdPlayer</code>.
+    * @param {string} domRef DOM ID used to mark the start point of a DOM search.
+    * @param {function} fnInit Callback executed when a default <code>AdPlayer</code> is created.
+    */
    function parentDomSearch(uid, domRef, fnInit) {
      // Attempt to find the top most player.
      var par = document.getElementById(domRef).parentNode;
@@ -1700,7 +2161,10 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
             _this.uid = function() {
               return uAdId;
             }
-            AdPlayerManager.factoryList().push(_this);            
+            
+            // Added for PostMessage target verification
+            AdPlayerManager.factoryList().push(_this);    
+            
             var obj = new Object();
             obj.postType = PostMessage.OUTGOING;
             obj.uid = _this.uid();
@@ -1725,11 +2189,25 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
        }
      }     
    }
-   
+
+   /**
+    * @name PlayerFactory#returnDefault
+    * @function
+    * @description Executes a callback function with a default <code>AdPlayer</code>.
+    * @param {string} uid Unique ID used to identify an <code>AdPlayer</code>.
+    * @param {string} domRef DOM ID used to mark the start point of a DOM search.
+    * @param {function} fnInit Callback executed when a default <code>AdPlayer</code> is created.
+    */
    function returnDefault(uid, domRef, fnInit) {
      fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));
    }
-   
+
+   /**
+    * @name PlayerFactory#setDocWriteRef
+    * @function
+    * @description Sets a <code>span</code> element using <code>document.write</code>.
+    * @return {string} domId ID of the generated <code>span</code> element.
+    */
    function setDocWriteRef() {
      var uAdId = new Date().getTime();
      Util.log('WARNING: No valid referral element specified for "'+uid+'". Referral will be created using "document.write"', 'parentDomSearch');
@@ -1749,10 +2227,12 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
  * @author christopher.sancho@adtech.com
  * 
  * @example
- * &lt;div id=&quot;myTagDivContainer&quot;&gt;<br/>  &lt;div&gt;-----TODO----&lt;/div&gt;<br/>  &lt;div&gt;-----TODO----&lt;/div&gt;<br/>&lt;/div&gt;
- * 
- * var myDomObj = document.getElementById('myTagDivContainer');
- * var adPlayer = new AdPlayer(myDomObj);
+ * &lt;div id=&quot;ad-container&quot;&gt;
+ *   &lt;!-- creative --&gt;
+ * &lt;/div&gt;
+ * &lt;script type=&quot;text/javascript&quot;&gt;
+ *   var adPlayer = new AdPlayer('placement123', 'ad-container');
+ * &lt;/script&gt;
  */
 var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   /** @private */ var _this = new AbstractPlayer(uid, null);
@@ -1885,10 +2365,6 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   _this.privacyInfoList = function() {
     return _player.privacyInfoList();
   };
-  
-  // -------------------------------------------------------------------------------------------------
-  // METHODS
-  // -------------------------------------------------------------------------------------------------
   
   /** @private */
   function queueCmd(fnName, params) {
@@ -2195,9 +2671,8 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
  * @class Global Static Class - Manages all created <code>AdPlayer</code> instances.
  * @description Globally Manages all created <code>AdPlayer</code> instances.
  *              <code>AdPlayerManager</code> is a singleton class and ensures it
- *              is the only available <code>AdPlayerManager</code> throughout a
- *              ad delivery flow.  
- *
+ *              is the only available <code>AdPlayerManager</code> throughout an
+ *              ad delivery flow.</br>
  * @author christopher.sancho@adtech.com
  */
 var AdPlayerManager = (function () {
@@ -2205,42 +2680,47 @@ var AdPlayerManager = (function () {
   /** @private */ var _adPlayerList = [];
   /** @private */ var _callBackList = [];
   /** @private */ var _queue = [];
-  
-  function init() {}
+
+  /** @private */ function init() {}
   
   /**
    * @name AdPlayerManager#list
    * @field
    * @description List that contains instances of <code>AdPlayer</code>
    *              added to the manager.  
-   * @returns {Array - Read Only} Returns a list list of <code>AdPlayer</code> instances.
+   * @returns {array - read only} Returns a list list of <code>AdPlayer</code> instances.
    * @see AdPlayerManager#register
    * @example
    * // Get reference to property
    * var adPlayerList = AdPlayerManager.list();
-  */    
+   */
   _this.list = function() {
     return _adPlayerList;
   };
 
-  _factoryList = [];
+  /**
+   * @private
+   * @name AdPlayerManager#factoryList
+   * @field
+   * @description Currently used by as universal list for verifying iframe identification incoming post-messaging.  
+   * @returns {array - read only} Returns a list of <code>PlayerFactory</code> instances.
+   */
+  var _factoryList = [];
   _this.factoryList = function() {
     return _factoryList;
   };    
   
+  /**
+   * @private
+   * @name AdPlayerManager#domIdList
+   * @field
+   * @description Currently used by as universal list for tracking DOM IDs associated with an AdPlayer.
+   * @returns {Array - Read Only} Returns a list of <code>DOM</code> id values.
+   */
   var _domIdList = [];
   _this.domIdList = function() {
     return _domIdList;
   }; 
-  
-  /** @private */ _this.searchCount = 0;
-  /** @private */ _this.isSearching = function(val) {
-    if (_this.searchCount == 0) {
-      return false;
-    } else {
-      return true;
-    }
-  }    
   
   /**
    * @name AdPlayerManager#addAdPlayer
@@ -2250,15 +2730,13 @@ var AdPlayerManager = (function () {
    *              this method.  Immediately following, all call-backs, registerd through
    *              <code>AdPlayerManger.register(adPlayer)</code> are dispatched and passed
    *              with the newly created <code>AdPlayer</code>.
-   *              
-   * @param adPlayer {AdPlayer} <code>AdPlayer</code> instance to add to management list.
+   * @param {adplayer} adPlayer <code>AdPlayer</code> instance to add to management list.
    * @see AdPlayerManger#register
-   * 
    * @example
    * // Add an AdPlayer instance to the manager.
    * var adPlayer = new AdPlayer(document.getElementById('myTagDivContainer'));
    * AdPlayerManager.addAdPlayer(adPlayer);
-  */
+   */
   _this.addAdPlayer = function(adPlayer) {
     for (var i=0; i < _adPlayerList.length; i++) {
       if (typeof _adPlayerList[i].adDomElement !== 'undefined') {
@@ -2277,9 +2755,7 @@ var AdPlayerManager = (function () {
    * @description Registers a function that will be called when an <code>AdPlayer</code> instance
    *              is created. Call-back handler function must expect a parameter that accepts
    *              an <code>AdPlayer</code> instance.
-   * 
-   * @param callback {function} The call-back handler function.
-   * 
+   * @param {function} callback The call-back handler function.
    * @example
    * function myCallBackHandler(adPlayer) {
    *   adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');
@@ -2294,9 +2770,7 @@ var AdPlayerManager = (function () {
    * @name AdPlayerManager#unregister
    * @function
    * @description Un-Registers a function added to the manager list.
-   * 
-   * @param callback {function} The call-back handler function.
-   * 
+   * @param {function} callback The call-back handler function.
    * @example
    * function myCallBackHandler(adPlayer) {
    *   adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');
@@ -2317,10 +2791,8 @@ var AdPlayerManager = (function () {
    * @function
    * @description Returns an instance of an <code>AdPlayer</code> associated with
    *              a DOM element id name
-   * 
-   * @param id {String} Id of DOM element associated with <code>AdPlayer</code>.
-   * @return {Adplayer} AdPlayer instance associated with id. 
-   * 
+   * @param {string} id Id of DOM element associated with <code>AdPlayer</code>.
+   * @return {adplayer} AdPlayer instance associated with id. 
    * @example
    * &lt;div id=&quot;adPlayerContainer&quot;&gt;
    *  &lt;script type=&quot;text/javascript&quot;&gt;
@@ -2350,10 +2822,8 @@ var AdPlayerManager = (function () {
    * @function
    * @description Returns an instance of an <code>AdPlayer</code> associated with
    *              a DOM element. 
-   * 
-   * @param dom {String} DOM element object associated with <code>AdPlayer</code>.
-   * @return {Adplayer} AdPlayer instance associated with dom element. 
-   * 
+   * @param {string} dom DOM element object associated with <code>AdPlayer</code>.
+   * @return {adplayer} AdPlayer instance associated with dom element. 
    * @example
    * &lt;div id=&quot;adPlayerContainer&quot;&gt;
    *  &lt;script type=&quot;text/javascript&quot;&gt;
@@ -2377,7 +2847,17 @@ var AdPlayerManager = (function () {
     }
     return null;
   };    
-  
+
+  /**
+   * @name AdPlayerManager#getPlayerByUID
+   * @function
+   * @description Returns an instance of an <code>AdPlayer</code> associated with
+   *              a UID string. 
+   * @param {string} uid UID string associated with <code>AdPlayer</code>.
+   * @return {adplayer} AdPlayer instance associated with dom element. 
+   * @example
+   * 
+   */
   _this.getPlayerByUID = function (uid) {
     for (var i = 0; i < _adPlayerList.length; i++) {
       if (_adPlayerList[i].uid()) {
@@ -2386,7 +2866,7 @@ var AdPlayerManager = (function () {
         }
       }
     }
-    return null;      
+    return null;
   };    
 
   /**

@@ -1,12 +1,36 @@
-/** @private */
+/**
+ * @private 
+ * @name IframePlayer
+ * @class <code>AdPlayer</code> implementation responsible for iFrame communication using <code>PostMessage</code>.
+ * 
+ * @author christopher.sancho@adtech.com
+ */
 var IframePlayer = (function (uid, adDomElement) {
   /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
   /** @private */ var _defaultPlayer = new DefaultPlayer(uid, adDomElement);
-
+  
+  /**
+   * @name IframePlayer#updateRef
+   * @function
+   * @description Updates the default player in order to keep information
+   *              synced between related <code>AdPlayers</code>. 
+   * @param {string} fnName Function name that will be executed.
+   * @param {array} params The parameters to pass to the executed function.
+   */ 
   function updateRef(fnName, params){
     return _defaultPlayer[fnName].apply(_this, params);
   }
   
+  /**
+   * @name IframePlayer#sendToParentFrame
+   * @function
+   * @description Sends a response to the PostMessage class.
+   * @param {string} fn Function name that will passed through.  This is used to identify 
+   *                    the correct function to execute on the incoming side.
+   * @param {array} params The parameters to pass to the function being executed on the other end.
+   * @param {object} json JSON object to pass through PostMessage.  Object will be
+   *                      stringified before delivery.
+   */
   function sendToParentFrame(fn, params, json) {
     var obj;
     if (json) {
@@ -21,6 +45,12 @@ var IframePlayer = (function (uid, adDomElement) {
     PostMessage.send(obj, parent);
   }
   
+  /**
+   * @name IframePlayer#getFunctionName
+   * @function
+   * @description Parses a function string and extracts its name.
+   * @param {string} funcStr Function converted to a string to be parsed.
+   */
   function getFunctionName(funcStr) {
     var funcStrClean = funcStr.replace(/\s+/g, " ");
     if (funcStrClean.search(/function /i, "") == 0) {
@@ -43,6 +73,10 @@ var IframePlayer = (function (uid, adDomElement) {
     funcName = funcStrClean.substring(startPos,endPos).replace(/\s+/g, "");
     return escape(PostMessage.FUNCTION + funcName);
   }  
+  
+  /*
+   * Override concrete implementation 
+   */
   
   _this.uid = function(val) {
     return updateRef('uid', [val]);
@@ -114,8 +148,6 @@ var IframePlayer = (function (uid, adDomElement) {
     } else {
       Util.log("Parameter 'url' must be defined", "addTrackingEvent");
     }    
-    //updateRef('addTrackingPixel', [adEvent, url, repeat, this]);
-    //sendToParentFrame('addTrackingPixel', [adEvent, url, repeat]);
   };
 
   _this.removeTrackingPixel = function(adEvent, url) {
@@ -154,8 +186,6 @@ var IframePlayer = (function (uid, adDomElement) {
         }
       } while(index < tmpLen);
     }    
-    //updateRef('removeTrackingPixel', [adEvent, url, this]);
-    //sendToParentFrame('removeTrackingPixel', [adEvent, url]);
   };
 
   _this.track = function(adEventObj, url, currentPlayer) {

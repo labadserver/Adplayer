@@ -42,7 +42,7 @@
  * adPlayer.addEventListener(AdEvent.COUNT, countEventHandler2);
  * function countEventHandler2(adEvent) {
  *   Util.log('COUNT ad event has been dispatched.');
- *   Util.log('Here is data.info:' + adEvent.data.info);
+ *   Util.log('Here is data info:' + adEvent.target().data().info);
  * }
  * 
  * var data = new Object();
@@ -51,8 +51,8 @@
  * 
  */
 function AdEvent(type, data) {
-  var _type = '';
   /**
+   * @name AdEvent#type
    * @field
    * @description The type of <code>AdEvent.EVENT</code> to create.
    * @returns {string} Returns the <code>AdEvent</code> type.
@@ -63,19 +63,33 @@ function AdEvent(type, data) {
    * // Set property's value
    * adEvent.type(AdEvent.LOAD);  
    */
+  var _type = '';
   this.type = function(val){
     if(val) { _type = val; }
     return _type;
   };
   if (type) { _type = type; }
   
+  /**
+   * @name AdEvent#currentTarget 
+   * @field
+   * @description The current <code>AdPlayer</code> instance associated with the <code>AdEvent</code> object. The current target
+   *           usually refers to the original AdPlayer dispatching the event. 
+   *           <code>currentTarget</code> is set when <code>AdPlayer.track()</code> dispatches the <code>AdEvent</code> object insance. 
+   * @returns {adplayer} Returns <code>AdPlayer</code> instance associated with the an <code>AdEvent</code> instance.
+   * @example
+   * // Get reference to property
+   * var adPlayer = adEvent.currentTarget();
+   * 
+   * // Set property's value
+   * adEvent.currentTarget(adPlayer);
+  */
   var _currentTarget = {};
   this.currentTarget = function(val){
     if(val) { _currentTarget = val; }
-      return _currentTarget;
+    return _currentTarget;
   };  
   
-  var _data = new Object();
   /**
    * @field
    * @description The object containing information associated with an <code>AdEvent</code> instance.
@@ -89,25 +103,26 @@ function AdEvent(type, data) {
    * o.hello = "Hello";
    * adEvent.data(o);
    */
+  var _data = new Object();
   this.data = function(val){
     if(val) { _data = val; }
-      return _data;
+    return _data;
   };
   if (data) { _data = data; }
   
-  var _target;
   /**
    * @field
    * @description The <code>AdPlayer</code> instance associated with the <code>AdEvent</code> object.
-   *        <code>player</code> is set when <code>AdPlayer.track()</code> dispatches the <code>AdEvent</code> object insance.
-   * @returns {AdPlayer} Returns <code>AdPlayer</code> instance associated with the an <code>AdEvent</code> instance.
+   *              <code>target</code> is set when <code>AdPlayer.track()</code> dispatches the <code>AdEvent</code> object insance.
+   * @returns {adplayer} Returns <code>AdPlayer</code> instance associated with the an <code>AdEvent</code> instance.
    * @example
    * // Get reference to property
-   * var adPlayer = adEvent.player();
+   * var adPlayer = adEvent.target();
    * 
    * // Set property's value
-   * adEvent.player(adPlayer); 
+   * adEvent.target(adPlayer); 
    */
+  var _target;
   this.target = function(val){
     if(val) { _target = val; }
       return _target;
@@ -120,6 +135,7 @@ AdEvent.list = new Object();
 
 /**
  * @description Checks if a certain event has been mapped to the <code>AdEvent</code> class.
+ * @function
  * @param {string} val The string value to check.
  * @returns {Boolean} Returns true or false.
  */
@@ -136,6 +152,7 @@ AdEvent.check = function(val) {
 
 /** 
  * @description Dynamically maps a string value to the <code>AdEvent</code> class.
+ * @function
  * @param {string} val The string value to map.
  */
 AdEvent.map = function(val) {
@@ -143,7 +160,7 @@ AdEvent.map = function(val) {
   AdEvent[val] = 'AdEvent.' + val;
 }
 
-// Setup default Ad Events
+/* Setup default Ad Events */
 for (var dae = 0; dae < defaultAdEvents.length; dae++) {
   AdEvent.map(defaultAdEvents[dae]);
 }
