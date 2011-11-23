@@ -1,15 +1,39 @@
-/** @private */
+/**
+ * @private
+ * @name PrivacyInfoButton
+ * @class 
+ * @description Handles display of privacy information button for current <code>AdPlayer</code> instance.
+ * @param {function} callback Function to execute when button is clicked.
+ * @param {string} openBtnTxt Optional - Text to use for button.
+ * @author christopher.sancho@adtech.com
+ */
 var PrivacyInfoButton = (function (callback, openBtnTxt) {
   /** @private */ var _this = {};
-  
-  _this.button;
-  _this.iconPos = 'top-right';
+  /** @private */ var _openBtnIcon;
+  /** @private */ var _openBtnTxtObj;
+  /** @private */ var _privBtnClassName = 'privacyButton';
 
-  var _openBtnIcon;
-  var _openBtnTxtObj;
-  var _openBtnTxt = 'Get Info';
-  var _privBtnClassName = 'privacyButton';
+  /**
+   * @name PrivacyInfoButton#button
+   * @field
+   * @description DOM object of current privacy button.
+   * @example
+   */ 
+  _this.button;
   
+  /**
+   * @name PrivacyInfoButton#openBtnTxt
+   * @field 
+   * @description 
+   * @param {string} val
+   * @example
+   * // Get reference to property
+   * var txt = privacyButton.openBtnTxt();
+   * 
+   * // Set property's value
+   * privacyButton.openBtnTxt('Open');  
+   */ 
+  var _openBtnTxt = 'Get Info';
   _this.openBtnTxt = function(val) {
     if(val) {
       _openBtnTxt = val;
@@ -20,6 +44,11 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
     return _openBtnTxt;
   } 
 
+  /**
+   * @private
+   * @function
+   * @description Creates DOM elements along with its attributes.  
+   */
   function init() {
     _this.openBtnTxt(openBtnTxt);
     
@@ -37,7 +66,6 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
     _openBtnTxtObj.innerHTML = _this.openBtnTxt();
        
     _this.button.onclick = callback;
-    //_openBtnIcon.onclick = callback;
     
     _openBtnIcon.onmouseover = function() {
       _openBtnTxtObj.style.display = "block";
@@ -46,7 +74,24 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
       _openBtnTxtObj.style.display = "none";
     };
   }
-  
+
+  /**
+   * @name PrivacyInfoButton#setPosition
+   * @function
+   * @description Sets the position of the button relative to its parent DOM element.
+   * @param {string} pos Position where to set panel.</br>  
+   *                 Valid values:
+   *                 <ul>
+   *                   <li>top-left</li>
+   *                   <li>top-right</li>
+   *                   <li>top-left-out</li>
+   *                   <li>top-right-out</li>
+   *                   <li>bottom-left</li>
+   *                   <li>bottom-right</li>
+   *                   <li>bottom-left-out</li>
+   *                   <li>bottom-right-out</li>
+   *                 </ul>
+   */
   _this.setPosition = function (pos) {
     _this.button.setAttribute('style', '');
     _openBtnIcon.setAttribute('style', '');

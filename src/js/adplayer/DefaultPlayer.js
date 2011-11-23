@@ -1,13 +1,16 @@
 /**
- * @private
+ * @private 
  * @name DefaultPlayer
- * @class Default player returned
- * @description DESCRIPTION NEEDED
+ * @class Default <code>AdPlayer</code> implementation.
  * 
  * @author christopher.sancho@adtech.com
  */
 var DefaultPlayer = (function (uid, adDomElement) {
   /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
+  
+  /*
+   * Override concrete implementation 
+   */  
   
   _this.addEventListener = function(adEvent, callback) {
     if (!AdEvent.check(adEvent)) { return; }
@@ -165,7 +168,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
 
   _this.enableAdChoice = function(openBtnTxt, closeTxt, headerTxt, footerTxt, iconPos) {
     if(!_this.privacyPanel) {
-      _this.privacyPanel = new PrivacyPanel(_this.privacyInfoList(), closeTxt, headerTxt, footerTxt, _this.toggle, _this.track);
+      _this.privacyPanel = new PrivacyPanel(_this.privacyInfoList(), _this.toggle, _this.track, closeTxt, headerTxt, footerTxt);
     } else {
       _this.privacyPanel.infoList(_this.privacyInfoList());
       _this.privacyPanel.closeTxt(closeTxt);

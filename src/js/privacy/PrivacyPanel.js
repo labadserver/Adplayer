@@ -1,13 +1,45 @@
-/** @private */
-var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCallback, trackCallback) {
+/**
+ * @private
+ * @name PrivacyPanel
+ * @class 
+ * @description Handles display of all privacy information passed to current <code>AdPlayer</code> instance.
+ * @param {array} infoList List containing <code>PrivacyInfo</code> objects. 
+ * @param {string} closeTxt Optional - Close button text. 'X' is default value.
+ * @param {string} headerTxt Optional - Header text.
+ * @param {string} footerTxt Optional - Footer text.
+ * @param {string} closeCallback Function to call when close button is clicked.
+ * @param {string} trackCallback Function to call when link is clicked.  <code>trackCallback</code> passes an
+ *                  a new <code>Advent.PRIVACY_CLICK</code> instance.
+ * @see PrivacyInfo
+ * @see AdEvent
+ * @author christopher.sancho@adtech.com
+ */
+var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, headerTxt, footerTxt) {
   /** @private */ var _this = {};
+  /** @private */ var _listObj;
+  /** @private */ var _infoList;
+  /** @private */ var _privPanelClassName = 'privacyPanel';
   
+  /**
+   * @name PrivacyPanel#panel
+   * @field
+   * @description DOM object of current privacy panel.
+   * @example
+   */ 
   _this.panel;
-
-  var _listObj;
-  var _infoList;
-  var _privPanelClassName = 'privacyPanel';
-    
+  
+  /**
+   * @name PrivacyPanel#infoList
+   * @field
+   * @description List containing <code>PrivacyInfo</code> objects. 
+   * @param {string} val List to set, which contains <code>PrivacyInfo</code> objects.
+   * @example
+   * // Get reference to property
+   * var infoList = privacyPanel.infoList();
+   * 
+   * // Set property's value
+   * privacyPanel.infoList(objList);  
+   */ 
   _this.infoList = function(val) {
     if(val) {
       _infoList = val;
@@ -20,7 +52,19 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     }
     return _infoList;    
   }
-  
+
+ /**
+  * @name PrivacyPanel#closeTxt
+  * @field
+  * @description Close button text. 'X' is default value. 
+  * @param {string} val Close button text.
+  * @example
+  * // Get reference to property
+  * var txt = privacyPanel.closeTxt();
+  * 
+  * // Set property's value
+  * privacyPanel.closeTxt('Close');  
+  */
   var _closeTxtObj;
   var _closeTxt = 'X';
     _this.closeTxt = function(val) {
@@ -32,7 +76,19 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     }
     return _closeTxt;
   }  
-  
+
+  /**
+   * @name PrivacyPanel#headerTxt
+   * @field
+   * @description Header text positioned above ad privacy list. 
+   * @param {string} val Header text.
+   * @example
+   * // Get reference to property
+   * var txt = privacyPanel.headerTxt();
+   * 
+   * // Set property's value
+   * privacyPanel.headerTxt('Hello world!');  
+   */
   var _headerTxtObj;
   var _headerTxt = '';
     _this.headerTxt = function(val) {
@@ -54,6 +110,18 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     return _headerTxt;
   }
   
+  /**
+   * @name PrivacyPanel#footerTxt
+   * @field
+   * @description Footer text positioned below ad privacy list. 
+   * @param {string} val Footer text.
+   * @example
+   * // Get reference to property
+   * var txt = privacyPanel.footerTxt();
+   * 
+   * // Set property's value
+   * privacyPanel.footerTxt('Hello world!');  
+   */
   var _footerTxtObj;
   var _footerTxt = '';
     _this.footerTxt = function(val) {
@@ -71,6 +139,11 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     return _headerTxt;
   }  
   
+  /**
+   * @private
+   * @function
+   * @description Creates DOM elements along with its attributes.  
+   */
   function init() {
     _this.panel = document.createElement('div');
     Util.setClassName(_this.panel, _privPanelClassName);
@@ -95,6 +168,13 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     _this.footerTxt(footerTxt);
   }
   
+  /**
+   * @name PrivacyPanel#addPrivacyInfo
+   * @function
+   * @description Adds <code>PrivacyInfo</code> to privacy DOM panel.
+   * @param {object} privacyInfoObj <code>PrivacyInfo</code> object.
+   * @see PrivacyInfo
+   */
   function addPrivacyInfo(privacyInfoObj) {
     var privacyObj =  document.createElement('div');
     privacyObj.setAttribute('class', 'item');
@@ -109,6 +189,13 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     _listObj.appendChild(privacyObj);
   }
   
+  /**
+   * @name PrivacyPanel#checkPanel
+   * @function
+   * @description Checks if panel contains a certain element with a defined class name.
+   * @param {string} tagName DOM element.
+   * @param {className} Class name.
+   */
   function checkPanel(tagName, className) {
     for (var i = 0; i < _this.panel.getElementsByTagName(tagName).length; i++) {
       if (_this.panel.getElementsByTagName(tagName)[i].className == className){
@@ -118,6 +205,23 @@ var PrivacyPanel = (function (infoList, closeTxt, headerTxt, footerTxt, closeCal
     return null;
   }
   
+  /**
+   * @name PrivacyPanel#setPosition
+   * @function
+   * @description Sets the position of the panel relative to its parent DOM element.
+   * @param {string} pos Position where to set panel.</br>  
+   *                 Valid values:
+   *                 <ul>
+   *                   <li>top-left</li>
+   *                   <li>top-right</li>
+   *                   <li>top-left-out</li>
+   *                   <li>top-right-out</li>
+   *                   <li>bottom-left</li>
+   *                   <li>bottom-right</li>
+   *                   <li>bottom-left-out</li>
+   *                   <li>bottom-right-out</li>
+   *                 </ul>
+   */
   _this.setPosition = function (pos) {
     _this.panel.setAttribute('style', '');
     _this.panel.style.position = "absolute";

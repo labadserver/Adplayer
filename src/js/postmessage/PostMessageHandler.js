@@ -1,8 +1,21 @@
-// TODO: Add error callback for queue routine
-
+/**
+ * @private
+ * @name PostMessageHandler
+ * @class 
+ * @description Handles both incoming and outgoing messages from <code>PostMessage</code>.
+ * @author christopher.sancho@adtech.com
+ */
 var PostMessageHandler = (function () {
-  var _this = {};
+  /** @private */ var _this = {};
 
+  /**
+   * @name PostMessageHandler#domRefPlayerWait
+   * @function
+   * @description Waits for DOM element to become available and then determines if iframe
+   *              verification is needed or message can be processed.
+   * @param {dom} dom DOM object this needs to be checked.
+   * @param {object} json JSON object to check or pass through.
+   */
   _this.domRefPlayerWait = function (dom, json) {
     _this.dom = dom;
     _this.json = json;
@@ -25,9 +38,18 @@ var PostMessageHandler = (function () {
         PostMessage.send(obj, dom.contentWindow);          
       }
     }
-    Util.ready(function(){return _this.dom;}, this, iframeVerify, [_this.dom, _this.json], null, null);
+    function iframeVerifyErr() {
+      Util.log('Could not verify a parent iframe AdPlayer.');
+    }
+    Util.ready(function(){return _this.dom;}, this, iframeVerify, [_this.dom, _this.json], iframeVerifyErr, null);
   }
 
+  /**
+   * @name PostMessageHandler#getPlayerByDomSearch
+   * @function
+   * @description Attempts to locate a parent AdPlayer from a DOM reference point.
+   * @param {dom} dom DOM object that needs to be checked.
+   */
   _this.getPlayerByDomSearch = function (dom) {
     var par = dom.parentNode;
     while (!AdPlayerManager.getAdPlayerById(par.id)) {
@@ -47,11 +69,19 @@ var PostMessageHandler = (function () {
     }     
   }    
 
+  /**
+   * @name PostMessageHandler#readyTest
+   * @function
+   * @description Parses JSON object and executes requests.
+   * @param {dom} iframe Target iframe to communicate with.
+   * @param {object} json JSON object.
+   * @param {adplayer} player Current AdPlayer.
+   */
   function readyTest(iframe, json, player) {
     if (player) {
       var params = json.params.split(',');
       for (var t=0; t < params.length; t++) {
-        // CHECKS if any contains a function to properly wrap and send off
+        // Checks if it contains a function, which is needs to be properly wrapped and send off
         switch (json.fn){
           case 'addEventListener':
             if (unescape(params[t]).match(PostMessage.FUNCTION)) {
@@ -89,6 +119,12 @@ var PostMessageHandler = (function () {
     }
   }      
   
+  /**
+   * @name PostMessageHandler#inMsgHandler
+   * @function
+   * @description Handles specific incoming messages.
+   * @param {object} json JSON object evaluate.
+   */
   _this.inMsgHandler = function (json) {
     switch (json.fn){
       case 'iframePlayerVerify':
@@ -109,7 +145,7 @@ var PostMessageHandler = (function () {
     default: 
       var func = (new Function( "return( " + json.fn + " );" ))();
       var player = AdPlayerManager.getPlayerByUID(json.uid);  
-      // NEED TO TARGET THE CURRENT PLAYER THEN SEND BACK
+      // Need to target the current player and send back
       if (player) {
         var event = new AdEvent(json.evtType);
         event.target(player);
@@ -117,6 +153,7 @@ var PostMessageHandler = (function () {
       }
       break;
     }
-  }  
-return _this;
+  }
+  
+  return _this;
 })();

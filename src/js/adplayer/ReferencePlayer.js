@@ -1,12 +1,31 @@
-/** @private */
+/**
+ * @private 
+ * @name ReferencePlayer
+ * @class <code>AdPlayer</code> implementation responsible for players being referenced through 
+ *        another <code>AdPlayer</code> instance.
+ * 
+ * @author christopher.sancho@adtech.com
+ */
 var ReferencePlayer = (function (uid, adDomElement, refAdPlayer) {
   /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
   /** @private */ var _defaultPlayer = new DefaultPlayer(uid, adDomElement);
   
+  /**
+   * @name ReferencePlayer#updateRef
+   * @function
+   * @description Updates the default player in order to keep information
+   *              synced between related <code>AdPlayers</code>.
+   * @param {string} fnName Function name that will be executed.
+   * @param {array} params The parameters to pass to the executed function.
+   */  
   function updateRef(fnName, params){
     _defaultPlayer[fnName].apply(_this, params);
     refAdPlayer[fnName].apply(_this, params);
   }
+  
+  /*
+   * Override concrete implementation 
+   */  
   
   _this.addEventListener = function(adEvent, callback) {
     updateRef('addEventListener', [adEvent, callback, this]);    
@@ -34,7 +53,6 @@ var ReferencePlayer = (function (uid, adDomElement, refAdPlayer) {
   };
 
   _this.enableAdChoice = function(openBtnTxt, closeTxt, headerTxt, footerTxt, iconPos) {
-    // refAdPlayer['enableAdChoice'].apply(_this, [openBtnTxt, closeTxt, headerTxt, footerTxt, iconPos, this]);
     _defaultPlayer.isAdChoiceEnabled(false);
     updateRef('enableAdChoice', [openBtnTxt, closeTxt, headerTxt, footerTxt, iconPos, this]);
   };

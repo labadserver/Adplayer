@@ -6,9 +6,8 @@ if (typeof AdPlayerManager === 'undefined') {
  * @class Global Static Class - Manages all created <code>AdPlayer</code> instances.
  * @description Globally Manages all created <code>AdPlayer</code> instances.
  *              <code>AdPlayerManager</code> is a singleton class and ensures it
- *              is the only available <code>AdPlayerManager</code> throughout a
- *              ad delivery flow.  
- *
+ *              is the only available <code>AdPlayerManager</code> throughout an
+ *              ad delivery flow.</br>
  * @author christopher.sancho@adtech.com
  */
 var AdPlayerManager = (function () {
@@ -16,29 +15,43 @@ var AdPlayerManager = (function () {
   /** @private */ var _adPlayerList = [];
   /** @private */ var _callBackList = [];
   /** @private */ var _queue = [];
-  
-  function init() {}
+
+  /** @private */ function init() {}
   
   /**
    * @name AdPlayerManager#list
    * @field
    * @description List that contains instances of <code>AdPlayer</code>
    *              added to the manager.  
-   * @returns {Array - Read Only} Returns a list list of <code>AdPlayer</code> instances.
+   * @returns {array - read only} Returns a list list of <code>AdPlayer</code> instances.
    * @see AdPlayerManager#register
    * @example
    * // Get reference to property
    * var adPlayerList = AdPlayerManager.list();
-  */    
+   */
   _this.list = function() {
     return _adPlayerList;
   };
 
-  _factoryList = [];
+  /**
+   * @private
+   * @name AdPlayerManager#factoryList
+   * @field
+   * @description Currently used by as universal list for verifying iframe identification incoming post-messaging.  
+   * @returns {array - read only} Returns a list of <code>PlayerFactory</code> instances.
+   */
+  var _factoryList = [];
   _this.factoryList = function() {
     return _factoryList;
   };    
   
+  /**
+   * @private
+   * @name AdPlayerManager#domIdList
+   * @field
+   * @description Currently used by as universal list for tracking DOM IDs associated with an AdPlayer.
+   * @returns {Array - Read Only} Returns a list of <code>DOM</code> id values.
+   */
   var _domIdList = [];
   _this.domIdList = function() {
     return _domIdList;
@@ -52,15 +65,13 @@ var AdPlayerManager = (function () {
    *              this method.  Immediately following, all call-backs, registerd through
    *              <code>AdPlayerManger.register(adPlayer)</code> are dispatched and passed
    *              with the newly created <code>AdPlayer</code>.
-   *              
-   * @param adPlayer {AdPlayer} <code>AdPlayer</code> instance to add to management list.
+   * @param {adplayer} adPlayer <code>AdPlayer</code> instance to add to management list.
    * @see AdPlayerManger#register
-   * 
    * @example
    * // Add an AdPlayer instance to the manager.
    * var adPlayer = new AdPlayer(document.getElementById('myTagDivContainer'));
    * AdPlayerManager.addAdPlayer(adPlayer);
-  */
+   */
   _this.addAdPlayer = function(adPlayer) {
     for (var i=0; i < _adPlayerList.length; i++) {
       if (typeof _adPlayerList[i].adDomElement !== 'undefined') {
@@ -79,9 +90,7 @@ var AdPlayerManager = (function () {
    * @description Registers a function that will be called when an <code>AdPlayer</code> instance
    *              is created. Call-back handler function must expect a parameter that accepts
    *              an <code>AdPlayer</code> instance.
-   * 
-   * @param callback {function} The call-back handler function.
-   * 
+   * @param {function} callback The call-back handler function.
    * @example
    * function myCallBackHandler(adPlayer) {
    *   adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');
@@ -96,9 +105,7 @@ var AdPlayerManager = (function () {
    * @name AdPlayerManager#unregister
    * @function
    * @description Un-Registers a function added to the manager list.
-   * 
-   * @param callback {function} The call-back handler function.
-   * 
+   * @param {function} callback The call-back handler function.
    * @example
    * function myCallBackHandler(adPlayer) {
    *   adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');
@@ -119,10 +126,8 @@ var AdPlayerManager = (function () {
    * @function
    * @description Returns an instance of an <code>AdPlayer</code> associated with
    *              a DOM element id name
-   * 
-   * @param id {String} Id of DOM element associated with <code>AdPlayer</code>.
-   * @return {Adplayer} AdPlayer instance associated with id. 
-   * 
+   * @param {string} id Id of DOM element associated with <code>AdPlayer</code>.
+   * @return {adplayer} AdPlayer instance associated with id. 
    * @example
    * &lt;div id=&quot;adPlayerContainer&quot;&gt;
    *  &lt;script type=&quot;text/javascript&quot;&gt;
@@ -152,10 +157,8 @@ var AdPlayerManager = (function () {
    * @function
    * @description Returns an instance of an <code>AdPlayer</code> associated with
    *              a DOM element. 
-   * 
-   * @param dom {String} DOM element object associated with <code>AdPlayer</code>.
-   * @return {Adplayer} AdPlayer instance associated with dom element. 
-   * 
+   * @param {string} dom DOM element object associated with <code>AdPlayer</code>.
+   * @return {adplayer} AdPlayer instance associated with dom element. 
    * @example
    * &lt;div id=&quot;adPlayerContainer&quot;&gt;
    *  &lt;script type=&quot;text/javascript&quot;&gt;
@@ -179,7 +182,17 @@ var AdPlayerManager = (function () {
     }
     return null;
   };    
-  
+
+  /**
+   * @name AdPlayerManager#getPlayerByUID
+   * @function
+   * @description Returns an instance of an <code>AdPlayer</code> associated with
+   *              a UID string. 
+   * @param {string} uid UID string associated with <code>AdPlayer</code>.
+   * @return {adplayer} AdPlayer instance associated with dom element. 
+   * @example
+   * 
+   */
   _this.getPlayerByUID = function (uid) {
     for (var i = 0; i < _adPlayerList.length; i++) {
       if (_adPlayerList[i].uid()) {
@@ -188,7 +201,7 @@ var AdPlayerManager = (function () {
         }
       }
     }
-    return null;      
+    return null;
   };    
 
   /**
