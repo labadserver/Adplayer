@@ -1,7 +1,7 @@
 <project name="DASE_WebUI" default="execute" basedir=".">
   <description>ADTECH - Ad Player build script.</description>
 
-  <property name="version" value="0.5.7"/>
+  <property name="version" value="0.5.8"/>
   <property name="jsfilename" value="adplayer-${version}"/>
   <property name="cssfilename" value="adplayer-${version}"/>
 
@@ -29,7 +29,6 @@
     <copy todir="${bin}/tmp" overwrite="true">
       <fileset dir="${src}/html/demo" includes="*.html" />	
     </copy>
-    <copy tofile="${bin}/tmp/README.txt" file="README.txt" overwrite="true" />
   	<copy tofile="${bin}/tmp/${jsfilename}.js" file="${src}/js/adplayer/AdPlayerManager.js" overwrite="true" />
     <copy todir="${bin}/css" overwrite="true">
       <fileset dir="${src}/css" includes="*.jpg" />  
@@ -121,10 +120,6 @@
       <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
       <path path="${bin}/tmp/${cssfilename}-style-ie.css"/>
     </concat>
-    <concat destfile="${bin}/css/${cssfilename}-style-previcon.css">
-      <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/${cssfilename}-style-previcon.css"/>
-    </concat>
   	
   	<replace file="${bin}/tmp/gnu.txt" token="/*" value="&lt;!--" />
   	<replace file="${bin}/tmp/gnu.txt" token="*/" value="--&gt;" />
@@ -141,17 +136,9 @@
       <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
       <path path="${bin}/tmp/iframe.html"/>
     </concat>    
-    <concat destfile="${bin}/adplayer.html">
-      <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/adplayer.html"/>
-    </concat>  	
   	
   	<replace file="${bin}/tmp/gnu.txt" token="&lt;!--" value="" />
   	<replace file="${bin}/tmp/gnu.txt" token="--&gt;" value="" />
-   	<concat destfile="${bin}/README.txt">
-      <header filtering="no" trimleading="yes" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/README.txt"/>
-    </concat>
   </target>
 
   <target name="jsdoc" depends="gnu">
