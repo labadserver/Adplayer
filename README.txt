@@ -1,6 +1,4 @@
-
 Note: The test page (index.html) currently uses static ADTECH test tags.
-
 
 ------------------------------------------------------------------------------------------
 Importing AdPlayer Project into Eclipse
@@ -28,4 +26,10 @@ Testing
 1) Open the generated index.html file from the bin directory in your favorite browser	
 	Note: the index.html file in the root folder can't be used for testing directly, use
 	the one in the bin folder instead!
-	
+
+
+------------------------------------------------------------------------------------------
+Additional Info
+------------------------------------------------------------------------------------------
+Additional info:  https://github.com/labadserver/
+Latest version of AdPlayer: https://github.com/labadserver/Adplayer/downloads
