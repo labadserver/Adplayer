@@ -1,5 +1,5 @@
-<project name="DASE_WebUI" default="execute" basedir=".">
-  <description>ADTECH - Ad Player build script.</description>
+<project name="AdPlayer" default="execute" basedir=".">
+  <description>AdPlayer build script.</description>
 
   <property name="version" value="0.5.8"/>
   <property name="jsfilename" value="adplayer-${version}"/>
@@ -127,6 +127,7 @@
       <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
       <path path="${bin}/tmp/apstub.html"/>
     </concat>
+  	
   	<!-- DEMO -->
     <concat destfile="${bin}/index.html">
       <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>

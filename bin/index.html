@@ -1,10 +1,10 @@
 <!--
    -------------------------------------------------------------------------------------------
-   AdPlayer v0.5.8 (dev.112911)
+   AdPlayer v0.5.8 (dev.120111)
    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
    -------------------------------------------------------------------------------------------
   
-   This file is part of AdPlayer v0.5.8 (dev.112911).
+   This file is part of AdPlayer v0.5.8 (dev.120111).
    AdPlayer is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
@@ -23,7 +23,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>ADTECH - AdPlayer | DAST Demo v0.5.8 (dev.112911)</title>
+<title>ADTECH - AdPlayer | DAST Demo v0.5.8 (dev.120111)</title>
 <script type="text/javascript" src="js/adplayer-0.5.8.js"></script>
 <!-- script type="text/javascript" src="js/adplayer-0.5.8.min.js"></script-->
 <link rel="stylesheet" type="text/css" href="css/adplayer-0.5.8-style.css" />
@@ -158,7 +158,7 @@ table td h3 {
 <table border="0">
 	<tr>
 		<th colspan="3">
-			<span>ADTECH</span> - AdPlayer | DAST Demo <span class="version">v0.5.8 (dev.112911)</span>
+			<span>ADTECH</span> - AdPlayer | DAST Demo <span class="version">v0.5.8 (dev.120111)</span>
 			<span id="info"><a href="docs/" target="_blank">API</a>  |  <a href="js/adplayer-0.5.8.js" target="_blank">SOURCE</a></span>
 		</th>
 	</tr>
@@ -233,6 +233,8 @@ table td h3 {
 			</div>
 			<script type="text/javascript">
 				// Enables default ad choice button for Ad Player #3
+				
+				
 				var hdr3 = 'We would like to help you mange your advertising experience, and can help you do this with the following options:';
 				adTechAdPlayer3.enableAdChoice('Open', 'Close', hdr3, 'Optional footer message.');
 	
@@ -304,12 +306,6 @@ table td h3 {
 						friendlyIframeAdPlayer.addEventListener(AdEvent.PRIVACY_CLOSE, adtechPlayerPrivacyClose);
 						friendlyIframeAdPlayer.addEventListener(AdEvent.PRIVACY_CLICK, adtechPlayerInfoClick);						
 
-
-
-					// Friendly iFrame Tag
-            document.write('<iframe id="friendlyIframe" width="300" height="250" border="0" scrolling="no"></iframe>');
-            document.getElementById('friendlyIframe').src = 'apstub.html#{"adloc":"http://www.adtagurl.com"}';
-						
 						// Friendly iFrame Tag
 						document.write('<iframe id="friendlyIframe" width="300" height="250" border="0" scrolling="no"></iframe>');
 						document.getElementById('friendlyIframe').src = 'apstub.html#{"adloc":"http://adserver.adtechus.com/addyn/3.0/5071/2132472/0/170/ADTECH;loc=100;target=_blank;key=key1+key2+key3+key4;grp=[group];misc='+new Date().getTime()+'"}';					
