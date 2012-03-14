@@ -1,10 +1,10 @@
 <!--
    -------------------------------------------------------------------------------------------
-   AdPlayer v0.5.8 (dev.120111)
+   AdPlayer v0.5.9 (dev.031412)
    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
    -------------------------------------------------------------------------------------------
   
-   This file is part of AdPlayer v0.5.8 (dev.120111).
+   This file is part of AdPlayer v0.5.9 (dev.031412).
    AdPlayer is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
@@ -23,17 +23,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-
+  <script type="text/javascript">var inDapIF = true;</script>
   <!-- 
     Notes: For older browsers, JSON2 script must be loaded in this files head 
     to avoid issues with ad responses using 'document.write' statements.
    -->
-
-  <!--[if lte IE 7]>
-    <script type="text/javascript" src="js/json2.min.js"></script>
-  <![endif]--> 
-  <script type="text/javascript" src="js/adplayer-0.5.8.min.js"></script>
-  <!-- script type="text/javascript" src="js/adplayer-0.5.8.js"></script-->
+  <script type="text/javascript">
+    if (typeof JSON == 'undefined') {
+      document.write('<script type="text/javascript" src="js/json2.min.js"><\/script>');
+    }
+  </script>
+  <script type="text/javascript" src="js/adplayer-0.5.9.min.js"></script>
+  <!-- script type="text/javascript" src="js/adplayer-0.5.9.js"></script-->
   <style> html, body {margin:0px; padding:0px;} </style>
 </head>	
 <body>

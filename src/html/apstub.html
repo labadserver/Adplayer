@@ -1,15 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-
+  <script type="text/javascript">var inDapIF = true;</script>
   <!-- 
     Notes: For older browsers, JSON2 script must be loaded in this files head 
     to avoid issues with ad responses using 'document.write' statements.
    -->
-
-  <!--[if lte IE 7]>
-    <script type="text/javascript" src="js/json2.min.js"></script>
-  <![endif]--> 
+  <script type="text/javascript">
+    if (typeof JSON == 'undefined') {
+      document.write('<script type="text/javascript" src="js/json2.min.js"><\/script>');
+    }
+  </script>
   <script type="text/javascript" src="js/_@ADPLAYER_JS_FILE_MIN@_"></script>
   <!-- script type="text/javascript" src="js/_@ADPLAYER_JS_FILE@_"></script-->
   <style> html, body {margin:0px; padding:0px;} </style>
