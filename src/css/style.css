@@ -1,17 +1,19 @@
-body, html {
-  font-family: 'Arial'; 
-}
 
 .privacyButton .icon {
+  background: url('oba_icon_15x20.jpg') no-repeat top left;
   width: 15px;
   height: 20px;
-  background: url('oba_icon_15x20.jpg') no-repeat top left; 
+  
+}
+
+.privacyButton .text {
+  font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
 }
 
 .privacyPanel {
-  font-family: Calibri, Ariel Bold, Sans-Serif, Geneva;
+  font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
   font-size: 12px;
-  background:#ffffff;
+  background: #ffffff;
   border: 1px solid #cccccc;
   padding: 5px 5px 0 5px;
   width: 250px;
