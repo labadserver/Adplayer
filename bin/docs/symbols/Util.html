@@ -225,7 +225,7 @@ ul.inheritsList
 				Static class for all common methods.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_chrssnch_Sites__workspace_PM_AdPlayer_GIT_bin_js_adplayer-0.5.9.js.html">adplayer-0.5.9.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/C__dev_projects_AdPlayer_bmonaumann_bin_js_adplayer-0.5.9.js.html">adplayer-0.5.9.js</a>.
 				
 			</p>
 
@@ -303,8 +303,7 @@ ul.inheritsList
 								<div class="fixedFont">
 								<b><a href="../symbols/Util.html#jsonUrl">jsonUrl</a></b>
 								</div>
-								<div class="description">Location of the external JSON framework script needed for browsers 
-             that do not natively support JSON.</div>
+								<div class="description">Location of the external JSON framework script needed for browsers              that do not natively support JSON.</div>
 							</td>
 						</tr>
 					
@@ -352,8 +351,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Util.html#loadScript">loadScript</a></b>(objId, objReturnFn, scriptSrc, callback)
 								</div>
-								<div class="description">Loads an external script & executes a callback function when an object, located in the 
-             external script & is returned in a <code>testFn</code>, is valid.</div>
+								<div class="description">Loads an external script & executes a callback function when an object, located in the              external script & is returned in a <code>testFn</code>, is valid.</div>
 							</td>
 						</tr>
 					
@@ -444,9 +442,7 @@ ul.inheritsList
 					
 					
 					
-					<pre class="code">if (Util.isFF) {
- Util.log('The current browser is Firefox.');
-}</pre>
+					<pre class="code">if (Util.isFF) { Util.log('The current browser is Firefox.');}</pre>
 					
 					
 
@@ -472,9 +468,7 @@ ul.inheritsList
 					
 					
 					
-					<pre class="code">if (Util.isIE) {
- Util.log('The current browser is Internet Explorer.');
-}</pre>
+					<pre class="code">if (Util.isIE) { Util.log('The current browser is Internet Explorer.');}</pre>
 					
 					
 
@@ -500,9 +494,7 @@ ul.inheritsList
 					
 					
 					
-					<pre class="code">if (Util.isOpera) {
- Util.log('The current browser is Opera.');
-}</pre>
+					<pre class="code">if (Util.isOpera) { Util.log('The current browser is Opera.');}</pre>
 					
 					
 
@@ -521,20 +513,14 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						Location of the external JSON framework script needed for browsers 
-             that do not natively support JSON. By default, <code>Util.jsonUrl</code>
-             is set to look for the script in a relative path: </code>js/json2.min.js</code>
+						Location of the external JSON framework script needed for browsers              that do not natively support JSON. By default, <code>Util.jsonUrl</code>             is set to look for the script in a relative path: </code>js/json2.min.js</code>
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">// Get reference to property
-Util.log(Util.jsonUrl);
-
-// Set property's value
-Util.jsonUrl = "http://new.uri.of.json.script";</pre>
+					<pre class="code">// Get reference to propertyUtil.log(Util.jsonUrl);// Set property's valueUtil.jsonUrl = "http://new.uri.of.json.script";</pre>
 					
 					
 
@@ -561,21 +547,14 @@ Util.jsonUrl = "http://new.uri.of.json.script";</pre>
 					
 					</div>
 					<div class="description">
-						Method first checks if JSON is natively available in the browser. If not,
-              it will attempt to load an external JSON framework script.
-              Finally it will initialize a callback when a successful parse is complete.
+						Method first checks if JSON is natively available in the browser. If not,              it will attempt to load an external JSON framework script.              Finally it will initialize a callback when a successful parse is complete.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">var str = '{"hello":"world"}';
-Util.jsonParse(str, null, 
-  function(json) {
-    Util.log(json.hello);
-  }
-);</pre>
+					<pre class="code">var str = '{"hello":"world"}';Util.jsonParse(str, null,   function(json) {    Util.log(json.hello);  });</pre>
 					
 					
 					
@@ -627,22 +606,14 @@ Util.jsonParse(str, null,
 					
 					</div>
 					<div class="description">
-						Method first checks if JSON is natively available in the browser. If not,
-              it will attempt to load an external JSON framework script.
-              Finally it will initialize a callback when a successful stringify is complete.
+						Method first checks if JSON is natively available in the browser. If not,              it will attempt to load an external JSON framework script.              Finally it will initialize a callback when a successful stringify is complete.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">var obj = new Object();
-ob.hello = "world";
-Util.jsonStringify(obj, null, 
-  function(str) {
-    Util.log(str);
-  }
-);</pre>
+					<pre class="code">var obj = new Object();ob.hello = "world";Util.jsonStringify(obj, null,   function(str) {    Util.log(str);  });</pre>
 					
 					
 					
@@ -694,19 +665,14 @@ Util.jsonStringify(obj, null,
 					
 					</div>
 					<div class="description">
-						Loads an external script & executes a callback function when an object, located in the 
-             external script & is returned in a <code>testFn</code>, is valid.
+						Loads an external script & executes a callback function when an object, located in the              external script & is returned in a <code>testFn</code>, is valid.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">Util.loadScript('ExtScriptObj', function(){return ExtScriptObj;}, 'http://the.script.url/extobj.js', 
-  function(){
-     Util.log('External script is done loading.');
-  }
-);</pre>
+					<pre class="code">Util.loadScript('ExtScriptObj', function(){return ExtScriptObj;}, 'http://the.script.url/extobj.js',   function(){     Util.log('External script is done loading.');  });</pre>
 					
 					
 					
@@ -764,8 +730,7 @@ Util.jsonStringify(obj, null,
 					
 					
 					
-					<pre class="code">// "AdPlayer(Parent): This is a log output."
- Util.log('This is a log output', 'Parent');</pre>
+					<pre class="code">// "AdPlayer(Parent): This is a log output." Util.log('This is a log output', 'Parent');</pre>
 					
 					
 					
@@ -811,15 +776,7 @@ Util.jsonStringify(obj, null,
 					
 					
 					
-					<pre class="code">function onReady(msg, num) {
-  Util.log(msg + ':' + num);
-}
-
-function onError(msg) {
-  Util.log(msg);
-}
-
-Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], onError, ['Error...']);</pre>
+					<pre class="code">function onReady(msg, num) {  Util.log(msg + ':' + num);}function onError(msg) {  Util.log(msg);}Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], onError, ['Error...']);</pre>
 					
 					
 					
@@ -855,8 +812,7 @@ Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], on
 									<span class="light fixedFont">{function}</span> <b>errorFn</b>
 									
 								</dt>
-								<dd>Function called when object being tested can not be found. 
-                          Method times out at a count of 100 at 100ms intervals.</dd>
+								<dd>Function called when object being tested can not be found.                           Method times out at a count of 100 at 100ms intervals.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{Array}</span> <b>errorParams</b>
@@ -890,8 +846,7 @@ Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], on
 					
 					
 					
-					<pre class="code">var a = document.getElementById('dom-container');
-Util.setClassName(a, 'ad-container');</pre>
+					<pre class="code">var a = document.getElementById('dom-container');Util.setClassName(a, 'ad-container');</pre>
 					
 					
 					
@@ -934,7 +889,7 @@ Util.setClassName(a, 'ad-container');</pre>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Mar 14 2012 12:41:05 GMT-0700 (PDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Mar 26 2012 16:01:07 GMT+0200 (MESZ)
 		</div>
 	</body>
 </html>
