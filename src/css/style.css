@@ -1,29 +1,58 @@
 
+/**
+ * Privacy button / Ad Marker
+ *
+ * These properties affect the style of the OBA Icon and
+ * the OBA Text displayed in one corner of an ad.
+ */
 .privacyButton .icon {
+	
+  /*
+   * Replace the background URL with the path the
+   * OBA Icon is accessable from.
+   * Note, that relative URLs must be relative from
+   * this stylesheet file. 
+   */
   background: url('oba_icon_15x20.jpg') no-repeat top left;
+  
   width: 15px;
   height: 20px;
-  
 }
 
 .privacyButton .text {
   font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
 }
 
+
+
+/**
+ * Privacy Panel
+ *
+ * These properties affect the style of the panel which is
+ * displayed as overlay after the user clicks the OBA Icon.
+ */
 .privacyPanel {
   font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
   font-size: 12px;
   background: #ffffff;
   border: 1px solid #cccccc;
   padding: 5px 5px 0 5px;
+  text-align: left;
+  min-height: 25px;
+  
+  /*
+   * Remove this to not have a fixed width or change this
+   * value to set another specific width.
+   */
   width: 250px;
+  
+  /* Rounded corners and shadow */
   border-radius: 0 0 5px 0;
   -moz-border-radius: 0 0 5px 0;
+  -webkit-border-radius: 0 0 5px 0;
   box-shadow: 2px 2px 2px #333;
   -moz-box-shadow: 2px 2px 2px #333;
   -webkit-box-shadow: 2px 2px 2px #333;
-  text-align: left;
-  min-height: 25px;
 }
 
 .privacyPanel div.header {
