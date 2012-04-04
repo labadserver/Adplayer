@@ -6,10 +6,10 @@
  * the OBA Text displayed in one corner of an ad.
  */
 .privacyButton .icon {
-	
+  
   /*
    * Replace the background URL with the path the
-   * OBA Icon is accessable from.
+   * OBA Icon is accessible from.
    * Note, that relative URLs must be relative from
    * this stylesheet file. 
    */
@@ -22,7 +22,6 @@
 .privacyButton .text {
   font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
 }
-
 
 
 /**
@@ -71,26 +70,36 @@
   height: auto;
 }
 
-.privacyPanel div.list {
+.privacyPanel ul.privacyInfoList {
   margin: 10px 5px;
+  padding-left: 15px;
+  list-style: disc;
+  text-align: left;
+  font-size: 12px;
+  font-weight: normal;
 }
 
-.privacyPanel div.list div.item {
+.privacyPanel ul.privacyInfoList li.privacyItem {
   margin-bottom: 10px;
-}
-
-.privacyPanel div.list div.item {
   margin: 0 0 8px 0;
   padding: 0;
 }
 
-.privacyPanel div.list div.item h4 span {
+.privacyPanel ul.privacyInfoList li.privacyItem h4.privacyItemHeader {
   font-weight: bold !important;
+  margin: 0;
+  padding:0;
+  border: none;
 }
 
-.privacyPanel div.list div.item p {
+.privacyPanel ul.privacyInfoList li.privacyItem p.privacyItemInfo {
   border: none;
-  margin: 0 0 0 5px;
+  margin: 0;
+  padding: 0;
+}
+
+.privacyPanel ul.privacyInfoList li.privacyItem p.privacyItemLink {
+  margin: 0;
   padding: 0;
 }
 
@@ -105,12 +114,4 @@
   padding: 5px;
   border-radius: 0 5px 0 5px;
   -moz-border-radius: 0 5px 0 5px;
-}
-
-.privacyPanel p {
-  text-align: left;
-  font-size: 12px;
-  font-weight: normal;
-  padding: 5px;
-  border-top: 1px solid #ccc;
 }

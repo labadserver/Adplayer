@@ -158,8 +158,8 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
     Util.setClassName(_headerTxtObj, 'header');
     _this.headerTxt(headerTxt);
 
-    _listObj = document.createElement('div');
-    Util.setClassName(_listObj, 'list');
+    _listObj = document.createElement('ul');
+    Util.setClassName(_listObj, 'privacyInfoList');
     _this.panel.appendChild(_listObj);
     _this.infoList(infoList);
     
@@ -176,16 +176,16 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
    * @see PrivacyInfo
    */
   function addPrivacyInfo(privacyInfoObj) {
-    var privacyObj =  document.createElement('div');
-    privacyObj.setAttribute('class', 'item');
-    if (Util.isIE) { privacyObj.setAttribute('className', 'item'); } // IE Fix        
+    var privacyObj =  document.createElement('li');
+    privacyObj.setAttribute('class', 'privacyItem');
+    if (Util.isIE) { privacyObj.setAttribute('className', 'privacyItem'); } // IE Fix        
     privacyClick = function(url) {
       var data = new Object();
       data.url = url;
       trackCallback(new AdEvent(AdEvent.PRIVACY_CLICK, data));
       window.open(url);          
     }
-    privacyObj.innerHTML = '<h4 style="margin:0; padding:0;">- ' + '<span>' + privacyInfoObj.adServer + '</span></h4><p>' + privacyInfoObj.message+'</p><p><a href="javascript:privacyClick(\''+privacyInfoObj.url+'\');" target="_self">'+privacyInfoObj.urlText+'</a></p>';
+    privacyObj.innerHTML = '<h4 class="privacyItemHeader">' + privacyInfoObj.adServer + '</h4><p class="privacyItemInfo">' + privacyInfoObj.message+'</p><p class="privacyItemLink"><a href="javascript:privacyClick(\''+privacyInfoObj.url+'\');" target="_self">'+privacyInfoObj.urlText+'</a></p>';
     _listObj.appendChild(privacyObj);
   }
   
