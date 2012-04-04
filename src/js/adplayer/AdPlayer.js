@@ -433,10 +433,10 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
       if (fnInit) {
         fnInit(_this);  
       }
-      _player.track(new AdEvent(AdEvent.INIT), null, _this);
       while (_queue.length > 0) {
         (_queue.shift())();   
       }
+      _player.track(new AdEvent(AdEvent.INIT), null, _this);
     }
   }  
   

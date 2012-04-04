@@ -1,10 +1,10 @@
 /*
    -------------------------------------------------------------------------------------------
-   AdPlayer v0.5.8 (dev.120111)
+   AdPlayer v0.6.1 (dev.040412)
    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
    -------------------------------------------------------------------------------------------
   
-   This file is part of AdPlayer v0.5.8 (dev.120111).
+   This file is part of AdPlayer v0.6.1 (dev.040412).
    AdPlayer is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
@@ -1219,7 +1219,7 @@ var PixelRequest = (function (url) {
  * }
  * 
  * var data = new Object();
- * data.info = 'This is custome info';
+ * data.info = 'This is custom info';
  * adPlayer.track(new AdEvent(AdEvent.COUNT, data));
  * 
  */
@@ -2654,10 +2654,10 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
       if (fnInit) {
         fnInit(_this);  
       }
-      _player.track(new AdEvent(AdEvent.INIT), null, _this);
       while (_queue.length > 0) {
         (_queue.shift())();   
       }
+      _player.track(new AdEvent(AdEvent.INIT), null, _this);
     }
   }  
   

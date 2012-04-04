@@ -46,7 +46,7 @@
  * }
  * 
  * var data = new Object();
- * data.info = 'This is custome info';
+ * data.info = 'This is custom info';
  * adPlayer.track(new AdEvent(AdEvent.COUNT, data));
  * 
  */

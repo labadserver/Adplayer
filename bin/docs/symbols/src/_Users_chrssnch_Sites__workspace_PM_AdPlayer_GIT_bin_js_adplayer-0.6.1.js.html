@@ -7,11 +7,11 @@
 	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
 	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/*
 <span class='line'>  2</span>    -------------------------------------------------------------------------------------------
-<span class='line'>  3</span>    AdPlayer v0.5.8 (dev.120111)
+<span class='line'>  3</span>    AdPlayer v0.6.1 (dev.040412)
 <span class='line'>  4</span>    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
 <span class='line'>  5</span>    -------------------------------------------------------------------------------------------
 <span class='line'>  6</span>   
-<span class='line'>  7</span>    This file is part of AdPlayer v0.5.8 (dev.120111).
+<span class='line'>  7</span>    This file is part of AdPlayer v0.6.1 (dev.040412).
 <span class='line'>  8</span>    AdPlayer is free software: you can redistribute it and/or modify
 <span class='line'>  9</span>    it under the terms of the GNU General Public License as published by
 <span class='line'> 10</span>    the Free Software Foundation, either version 3 of the License, or
@@ -1226,7 +1226,7 @@
 <span class='line'>1219</span>  * }
 <span class='line'>1220</span>  * 
 <span class='line'>1221</span>  * var data = new Object();
-<span class='line'>1222</span>  * data.info = 'This is custome info';
+<span class='line'>1222</span>  * data.info = 'This is custom info';
 <span class='line'>1223</span>  * adPlayer.track(new AdEvent(AdEvent.COUNT, data));
 <span class='line'>1224</span>  * 
 <span class='line'>1225</span>  */</span><span class="WHIT">
@@ -2661,10 +2661,10 @@
 <span class='line'>2654</span>       </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>2655</span> </span><span class="WHIT">        </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="NAME">_this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">  
 <span class='line'>2656</span>       </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>2657</span> </span><span class="WHIT">      </span><span class="NAME">_player.track</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AdEvent</span><span class="PUNC">(</span><span class="NAME">AdEvent.INIT</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>2658</span> </span><span class="WHIT">      </span><span class="KEYW">while</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_queue.length</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>2659</span> </span><span class="WHIT">        </span><span class="PUNC">(</span><span class="NAME">_queue.shift</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">   
-<span class='line'>2660</span>       </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>2657</span> </span><span class="WHIT">      </span><span class="KEYW">while</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_queue.length</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>2658</span> </span><span class="WHIT">        </span><span class="PUNC">(</span><span class="NAME">_queue.shift</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">   
+<span class='line'>2659</span>       </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>2660</span> </span><span class="WHIT">      </span><span class="NAME">_player.track</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AdEvent</span><span class="PUNC">(</span><span class="NAME">AdEvent.INIT</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2661</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>2662</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">  
 <span class='line'>2663</span>   
