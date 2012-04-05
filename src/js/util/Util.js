@@ -3,7 +3,7 @@
  * @class Static class for all common methods.
  * @description The Util class provides common methods used across AdPlayer.
  * 
- * @author christopher.sancho@adtech.com
+ * @author christopher.sancho@adtech.com, marius.naumann@bauermedia.com
  */
 var Util = (function () {
   /** @private */ var _this = {};
@@ -22,6 +22,35 @@ var Util = (function () {
    * Util.jsonUrl = "http://new.uri.of.json.script";  
    */
   _this.jsonUrl = 'js/json2.min.js';
+  
+  /**
+   * @name Util#cssPrefix
+   * @field
+   * @description Prefix for stylesheet ids and class names to allow unique descriptors.  
+   *              By default, <code>Util.cssPrefix</code> is set to <code>adplayer</code>.
+   * @example
+   * // Get reference to property
+   * Util.log(Util.cssPrefix);
+   * 
+   * // Set property's value
+   * Util.cssPrefix = "anotherPrefix";  
+   */
+  _this.cssPrefix = 'adplayer';
+  
+  /**
+   * @name Util#cssPrefixed
+   * @function
+   * @description Generates and returns a prefixed version of the given class name. This method uses the
+   *              <code>Util.cssPrefix</code> property and a dash (-) as delimiter.
+   * @param {string} className The original class name without prefix.
+   * 
+   * @example
+   * // Result: 'adplayer-myClassName'
+   *  Util.cssPrefixed('myClassName');
+   */
+  _this.cssPrefixed = function(className) {
+    return _this.cssPrefix + '-' + className;
+  };
   
   /**
    * @name Util#isIE
