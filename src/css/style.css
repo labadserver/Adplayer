@@ -5,7 +5,7 @@
  * These properties affect the style of the OBA Icon and
  * the OBA Text displayed in one corner of an ad.
  */
-.privacyButton .icon {
+.adplayer-privacyButton .adplayer-icon {
   
   /*
    * Replace the background URL with the path the
@@ -19,7 +19,7 @@
   height: 20px;
 }
 
-.privacyButton .text {
+.adplayer-privacyButton .adplayer-text {
   font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
 }
 
@@ -30,7 +30,7 @@
  * These properties affect the style of the panel which is
  * displayed as overlay after the user clicks the OBA Icon.
  */
-.privacyPanel {
+.adplayer-privacyPanel {
   font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
   font-size: 12px;
   background: #ffffff;
@@ -54,14 +54,14 @@
   -webkit-box-shadow: 2px 2px 2px #333;
 }
 
-.privacyPanel div.header {
+.adplayer-privacyPanel div.adplayer-header {
   text-align: left;
   font-size: 12px;
   padding: 5px;
   border-bottom: 1px solid #ccc;
 }
 
-.privacyPanel div.footer {
+.adplayer-privacyPanel div.adplayer-footer {
   text-align: left;
   font-size: 10px;
   padding: 5px;
@@ -70,7 +70,7 @@
   height: auto;
 }
 
-.privacyPanel ul.privacyInfoList {
+.adplayer-privacyPanel ul.adplayer-privacyInfoList {
   margin: 10px 5px;
   padding-left: 15px;
   list-style: disc;
@@ -79,31 +79,31 @@
   font-weight: normal;
 }
 
-.privacyPanel ul.privacyInfoList li.privacyItem {
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem {
   margin-bottom: 10px;
   margin: 0 0 8px 0;
   padding: 0;
 }
 
-.privacyPanel ul.privacyInfoList li.privacyItem h4.privacyItemHeader {
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem h4.adplayer-privacyItemHeader {
   font-weight: bold !important;
   margin: 0;
   padding:0;
   border: none;
 }
 
-.privacyPanel ul.privacyInfoList li.privacyItem p.privacyItemInfo {
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemInfo {
   border: none;
   margin: 0;
   padding: 0;
 }
 
-.privacyPanel ul.privacyInfoList li.privacyItem p.privacyItemLink {
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLink {
   margin: 0;
   padding: 0;
 }
 
-.privacyPanel div.close {
+.adplayer-privacyPanel div.adplayer-close {
   cursor: pointer;
   position: absolute;
   top: -1px;

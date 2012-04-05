@@ -225,7 +225,7 @@ ul.inheritsList
 				Global Static Class - Manages all created <code>AdPlayer</code> instances.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_chrssnch_Sites__workspace_PM_AdPlayer_GIT_bin_js_adplayer-0.6.2.js.html">adplayer-0.6.2.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/C__dev_projects_AdPlayer_bmonaumann_bin_js_adplayer-0.6.2.js.html">adplayer-0.6.2.js</a>.
 				
 			</p>
 
@@ -273,8 +273,7 @@ ul.inheritsList
 								<div class="fixedFont">
 								<b><a href="../symbols/AdPlayerManager.html#list">list</a></b>
 								</div>
-								<div class="description">List that contains instances of <code>AdPlayer</code>
-             added to the manager.</div>
+								<div class="description">List that contains instances of <code>AdPlayer</code>             added to the manager.</div>
 							</td>
 						</tr>
 					
@@ -313,8 +312,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#getAdPlayerById">getAdPlayerById</a></b>(id)
 								</div>
-								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with
-             a DOM element id name</div>
+								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with             a DOM element id name</div>
 							</td>
 						</tr>
 					
@@ -323,8 +321,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#getPlayerByDomElement">getPlayerByDomElement</a></b>(dom)
 								</div>
-								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with
-             a DOM element.</div>
+								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with             a DOM element.</div>
 							</td>
 						</tr>
 					
@@ -333,8 +330,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#getPlayerByUID">getPlayerByUID</a></b>(uid)
 								</div>
-								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with
-             a UID string.</div>
+								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with             a UID string.</div>
 							</td>
 						</tr>
 					
@@ -343,8 +339,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/AdPlayerManager.html#register">register</a></b>(callback)
 								</div>
-								<div class="description">Registers a function that will be called when an <code>AdPlayer</code> instance
-             is created.</div>
+								<div class="description">Registers a function that will be called when an <code>AdPlayer</code> instance             is created.</div>
 							</td>
 						</tr>
 					
@@ -378,10 +373,7 @@ ul.inheritsList
 				</div>
 				
 				<div class="description">
-					Globally Manages all created <code>AdPlayer</code> instances.
-             <code>AdPlayerManager</code> is a singleton class and ensures it
-             is the only available <code>AdPlayerManager</code> throughout an
-             ad delivery flow.</br>
+					Globally Manages all created <code>AdPlayer</code> instances.             <code>AdPlayerManager</code> is a singleton class and ensures it             is the only available <code>AdPlayerManager</code> throughout an             ad delivery flow.</br>
 					<br /><i>Author: </i>christopher.sancho@adtech.com.
 				</div>
 				
@@ -413,16 +405,14 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						List that contains instances of <code>AdPlayer</code>
-             added to the manager.
+						List that contains instances of <code>AdPlayer</code>             added to the manager.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">// Get reference to property
-var adPlayerList = AdPlayerManager.list();</pre>
+					<pre class="code">// Get reference to propertyvar adPlayerList = AdPlayerManager.list();</pre>
 					
 					
 
@@ -456,20 +446,14 @@ var adPlayerList = AdPlayerManager.list();</pre>
 					
 					</div>
 					<div class="description">
-						Adds an <code>AdPlayer</code> instance to the management list.  When a new
-             <code>AdPlayer</code> instance is created, it is automatically passed to
-             this method.  Immediately following, all call-backs, registerd through
-             <code>AdPlayerManger.register(adPlayer)</code> are dispatched and passed
-             with the newly created <code>AdPlayer</code>.
+						Adds an <code>AdPlayer</code> instance to the management list.  When a new             <code>AdPlayer</code> instance is created, it is automatically passed to             this method.  Immediately following, all call-backs, registerd through             <code>AdPlayerManger.register(adPlayer)</code> are dispatched and passed             with the newly created <code>AdPlayer</code>.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">// Add an AdPlayer instance to the manager.
-var adPlayer = new AdPlayer(document.getElementById('myTagDivContainer'));
-AdPlayerManager.addAdPlayer(adPlayer);</pre>
+					<pre class="code">// Add an AdPlayer instance to the manager.var adPlayer = new AdPlayer(document.getElementById('myTagDivContainer'));AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					
 					
 					
@@ -509,23 +493,14 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					
 					</div>
 					<div class="description">
-						Returns an instance of an <code>AdPlayer</code> associated with
-             a DOM element id name
+						Returns an instance of an <code>AdPlayer</code> associated with             a DOM element id name
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">&lt;div id=&quot;adPlayerContainer&quot;&gt;
- &lt;script type=&quot;text/javascript&quot;&gt;
-   var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
-   adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
- &lt;/script&gt;
-&lt;/div&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
- var adPlayer = AdPlayerManager.getAdPlayerById('adPlayerContainer');
-&lt;/script&gt;</pre>
+					<pre class="code">&lt;div id=&quot;adPlayerContainer&quot;&gt; &lt;script type=&quot;text/javascript&quot;&gt;   var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));   adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com'); &lt;/script&gt;&lt;/div&gt;&lt;script type=&quot;text/javascript&quot;&gt; var adPlayer = AdPlayerManager.getAdPlayerById('adPlayerContainer');&lt;/script&gt;</pre>
 					
 					
 					
@@ -565,23 +540,14 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					
 					</div>
 					<div class="description">
-						Returns an instance of an <code>AdPlayer</code> associated with
-             a DOM element.
+						Returns an instance of an <code>AdPlayer</code> associated with             a DOM element.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">&lt;div id=&quot;adPlayerContainer&quot;&gt;
- &lt;script type=&quot;text/javascript&quot;&gt;
-   var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
-   adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
- &lt;/script&gt;
-&lt;/div&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
- var adPlayer = AdPlayerManager.getPlayerByDomElement('adPlayerContainer');
-&lt;/script&gt;</pre>
+					<pre class="code">&lt;div id=&quot;adPlayerContainer&quot;&gt; &lt;script type=&quot;text/javascript&quot;&gt;   var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));   adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com'); &lt;/script&gt;&lt;/div&gt;&lt;script type=&quot;text/javascript&quot;&gt; var adPlayer = AdPlayerManager.getPlayerByDomElement('adPlayerContainer');&lt;/script&gt;</pre>
 					
 					
 					
@@ -621,8 +587,7 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					
 					</div>
 					<div class="description">
-						Returns an instance of an <code>AdPlayer</code> associated with
-             a UID string.
+						Returns an instance of an <code>AdPlayer</code> associated with             a UID string.
 						
 						
 					</div>
@@ -669,19 +634,14 @@ AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					
 					</div>
 					<div class="description">
-						Registers a function that will be called when an <code>AdPlayer</code> instance
-             is created. Call-back handler function must expect a parameter that accepts
-             an <code>AdPlayer</code> instance.
+						Registers a function that will be called when an <code>AdPlayer</code> instance             is created. Call-back handler function must expect a parameter that accepts             an <code>AdPlayer</code> instance.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">function myCallBackHandler(adPlayer) {
-  adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');
-}
-AdPlayerManager.register(myCallBackHandler);</pre>
+					<pre class="code">function myCallBackHandler(adPlayer) {  adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');}AdPlayerManager.register(myCallBackHandler);</pre>
 					
 					
 					
@@ -721,10 +681,7 @@ AdPlayerManager.register(myCallBackHandler);</pre>
 					
 					
 					
-					<pre class="code">function myCallBackHandler(adPlayer) {
-  adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');
-}
-AdPlayerManager.unregister(myCallBackHandler);</pre>
+					<pre class="code">function myCallBackHandler(adPlayer) {  adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');}AdPlayerManager.unregister(myCallBackHandler);</pre>
 					
 					
 					
@@ -761,7 +718,7 @@ AdPlayerManager.unregister(myCallBackHandler);</pre>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Apr 04 2012 14:39:29 GMT-0700 (PDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Apr 05 2012 12:20:28 GMT+0200 (MESZ)
 		</div>
 	</body>
 </html>

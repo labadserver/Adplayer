@@ -225,7 +225,7 @@ ul.inheritsList
 				Static class for all common methods.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_chrssnch_Sites__workspace_PM_AdPlayer_GIT_bin_js_adplayer-0.6.2.js.html">adplayer-0.6.2.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/C__dev_projects_AdPlayer_bmonaumann_bin_js_adplayer-0.6.2.js.html">adplayer-0.6.2.js</a>.
 				
 			</p>
 
@@ -271,6 +271,16 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
+								<b><a href="../symbols/Util.html#cssPrefix">cssPrefix</a></b>
+								</div>
+								<div class="description">Prefix for stylesheet ids and class names to allow unique descriptors.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
 								<b><a href="../symbols/Util.html#isFF">isFF</a></b>
 								</div>
 								<div class="description">Returns <code>true</code> if browser is Firefox.</div>
@@ -303,8 +313,7 @@ ul.inheritsList
 								<div class="fixedFont">
 								<b><a href="../symbols/Util.html#jsonUrl">jsonUrl</a></b>
 								</div>
-								<div class="description">Location of the external JSON framework script needed for browsers 
-             that do not natively support JSON.</div>
+								<div class="description">Location of the external JSON framework script needed for browsers              that do not natively support JSON.</div>
 							</td>
 						</tr>
 					
@@ -332,6 +341,15 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Util.html#cssPrefixed">cssPrefixed</a></b>(className)
+								</div>
+								<div class="description">Generates and returns a prefixed version of the given class name.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Util.html#jsonParse">jsonParse</a></b>(txt, reviver, rdyFn)
 								</div>
 								<div class="description">Method first checks if JSON is natively available in the browser.</div>
@@ -352,8 +370,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Util.html#loadScript">loadScript</a></b>(objId, objReturnFn, scriptSrc, callback)
 								</div>
-								<div class="description">Loads an external script & executes a callback function when an object, located in the 
-             external script & is returned in a <code>testFn</code>, is valid.</div>
+								<div class="description">Loads an external script & executes a callback function when an object, located in the              external script & is returned in a <code>testFn</code>, is valid.</div>
 							</td>
 						</tr>
 					
@@ -406,7 +423,7 @@ ul.inheritsList
 				
 				<div class="description">
 					The Util class provides common methods used across AdPlayer.
-					<br /><i>Author: </i>christopher.sancho@adtech.com.
+					<br /><i>Author: </i>christopher.sancho@adtech.com, marius.naumann@bauermedia.com.
 				</div>
 				
 				
@@ -429,6 +446,32 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
+					<a name="cssPrefix"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>cssPrefix</b>
+					
+					</div>
+					<div class="description">
+						Prefix for stylesheet ids and class names to allow unique descriptors.               By default, <code>Util.cssPrefix</code> is set to <code>adplayer</code>.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">// Get reference to propertyUtil.log(Util.cssPrefix);// Set property's valueUtil.cssPrefix = "anotherPrefix";</pre>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="isFF"> </a>
 					<div class="fixedFont">
 					
@@ -444,9 +487,7 @@ ul.inheritsList
 					
 					
 					
-					<pre class="code">if (Util.isFF) {
- Util.log('The current browser is Firefox.');
-}</pre>
+					<pre class="code">if (Util.isFF) { Util.log('The current browser is Firefox.');}</pre>
 					
 					
 
@@ -472,9 +513,7 @@ ul.inheritsList
 					
 					
 					
-					<pre class="code">if (Util.isIE) {
- Util.log('The current browser is Internet Explorer.');
-}</pre>
+					<pre class="code">if (Util.isIE) { Util.log('The current browser is Internet Explorer.');}</pre>
 					
 					
 
@@ -500,9 +539,7 @@ ul.inheritsList
 					
 					
 					
-					<pre class="code">if (Util.isOpera) {
- Util.log('The current browser is Opera.');
-}</pre>
+					<pre class="code">if (Util.isOpera) { Util.log('The current browser is Opera.');}</pre>
 					
 					
 
@@ -521,20 +558,14 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						Location of the external JSON framework script needed for browsers 
-             that do not natively support JSON. By default, <code>Util.jsonUrl</code>
-             is set to look for the script in a relative path: </code>js/json2.min.js</code>
+						Location of the external JSON framework script needed for browsers              that do not natively support JSON. By default, <code>Util.jsonUrl</code>             is set to look for the script in a relative path: </code>js/json2.min.js</code>
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">// Get reference to property
-Util.log(Util.jsonUrl);
-
-// Set property's value
-Util.jsonUrl = "http://new.uri.of.json.script";</pre>
+					<pre class="code">// Get reference to propertyUtil.log(Util.jsonUrl);// Set property's valueUtil.jsonUrl = "http://new.uri.of.json.script";</pre>
 					
 					
 
@@ -553,6 +584,46 @@ Util.jsonUrl = "http://new.uri.of.json.script";</pre>
 					Method Detail
 				</div>
 				
+					<a name="cssPrefixed"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>cssPrefixed</b>(className)
+					
+					</div>
+					<div class="description">
+						Generates and returns a prefixed version of the given class name. This method uses the             <code>Util.cssPrefix</code> property and a dash (-) as delimiter.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">// Result: 'adplayer-myClassName' Util.cssPrefixed('myClassName');</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{string}</span> <b>className</b>
+									
+								</dt>
+								<dd>The original class name without prefix.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="jsonParse"> </a>
 					<div class="fixedFont">
 					
@@ -561,21 +632,14 @@ Util.jsonUrl = "http://new.uri.of.json.script";</pre>
 					
 					</div>
 					<div class="description">
-						Method first checks if JSON is natively available in the browser. If not,
-              it will attempt to load an external JSON framework script.
-              Finally it will initialize a callback when a successful parse is complete.
+						Method first checks if JSON is natively available in the browser. If not,              it will attempt to load an external JSON framework script.              Finally it will initialize a callback when a successful parse is complete.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">var str = '{"hello":"world"}';
-Util.jsonParse(str, null, 
-  function(json) {
-    Util.log(json.hello);
-  }
-);</pre>
+					<pre class="code">var str = '{"hello":"world"}';Util.jsonParse(str, null,   function(json) {    Util.log(json.hello);  });</pre>
 					
 					
 					
@@ -627,22 +691,14 @@ Util.jsonParse(str, null,
 					
 					</div>
 					<div class="description">
-						Method first checks if JSON is natively available in the browser. If not,
-              it will attempt to load an external JSON framework script.
-              Finally it will initialize a callback when a successful stringify is complete.
+						Method first checks if JSON is natively available in the browser. If not,              it will attempt to load an external JSON framework script.              Finally it will initialize a callback when a successful stringify is complete.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">var obj = new Object();
-ob.hello = "world";
-Util.jsonStringify(obj, null, 
-  function(str) {
-    Util.log(str);
-  }
-);</pre>
+					<pre class="code">var obj = new Object();ob.hello = "world";Util.jsonStringify(obj, null,   function(str) {    Util.log(str);  });</pre>
 					
 					
 					
@@ -694,19 +750,14 @@ Util.jsonStringify(obj, null,
 					
 					</div>
 					<div class="description">
-						Loads an external script & executes a callback function when an object, located in the 
-             external script & is returned in a <code>testFn</code>, is valid.
+						Loads an external script & executes a callback function when an object, located in the              external script & is returned in a <code>testFn</code>, is valid.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">Util.loadScript('ExtScriptObj', function(){return ExtScriptObj;}, 'http://the.script.url/extobj.js', 
-  function(){
-     Util.log('External script is done loading.');
-  }
-);</pre>
+					<pre class="code">Util.loadScript('ExtScriptObj', function(){return ExtScriptObj;}, 'http://the.script.url/extobj.js',   function(){     Util.log('External script is done loading.');  });</pre>
 					
 					
 					
@@ -764,8 +815,7 @@ Util.jsonStringify(obj, null,
 					
 					
 					
-					<pre class="code">// "AdPlayer(Parent): This is a log output."
- Util.log('This is a log output', 'Parent');</pre>
+					<pre class="code">// "AdPlayer(Parent): This is a log output." Util.log('This is a log output', 'Parent');</pre>
 					
 					
 					
@@ -811,15 +861,7 @@ Util.jsonStringify(obj, null,
 					
 					
 					
-					<pre class="code">function onReady(msg, num) {
-  Util.log(msg + ':' + num);
-}
-
-function onError(msg) {
-  Util.log(msg);
-}
-
-Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], onError, ['Error...']);</pre>
+					<pre class="code">function onReady(msg, num) {  Util.log(msg + ':' + num);}function onError(msg) {  Util.log(msg);}Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], onError, ['Error...']);</pre>
 					
 					
 					
@@ -855,8 +897,7 @@ Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], on
 									<span class="light fixedFont">{function}</span> <b>errorFn</b>
 									
 								</dt>
-								<dd>Function called when object being tested can not be found. 
-                          Method times out at a count of 100 at 100ms intervals.</dd>
+								<dd>Function called when object being tested can not be found.                           Method times out at a count of 100 at 100ms intervals.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{Array}</span> <b>errorParams</b>
@@ -890,8 +931,7 @@ Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], on
 					
 					
 					
-					<pre class="code">var a = document.getElementById('dom-container');
-Util.setClassName(a, 'ad-container');</pre>
+					<pre class="code">var a = document.getElementById('dom-container');Util.setClassName(a, 'ad-container');</pre>
 					
 					
 					
@@ -934,7 +974,7 @@ Util.setClassName(a, 'ad-container');</pre>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Apr 04 2012 14:39:29 GMT-0700 (PDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Apr 05 2012 12:20:28 GMT+0200 (MESZ)
 		</div>
 	</body>
 </html>
