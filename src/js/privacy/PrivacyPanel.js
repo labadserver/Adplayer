@@ -97,7 +97,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
       if (_headerTxtObj) {
         _headerTxtObj.innerHTML = _headerTxt;
         if (_headerTxt != '') {
-          if (!checkPanel('div', 'header')) {
+          if (!checkPanel('div', Util.cssPrefixed('header'))) {
             if (_listObj) {
               _this.panel.insertBefore(_headerTxtObj, _listObj);  
             } else {
@@ -130,7 +130,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
       if (_footerTxtObj) {
         _footerTxtObj.innerHTML = _footerTxt;
         if (_footerTxt != '') {
-          if (!checkPanel('div', 'footer')) {
+          if (!checkPanel('div', Util.cssPrefixed('footer'))) {
             _this.panel.appendChild(_footerTxtObj);
           }
         }
@@ -146,25 +146,25 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
    */
   function init() {
     _this.panel = document.createElement('div');
-    Util.setClassName(_this.panel, _privPanelClassName);
+    Util.setClassName(_this.panel, Util.cssPrefixed(_privPanelClassName));
     
     _closeTxtObj = document.createElement('div');
-    Util.setClassName(_closeTxtObj, 'close');
+    Util.setClassName(_closeTxtObj, Util.cssPrefixed('close'));
     _closeTxtObj.innerHTML = _this.closeTxt(closeTxt);
     _closeTxtObj.onclick = closeCallback;
     _this.panel.appendChild(_closeTxtObj);
     
     _headerTxtObj = document.createElement('div');
-    Util.setClassName(_headerTxtObj, 'header');
+    Util.setClassName(_headerTxtObj, Util.cssPrefixed('header'));
     _this.headerTxt(headerTxt);
 
     _listObj = document.createElement('ul');
-    Util.setClassName(_listObj, 'privacyInfoList');
+    Util.setClassName(_listObj, Util.cssPrefixed('privacyInfoList'));
     _this.panel.appendChild(_listObj);
     _this.infoList(infoList);
     
     _footerTxtObj = document.createElement('div');
-    Util.setClassName(_footerTxtObj, 'footer');
+    Util.setClassName(_footerTxtObj, Util.cssPrefixed('footer'));
     _this.footerTxt(footerTxt);
   }
   
@@ -177,15 +177,15 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
    */
   function addPrivacyInfo(privacyInfoObj) {
     var privacyObj =  document.createElement('li');
-    privacyObj.setAttribute('class', 'privacyItem');
-    if (Util.isIE) { privacyObj.setAttribute('className', 'privacyItem'); } // IE Fix        
+    privacyObj.setAttribute('class', Util.cssPrefixed('privacyItem'));
+    if (Util.isIE) { privacyObj.setAttribute('className', Util.cssPrefixed('privacyItem')); } // IE Fix        
     privacyClick = function(url) {
       var data = new Object();
       data.url = url;
       trackCallback(new AdEvent(AdEvent.PRIVACY_CLICK, data));
       window.open(url);          
     }
-    privacyObj.innerHTML = '<h4 class="privacyItemHeader">' + privacyInfoObj.adServer + '</h4><p class="privacyItemInfo">' + privacyInfoObj.message+'</p><p class="privacyItemLink"><a href="javascript:privacyClick(\''+privacyInfoObj.url+'\');" target="_self">'+privacyInfoObj.urlText+'</a></p>';
+    privacyObj.innerHTML = '<h4 class="' + Util.cssPrefixed('privacyItemHeader') + '">' + privacyInfoObj.adServer + '</h4><p class="' + Util.cssPrefixed('privacyItemInfo') + '">' + privacyInfoObj.message+'</p><p class="' + Util.cssPrefixed('privacyItemLink') + '"><a href="javascript:privacyClick(\''+privacyInfoObj.url+'\');" target="_self">'+privacyInfoObj.urlText+'</a></p>';
     _listObj.appendChild(privacyObj);
   }
   
@@ -248,7 +248,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
         break;
     }
     
-    Util.setClassName(_this.panel, _privPanelClassName + ' ' + pos);
+    Util.setClassName(_this.panel, Util.cssPrefixed(_privPanelClassName) + ' ' + pos);
   }    
     
   

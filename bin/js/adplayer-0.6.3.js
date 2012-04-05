@@ -1,10 +1,10 @@
 /*
    -------------------------------------------------------------------------------------------
-   AdPlayer v0.6.2 (dev.040412)
+   AdPlayer v0.6.3 (dev.040512)
    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
    -------------------------------------------------------------------------------------------
   
-   This file is part of AdPlayer v0.6.2 (dev.040412).
+   This file is part of AdPlayer v0.6.3 (dev.040512).
    AdPlayer is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
@@ -26,7 +26,7 @@ if (typeof AdPlayerManager === 'undefined') {
  * @class Static class for all common methods.
  * @description The Util class provides common methods used across AdPlayer.
  * 
- * @author christopher.sancho@adtech.com
+ * @author christopher.sancho@adtech.com, marius.naumann@bauermedia.com
  */
 var Util = (function () {
   /** @private */ var _this = {};
@@ -45,6 +45,35 @@ var Util = (function () {
    * Util.jsonUrl = "http://new.uri.of.json.script";  
    */
   _this.jsonUrl = 'js/json2.min.js';
+  
+  /**
+   * @name Util#cssPrefix
+   * @field
+   * @description Prefix for stylesheet ids and class names to allow unique descriptors.  
+   *              By default, <code>Util.cssPrefix</code> is set to <code>adplayer</code>.
+   * @example
+   * // Get reference to property
+   * Util.log(Util.cssPrefix);
+   * 
+   * // Set property's value
+   * Util.cssPrefix = "anotherPrefix";  
+   */
+  _this.cssPrefix = 'adplayer';
+  
+  /**
+   * @name Util#cssPrefixed
+   * @function
+   * @description Generates and returns a prefixed version of the given class name. This method uses the
+   *              <code>Util.cssPrefix</code> property and a dash (-) as delimiter.
+   * @param {string} className The original class name without prefix.
+   * 
+   * @example
+   * // Result: 'adplayer-myClassName'
+   *  Util.cssPrefixed('myClassName');
+   */
+  _this.cssPrefixed = function(className) {
+    return _this.cssPrefix + '-' + className;
+  };
   
   /**
    * @name Util#isIE
@@ -678,14 +707,14 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
     _this.openBtnTxt(openBtnTxt);
     
     _this.button = document.createElement('div');
-    Util.setClassName(_this.button, _privBtnClassName);
+    Util.setClassName(_this.button, Util.cssPrefixed(_privBtnClassName));
     
     _openBtnIcon = document.createElement('div');
-    Util.setClassName(_openBtnIcon, 'icon');
+    Util.setClassName(_openBtnIcon, Util.cssPrefixed('icon'));
     _this.button.appendChild(_openBtnIcon);
     
     _openBtnTxtObj = document.createElement('div');
-    Util.setClassName(_openBtnTxtObj, 'text');
+    Util.setClassName(_openBtnTxtObj, Util.cssPrefixed('text'));
     _openBtnTxtObj.style.display = "none";
     _this.button.appendChild(_openBtnTxtObj);
     _openBtnTxtObj.innerHTML = _this.openBtnTxt();
@@ -821,7 +850,7 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
         break;
     }
     
-    Util.setClassName(_this.button, _privBtnClassName + ' ' + pos);
+    Util.setClassName(_this.button, Util.cssPrefixed(_privBtnClassName) + ' ' + Util.cssPrefixed(pos));
   }    
   
   init();
@@ -926,7 +955,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
       if (_headerTxtObj) {
         _headerTxtObj.innerHTML = _headerTxt;
         if (_headerTxt != '') {
-          if (!checkPanel('div', 'header')) {
+          if (!checkPanel('div', Util.cssPrefixed('header'))) {
             if (_listObj) {
               _this.panel.insertBefore(_headerTxtObj, _listObj);  
             } else {
@@ -959,7 +988,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
       if (_footerTxtObj) {
         _footerTxtObj.innerHTML = _footerTxt;
         if (_footerTxt != '') {
-          if (!checkPanel('div', 'footer')) {
+          if (!checkPanel('div', Util.cssPrefixed('footer'))) {
             _this.panel.appendChild(_footerTxtObj);
           }
         }
@@ -975,25 +1004,25 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
    */
   function init() {
     _this.panel = document.createElement('div');
-    Util.setClassName(_this.panel, _privPanelClassName);
+    Util.setClassName(_this.panel, Util.cssPrefixed(_privPanelClassName));
     
     _closeTxtObj = document.createElement('div');
-    Util.setClassName(_closeTxtObj, 'close');
+    Util.setClassName(_closeTxtObj, Util.cssPrefixed('close'));
     _closeTxtObj.innerHTML = _this.closeTxt(closeTxt);
     _closeTxtObj.onclick = closeCallback;
     _this.panel.appendChild(_closeTxtObj);
     
     _headerTxtObj = document.createElement('div');
-    Util.setClassName(_headerTxtObj, 'header');
+    Util.setClassName(_headerTxtObj, Util.cssPrefixed('header'));
     _this.headerTxt(headerTxt);
 
     _listObj = document.createElement('ul');
-    Util.setClassName(_listObj, 'privacyInfoList');
+    Util.setClassName(_listObj, Util.cssPrefixed('privacyInfoList'));
     _this.panel.appendChild(_listObj);
     _this.infoList(infoList);
     
     _footerTxtObj = document.createElement('div');
-    Util.setClassName(_footerTxtObj, 'footer');
+    Util.setClassName(_footerTxtObj, Util.cssPrefixed('footer'));
     _this.footerTxt(footerTxt);
   }
   
@@ -1006,15 +1035,15 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
    */
   function addPrivacyInfo(privacyInfoObj) {
     var privacyObj =  document.createElement('li');
-    privacyObj.setAttribute('class', 'privacyItem');
-    if (Util.isIE) { privacyObj.setAttribute('className', 'privacyItem'); } // IE Fix        
+    privacyObj.setAttribute('class', Util.cssPrefixed('privacyItem'));
+    if (Util.isIE) { privacyObj.setAttribute('className', Util.cssPrefixed('privacyItem')); } // IE Fix        
     privacyClick = function(url) {
       var data = new Object();
       data.url = url;
       trackCallback(new AdEvent(AdEvent.PRIVACY_CLICK, data));
       window.open(url);          
     }
-    privacyObj.innerHTML = '<h4 class="privacyItemHeader">' + privacyInfoObj.adServer + '</h4><p class="privacyItemInfo">' + privacyInfoObj.message+'</p><p class="privacyItemLink"><a href="javascript:privacyClick(\''+privacyInfoObj.url+'\');" target="_self">'+privacyInfoObj.urlText+'</a></p>';
+    privacyObj.innerHTML = '<h4 class="' + Util.cssPrefixed('privacyItemHeader') + '">' + privacyInfoObj.adServer + '</h4><p class="' + Util.cssPrefixed('privacyItemInfo') + '">' + privacyInfoObj.message+'</p><p class="' + Util.cssPrefixed('privacyItemLink') + '"><a href="javascript:privacyClick(\''+privacyInfoObj.url+'\');" target="_self">'+privacyInfoObj.urlText+'</a></p>';
     _listObj.appendChild(privacyObj);
   }
   
@@ -1077,7 +1106,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
         break;
     }
     
-    Util.setClassName(_this.panel, _privPanelClassName + ' ' + pos);
+    Util.setClassName(_this.panel, Util.cssPrefixed(_privPanelClassName) + ' ' + pos);
   }    
     
   

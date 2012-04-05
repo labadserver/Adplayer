@@ -53,14 +53,14 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
     _this.openBtnTxt(openBtnTxt);
     
     _this.button = document.createElement('div');
-    Util.setClassName(_this.button, _privBtnClassName);
+    Util.setClassName(_this.button, Util.cssPrefixed(_privBtnClassName));
     
     _openBtnIcon = document.createElement('div');
-    Util.setClassName(_openBtnIcon, 'icon');
+    Util.setClassName(_openBtnIcon, Util.cssPrefixed('icon'));
     _this.button.appendChild(_openBtnIcon);
     
     _openBtnTxtObj = document.createElement('div');
-    Util.setClassName(_openBtnTxtObj, 'text');
+    Util.setClassName(_openBtnTxtObj, Util.cssPrefixed('text'));
     _openBtnTxtObj.style.display = "none";
     _this.button.appendChild(_openBtnTxtObj);
     _openBtnTxtObj.innerHTML = _this.openBtnTxt();
@@ -196,7 +196,7 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
         break;
     }
     
-    Util.setClassName(_this.button, _privBtnClassName + ' ' + pos);
+    Util.setClassName(_this.button, Util.cssPrefixed(_privBtnClassName) + ' ' + Util.cssPrefixed(pos));
   }    
   
   init();
