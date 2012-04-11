@@ -286,12 +286,18 @@ var Util = (function () {
    * );
    */  
   _this.jsonParse = function(txt, reviver, rdyFn) {
+    function safeCall (obj,reviver,rdyFn) {
+      try {
+        var obj = JSON.parse(txt, reviver); 
+        rdyFn(obj);  
+      } catch (e) {_this.log('Ignoring invalid message: '+txt)}
+    }
     if(typeof JSON !== 'undefined') {
-      rdyFn(JSON.parse(txt, reviver));  
+      safeCall(txt, reviver,rdyFn);  
     } else {
       _this.loadScript('JSON', function(){return JSON;}, _this.jsonUrl, 
         function() {
-          rdyFn(JSON.parse(txt, reviver));
+          safeCall(txt, reviver,rdyFn);
         }
       );
     }
@@ -318,11 +324,11 @@ var Util = (function () {
    */  
   _this.jsonStringify = function(obj, replacer, rdyFn) {
     if(typeof JSON !== 'undefined') {
-      rdyFn(JSON.stringify(obj, replacer));  
+       rdyFn(JSON.stringify(obj, replacer));  
     } else {
       _this.loadScript('JSON', function(){return JSON;}, _this.jsonUrl, 
         function() {
-          rdyFn(JSON.stringify(obj, replacer));
+           rdyFn(JSON.stringify(obj, replacer));  
         }
       );
     }
