@@ -1,10 +1,10 @@
 /*
    -------------------------------------------------------------------------------------------
-   AdPlayer v0.7.0 (dev.041112)
+   AdPlayer v0.7.1 (dev.041112)
    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
    -------------------------------------------------------------------------------------------
   
-   This file is part of AdPlayer v0.7.0 (dev.041112).
+   This file is part of AdPlayer v0.7.1 (dev.041112).
    AdPlayer is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
@@ -308,12 +308,19 @@ var Util = (function () {
    * );
    */  
   _this.jsonParse = function(txt, reviver, rdyFn) {
+    function safeCall(txt, reviver, rdyFn) {
+      try {
+        rdyFn(JSON.parse(txt, reviver));  
+      } catch (e) {
+        _this.log('Ignoring invalid message: '+txt)
+      }
+    }
     if(typeof JSON !== 'undefined') {
-      rdyFn(JSON.parse(txt, reviver));  
+      safeCall(txt, reviver, rdyFn);
     } else {
       _this.loadScript('JSON', function(){return JSON;}, _this.jsonUrl, 
         function() {
-          rdyFn(JSON.parse(txt, reviver));
+          safeCall(txt, reviver, rdyFn);
         }
       );
     }

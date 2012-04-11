@@ -285,12 +285,19 @@ var Util = (function () {
    * );
    */  
   _this.jsonParse = function(txt, reviver, rdyFn) {
+    function safeCall(txt, reviver, rdyFn) {
+      try {
+        rdyFn(JSON.parse(txt, reviver));  
+      } catch (e) {
+        _this.log('Ignoring invalid message: '+txt)
+      }
+    }
     if(typeof JSON !== 'undefined') {
-      rdyFn(JSON.parse(txt, reviver));  
+      safeCall(txt, reviver, rdyFn);
     } else {
       _this.loadScript('JSON', function(){return JSON;}, _this.jsonUrl, 
         function() {
-          rdyFn(JSON.parse(txt, reviver));
+          safeCall(txt, reviver, rdyFn);
         }
       );
     }
