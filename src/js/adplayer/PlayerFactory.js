@@ -287,8 +287,8 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    function setDocWriteRef() {
      var uAdId = new Date().getTime();
      Util.log('WARNING: No valid referral element specified for "'+uid+'". Referral will be created using "document.write"', 'parentDomSearch');
-     domId = 'ref'+ uid +uAdId;
-     document.write('<span id="'+domId+'"></span>');
+     domId = 'ref' + uAdId;
+     document.write('<span id="' + domId + '"></span>');
      return domId;
    }
    
