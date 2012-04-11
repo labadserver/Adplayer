@@ -1,10 +1,10 @@
 <!--
    -------------------------------------------------------------------------------------------
-   AdPlayer v0.6.3 (dev.040512)
+   AdPlayer v0.7.0 (dev.041112)
    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
    -------------------------------------------------------------------------------------------
   
-   This file is part of AdPlayer v0.6.3 (dev.040512).
+   This file is part of AdPlayer v0.7.0 (dev.041112).
    AdPlayer is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
@@ -23,11 +23,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>ADTECH - AdPlayer | DAST Demo v0.6.3 (dev.040512)</title>
-<script type="text/javascript" src="js/adplayer-0.6.3.js"></script>
-<!-- script type="text/javascript" src="js/adplayer-0.6.3.min.js"></script-->
-<link rel="stylesheet" type="text/css" href="css/adplayer-0.6.3-style.css" />
-<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="css/adplayer-0.6.3-style-ie.css" /><![endif]-->
+<title>ADTECH - AdPlayer | DAST Demo v0.7.0 (dev.041112)</title>
+<script type="text/javascript" src="js/adplayer-0.7.0.js"></script>
+<!-- script type="text/javascript" src="js/adplayer-0.7.0.min.js"></script-->
+<link rel="stylesheet" type="text/css" href="css/adplayer-0.7.0-style.css" />
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="css/adplayer-0.7.0-style-ie.css" /><![endif]-->
 
 <style>
 body {
@@ -158,8 +158,8 @@ table td h3 {
 <table border="0">
 	<tr>
 		<th colspan="3">
-			<span>ADTECH</span> - AdPlayer | DAST Demo <span class="version">v0.6.3 (dev.040512)</span>
-			<span id="info"><a href="docs/" target="_blank">API</a>  |  <a href="js/adplayer-0.6.3.js" target="_blank">SOURCE</a></span>
+			<span>ADTECH</span> - AdPlayer | DAST Demo <span class="version">v0.7.0 (dev.041112)</span>
+			<span id="info"><a href="docs/" target="_blank">API</a>  |  <a href="js/adplayer-0.7.0.js" target="_blank">SOURCE</a></span>
 		</th>
 	</tr>
 	<tr>
@@ -273,8 +273,7 @@ table td h3 {
 					iframeAdPlayer.addEventListener(AdEvent.TRACK, iframeTrackHandler);
 				//--></script>
 				<!-- End of JavaScript Tag -->
-				<!-- iframe id="myFrame" src="http://iqtestsites.adtech.de/sancho/adplayer/iframe.html" width="300" height="250" border="0" scrolling="no"></iframe-->
-				<iframe id="myFrame" src="iframe.html" width="300" height="250" border="0" scrolling="no"></iframe>
+				<iframe id="myFrame" src="demo/iframe.html" width="300" height="250" border="0" scrolling="no"></iframe>
 			</div>
 			<p>Regular iframe element only supported on "newer" browsers that have PostMessage support.  
 				Iframe must be delivered using the friendly iframe ad player support for all iframe browser support.</p>
@@ -285,7 +284,7 @@ table td h3 {
 			<!-- IFRAME EXAMPLE No Parent Player =============================================
 			===============================================================================-->		
 			<h3>Iframe - Self-Contained</h3>
-			<iframe id="noParentFrame" src="iframe.html" width="300" height="250" border="0" scrolling="no"></iframe>
+			<iframe id="noParentFrame" src="demo/iframe.html" width="300" height="250" border="0" scrolling="no"></iframe>
 			<!-- END IFRAME EXAMPLE No Parent Player =========================================
 			===============================================================================-->
 		</td>
@@ -316,6 +315,8 @@ table td h3 {
 		</td>
 	</tr>
 	<tr>
+    <!-- POST-CONTENT REFERENCE EXAMPLE ==============================================
+    ===============================================================================-->
 		<td>
 			<h3>Post-Content Reference</h3>
 			<div id="post-content-adplayer" style="width:300px; height:250px;">
@@ -372,9 +373,35 @@ table td h3 {
 			  </script>
 			</div>
 		</td>
+    <!-- END POST-CONTENT REFERENCE EXAMPLE ==========================================
+    ===============================================================================-->
 	</tr>
+  <!-- TYPICAL SERVER RESPONSE EXAMPLE =============================================
+  ===============================================================================-->
+  <tr>
+    <td>
+      <h3>Typical Server Response</h3>
+      <div id="ad-container-docwrite1" style="width:300px; height:250px;">
+        <script type="text/javascript">
+          document.write('<script type="text/javascript" src="demo/example1.js"><\/script>');
+        </script>
+        <p>Regular iframe element only supported on "newer" browsers that have PostMessage support.  
+          Iframe must be delivered using the friendly iframe ad player support for all iframe browser support.</p>
+      </div>
+    </td>
+    <td>
+      <h3>Typical Server Response (duplicate)</h3>
+      <div id="ad-container-docwrite2" style="width:300px; height:250px;">
+        <script type="text/javascript">
+          document.write('<script type="text/javascript" src="demo/example1.js"><\/script>');
+        </script>
+      </div>
+    </td>
+  </tr>
+  <!-- END TYPICAL SERVER RESPONSE EXAMPLE =========================================
+  ===============================================================================-->
 	<tr>
-		<td colspan="3" align="center">
+		<td colspan="3" align="center" style="padding: 100px 0 0 0;">
 			<textarea id="output-box"></textarea><br/><br/>
 			<button onclick="clearOutput();">Clear Output Box</button>
 		</td>

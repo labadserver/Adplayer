@@ -120,6 +120,19 @@ var Util = (function () {
     if (_this.isIE) { domObj.setAttribute('className', className); } // IE Fix        
   }
 
+  /*
+  _this.funcQueue = [];
+  function checkQueue() {
+    if(_this.funcQueue.length > 0) {
+      if(_this.funcQueue[0].ready === true) {
+        _this.funcQueue[0].load();
+        _this.funcQueue.splice(0, 1)
+      }
+    }
+  }
+  var funcInt = setInterval(checkQueue, 100);
+  */
+  
   /**
    * @name Util#ready
    * @function
@@ -152,16 +165,34 @@ var Util = (function () {
           errFn.apply(cTxt, errorParams);
           return;
         }
+        
         if (fn()) {
           clearInterval(_interval);
+          
           rdyFn.apply(cTxt, rdyPar);
+          
+          //rdyFn.ready = true;
+          
           return;
         }
       }
       var _interval = setInterval(check, 100);
     }  
+
+    /*
+    var testMe = {
+        load: function() {
+          readyFn.apply(context, readyParams)
+        }, 
+        ready: false
+    }
+    _this.funcQueue.push(testMe);
+    waitTimer(testFn, context, testMe, readyParams, errorFn, errorParams);
+    */
     waitTimer(testFn, context, readyFn, readyParams, errorFn, errorParams);
   }
+  
+  
   
   
   /** @private List containing IDs of scripts being currently loaded. **/
