@@ -68,7 +68,7 @@
 /**
  * Privacy Panel
  *
- * These properties affect the style of the panel which is
+ * These properties affect the positioning and style of the panel which is
  * displayed as overlay after the user clicks the OBA Icon.
  */
 .adplayer-privacyPanel {
@@ -79,6 +79,8 @@
   padding: 5px 5px 0 5px;
   text-align: left;
   min-height: 25px;
+  position: absolute;
+  z-index: 999999999;
   
   /*
    * Remove this to not have a fixed width or change this
@@ -94,6 +96,15 @@
   -moz-box-shadow: 2px 2px 2px #333;
   -webkit-box-shadow: 2px 2px 2px #333;
 }
+
+.adplayer-privacyPanel.adplayer-top-left,
+.adplayer-privacyPanel.adplayer-top-left-out { top: 0; left: 0; }
+.adplayer-privacyPanel.adplayer-top-right,
+.adplayer-privacyPanel.adplayer-top-right-out { top: 0; right: 0; }
+.adplayer-privacyPanel.adplayer-bottom-left,
+.adplayer-privacyPanel.adplayer-bottom-left-out { bottom: 0; left: 0; }
+.adplayer-privacyPanel.adplayer-bottom-right,
+.adplayer-privacyPanel.adplayer-bottom-right-out { bottom: 0; right: 0; }
 
 .adplayer-privacyPanel div.adplayer-header {
   text-align: left;

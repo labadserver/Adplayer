@@ -223,32 +223,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
    *                 </ul>
    */
   _this.setPosition = function (pos) {
-    _this.panel.setAttribute('style', '');
-    _this.panel.style.position = "absolute";
-    _this.panel.style.zIndex = "999999999";
-    switch (pos) {
-      case "bottom-left-out":
-      case "bottom-left":
-        _this.panel.style.bottom = "0px";
-        _this.panel.style.left = "0px";        
-      break; 
-      case "bottom-right-out":
-      case "bottom-right":
-        _this.panel.style.bottom = "0px";
-        _this.panel.style.right = "0px";        
-      break;
-      case "top-right-out":
-      case "top-right":
-        _this.panel.style.top = "0px";
-        _this.panel.style.right = "0px";        
-        break;
-      default: // top-left
-        _this.panel.style.top = "0px";
-        _this.panel.style.left = "0px";
-        break;
-    }
-    
-    Util.setClassName(_this.panel, Util.cssPrefixed(_privPanelClassName) + ' ' + pos);
+    Util.setClassName(_this.panel, Util.cssPrefixed(_privPanelClassName) + ' ' + Util.cssPrefixed(pos));
   }    
     
   
