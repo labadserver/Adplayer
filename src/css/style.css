@@ -1,12 +1,26 @@
-
 /**
  * Privacy button / Ad Marker
  *
- * These properties affect the style of the OBA Icon and
- * the OBA Text displayed in one corner of an ad.
+ * These properties affect the positioning and style of the
+ * OBA Icon and the OBA Text displayed in one corner of an ad.
  */
-.adplayer-privacyButton .adplayer-icon {
+.adplayer-privacyButton {
+  position: absolute;
+  z-index: 99999999;
+}
+
+.adplayer-privacyButton.adplayer-top-left { top: 0; left: 0; }
+.adplayer-privacyButton.adplayer-top-right { top: 0; right: 0; }
+.adplayer-privacyButton.adplayer-bottom-left { bottom: 20px; left: 0; }
+.adplayer-privacyButton.adplayer-bottom-right { bottom: 20px; right: 0; }
   
+.adplayer-privacyButton.adplayer-top-left-out { top: -20px; left: 0; }
+.adplayer-privacyButton.adplayer-top-right-out { top: -20px; right: 0; }
+.adplayer-privacyButton.adplayer-bottom-left-out { bottom: 0; left: 0; }
+.adplayer-privacyButton.adplayer-bottom-right-out { bottom: 0; right: 0; }
+	
+/* OBA Icon */
+.adplayer-privacyButton .adplayer-icon {
   /*
    * Replace the background URL with the path the
    * OBA Icon is accessible from.
@@ -14,15 +28,42 @@
    * this stylesheet file. 
    */
   background: url('oba_icon_15x20.jpg') no-repeat top left;
-  
+
   width: 15px;
   height: 20px;
+
+  position: absolute;
+  cursor: pointer;
 }
 
+.adplayer-privacyButton.adplayer-top-left .adplayer-icon { top: 0; left: 0; }
+.adplayer-privacyButton.adplayer-top-right .adplayer-icon { top: 0; right: 0; }
+.adplayer-privacyButton.adplayer-bottom-left .adplayer-icon { top: 0; left: 0; }
+.adplayer-privacyButton.adplayer-bottom-right .adplayer-icon { top: 0; right: 0; }
+
+.adplayer-privacyButton.adplayer-top-left-out .adplayer-icon { top: 0; left: 0; }
+.adplayer-privacyButton.adplayer-top-right-out .adplayer-icon { top: 0; right: 0; }
+.adplayer-privacyButton.adplayer-bottom-left-out .adplayer-icon { top: 0; left: 0; }
+.adplayer-privacyButton.adplayer-bottom-right-out .adplayer-icon { top: 0; right: 0; }
+
+/* OBA Text */
 .adplayer-privacyButton .adplayer-text {
   font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
+  position: absolute;
+  font-size: 12px;
+  font-weight: bold;
+  width: 100px;
 }
 
+.adplayer-privacyButton.adplayer-top-left .adplayer-text { top: 3px; left: 16px; text-align: left; }
+.adplayer-privacyButton.adplayer-top-right .adplayer-text { top: 3px; right: 20px; text-align: right; }
+.adplayer-privacyButton.adplayer-bottom-left .adplayer-text { top: 3px; left: 16px; text-align: left; }
+.adplayer-privacyButton.adplayer-bottom-right .adplayer-text { top: 3px; right: 20px; text-align: right; }
+
+.adplayer-privacyButton.adplayer-top-left-out .adplayer-text { top: 3px; left: 16px; text-align: left; }
+.adplayer-privacyButton.adplayer-top-right-out .adplayer-text { top: 3px; right: 20px; text-align: right; }
+.adplayer-privacyButton.adplayer-bottom-left-out .adplayer-text { top: 3px; left: 16px; text-align: left; }
+.adplayer-privacyButton.adplayer-bottom-right-out .adplayer-text { top: 3px; right: 20px; text-align: right; }
 
 /**
  * Privacy Panel
