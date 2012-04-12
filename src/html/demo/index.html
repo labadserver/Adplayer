@@ -251,8 +251,7 @@ table td h3 {
 					iframeAdPlayer.addEventListener(AdEvent.TRACK, iframeTrackHandler);
 				//--></script>
 				<!-- End of JavaScript Tag -->
-				<!-- iframe id="myFrame" src="http://iqtestsites.adtech.de/sancho/adplayer/iframe.html" width="300" height="250" border="0" scrolling="no"></iframe-->
-				<iframe id="myFrame" src="iframe.html" width="300" height="250" border="0" scrolling="no"></iframe>
+				<iframe id="myFrame" src="demo/iframe.html" width="300" height="250" border="0" scrolling="no"></iframe>
 			</div>
 			<p>Regular iframe element only supported on "newer" browsers that have PostMessage support.  
 				Iframe must be delivered using the friendly iframe ad player support for all iframe browser support.</p>
@@ -263,7 +262,7 @@ table td h3 {
 			<!-- IFRAME EXAMPLE No Parent Player =============================================
 			===============================================================================-->		
 			<h3>Iframe - Self-Contained</h3>
-			<iframe id="noParentFrame" src="iframe.html" width="300" height="250" border="0" scrolling="no"></iframe>
+			<iframe id="noParentFrame" src="demo/iframe.html" width="300" height="250" border="0" scrolling="no"></iframe>
 			<!-- END IFRAME EXAMPLE No Parent Player =========================================
 			===============================================================================-->
 		</td>
@@ -294,6 +293,8 @@ table td h3 {
 		</td>
 	</tr>
 	<tr>
+    <!-- POST-CONTENT REFERENCE EXAMPLE ==============================================
+    ===============================================================================-->
 		<td>
 			<h3>Post-Content Reference</h3>
 			<div id="post-content-adplayer" style="width:300px; height:250px;">
@@ -350,9 +351,35 @@ table td h3 {
 			  </script>
 			</div>
 		</td>
+    <!-- END POST-CONTENT REFERENCE EXAMPLE ==========================================
+    ===============================================================================-->
 	</tr>
+  <!-- TYPICAL SERVER RESPONSE EXAMPLE =============================================
+  ===============================================================================-->
+  <tr>
+    <td>
+      <h3>Typical Server Response</h3>
+      <div id="ad-container-docwrite1" style="width:300px; height:250px;">
+        <script type="text/javascript">
+          document.write('<script type="text/javascript" src="demo/example1.js"><\/script>');
+        </script>
+        <p>Regular iframe element only supported on "newer" browsers that have PostMessage support.  
+          Iframe must be delivered using the friendly iframe ad player support for all iframe browser support.</p>
+      </div>
+    </td>
+    <td>
+      <h3>Typical Server Response (duplicate)</h3>
+      <div id="ad-container-docwrite2" style="width:300px; height:250px;">
+        <script type="text/javascript">
+          document.write('<script type="text/javascript" src="demo/example1.js"><\/script>');
+        </script>
+      </div>
+    </td>
+  </tr>
+  <!-- END TYPICAL SERVER RESPONSE EXAMPLE =========================================
+  ===============================================================================-->
 	<tr>
-		<td colspan="3" align="center">
+		<td colspan="3" align="center" style="padding: 100px 0 0 0;">
 			<textarea id="output-box"></textarea><br/><br/>
 			<button onclick="clearOutput();">Clear Output Box</button>
 		</td>

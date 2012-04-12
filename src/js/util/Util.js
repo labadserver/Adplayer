@@ -163,7 +163,6 @@ var Util = (function () {
     waitTimer(testFn, context, readyFn, readyParams, errorFn, errorParams);
   }
   
-  
   /** @private List containing IDs of scripts being currently loaded. **/
   var _loadList = [];
 
@@ -286,18 +285,19 @@ var Util = (function () {
    * );
    */  
   _this.jsonParse = function(txt, reviver, rdyFn) {
-    function safeCall (obj,reviver,rdyFn) {
+    function safeCall(txt, reviver, rdyFn) {
       try {
-        var obj = JSON.parse(txt, reviver); 
-        rdyFn(obj);  
-      } catch (e) {_this.log('Ignoring invalid message: '+txt)}
+        rdyFn(JSON.parse(txt, reviver));  
+      } catch (e) {
+        _this.log('Ignoring invalid message: '+txt)
+      }
     }
     if(typeof JSON !== 'undefined') {
-      safeCall(txt, reviver,rdyFn);  
+      safeCall(txt, reviver, rdyFn);
     } else {
       _this.loadScript('JSON', function(){return JSON;}, _this.jsonUrl, 
         function() {
-          safeCall(txt, reviver,rdyFn);
+          safeCall(txt, reviver, rdyFn);
         }
       );
     }

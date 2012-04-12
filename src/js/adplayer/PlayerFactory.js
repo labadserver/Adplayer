@@ -149,6 +149,8 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
     * @param {function} fnInit Callback executed when a default <code>AdPlayer</code> is created.
     */
    function parentDomSearch(uid, domRef, fnInit) {
+     // TODO (chris.sancho): separate into methods...
+     
      // Attempt to find the top most player.
      var par = document.getElementById(domRef).parentNode;
      while (!AdPlayerManager.getAdPlayerById(par.id)) {
@@ -159,14 +161,13 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
      if(par) {
        var adPlayer = AdPlayerManager.getAdPlayerById(par.id); 
        if(adPlayer) {
-         // adPlayer.adDomElement().removeChild(document.getElementById(domRef));
          if(fnInit) {
-           Util.log('Found player at '+adPlayer.adDomElement().id);
+           Util.log('Found player at ' + adPlayer.adDomElement().id);
            fnInit(adPlayer);  
          }
          removeFromAdMgrList(domRef);
        } else {
-         Util.log('No AdPlayer found after parent search. Creating new player for ' + uid);
+         Util.log('No AdPlayer found after parent search for ' + uid);
           if (_isInIFrame) {
             
             // Check if Stub file is used
@@ -174,7 +175,8 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
               function setStub(uid, domRef) {
                 for (var i=0; i < parent.document.getElementsByTagName('iframe').length; i++){
                   if(parent.document.getElementsByTagName('iframe')[i].contentWindow == window) {
-                    var player =  parent.PostMessageHandler.getPlayerByDomSearch(parent.document.getElementsByTagName('iframe')[i]);
+                    var player =  parent.PostMessageHandler.getPlayerByDomSearch(
+                        parent.document.getElementsByTagName('iframe')[i]);
                     if (player) {
                       fnInit(player);
                     } else {
@@ -218,7 +220,46 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
               } 
             }
          } else {
-           fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));  
+           // Fixes IE issue where ads delivered using document.write
+           // are written outside of container
+           if (Util.isIE) {
+             Util.log('isIE is set to true.  Searching for previous sibling player...');
+             function getPrevSibling(n) {
+               x = n.previousSibling;
+               if (x == null) {
+                 return false;
+               } else { 
+                 while (x && x.nodeType != 1) {
+                   x = x.previousSibling;
+                   if (AdPlayerManager.getAdPlayerById(x.id)) { break; }
+                 }
+                 return x;
+               }
+             }
+             var ieAdPlayer = AdPlayerManager.getAdPlayerById(getPrevSibling(
+                 document.getElementById(domRef)).id);
+             if (ieAdPlayer) {
+               Util.log('Found player at ' + ieAdPlayer.adDomElement().id);
+               fnInit(ieAdPlayer);
+               return;
+             } else {
+               Util.log('Searching parent div...');
+               var parChildren = document.getElementById(domRef).parentNode.childNodes;
+               for (var i = 0; i < parChildren.length; i++) {
+                 if (parChildren[i].id != '') {
+                   ieAdPlayer = AdPlayerManager.getAdPlayerById(parChildren[i].id);
+                   if (ieAdPlayer) {
+                     fnInit(ieAdPlayer);
+                     return;
+                   }
+                 }
+               }
+               Util.log('Creating new player for ' + uid);
+               fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));
+             }
+           }
+           Util.log('Creating new player for ' + uid);
+           fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));
          }         
          removeFromAdMgrList(domRef);
        }
@@ -246,8 +287,8 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    function setDocWriteRef() {
      var uAdId = new Date().getTime();
      Util.log('WARNING: No valid referral element specified for "'+uid+'". Referral will be created using "document.write"', 'parentDomSearch');
-     domId = 'ref'+ uAdId;
-     document.write('<span id="'+domId+'"></span>');
+     domId = 'ref' + uAdId;
+     document.write('<span id="' + domId + '"></span>');
      return domId;
    }
    
