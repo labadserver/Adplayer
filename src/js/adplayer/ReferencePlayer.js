@@ -1,17 +1,17 @@
 /**
  * @private 
- * @name ReferencePlayer
+ * @name $ADP.ReferencePlayer
  * @class <code>AdPlayer</code> implementation responsible for players being referenced through 
  *        another <code>AdPlayer</code> instance.
  * 
  * @author christopher.sancho@adtech.com
  */
-var ReferencePlayer = (function (uid, adDomElement, refAdPlayer) {
-  /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
-  /** @private */ var _defaultPlayer = new DefaultPlayer(uid, adDomElement);
+$ADP.ReferencePlayer = (function (uid, adDomElement, refAdPlayer) {
+  /** @private */ var _this = new $ADP.AbstractPlayer(uid, adDomElement);
+  /** @private */ var _defaultPlayer = new $ADP.DefaultPlayer(uid, adDomElement);
   
   /**
-   * @name ReferencePlayer#updateRef
+   * @name $ADP.ReferencePlayer#updateRef
    * @function
    * @description Updates the default player in order to keep information
    *              synced between related <code>AdPlayers</code>.

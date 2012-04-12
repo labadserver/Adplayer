@@ -5,15 +5,15 @@
 * @param {string} url Optional - URL of the pixel to request.
 * @property {string} url URL of the pixel to request.
 * @example
-* var pixelRequest = new PixelRequest('http://my.pixel-url.com');
+* var pixelRequest = new $ADP.PixelRequest('http://my.pixel-url.com');
 * pixelRequest.load();
 * 
 * // Alternate
-* var pixelRequest2 = new PixelRequest();
+* var pixelRequest2 = new $ADP.PixelRequest();
 * pixelRequest2.url = 'http://my.pixel-url.com';
 * pixelRequest2.load();
 */
-var PixelRequest = (function (url) {
+$ADP.PixelRequest = (function (url) {
   /** @private */ var _this = {};
   
   /** @property {string} The URL of the pixel to request. */
@@ -21,7 +21,7 @@ var PixelRequest = (function (url) {
   if (url) { _this.url = url; }
 
   /**
-   * @name PixelRequest#load
+   * @name $ADP.PixelRequest#load
    * @function
    * @description Requests a pixel using the <code>url</code> property.
    */
@@ -29,9 +29,9 @@ var PixelRequest = (function (url) {
     if(_this.url) {
       var urlImgReq = new Image();
       urlImgReq.src = _this.url;
-      Util.log(_this.url, 'PixelRequest');
+      $ADP.Util.log(_this.url, '$ADP.PixelRequest');
     } else {
-      Util.log('PixelRequest', 'Parameter "url" is not defined.');
+      $ADP.Util.log('$ADP.PixelRequest', 'Parameter "url" is not defined.');
     }
   };
   

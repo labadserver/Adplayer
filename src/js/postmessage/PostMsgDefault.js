@@ -1,12 +1,12 @@
 /**
  * @private
- * @name PostMsgDefault
+ * @name $ADP.PostMsgDefault
  * @class 
  * @description Handles communication for postMessage supported browsers.
  * @author christopher.sancho@adtech.com
  */
-var PostMsgDefault = (function(){
-  /** @private */ var _this = new AbstractPostMsg();
+$ADP.PostMsgDefault = (function(){
+  /** @private */ var _this = new $ADP.AbstractPostMsg();
   
   /**
    * @private
@@ -33,17 +33,17 @@ var PostMsgDefault = (function(){
   };
 
   _this.receive = function(evt) {
-    Util.jsonParse(evt.data, null, function(json){      
-      if(json.postType == PostMessage.OUTGOING) {
+    $ADP.Util.jsonParse(evt.data, null, function(json){      
+      if(json.postType == $ADP.PostMessage.OUTGOING) {
         for (var i=0; i < document.getElementsByTagName('iframe').length; i++){
           if(document.getElementsByTagName('iframe')[i].contentWindow == evt.source) {
             var iframe = document.getElementsByTagName('iframe')[i];
-            PostMessageHandler.domRefPlayerWait(iframe, json);          
+            $ADP.PostMessageHandler.domRefPlayerWait(iframe, json);          
             break;
           }      
         }
-      } else if (json.postType == PostMessage.INCOMING){
-        PostMessageHandler.inMsgHandler(json)
+      } else if (json.postType == $ADP.PostMessage.INCOMING){
+        $ADP.PostMessageHandler.inMsgHandler(json)
       }      
     });
   };

@@ -1,99 +1,99 @@
 /**
- * @name Util
+ * @name $ADP.Util
  * @class Static class for all common methods.
- * @description The Util class provides common methods used across AdPlayer.
+ * @description The $ADP.Util class provides common methods used across AdPlayer.
  * 
  * @author christopher.sancho@adtech.com, marius.naumann@bauermedia.com
  */
-var Util = (function () {
+$ADP.Util = (function () {
   /** @private */ var _this = {};
   
   /**
-   * @name Util#jsonUrl
+   * @name $ADP.Util#jsonUrl
    * @field
    * @description Location of the external JSON framework script needed for browsers 
-   *              that do not natively support JSON. By default, <code>Util.jsonUrl</code>
+   *              that do not natively support JSON. By default, <code>$ADP.Util.jsonUrl</code>
    *              is set to look for the script in a relative path: </code>js/json2.min.js</code>
    * @example
    * // Get reference to property
-   * Util.log(Util.jsonUrl);
+   * $ADP.Util.log($ADP.Util.jsonUrl);
    * 
    * // Set property's value
-   * Util.jsonUrl = "http://new.uri.of.json.script";  
+   * $ADP.Util.jsonUrl = "http://new.uri.of.json.script";  
    */
   _this.jsonUrl = 'js/json2.min.js';
   
   /**
-   * @name Util#cssPrefix
+   * @name $ADP.Util#cssPrefix
    * @field
    * @description Prefix for stylesheet ids and class names to allow unique descriptors.  
-   *              By default, <code>Util.cssPrefix</code> is set to <code>adplayer</code>.
+   *              By default, <code>$ADP.Util.cssPrefix</code> is set to <code>adplayer</code>.
    * @example
    * // Get reference to property
-   * Util.log(Util.cssPrefix);
+   * $ADP.Util.log($ADP.Util.cssPrefix);
    * 
    * // Set property's value
-   * Util.cssPrefix = "anotherPrefix";  
+   * $ADP.Util.cssPrefix = "anotherPrefix";  
    */
   _this.cssPrefix = 'adplayer';
   
   /**
-   * @name Util#cssPrefixed
+   * @name $ADP.Util#cssPrefixed
    * @function
    * @description Generates and returns a prefixed version of the given class name. This method uses the
-   *              <code>Util.cssPrefix</code> property and a dash (-) as delimiter.
+   *              <code>$ADP.Util.cssPrefix</code> property and a dash (-) as delimiter.
    * @param {string} className The original class name without prefix.
    * 
    * @example
    * // Result: 'adplayer-myClassName'
-   *  Util.cssPrefixed('myClassName');
+   *  $ADP.Util.cssPrefixed('myClassName');
    */
   _this.cssPrefixed = function(className) {
     return _this.cssPrefix + '-' + className;
   };
   
   /**
-   * @name Util#isIE
+   * @name $ADP.Util#isIE
    * @field
    * @description Returns <code>true</code> if browser is Internet Explorer. 
    * @example
-   * if (Util.isIE) {
-   *  Util.log('The current browser is Internet Explorer.');
+   * if ($ADP.Util.isIE) {
+   *  $ADP.Util.log('The current browser is Internet Explorer.');
    * }
    */
   _this.isIE  = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;
 
   /**
-   * @name Util#isOpera
+   * @name $ADP.Util#isOpera
    * @field
    * @description Returns <code>true</code> if browser is Opera. 
    * @example
-   * if (Util.isOpera) {
-   *  Util.log('The current browser is Opera.');
+   * if ($ADP.Util.isOpera) {
+   *  $ADP.Util.log('The current browser is Opera.');
    * }
    */
   _this.isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;      
 
   /**
-   * @name Util#isFF
+   * @name $ADP.Util#isFF
    * @field
    * @description Returns <code>true</code> if browser is Firefox. 
    * @example
-   * if (Util.isFF) {
-   *  Util.log('The current browser is Firefox.');
+   * if ($ADP.Util.isFF) {
+   *  $ADP.Util.log('The current browser is Firefox.');
    * }
    */  
   _this.isFF = (navigator.userAgent.indexOf("Firefox") != -1) ? true : false;    
   
   /**
-   * @name Util#log
+   * @name $ADP.Util#log
    * @function
    * @description Logs a message through the console; if available.
    * @param {string} msg The message to log.
    * @param {string} ref Optional - An identifer used to reference the source of a message.
    * @example
    * // "AdPlayer(Parent): This is a log output."
-   *  Util.log('This is a log output', 'Parent');  
+   *  $ADP.Util.log('This is a log output', 'Parent');  
    */
   _this.log = function(msg, ref) {
     if(typeof(console) !== 'undefined' && console != null) {
@@ -106,14 +106,14 @@ var Util = (function () {
   };
 
   /**
-   * @name Util#setClassName
+   * @name $ADP.Util#setClassName
    * @function
    * @description Sets a cross-browser compatible class attribute to a DOM object. 
    * @param {dom} domObj DOM object that class attribute will be set. 
    * @param {string} className Value of the class attribute.
    * @example
    * var a = document.getElementById('dom-container');
-   * Util.setClassName(a, 'ad-container');  
+   * $ADP.Util.setClassName(a, 'ad-container');  
    */ 
   _this.setClassName = function (domObj, className) {
     domObj.setAttribute('class', className);
@@ -121,7 +121,7 @@ var Util = (function () {
   }
 
   /**
-   * @name Util#ready
+   * @name $ADP.Util#ready
    * @function
    * @description Executes a callback function when an object, being returned in a <code>testFn</code>, is valid.
    * @param {function} testFn Function that returns object to test against. Note: Implemented to avoid use of eval();
@@ -133,14 +133,14 @@ var Util = (function () {
    * @param {Array} errorParams Array of parameters to pass at the time <code>errorFn</code> is called.
    * @example
    * function onReady(msg, num) {
-   *   Util.log(msg + ':' + num);
+   *   $ADP.Util.log(msg + ':' + num);
    * }
    * 
    * function onError(msg) {
-   *   Util.log(msg);
+   *   $ADP.Util.log(msg);
    * }
    * 
-   * Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], onError, ['Error...']);
+   * $ADP.Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], onError, ['Error...']);
    */
   _this.ready = function(testFn, context, readyFn, readyParams, errorFn, errorParams) {
     function waitTimer(fn, cTxt, rdyFn, rdyPar, errFn, errPar) {
@@ -167,7 +167,7 @@ var Util = (function () {
   var _loadList = [];
 
   /**
-   * @name Util#loadScript
+   * @name $ADP.Util#loadScript
    * @function
    * @description Loads an external script & executes a callback function when an object, located in the 
    *              external script & is returned in a <code>testFn</code>, is valid. 
@@ -176,9 +176,9 @@ var Util = (function () {
    * @param {url} scriptSrc The url of the script to load.
    * @param {string} callback The handler to be executed when script load is complete.
    * @example
-   * Util.loadScript('ExtScriptObj', function(){return ExtScriptObj;}, 'http://the.script.url/extobj.js', 
+   * $ADP.Util.loadScript('ExtScriptObj', function(){return ExtScriptObj;}, 'http://the.script.url/extobj.js', 
    *   function(){
-   *      Util.log('External script is done loading.');
+   *      $ADP.Util.log('External script is done loading.');
    *   }
    * );
    */  
@@ -267,7 +267,7 @@ var Util = (function () {
   }
 
   /**
-   * @name Util#jsonParse
+   * @name $ADP.Util#jsonParse
    * @function
    * @description  Method first checks if JSON is natively available in the browser. If not,
    *               it will attempt to load an external JSON framework script.
@@ -275,12 +275,12 @@ var Util = (function () {
    * @param {string} txt A valid JSON string to parse.
    * @param {function} reviver Function called for every key value from parsed result. 
    * @param {function} rdyFn Callback function called and passed the parsed JSON object. 
-   * @see Util#jsonUrl
+   * @see $ADP.Util#jsonUrl
    * @example
    * var str = '{"hello":"world"}';
-   * Util.jsonParse(str, null, 
+   * $ADP.Util.jsonParse(str, null, 
    *   function(json) {
-   *     Util.log(json.hello);
+   *     $ADP.Util.log(json.hello);
    *   }
    * );
    */  
@@ -302,7 +302,7 @@ var Util = (function () {
   }
 
   /**
-   * @name Util#jsonStringify
+   * @name $ADP.Util#jsonStringify
    * @function
    * @description  Method first checks if JSON is natively available in the browser. If not,
    *               it will attempt to load an external JSON framework script.
@@ -310,13 +310,13 @@ var Util = (function () {
    * @param {object} obj An object to convert to a JSON string.
    * @param {function} replacer Function called for every object values. 
    * @param {function} rdyFn Callback function called and passed the JSON string. 
-   * @see Util#jsonUrl
+   * @see $ADP.Util#jsonUrl
    * @example
    * var obj = new Object();
    * ob.hello = "world";
-   * Util.jsonStringify(obj, null, 
+   * $ADP.Util.jsonStringify(obj, null, 
    *   function(str) {
-   *     Util.log(str);
+   *     $ADP.Util.log(str);
    *   }
    * );
    */  

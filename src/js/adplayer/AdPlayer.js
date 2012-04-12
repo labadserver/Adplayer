@@ -14,7 +14,7 @@
  * &lt;/script&gt;
  */
 var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
-  /** @private */ var _this = new AbstractPlayer(uid, null);
+  /** @private */ var _this = new $ADP.AbstractPlayer(uid, null);
   /** @private */ var _queue = [];
   
   /**
@@ -22,9 +22,9 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * @field
    * @description Returns a direct reference to the parent AdPlayer within the setup hierarchy.
    * @returns {DOM Object} The direct reference to the parent AdPlayer within the setup hierarchy.
-   * @see DefaultPlayer
-   * @see IframePlayer
-   * @see ReferencePlayer
+   * @see $ADP.DefaultPlayer
+   * @see $ADP.IframePlayer
+   * @see $ADP.ReferencePlayer
    * @example
    * // Get reference to property
    * var adPlayerParent = adPlayer.player();  
@@ -56,7 +56,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * @description The associated ad's event object containing a set of events
    *              registered to an instance of <code>AdPlayer</code>. 
    * @returns {Object - Read Only} Returns an object.
-   * @see AdEvent
+   * @see $ADP.AdEvent
    * @example
    * // Get reference to property
    * var eventList = adPlayer.adEventListObj();
@@ -132,11 +132,11 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   /**
    * @name AdPlayer#privacyInfoList
    * @field
-   * @description Provides a list containing instances of <code>PrivacyInfo</code> objects added
+   * @description Provides a list containing instances of <code>$ADP.PrivacyInfo</code> objects added
    *              through <code>addPrivacyInfo</code>.
-   * @returns {Array - Read Only} Returns a list of <code>PrivacyInfo</code> objects
+   * @returns {Array - Read Only} Returns a list of <code>$ADP.PrivacyInfo</code> objects
    * @see AdPlayer#addPrivacyInfo
-   * @see PrivacyInfo
+   * @see $ADP.PrivacyInfo
    * @example
    * // Get reference to property
    * var privacyList = adPlayer.privacyInfoList();
@@ -164,31 +164,31 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   /** 
    * @name AdPlayer#addEventListener
    * @function
-   * @description Adds a callback function to an <code>AdEvent</code> flow. Callback handler function 
-   *              returns an <code>AdEvent</code> object instance, which contains the following:
+   * @description Adds a callback function to an <code>$ADP.AdEvent</code> flow. Callback handler function 
+   *              returns an <code>$ADP.AdEvent</code> object instance, which contains the following:
    *              <ul>
    *                <li><code>data</code> - Object containing any data passed at the time of dispatch.</li>
-   *                <li><code>type</code> - The AdEvent type passed at the time if dispatch.</li>
+   *                <li><code>type</code> - The $ADP.AdEvent type passed at the time if dispatch.</li>
    *                <li><code>target</code> - Reference to the parent AdPlayer within the setup hierarchy.</li>
    *                <li><code>currentTarget</code> - Reference to the current AdPlayer from where the dispatch orignated.</li>
    *              </ul>
    *              
-   * @param adEvent {AdEvent} The <code>AdEvent</code> string to listen to.
-   * @param callback {Function} The callback handler to call when an <code>AdEvent</code> is dispatched. 
+   * @param adEvent {$ADP.AdEvent} The <code>$ADP.AdEvent</code> string to listen to.
+   * @param callback {Function} The callback handler to call when an <code>$ADP.AdEvent</code> is dispatched. 
    * 
-   * @see AdEvent
+   * @see $ADP.AdEvent
    * @see AdPlayer#track
    * 
    * @example
    * function trackEventHandler(adEvent) {
-   *  Util.log(adEvent.type() + ' has been dispatched');
-   *  Util.log(adEvent.data().message);
+   *  $ADP.Util.log(adEvent.type() + ' has been dispatched');
+   *  $ADP.Util.log(adEvent.data().message);
    * }
-   * adPlayer.addEventListener(AdEvent.TRACK, trackEventHandler);
+   * adPlayer.addEventListener($ADP.AdEvent.TRACK, trackEventHandler);
    * 
    * var data = new Object();
    * data.message = "Hello World!";
-   * adPlayer.track(new AdEvent(AdEvent.TRACK, data), trackEventHandler);
+   * adPlayer.track(new $ADP.AdEvent($ADP.AdEvent.TRACK, data), trackEventHandler);
    */
   _this.addEventListener = function(adEvent, callback) {
     queueCmd('addEventListener', [adEvent, callback, this]);
@@ -197,24 +197,24 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   /** 
    * @name AdPlayer#removeEventListener
    * @function
-   * @description Removes a callback function registered to an <code>AdEvent</code> flow.
-   * @param adEvent {AdEvent} The <code>AdEvent</code> to listen to.
-   * @param callback {Function} The callback handler being called when an <code>AdEvent</code> is dispatched. 
+   * @description Removes a callback function registered to an <code>$ADP.AdEvent</code> flow.
+   * @param adEvent {$ADP.AdEvent} The <code>$ADP.AdEvent</code> to listen to.
+   * @param callback {Function} The callback handler being called when an <code>$ADP.AdEvent</code> is dispatched. 
    * 
-   * @see AdEvent
+   * @see $ADP.AdEvent
    * @see AdPlayer#track
    * 
    * @example
    * function trackEventHandler(adEvent) {
    *  // Remove callback
-   *  adEvent.player().removeEventListener(AdEvent.TRACK, trackEventHandler);
+   *  adEvent.player().removeEventListener($ADP.AdEvent.TRACK, trackEventHandler);
    *  
    *  // Alternate
-   *  // adPlayer.removeEventListener(AdEvent.TRACK, trackEventHandler); 
+   *  // adPlayer.removeEventListener($ADP.AdEvent.TRACK, trackEventHandler); 
    *  
-   *  Util.log(adEvent.type() + ' has been dispatched');
+   *  $ADP.Util.log(adEvent.type() + ' has been dispatched');
    * }
-   * adPlayer.addEventListener(AdEvent.TRACK, trackEventHandler); 
+   * adPlayer.addEventListener($ADP.AdEvent.TRACK, trackEventHandler); 
    */  
   _this.removeEventListener = function(adEvent, callback, uidName) {
     queueCmd('removeEventListener', [adEvent, callback, uidName, this]);
@@ -223,22 +223,22 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   /** 
    * @name AdPlayer#addTrackingPixel
    * @function
-   * @description A convenience function that adds a pixel URL to an <code>AdEvent</code> flow.  
+   * @description A convenience function that adds a pixel URL to an <code>$ADP.AdEvent</code> flow.  
    *              
-   * @param adEvent {AdEvent} The <code>AdEvent</code> to listen to.
-   * @param url {String - URL} URL of pixel to call when associated <code>AdEvent</code> is dispatched.
+   * @param adEvent {$ADP.AdEvent} The <code>$ADP.AdEvent</code> to listen to.
+   * @param url {String - URL} URL of pixel to call when associated <code>$ADP.AdEvent</code> is dispatched.
    * @param repeat {Boolean} Optional - Default is 'true.'  If set to 'false,' pixel will only fire once.
    * 
-   * @see AdEvent
+   * @see $ADP.AdEvent
    * @see AdPlayer#track
-   * @see PixelRequest#load
+   * @see $ADP.PixelRequest#load
    * 
    * @example
-   * // Adds a tracking pixel that will dispatch on AdEvent.TRACK event
-   * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
+   * // Adds a tracking pixel that will dispatch on $ADP.AdEvent.TRACK event
+   * adPlayer.addTrackingPixel($ADP.AdEvent.TRACK, 'http://my.pixel.url');
    * 
-   * // Adds a tracking pixel that will dispatch only once on AdEvent.TRACK event
-   * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url', null, false);
+   * // Adds a tracking pixel that will dispatch only once on $ADP.AdEvent.TRACK event
+   * adPlayer.addTrackingPixel($ADP.AdEvent.TRACK, 'http://my.pixel.url', null, false);
    */  
   _this.addTrackingPixel = function(adEvent, url, repeat) {
     queueCmd('addTrackingPixel', [adEvent, url, repeat, this]);
@@ -248,30 +248,30 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * @name AdPlayer#removeTrackingPixel
    * @function
    * @description Removes a matching <code>url</code> or <code>callback</code> associated with
-   *              an <code>AdEvent</code> and registered using <code>addTrackingPixel()</code>
+   *              an <code>$ADP.AdEvent</code> and registered using <code>addTrackingPixel()</code>
    *              method.
    *              <ul>
    *                <li>If a <code>callback</code> and a <code>url</code> are both defined,
-   *                    method will remove the <code>AdEvent</code> associated with the callback.</li>
+   *                    method will remove the <code>$ADP.AdEvent</code> associated with the callback.</li>
    *                <li>If only a <code>callback</code> is defined method will remove the
-   *                    <code>AdEvent</code> associated with the callback.</li>
-   *                <li>If only a <code>url</code> is defined, method will remove all <code>AdEvent</code>
+   *                    <code>$ADP.AdEvent</code> associated with the callback.</li>
+   *                <li>If only a <code>url</code> is defined, method will remove all <code>$ADP.AdEvent</code>
    *                    callbacks containing a matching <code>url</code> property.</li>
    *              </ul>
    *              
-   * @param adEvent {AdEvent} The <code>AdEvent</code> to listen to.
-   * @param url {String - URL} Optional - URL of pixel to call when associated <code>AdEvent</code> is dispatched.
+   * @param adEvent {$ADP.AdEvent} The <code>$ADP.AdEvent</code> to listen to.
+   * @param url {String - URL} Optional - URL of pixel to call when associated <code>$ADP.AdEvent</code> is dispatched.
    * 
-   * @see AdEvent
+   * @see $ADP.AdEvent
    * @see AdPlayer#addTrackingPixel
    * 
    * @example
-   * adPlayer.addTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
-   * adPlayer.addEventListener(AdEvent.TRACK, removePixels);
+   * adPlayer.addTrackingPixel($ADP.AdEvent.TRACK, 'http://my.pixel.url');
+   * adPlayer.addEventListener($ADP.AdEvent.TRACK, removePixels);
    * 
    * function removePixels(adEvent) {
    *  // Removes url from TRACK event flow.
-   *  adPlayer.removeTrackingPixel(AdEvent.TRACK, 'http://my.pixel.url');
+   *  adPlayer.removeTrackingPixel($ADP.AdEvent.TRACK, 'http://my.pixel.url');
    *  
    * }
    */  
@@ -282,17 +282,17 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   /** 
    * @name AdPlayer#track
    * @function
-   * @description Dispatches an <code>AdEvent</code> object to all suscribers.
+   * @description Dispatches an <code>$ADP.AdEvent</code> object to all suscribers.
    *              
-   * @param adEventObj {AdEvent} The <code>AdEvent</code> instance to track.
+   * @param adEventObj {$ADP.AdEvent} The <code>$ADP.AdEvent</code> instance to track.
    * @param url {String - URL} Optional - URL of pixel that will be called once with track method.
    * 
    * @example
    * // Dispatches a track event to all suscribers
-   * adPlayer.track(new AdEvent(AdEvent.TRACK));
+   * adPlayer.track(new $ADP.AdEvent($ADP.AdEvent.TRACK));
    * 
    * // Dispatches a track event to all suscribers and calls URL once.
-   * adPlayer.track(new AdEvent(AdEvent.TRACK), 'http://my.pixel.url');
+   * adPlayer.track(new $ADP.AdEvent($ADP.AdEvent.TRACK), 'http://my.pixel.url');
    */  
   _this.track = function(adEventObj, url) {
     queueCmd('track', [adEventObj, url, this]);
@@ -301,7 +301,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   /** 
    * @name AdPlayer#addPrivacyInfo
    * @function
-   * @description Creates a <code>PrivacyInfo</code> instance and adds it to <code>privacyInfoList</code>
+   * @description Creates a <code>$ADP.PrivacyInfo</code> instance and adds it to <code>privacyInfoList</code>
    *              
    * @param adServer {String} Ad server name. 
    * @param message {String} Privacy information message.
@@ -310,7 +310,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * @param enableAdChoice {Boolean} Optional - Specifies whether the privacy panel button should be enabled.
    *                                 Defaults to <code>true</code>.
    * 
-   * @see PrivacyInfo
+   * @see $ADP.PrivacyInfo
    * @see AdPlayer#privacyInfoList
    * @see AdPlayer#enableAdChoice
    * 
@@ -335,7 +335,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    *
    * @see AdPlayer#setPosition
    * @see AdPlayer#showPrivacyInfo
-   * @see PrivacyInfo
+   * @see $ADP.PrivacyInfo
   */  
   _this.enableAdChoice = function(openBtnTxt, closeTxt, headerTxt, footerTxt, iconPos) {
     queueCmd('enableAdChoice', [openBtnTxt, closeTxt, headerTxt, footerTxt, iconPos, this]);
@@ -349,7 +349,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * 
    * @see AdPlayer#enableAdChoice
    * @see AdPlayer#addPrivacyInfo
-   * @see PrivacyInfo
+   * @see $ADP.PrivacyInfo
   */  
   _this.disableAdChoice = function() {
     queueCmd('disableAdChoice', [this]);
@@ -359,7 +359,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * @name AdPlayer#showPrivacyInfo
    * @function
    * @description Convenience function that creates a layer that displays the privacy info added to <code>privacyInfoList</code>. <br/>
-   *              <code>AdEvent.PRIVACY_CLOSE</code> is dispatched when method is called. <br/>
+   *              <code>$ADP.AdEvent.PRIVACY_CLOSE</code> is dispatched when method is called. <br/>
    *              Layer should be styled to preference using css.
    *              <ul>
    *                <li>.privacyPanel</li>
@@ -381,7 +381,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    *              </ul>
    * 
    * @see AdPlayer#privacyInfoList
-   * @see PrivacyInfo
+   * @see $ADP.PrivacyInfo
   */  
   _this.showPrivacyInfo = function() {
     queueCmd('showPrivacyInfo', [this]);
@@ -391,10 +391,10 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * @name AdPlayer#hidePrivacyInfo
    * @function
    * @description Used in conjunction with <code>showPrivacyInfo</code> to remove privacy info layer.<br/>
-   *              <code>AdEvent.PRIVACY_CLOSE</code> is dispatched when method is called.
+   *              <code>$ADP.AdEvent.PRIVACY_CLOSE</code> is dispatched when method is called.
    * 
    * @see AdPlayer#showPrivacyInfo
-   * @see PrivacyInfo
+   * @see $ADP.PrivacyInfo
   */  
   _this.hidePrivacyInfo = function() {
     queueCmd('hidePrivacyInfo', [this]);
@@ -424,11 +424,11 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
 
   /** @private */
   function init() {
-    var factory  = new PlayerFactory(uid, domId, playerInit, refAdPlayer);
+    var factory  = new $ADP.PlayerFactory(uid, domId, playerInit, refAdPlayer);
     function playerInit(player) {
       _player = player;
 
-      AdPlayerManager.addAdPlayer(_player);
+      $ADP.AdPlayerManager.addAdPlayer(_player);
       
       if (fnInit) {
         fnInit(_this);  
@@ -436,7 +436,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
       while (_queue.length > 0) {
         (_queue.shift())();   
       }
-      _player.track(new AdEvent(AdEvent.INIT), null, _this);
+      _player.track(new $ADP.AdEvent($ADP.AdEvent.INIT), null, _this);
     }
   }  
   

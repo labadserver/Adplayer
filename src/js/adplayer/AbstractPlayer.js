@@ -1,12 +1,12 @@
 /**
  * @private
- * @name AbstractPlayer
+ * @name $ADP.AbstractPlayer
  * @class Base class for all ad player types.
  * @description Base class for all ad player types.
  * 
  * @author christopher.sancho@adtech.com
  */
-AbstractPlayer = (function(uid, adDomElement) {
+$ADP.AbstractPlayer = (function(uid, adDomElement) {
   /** @private */ var _this = {};
   
   var _uid;
