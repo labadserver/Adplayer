@@ -290,7 +290,7 @@ var Util = (function () {
       try {
         var obj = JSON.parse(txt, reviver); 
         rdyFn(obj);  
-      } catch (e) {_this.log('Ignoring invalid message: '+txt)}
+      } catch (e) {}
     }
     if(typeof JSON !== 'undefined') {
       safeCall(txt, reviver,rdyFn);  
