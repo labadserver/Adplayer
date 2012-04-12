@@ -324,11 +324,11 @@ var Util = (function () {
    */  
   _this.jsonStringify = function(obj, replacer, rdyFn) {
     if(typeof JSON !== 'undefined') {
-      rdyFn(JSON.stringify(obj, replacer));  
+       rdyFn(JSON.stringify(obj, replacer));  
     } else {
       _this.loadScript('JSON', function(){return JSON;}, _this.jsonUrl, 
         function() {
-          rdyFn(JSON.stringify(obj, replacer));
+           rdyFn(JSON.stringify(obj, replacer));  
         }
       );
     }

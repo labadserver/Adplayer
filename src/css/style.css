@@ -23,7 +23,6 @@
   font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
 }
 
-
 /**
  * Privacy Panel
  *
@@ -31,11 +30,11 @@
  * displayed as overlay after the user clicks the OBA Icon.
  */
 .adplayer-privacyPanel {
-  font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
-  font-size: 12px;
+  
   background: #ffffff;
   border: 1px solid #cccccc;
   padding: 5px 5px 0 5px;
+  margin: 0 0;
   text-align: left;
   min-height: 25px;
   
@@ -52,21 +51,43 @@
   box-shadow: 2px 2px 2px #333;
   -moz-box-shadow: 2px 2px 2px #333;
   -webkit-box-shadow: 2px 2px 2px #333;
+  
+  /* Opacity Settings */
+  opacity: 1;
+}
+
+.adplayer-privacyPanel div, .adplayer-privacyPanel h4 , .adplayer-privacyPanel p, .adplayer-privacyPanel li, .adplayer-privacyPanel a {
+  color:#000000;
+  background: #ffffff;
+  text-align: left;
+  font-family: Calibri, 'Arial Bold', sans-serif, Geneva;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: normal;
+  text-align: left;
+  text-decoration: none;
+  line-height:normal;
+  margin: 0;
+  padding:0;
+  border: none;
+  opacity: 1;
+}
+
+.adplayer-privacyPanel a, .adplayer-privacyPanel a :hover, .adplayer-privacyPanel a :visited {
+  color: #00E;
+  cursor: auto;
+  text-decoration: underline;
 }
 
 .adplayer-privacyPanel div.adplayer-header {
-  text-align: left;
-  font-size: 12px;
   padding: 5px;
   border-bottom: 1px solid #ccc;
 }
 
 .adplayer-privacyPanel div.adplayer-footer {
-  text-align: left;
   font-size: 10px;
   padding: 5px;
   border-top: 1px solid #ccc;
-  margin: 0px;
   height: auto;
 }
 
@@ -74,33 +95,28 @@
   margin: 10px 5px;
   padding-left: 15px;
   list-style: disc;
-  text-align: left;
-  font-size: 12px;
-  font-weight: normal;
 }
 
 .adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem {
   margin-bottom: 10px;
   margin: 0 0 8px 0;
-  padding: 0;
 }
 
 .adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem h4.adplayer-privacyItemHeader {
   font-weight: bold !important;
-  margin: 0;
-  padding:0;
-  border: none;
 }
 
 .adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemInfo {
-  border: none;
-  margin: 0;
-  padding: 0;
 }
 
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLinkOuter {
+}
 .adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLink {
-  margin: 0;
-  padding: 0;
+}
+
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLink :hover{
+}
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLink :visited{
 }
 
 .adplayer-privacyPanel div.adplayer-close {
