@@ -185,7 +185,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
       trackCallback(new AdEvent(AdEvent.PRIVACY_CLICK, data));
       window.open(url);          
     }
-    privacyObj.innerHTML = '<h4 class="' + Util.cssPrefixed('privacyItemHeader') + '">' + privacyInfoObj.adServer + '</h4><p class="' + Util.cssPrefixed('privacyItemInfo') + '">' + privacyInfoObj.message+'</p><p class="' + Util.cssPrefixed('privacyItemLink') + '"><a href="javascript:privacyClick(\''+privacyInfoObj.url+'\');" target="_self">'+privacyInfoObj.urlText+'</a></p>';
+    privacyObj.innerHTML = '<h4 class="' + Util.cssPrefixed('privacyItemHeader') + '">' + privacyInfoObj.adServer + '</h4><p class="' + Util.cssPrefixed('privacyItemInfo') + '">' + privacyInfoObj.message+'</p><p class="' + Util.cssPrefixed('privacyItemLinkOuter') + '"><a class="'+ Util.cssPrefixed('privacyItemLink')+'" href="javascript:privacyClick(\''+privacyInfoObj.url+'\');" target="_self">'+privacyInfoObj.urlText+'</a></p>';
     _listObj.appendChild(privacyObj);
   }
   
