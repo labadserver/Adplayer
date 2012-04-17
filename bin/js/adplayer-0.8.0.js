@@ -1,10 +1,10 @@
 /*
    -------------------------------------------------------------------------------------------
-   AdPlayer v0.8.0 (dev.041212)
+   AdPlayer v0.8.0 (dev.041712)
    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
    -------------------------------------------------------------------------------------------
   
-   This file is part of AdPlayer v0.8.0 (dev.041212).
+   This file is part of AdPlayer v0.8.0 (dev.041712).
    AdPlayer is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
@@ -360,6 +360,7 @@ $ADP.Util = (function () {
 
   return _this;
 })();
+
 
 
 /**
@@ -754,108 +755,7 @@ $ADP.PrivacyInfoButton = (function (callback, openBtnTxt) {
    *                 </ul>
    */
   _this.setPosition = function (pos) {
-    _this.button.setAttribute('style', '');
-    _openBtnIcon.setAttribute('style', '');
     _openBtnTxtObj.setAttribute('style', 'display: none;');
-    
-    _this.button.style.position = "absolute";
-    _this.button.style.zIndex = "99999999";
-    _openBtnIcon.style.position = "absolute";
-    _openBtnTxtObj.style.position = "absolute";
-    _openBtnTxtObj.style.fontSize = "12px";
-    _openBtnTxtObj.style.fontWeight = "bold";
-    _openBtnTxtObj.style.width = "100px";
-    
-    switch (pos) {
-      case "bottom-left-out":
-        _this.button.style.bottom = "0px";
-        _this.button.style.left = "0px";
-        
-        _openBtnIcon.style.left = "0px";
-        _openBtnIcon.style.top = "0px";        
-        
-        _openBtnTxtObj.style.left = "16px";
-        _openBtnTxtObj.style.top = "3px";
-        _openBtnTxtObj.style.textAlign = "left";
-      break;
-      case "bottom-left":
-        _this.button.style.bottom = "20px";
-        _this.button.style.left = "0px";
-        
-        _openBtnIcon.style.left = "0px";
-        _openBtnIcon.style.top = "0px";        
-        
-        _openBtnTxtObj.style.left = "16px";
-        _openBtnTxtObj.style.top = "3px";
-        _openBtnTxtObj.style.textAlign = "left";
-        break;
-      case "bottom-right-out":
-        _this.button.style.bottom = "0px";
-        _this.button.style.right = "0px";
-        
-        _openBtnIcon.style.right = "0px";
-        _openBtnIcon.style.top = "0px";
-        
-        _openBtnTxtObj.style.right = "20px";
-        _openBtnTxtObj.style.top = "3px";
-        _openBtnTxtObj.style.textAlign = "right";
-        break;        
-      case "bottom-right":
-        _this.button.style.bottom = "20px";
-        _this.button.style.right = "0px";
-        
-        _openBtnIcon.style.right = "0px";
-        _openBtnIcon.style.top = "0px";
-        
-        _openBtnTxtObj.style.right = "20px";
-        _openBtnTxtObj.style.top = "3px";
-        _openBtnTxtObj.style.textAlign = "right";
-        break; 
-      case "top-right-out":
-        _this.button.style.top = "-20px";
-        _this.button.style.right = "0px";
-        
-        _openBtnIcon.style.right = "0px";
-        _openBtnIcon.style.top = "0px";
-        
-        _openBtnTxtObj.style.right = "20px";
-        _openBtnTxtObj.style.top = "3px";
-        _openBtnTxtObj.style.textAlign = "right";   
-        break;
-      case "top-right":
-        _this.button.style.top = "0px";
-        _this.button.style.right = "0px";
-        
-        _openBtnIcon.style.right = "0px";
-        _openBtnIcon.style.top = "0px";
-        
-        _openBtnTxtObj.style.right = "20px";
-        _openBtnTxtObj.style.top = "3px";
-        _openBtnTxtObj.style.textAlign = "right";
-        break;
-      case "top-left-out":
-        _this.button.style.top = "-20px";
-        _this.button.style.left = "0px";
-        
-        _openBtnIcon.style.left = "0px";
-        _openBtnIcon.style.top = "0px";        
-        
-        _openBtnTxtObj.style.left = "16px";
-        _openBtnTxtObj.style.top = "3px";
-        _openBtnTxtObj.style.textAlign = "left";    
-        break;
-      default: // top-left
-        _this.button.style.top = "0px";
-        _this.button.style.left = "0px";
-        
-        _openBtnIcon.style.left = "0px";
-        _openBtnIcon.style.top = "0px";        
-        
-        _openBtnTxtObj.style.left = "16px";
-        _openBtnTxtObj.style.top = "3px";
-        _openBtnTxtObj.style.textAlign = "left";
-        break;
-    }
     
     $ADP.Util.setClassName(_this.button, $ADP.Util.cssPrefixed(_privBtnClassName) + ' ' + $ADP.Util.cssPrefixed(pos));
   }    

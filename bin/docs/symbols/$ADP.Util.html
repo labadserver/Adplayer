@@ -225,7 +225,7 @@ ul.inheritsList
 				Static class for all common methods.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_chrssnch_Sites__workspace_PM_AdPlayer_GIT_bin_js_adplayer-0.8.0.js.html">adplayer-0.8.0.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/C__dev_projects_AdPlayer_bmonaumann_bin_js_adplayer-0.8.0.js.html">adplayer-0.8.0.js</a>.
 				
 			</p>
 
@@ -313,8 +313,7 @@ ul.inheritsList
 								<div class="fixedFont">
 								<b><a href="../symbols/%24ADP.Util.html#jsonUrl">jsonUrl</a></b>
 								</div>
-								<div class="description">Location of the external JSON framework script needed for browsers 
-             that do not natively support JSON.</div>
+								<div class="description">Location of the external JSON framework script needed for browsers              that do not natively support JSON.</div>
 							</td>
 						</tr>
 					
@@ -371,8 +370,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/%24ADP.Util.html#loadScript">loadScript</a></b>(objId, objReturnFn, scriptSrc, callback)
 								</div>
-								<div class="description">Loads an external script & executes a callback function when an object, located in the 
-             external script & is returned in a <code>testFn</code>, is valid.</div>
+								<div class="description">Loads an external script & executes a callback function when an object, located in the              external script & is returned in a <code>testFn</code>, is valid.</div>
 							</td>
 						</tr>
 					
@@ -456,19 +454,14 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						Prefix for stylesheet ids and class names to allow unique descriptors.  
-             By default, <code>$ADP.Util.cssPrefix</code> is set to <code>adplayer</code>.
+						Prefix for stylesheet ids and class names to allow unique descriptors.               By default, <code>$ADP.Util.cssPrefix</code> is set to <code>adplayer</code>.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">// Get reference to property
-$ADP.Util.log($ADP.Util.cssPrefix);
-
-// Set property's value
-$ADP.Util.cssPrefix = "anotherPrefix";</pre>
+					<pre class="code">// Get reference to property$ADP.Util.log($ADP.Util.cssPrefix);// Set property's value$ADP.Util.cssPrefix = "anotherPrefix";</pre>
 					
 					
 
@@ -494,9 +487,7 @@ $ADP.Util.cssPrefix = "anotherPrefix";</pre>
 					
 					
 					
-					<pre class="code">if ($ADP.Util.isFF) {
- $ADP.Util.log('The current browser is Firefox.');
-}</pre>
+					<pre class="code">if ($ADP.Util.isFF) { $ADP.Util.log('The current browser is Firefox.');}</pre>
 					
 					
 
@@ -522,9 +513,7 @@ $ADP.Util.cssPrefix = "anotherPrefix";</pre>
 					
 					
 					
-					<pre class="code">if ($ADP.Util.isIE) {
- $ADP.Util.log('The current browser is Internet Explorer.');
-}</pre>
+					<pre class="code">if ($ADP.Util.isIE) { $ADP.Util.log('The current browser is Internet Explorer.');}</pre>
 					
 					
 
@@ -550,9 +539,7 @@ $ADP.Util.cssPrefix = "anotherPrefix";</pre>
 					
 					
 					
-					<pre class="code">if ($ADP.Util.isOpera) {
- $ADP.Util.log('The current browser is Opera.');
-}</pre>
+					<pre class="code">if ($ADP.Util.isOpera) { $ADP.Util.log('The current browser is Opera.');}</pre>
 					
 					
 
@@ -571,20 +558,14 @@ $ADP.Util.cssPrefix = "anotherPrefix";</pre>
 					
 					</div>
 					<div class="description">
-						Location of the external JSON framework script needed for browsers 
-             that do not natively support JSON. By default, <code>$ADP.Util.jsonUrl</code>
-             is set to look for the script in a relative path: </code>js/json2.min.js</code>
+						Location of the external JSON framework script needed for browsers              that do not natively support JSON. By default, <code>$ADP.Util.jsonUrl</code>             is set to look for the script in a relative path: </code>js/json2.min.js</code>
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">// Get reference to property
-$ADP.Util.log($ADP.Util.jsonUrl);
-
-// Set property's value
-$ADP.Util.jsonUrl = "http://new.uri.of.json.script";</pre>
+					<pre class="code">// Get reference to property$ADP.Util.log($ADP.Util.jsonUrl);// Set property's value$ADP.Util.jsonUrl = "http://new.uri.of.json.script";</pre>
 					
 					
 
@@ -611,16 +592,14 @@ $ADP.Util.jsonUrl = "http://new.uri.of.json.script";</pre>
 					
 					</div>
 					<div class="description">
-						Generates and returns a prefixed version of the given class name. This method uses the
-             <code>$ADP.Util.cssPrefix</code> property and a dash (-) as delimiter.
+						Generates and returns a prefixed version of the given class name. This method uses the             <code>$ADP.Util.cssPrefix</code> property and a dash (-) as delimiter.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">// Result: 'adplayer-myClassName'
- $ADP.Util.cssPrefixed('myClassName');</pre>
+					<pre class="code">// Result: 'adplayer-myClassName' $ADP.Util.cssPrefixed('myClassName');</pre>
 					
 					
 					
@@ -653,21 +632,14 @@ $ADP.Util.jsonUrl = "http://new.uri.of.json.script";</pre>
 					
 					</div>
 					<div class="description">
-						Method first checks if JSON is natively available in the browser. If not,
-              it will attempt to load an external JSON framework script.
-              Finally it will initialize a callback when a successful parse is complete.
+						Method first checks if JSON is natively available in the browser. If not,              it will attempt to load an external JSON framework script.              Finally it will initialize a callback when a successful parse is complete.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">var str = '{"hello":"world"}';
-$ADP.Util.jsonParse(str, null, 
-  function(json) {
-    $ADP.Util.log(json.hello);
-  }
-);</pre>
+					<pre class="code">var str = '{"hello":"world"}';$ADP.Util.jsonParse(str, null,   function(json) {    $ADP.Util.log(json.hello);  });</pre>
 					
 					
 					
@@ -719,22 +691,14 @@ $ADP.Util.jsonParse(str, null,
 					
 					</div>
 					<div class="description">
-						Method first checks if JSON is natively available in the browser. If not,
-              it will attempt to load an external JSON framework script.
-              Finally it will initialize a callback when a successful stringify is complete.
+						Method first checks if JSON is natively available in the browser. If not,              it will attempt to load an external JSON framework script.              Finally it will initialize a callback when a successful stringify is complete.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">var obj = new Object();
-ob.hello = "world";
-$ADP.Util.jsonStringify(obj, null, 
-  function(str) {
-    $ADP.Util.log(str);
-  }
-);</pre>
+					<pre class="code">var obj = new Object();ob.hello = "world";$ADP.Util.jsonStringify(obj, null,   function(str) {    $ADP.Util.log(str);  });</pre>
 					
 					
 					
@@ -786,19 +750,14 @@ $ADP.Util.jsonStringify(obj, null,
 					
 					</div>
 					<div class="description">
-						Loads an external script & executes a callback function when an object, located in the 
-             external script & is returned in a <code>testFn</code>, is valid.
+						Loads an external script & executes a callback function when an object, located in the              external script & is returned in a <code>testFn</code>, is valid.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">$ADP.Util.loadScript('ExtScriptObj', function(){return ExtScriptObj;}, 'http://the.script.url/extobj.js', 
-  function(){
-     $ADP.Util.log('External script is done loading.');
-  }
-);</pre>
+					<pre class="code">$ADP.Util.loadScript('ExtScriptObj', function(){return ExtScriptObj;}, 'http://the.script.url/extobj.js',   function(){     $ADP.Util.log('External script is done loading.');  });</pre>
 					
 					
 					
@@ -856,8 +815,7 @@ $ADP.Util.jsonStringify(obj, null,
 					
 					
 					
-					<pre class="code">// "AdPlayer(Parent): This is a log output."
- $ADP.Util.log('This is a log output', 'Parent');</pre>
+					<pre class="code">// "AdPlayer(Parent): This is a log output." $ADP.Util.log('This is a log output', 'Parent');</pre>
 					
 					
 					
@@ -903,15 +861,7 @@ $ADP.Util.jsonStringify(obj, null,
 					
 					
 					
-					<pre class="code">function onReady(msg, num) {
-  $ADP.Util.log(msg + ':' + num);
-}
-
-function onError(msg) {
-  $ADP.Util.log(msg);
-}
-
-$ADP.Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], onError, ['Error...']);</pre>
+					<pre class="code">function onReady(msg, num) {  $ADP.Util.log(msg + ':' + num);}function onError(msg) {  $ADP.Util.log(msg);}$ADP.Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100], onError, ['Error...']);</pre>
 					
 					
 					
@@ -947,8 +897,7 @@ $ADP.Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100
 									<span class="light fixedFont">{function}</span> <b>errorFn</b>
 									
 								</dt>
-								<dd>Function called when object being tested can not be found. 
-                          Method times out at a count of 100 at 100ms intervals.</dd>
+								<dd>Function called when object being tested can not be found.                           Method times out at a count of 100 at 100ms intervals.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{Array}</span> <b>errorParams</b>
@@ -982,8 +931,7 @@ $ADP.Util.ready(function(){return testObj;}, this, onReady, ['Hello World!', 100
 					
 					
 					
-					<pre class="code">var a = document.getElementById('dom-container');
-$ADP.Util.setClassName(a, 'ad-container');</pre>
+					<pre class="code">var a = document.getElementById('dom-container');$ADP.Util.setClassName(a, 'ad-container');</pre>
 					
 					
 					
@@ -1026,7 +974,7 @@ $ADP.Util.setClassName(a, 'ad-container');</pre>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Apr 12 2012 15:05:06 GMT-0700 (PDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Apr 17 2012 16:05:49 GMT+0200 (MESZ)
 		</div>
 	</body>
 </html>
