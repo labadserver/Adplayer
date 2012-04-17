@@ -1,10 +1,10 @@
 <!--
    -------------------------------------------------------------------------------------------
-   AdPlayer v0.6.3 (dev.041212)
+   AdPlayer v0.8.0 (dev.041712)
    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
    -------------------------------------------------------------------------------------------
   
-   This file is part of AdPlayer v0.6.3 (dev.041212).
+   This file is part of AdPlayer v0.8.0 (dev.041712).
    AdPlayer is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
@@ -33,8 +33,8 @@
       document.write('<script type="text/javascript" src="js/json2.min.js"><\/script>');
     }
   </script>
-  <script type="text/javascript" src="js/adplayer-0.6.3.min.js"></script>
-  <!-- script type="text/javascript" src="js/adplayer-0.6.3.js"></script-->
+  <script type="text/javascript" src="js/adplayer-0.8.0.min.js"></script>
+  <!-- script type="text/javascript" src="js/adplayer-0.8.0.js"></script-->
   <style> html, body {margin:0px; padding:0px;} </style>
 </head>	
 <body>
@@ -42,11 +42,11 @@
 	  <script type="text/javascript">
 		  if(window.location.hash) {
 		    try {
-		      Util.jsonParse(unescape(window.location.hash).replace('#', ''), null, function(json){
+		      $ADP.Util.jsonParse(unescape(window.location.hash).replace('#', ''), null, function(json){
 		        document.write("<scr"+'ipt type="text/javascript" src="'+json.adloc+'"></scri'+"pt>");
 		      });
 		    } catch (e) {
-		      Util.log('AdPlayer "adloc" string not valid');
+		      $ADP.Util.log('AdPlayer "adloc" string not valid');
 		    }
 		  }
 	  </script>

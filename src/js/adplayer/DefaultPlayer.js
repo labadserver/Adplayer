@@ -1,19 +1,19 @@
 /**
  * @private 
- * @name DefaultPlayer
+ * @name $ADP.DefaultPlayer
  * @class Default <code>AdPlayer</code> implementation.
  * 
  * @author christopher.sancho@adtech.com
  */
-var DefaultPlayer = (function (uid, adDomElement) {
-  /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
+$ADP.DefaultPlayer = (function (uid, adDomElement) {
+  /** @private */ var _this = new $ADP.AbstractPlayer(uid, adDomElement);
   
   /*
    * Override concrete implementation 
    */  
   
   _this.addEventListener = function(adEvent, callback) {
-    if (!AdEvent.check(adEvent)) { return; }
+    if (!$ADP.AdEvent.check(adEvent)) { return; }
     if(!_this.adEventListObj()[adEvent]) {
       _this.adEventListObj()[adEvent] = [];
     }
@@ -27,19 +27,19 @@ var DefaultPlayer = (function (uid, adDomElement) {
   };
 
   _this.removeEventListener = function(adEvent, callback, uidName) {
-    if (!AdEvent.check(adEvent)) { return; }
+    if (!$ADP.AdEvent.check(adEvent)) { return; }
     if (_this.adEventListObj()[adEvent]) {
       for (var i = 0; i < _this.adEventListObj()[adEvent].length; i++) {
         if (uidName) {
           if (uidName == _this.adEventListObj()[adEvent][i].uidName) {
             _this.adEventListObj()[adEvent].splice(i, 1);
-            // Util.log('Removing from event list:'+callback);
+            // $ADP.Util.log('Removing from event list:'+callback);
             break;            
           }
         } else {
           if (_this.adEventListObj()[adEvent][i] == callback ) {
             _this.adEventListObj()[adEvent].splice(i, 1);
-            // Util.log('Removing from event list:'+callback);
+            // $ADP.Util.log('Removing from event list:'+callback);
             break;      
           }
         }
@@ -51,12 +51,12 @@ var DefaultPlayer = (function (uid, adDomElement) {
   };
 
   _this.addTrackingPixel = function(adEvent, url, repeat) {
-    if (!AdEvent.check(adEvent)) { return; }
+    if (!$ADP.AdEvent.check(adEvent)) { return; }
     if (repeat === undefined) { repeat = true; }
     if (url) {
       /** @private */
       function defaultTrackCallBack(evt) {
-        var urlReq = new PixelRequest(url);
+        var urlReq = new $ADP.PixelRequest(url);
         urlReq.load();
         if(!repeat) {
           _this.removeEventListener(evt.type(), defaultTrackCallBack);
@@ -66,12 +66,12 @@ var DefaultPlayer = (function (uid, adDomElement) {
       defaultTrackCallBack.repeat = repeat;
       _this.addEventListener(adEvent, defaultTrackCallBack, false);
     } else {
-      Util.log("Parameter 'url' must be defined", "addTrackingEvent");
+      $ADP.Util.log("Parameter 'url' must be defined", "addTrackingEvent");
     }
   };
 
   _this.removeTrackingPixel = function(adEvent, url) {
-    if (!AdEvent.check(adEvent)) { return; }
+    if (!$ADP.AdEvent.check(adEvent)) { return; }
     if (_this.adEventListObj()[adEvent]) {
       var tmpLen = _this.adEventListObj()[adEvent].length;
       var tempLenDiff = 0;
@@ -109,8 +109,8 @@ var DefaultPlayer = (function (uid, adDomElement) {
   };
 
   _this.track = function(adEventObj, url, currentPlayer) {
-    try { if (!AdEvent.check(adEventObj.type())) { return; } } catch(e) { return; }
-//    Util.log(adEventObj.type(), 'track');
+    try { if (!$ADP.AdEvent.check(adEventObj.type())) { return; } } catch(e) { return; }
+//    $ADP.Util.log(adEventObj.type(), 'track');
     if (_this.adEventListObj()[adEventObj.type()]) {
       var tmpLen = _this.adEventListObj()[adEventObj.type()].length;
       var tempLenDiff = 0;
@@ -143,13 +143,13 @@ var DefaultPlayer = (function (uid, adDomElement) {
       } while(index < tmpLen);
     }
     if (url) {
-      var urlReq = new PixelRequest(url);
+      var urlReq = new $ADP.PixelRequest(url);
       urlReq.load();
     }
   };
 
   _this.addPrivacyInfo = function(adServer, message, url, urlText, enableAdChoice) {
-    var privacyInfo = new PrivacyInfo();
+    var privacyInfo = new $ADP.PrivacyInfo();
     privacyInfo.adServer = adServer;
     privacyInfo.message = message;
      if (!urlText || urlText == '') { urlText = 'Opt Out'; }
@@ -168,7 +168,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
 
   _this.enableAdChoice = function(openBtnTxt, closeTxt, headerTxt, footerTxt, iconPos) {
     if(!_this.privacyPanel) {
-      _this.privacyPanel = new PrivacyPanel(_this.privacyInfoList(), _this.toggle, _this.track, closeTxt, headerTxt, footerTxt);
+      _this.privacyPanel = new $ADP.PrivacyPanel(_this.privacyInfoList(), _this.toggle, _this.track, closeTxt, headerTxt, footerTxt);
     } else {
       _this.privacyPanel.infoList(_this.privacyInfoList());
       _this.privacyPanel.closeTxt(closeTxt);
@@ -178,7 +178,7 @@ var DefaultPlayer = (function (uid, adDomElement) {
     
     if(!_this.privacyInfoBtn) { 
       _this.adDomElement().style.position = "relative";
-      _this.privacyInfoBtn = new PrivacyInfoButton(_this.toggle, openBtnTxt);
+      _this.privacyInfoBtn = new $ADP.PrivacyInfoButton(_this.toggle, openBtnTxt);
       if (iconPos) {
         _this.iconPos = iconPos;
       }
@@ -220,14 +220,14 @@ var DefaultPlayer = (function (uid, adDomElement) {
   _this.showPrivacyInfo = function() {
     _this.adDomElement().appendChild(_this.privacyPanel.panel);
     _this.isPrivacyPanelEnabled(true);
-    _this.track(new AdEvent(AdEvent.PRIVACY_OPEN));
+    _this.track(new $ADP.AdEvent($ADP.AdEvent.PRIVACY_OPEN));
   };
 
   _this.hidePrivacyInfo = function() {
     if (_this.privacyPanel) {
       _this.isPrivacyPanelEnabled(false);
       _this.adDomElement().removeChild(_this.privacyPanel.panel);
-      _this.track(new AdEvent(AdEvent.PRIVACY_CLOSE));
+      _this.track(new $ADP.AdEvent($ADP.AdEvent.PRIVACY_CLOSE));
     }
   };  
   

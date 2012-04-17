@@ -20,11 +20,11 @@
 	  <script type="text/javascript">
 		  if(window.location.hash) {
 		    try {
-		      Util.jsonParse(unescape(window.location.hash).replace('#', ''), null, function(json){
+		      $ADP.Util.jsonParse(unescape(window.location.hash).replace('#', ''), null, function(json){
 		        document.write("<scr"+'ipt type="text/javascript" src="'+json.adloc+'"></scri'+"pt>");
 		      });
 		    } catch (e) {
-		      Util.log('AdPlayer "adloc" string not valid');
+		      $ADP.Util.log('AdPlayer "adloc" string not valid');
 		    }
 		  }
 	  </script>

@@ -1,16 +1,16 @@
 /**
  * @private 
- * @name IframePlayer
- * @class <code>AdPlayer</code> implementation responsible for iFrame communication using <code>PostMessage</code>.
+ * @name $ADP.IframePlayer
+ * @class <code>AdPlayer</code> implementation responsible for iFrame communication using <code>$ADP.PostMessage</code>.
  * 
  * @author christopher.sancho@adtech.com
  */
-var IframePlayer = (function (uid, adDomElement) {
-  /** @private */ var _this = new AbstractPlayer(uid, adDomElement);
-  /** @private */ var _defaultPlayer = new DefaultPlayer(uid, adDomElement);
+$ADP.IframePlayer = (function (uid, adDomElement) {
+  /** @private */ var _this = new $ADP.AbstractPlayer(uid, adDomElement);
+  /** @private */ var _defaultPlayer = new $ADP.DefaultPlayer(uid, adDomElement);
   
   /**
-   * @name IframePlayer#updateRef
+   * @name $ADP.IframePlayer#updateRef
    * @function
    * @description Updates the default player in order to keep information
    *              synced between related <code>AdPlayers</code>. 
@@ -22,13 +22,13 @@ var IframePlayer = (function (uid, adDomElement) {
   }
   
   /**
-   * @name IframePlayer#sendToParentFrame
+   * @name $ADP.IframePlayer#sendToParentFrame
    * @function
-   * @description Sends a response to the PostMessage class.
+   * @description Sends a response to the $ADP.PostMessage class.
    * @param {string} fn Function name that will passed through.  This is used to identify 
    *                    the correct function to execute on the incoming side.
    * @param {array} params The parameters to pass to the function being executed on the other end.
-   * @param {object} json JSON object to pass through PostMessage.  Object will be
+   * @param {object} json JSON object to pass through $ADP.PostMessage.  Object will be
    *                      stringified before delivery.
    */
   function sendToParentFrame(fn, params, json) {
@@ -38,15 +38,15 @@ var IframePlayer = (function (uid, adDomElement) {
     } else {
       obj = new Object();
     }
-    obj.postType = PostMessage.OUTGOING;
+    obj.postType = $ADP.PostMessage.OUTGOING;
     obj.uid = uid;
     obj.fn = fn;
     obj.params = params.toString();
-    PostMessage.send(obj, parent);
+    $ADP.PostMessage.send(obj, parent);
   }
   
   /**
-   * @name IframePlayer#getFunctionName
+   * @name $ADP.IframePlayer#getFunctionName
    * @function
    * @description Parses a function string and extracts its name.
    * @param {string} funcStr Function converted to a string to be parsed.
@@ -71,7 +71,7 @@ var IframePlayer = (function (uid, adDomElement) {
       endPos = funcStrClean.search(/\=/);
     }
     funcName = funcStrClean.substring(startPos,endPos).replace(/\s+/g, "");
-    return escape(PostMessage.FUNCTION + funcName);
+    return escape($ADP.PostMessage.FUNCTION + funcName);
   }  
   
   /*
@@ -131,12 +131,12 @@ var IframePlayer = (function (uid, adDomElement) {
   };
 
   _this.addTrackingPixel = function(adEvent, url, repeat) {
-    if (!AdEvent.check(adEvent)) { return; }
+    if (!$ADP.AdEvent.check(adEvent)) { return; }
     if (repeat === undefined) { repeat = true; }
     if (url) {
       /** @private */
       function defaultTrackCallBack(evt) {
-        var urlReq = new PixelRequest(url);
+        var urlReq = new $ADP.PixelRequest(url);
         urlReq.load();
         if(!repeat) {
           _this.removeEventListener(evt.type(), defaultTrackCallBack);
@@ -146,12 +146,12 @@ var IframePlayer = (function (uid, adDomElement) {
       defaultTrackCallBack.repeat = repeat;
       this.addEventListener(adEvent, defaultTrackCallBack, false);
     } else {
-      Util.log("Parameter 'url' must be defined", "addTrackingEvent");
+      $ADP.Util.log("Parameter 'url' must be defined", "addTrackingEvent");
     }    
   };
 
   _this.removeTrackingPixel = function(adEvent, url) {
-    if (!AdEvent.check(adEvent)) { return; }
+    if (!$ADP.AdEvent.check(adEvent)) { return; }
     if (this.adEventListObj()[adEvent]) {
       var tmpLen = this.adEventListObj()[adEvent].length;
       var tempLenDiff = 0;

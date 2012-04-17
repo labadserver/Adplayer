@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - PrivacyInfo</title>
+		<title>JsDoc Reference - $ADP.PixelRequest</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -189,21 +189,21 @@ ul.inheritsList
 <h2>Classes</h2>
 <ul class="classList">
 	
+	<li><a href="../symbols/%24ADP.AdEvent.html">$ADP.AdEvent</a></li>
+	
+	<li><a href="../symbols/%24ADP.AdPlayerManager.html">$ADP.AdPlayerManager</a></li>
+	
+	<li><a href="../symbols/%24ADP.PixelRequest.html">$ADP.PixelRequest</a></li>
+	
+	<li><a href="../symbols/%24ADP.PostMessage.html">$ADP.PostMessage</a></li>
+	
+	<li><a href="../symbols/%24ADP.PrivacyInfo.html">$ADP.PrivacyInfo</a></li>
+	
+	<li><a href="../symbols/%24ADP.Util.html">$ADP.Util</a></li>
+	
 	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
 	
-	<li><a href="../symbols/AdEvent.html">AdEvent</a></li>
-	
 	<li><a href="../symbols/AdPlayer.html">AdPlayer</a></li>
-	
-	<li><a href="../symbols/AdPlayerManager.html">AdPlayerManager</a></li>
-	
-	<li><a href="../symbols/PixelRequest.html">PixelRequest</a></li>
-	
-	<li><a href="../symbols/PostMessage.html">PostMessage</a></li>
-	
-	<li><a href="../symbols/PrivacyInfo.html">PrivacyInfo</a></li>
-	
-	<li><a href="../symbols/Util.html">Util</a></li>
 	
 </ul>
 <hr />
@@ -214,7 +214,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class PrivacyInfo
+				Class $ADP.PixelRequest
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -222,16 +222,16 @@ ul.inheritsList
 				
 				
 			
-				Contains reference to a party's ad privacy information.
+				Responsible for handling the loading and referencing of a pixel request.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/C__dev_projects_AdPlayer_bmonaumann_bin_js_adplayer-0.6.3.js.html">adplayer-0.6.3.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/C__dev_projects_AdPlayer_bmonaumann_bin_js_adplayer-0.8.0.js.html">adplayer-0.8.0.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class PrivacyInfo.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $ADP.PixelRequest.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -244,9 +244,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/PrivacyInfo.html#constructor">PrivacyInfo</a></b>()
+								<b><a href="../symbols/%24ADP.PixelRequest.html#constructor">$ADP.PixelRequest</a></b>(url)
 							</div>
-							<div class="description">Contains reference to a party's ad privacy information.</div>
+							<div class="description">Responsible for handling the loading and referencing of a pixel request.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -257,7 +257,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class PrivacyInfo.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class $ADP.PixelRequest.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -271,39 +271,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/PrivacyInfo.html#adServer">adServer</a></b>
+								<b><a href="../symbols/%24ADP.PixelRequest.html#url">url</a></b>
 								</div>
-								<div class="description">Ad server name.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/PrivacyInfo.html#message">message</a></b>
-								</div>
-								<div class="description">Privacy information message.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/PrivacyInfo.html#url">url</a></b>
-								</div>
-								<div class="description">Click-through url of privacy page.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/PrivacyInfo.html#urlText">urlText</a></b>
-								</div>
-								<div class="description">Text for click-through url of privacy page.</div>
+								<div class="description">URL of the pixel to request.</div>
 							</td>
 						</tr>
 					
@@ -316,6 +286,33 @@ ul.inheritsList
 
 <!-- ============================== methods summary ======================== -->
 			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class $ADP.PixelRequest.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/%24ADP.PixelRequest.html#load">load</a></b>()
+								</div>
+								<div class="description">Requests a pixel using the <code>url</code> property.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
 <!-- ============================== events summary ======================== -->
 			
 
@@ -327,34 +324,38 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>PrivacyInfo</b>()
+						<b>$ADP.PixelRequest</b>(url)
 				</div>
 				
 				<div class="description">
-					Contains reference to a party's ad privacy information.
+					Responsible for handling the loading and referencing of a pixel request.
 					<br /><i>Author: </i>christopher.sancho@adtech.com.
 				</div>
 				
 				
 				
-				<pre class="code">var myPrivacyInfo = new PrivacyInfo();myPrivacyInfo.adServer = "MyAdServer";myPrivacyInfo.message = "This is my privacy message.";myPrivacyInfo.url = "http://adplayer.aboutthisad.com";</pre>
+				<pre class="code">var pixelRequest = new $ADP.PixelRequest('http://my.pixel-url.com');pixelRequest.load();// Alternatevar pixelRequest2 = new $ADP.PixelRequest();pixelRequest2.url = 'http://my.pixel-url.com';pixelRequest2.load();</pre>
 				
 				
 				
 				
-					
-					
-					
-					
-					
-					
 					
 						<dl class="detailList">
-						<dt class="heading">See:</dt>
+						<dt class="heading">Parameters:</dt>
 						
-							<dd><a href="../symbols/AdPlayer.html#addPrivacyInfo">AdPlayer#addPrivacyInfo</a></dd>
+							<dt>
+								<span class="light fixedFont">{string}</span>  <b>url</b>
+								
+							</dt>
+								<dd>Optional - URL of the pixel to request.</dd>
 						
 						</dl>
+					
+					
+					
+					
+					
+					
 					
 
 			</div>
@@ -366,81 +367,15 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name="adServer"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{String}</span>
-					<b>adServer</b>
-					
-					</div>
-					<div class="description">
-						Ad server name.
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="message"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{String}</span>
-					<b>message</b>
-					
-					</div>
-					<div class="description">
-						Privacy information message.
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name="url"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{String - URL}</span>
+					<span class="light">{string}</span>
 					<b>url</b>
 					
 					</div>
 					<div class="description">
-						Click-through url of privacy page.
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="urlText"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{String}</span>
-					<b>urlText</b>
-					
-					</div>
-					<div class="description">
-						Text for click-through url of privacy page.
+						URL of the pixel to request.
 						
 						
 					</div>
@@ -458,6 +393,36 @@ ul.inheritsList
 
 <!-- ============================== method details ========================= -->		
 			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="load"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>load</b>()
+					
+					</div>
+					<div class="description">
+						Requests a pixel using the <code>url</code> property.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					
+				
+			
 			
 <!-- ============================== event details ========================= -->		
 			
@@ -469,7 +434,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Apr 12 2012 12:06:45 GMT+0200 (MESZ)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Apr 17 2012 15:53:41 GMT+0200 (MESZ)
 		</div>
 	</body>
 </html>

@@ -8,18 +8,21 @@
   position: absolute;
   z-index: 99999999;
 }
-
 .adplayer-privacyButton.adplayer-top-left { top: 0; left: 0; }
 .adplayer-privacyButton.adplayer-top-right { top: 0; right: 0; }
 .adplayer-privacyButton.adplayer-bottom-left { bottom: 20px; left: 0; }
 .adplayer-privacyButton.adplayer-bottom-right { bottom: 20px; right: 0; }
-  
 .adplayer-privacyButton.adplayer-top-left-out { top: -20px; left: 0; }
 .adplayer-privacyButton.adplayer-top-right-out { top: -20px; right: 0; }
 .adplayer-privacyButton.adplayer-bottom-left-out { bottom: 0; left: 0; }
 .adplayer-privacyButton.adplayer-bottom-right-out { bottom: 0; right: 0; }
-	
-/* OBA Icon */
+
+/**
+ * Privacy button / Ad Marker
+ *
+ * These properties affect the style of the OBA Icon and
+ * the OBA Text displayed in one corner of an ad.
+ */
 .adplayer-privacyButton .adplayer-icon {
   /*
    * Replace the background URL with the path the
@@ -28,25 +31,20 @@
    * this stylesheet file. 
    */
   background: url('oba_icon_15x20.jpg') no-repeat top left;
-
   width: 15px;
   height: 20px;
-
   position: absolute;
   cursor: pointer;
 }
-
 .adplayer-privacyButton.adplayer-top-left .adplayer-icon { top: 0; left: 0; }
 .adplayer-privacyButton.adplayer-top-right .adplayer-icon { top: 0; right: 0; }
 .adplayer-privacyButton.adplayer-bottom-left .adplayer-icon { top: 0; left: 0; }
 .adplayer-privacyButton.adplayer-bottom-right .adplayer-icon { top: 0; right: 0; }
-
 .adplayer-privacyButton.adplayer-top-left-out .adplayer-icon { top: 0; left: 0; }
 .adplayer-privacyButton.adplayer-top-right-out .adplayer-icon { top: 0; right: 0; }
 .adplayer-privacyButton.adplayer-bottom-left-out .adplayer-icon { top: 0; left: 0; }
 .adplayer-privacyButton.adplayer-bottom-right-out .adplayer-icon { top: 0; right: 0; }
 
-/* OBA Text */
 .adplayer-privacyButton .adplayer-text {
   font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
   position: absolute;
@@ -54,12 +52,10 @@
   font-weight: bold;
   width: 100px;
 }
-
 .adplayer-privacyButton.adplayer-top-left .adplayer-text { top: 3px; left: 16px; text-align: left; }
 .adplayer-privacyButton.adplayer-top-right .adplayer-text { top: 3px; right: 20px; text-align: right; }
 .adplayer-privacyButton.adplayer-bottom-left .adplayer-text { top: 3px; left: 16px; text-align: left; }
 .adplayer-privacyButton.adplayer-bottom-right .adplayer-text { top: 3px; right: 20px; text-align: right; }
-
 .adplayer-privacyButton.adplayer-top-left-out .adplayer-text { top: 3px; left: 16px; text-align: left; }
 .adplayer-privacyButton.adplayer-top-right-out .adplayer-text { top: 3px; right: 20px; text-align: right; }
 .adplayer-privacyButton.adplayer-bottom-left-out .adplayer-text { top: 3px; left: 16px; text-align: left; }
@@ -68,15 +64,15 @@
 /**
  * Privacy Panel
  *
- * These properties affect the positioning and style of the panel which is
+ * These properties affect the style of the panel which is
  * displayed as overlay after the user clicks the OBA Icon.
  */
 .adplayer-privacyPanel {
-  font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
-  font-size: 12px;
+  
   background: #ffffff;
   border: 1px solid #cccccc;
   padding: 5px 5px 0 5px;
+  margin: 0 0;
   text-align: left;
   min-height: 25px;
   position: absolute;
@@ -95,8 +91,10 @@
   box-shadow: 2px 2px 2px #333;
   -moz-box-shadow: 2px 2px 2px #333;
   -webkit-box-shadow: 2px 2px 2px #333;
+  
+  /* Opacity Settings */
+  opacity: 1;
 }
-
 .adplayer-privacyPanel.adplayer-top-left,
 .adplayer-privacyPanel.adplayer-top-left-out { top: 0; left: 0; }
 .adplayer-privacyPanel.adplayer-top-right,
@@ -106,19 +104,38 @@
 .adplayer-privacyPanel.adplayer-bottom-right,
 .adplayer-privacyPanel.adplayer-bottom-right-out { bottom: 0; right: 0; }
 
-.adplayer-privacyPanel div.adplayer-header {
+.adplayer-privacyPanel div, .adplayer-privacyPanel h4 , .adplayer-privacyPanel p, .adplayer-privacyPanel li, .adplayer-privacyPanel a {
+  color:#000000;
+  background: #ffffff;
   text-align: left;
+  font-family: Calibri, 'Arial Bold', sans-serif, Geneva;
   font-size: 12px;
+  font-style: normal;
+  font-weight: normal;
+  text-align: left;
+  text-decoration: none;
+  line-height:normal;
+  margin: 0;
+  padding:0;
+  border: none;
+  opacity: 1;
+}
+
+.adplayer-privacyPanel a, .adplayer-privacyPanel a :hover, .adplayer-privacyPanel a :visited {
+  color: #00E;
+  cursor: auto;
+  text-decoration: underline;
+}
+
+.adplayer-privacyPanel div.adplayer-header {
   padding: 5px;
   border-bottom: 1px solid #ccc;
 }
 
 .adplayer-privacyPanel div.adplayer-footer {
-  text-align: left;
   font-size: 10px;
   padding: 5px;
   border-top: 1px solid #ccc;
-  margin: 0px;
   height: auto;
 }
 
@@ -126,33 +143,28 @@
   margin: 10px 5px;
   padding-left: 15px;
   list-style: disc;
-  text-align: left;
-  font-size: 12px;
-  font-weight: normal;
 }
 
 .adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem {
   margin-bottom: 10px;
   margin: 0 0 8px 0;
-  padding: 0;
 }
 
 .adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem h4.adplayer-privacyItemHeader {
   font-weight: bold !important;
-  margin: 0;
-  padding:0;
-  border: none;
 }
 
 .adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemInfo {
-  border: none;
-  margin: 0;
-  padding: 0;
 }
 
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLinkOuter {
+}
 .adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLink {
-  margin: 0;
-  padding: 0;
+}
+
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLink :hover{
+}
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLink :visited{
 }
 
 .adplayer-privacyPanel div.adplayer-close {

@@ -1,6 +1,6 @@
 /**
  * @private
- * @name PlayerFactory
+ * @name $ADP.PlayerFactory
  * @class Returns an instance of an <code>AdPlayer</code>.
  * @description Returns an instance of an <code>AdPlayer</code>.</br>
  * @param {string} uid Unique ID used to identify an <code>AdPlayer</code>.
@@ -11,9 +11,9 @@
  * @return {adplayer} AdPlayer instance created through the factory search logic.
  * @author christopher.sancho@adtech.com
  */
-var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
+$ADP.PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    /** @private */ var _this = {};
-   if(!uid) { Util.log('Unique ID is required.', 'AdPlayer'); return; }
+   if(!uid) { $ADP.Util.log('Unique ID is required.', 'AdPlayer'); return; }
 
    /** @private */ var _isInIFrame = (window.location != window.parent.location) ? true : false;
 
@@ -30,39 +30,39 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    function init() {
      if (domRefId && !refAdPlayer) {
        if(checkAdMgrDomList(domRefId)) {
-         Util.ready(function(){return AdPlayerManager.getAdPlayerById(domRefId);}, _this, domRefAdPlayerInit, [domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
+         $ADP.Util.ready(function(){return $ADP.AdPlayerManager.getAdPlayerById(domRefId);}, _this, domRefAdPlayerInit, [domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        } else {
          addToAdMgrList(domRefId);
-         Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
+         $ADP.Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        }
      }
      else if (domRefId && refAdPlayer) {
        if(checkAdMgrDomList(domRefId)) {
-         Util.ready(function(){return refAdPlayer;}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);         
+         $ADP.Util.ready(function(){return refAdPlayer;}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);         
        } else {
          addToAdMgrList(domRefId);
-         Util.ready(function(){return document.getElementById(domRefId);}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
+         $ADP.Util.ready(function(){return document.getElementById(domRefId);}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        }
 
      }     
      else if(!domRefId && refAdPlayer) {
        domRefId = setDocWriteRef();
        addToAdMgrList(domRefId);
-       Util.ready(function(){return document.getElementById(domRefId);}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
+       $ADP.Util.ready(function(){return document.getElementById(domRefId);}, _this, refAdPlayerInit, [refAdPlayer, uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
      }
      else if(!domRefId && !refAdPlayer) {
        domRefId = setDocWriteRef();
        if(checkAdMgrDomList(domRefId)) {
-         Util.ready(function(){return AdPlayerManager.getAdPlayerById(domRefId);}, _this, domRefAdPlayerInit, [domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
+         $ADP.Util.ready(function(){return $ADP.AdPlayerManager.getAdPlayerById(domRefId);}, _this, domRefAdPlayerInit, [domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        } else {
          addToAdMgrList(domRefId);
-         Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
+         $ADP.Util.ready(function(){return document.getElementById(domRefId);}, _this, parentDomSearch, [uid, domRefId, fnInit], returnDefault, [uid, domRefId, fnInit]);
        }       
      }
    }
    
    /**
-    * @name PlayerFactory#refAdPlayerInit
+    * @name $ADP.PlayerFactory#refAdPlayerInit
     * @function
     * @description Executes a callback function with a reference <code>AdPlayer</code>.
     * @param {adplayer} refPlayer Primary <code>AdPlayer</code>. to use.
@@ -72,35 +72,35 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
     */
    function refAdPlayerInit(refPlayer, uid, domRef, fnInit) {   
      if (document.getElementById(domRef)) {
-       fnInit(new ReferencePlayer(uid, document.getElementById(domRef), refPlayer));
+       fnInit(new $ADP.ReferencePlayer(uid, document.getElementById(domRef), refPlayer));
      } else {
-       fnInit(new ReferencePlayer(uid, refPlayer.adDomElement(), refPlayer));
+       fnInit(new $ADP.ReferencePlayer(uid, refPlayer.adDomElement(), refPlayer));
      }     
    }
 
    /**
-    * @name PlayerFactory#domRefAdPlayerInit
+    * @name $ADP.PlayerFactory#domRefAdPlayerInit
     * @function
-    * @description Executes a callback function when an <code>AdPlayer</code> is found by <code>AdPlayerManager.getAdPlayerById</code>.
+    * @description Executes a callback function when an <code>AdPlayer</code> is found by <code>$ADP.AdPlayerManager.getAdPlayerById</code>.
     * @param {string} domRef domRef DOM ID used to mark the start point of a DOM search.
-    * @param {function} fnInit Callback executed when an <code>AdPlayer</code> is located by <code>AdPlayerManager.getAdPlayerById</code>.
-    * @see AdPlayerManager#getAdPlayerById 
+    * @param {function} fnInit Callback executed when an <code>AdPlayer</code> is located by <code>$ADP.AdPlayerManager.getAdPlayerById</code>.
+    * @see $ADP.AdPlayerManager#getAdPlayerById 
     */
    function domRefAdPlayerInit(domRef, fnInit) {   
-     fnInit(AdPlayerManager.getAdPlayerById(domRef));   
+     fnInit($ADP.AdPlayerManager.getAdPlayerById(domRef));   
    }   
 
    /**
-    * @name PlayerFactory#checkAdMgrDomList
+    * @name $ADP.PlayerFactory#checkAdMgrDomList
     * @function
-    * @description Checks if a DOM ID is located in <code>AdPlayerManager.domIdList</code>.
+    * @description Checks if a DOM ID is located in <code>$ADP.AdPlayerManager.domIdList</code>.
     * @param {string} domRef DOM ID used to mark the start point of a DOM search.
-    * @see AdPlayerManager#domIdList
+    * @see $ADP.AdPlayerManager#domIdList
     */
    function checkAdMgrDomList(domRef) {
      var isListed = false;
-     for (var i=0; i < AdPlayerManager.domIdList().length; i++) {
-       if(AdPlayerManager.domIdList()[i] == domRef) {
+     for (var i=0; i < $ADP.AdPlayerManager.domIdList().length; i++) {
+       if($ADP.AdPlayerManager.domIdList()[i] == domRef) {
          isListed = true;
          break;
        }
@@ -109,39 +109,39 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    }
 
    /**
-    * @name PlayerFactory#addToAdMgrList
+    * @name $ADP.PlayerFactory#addToAdMgrList
     * @function
-    * @description Adds a DOM ID to <code>AdPlayerManager.domIdList</code>.
+    * @description Adds a DOM ID to <code>$ADP.AdPlayerManager.domIdList</code>.
     * @param {string} domRef DOM ID used to mark the start point of a DOM search.
-    * @see AdPlayerManager#domIdList
+    * @see $ADP.AdPlayerManager#domIdList
     */
    function addToAdMgrList(domRef) {
-     for (var i=0; i < AdPlayerManager.domIdList().length; i++) {
-       if(AdPlayerManager.domIdList()[i] == domRef) {
+     for (var i=0; i < $ADP.AdPlayerManager.domIdList().length; i++) {
+       if($ADP.AdPlayerManager.domIdList()[i] == domRef) {
          return;
        }
      }
-     AdPlayerManager.domIdList().push(domRef);
+     $ADP.AdPlayerManager.domIdList().push(domRef);
    }   
 
    /**
-    * @name PlayerFactory#removeFromAdMgrList
+    * @name $ADP.PlayerFactory#removeFromAdMgrList
     * @function
-    * @description Removes a DOM ID from <code>AdPlayerManager.domIdList</code>.
+    * @description Removes a DOM ID from <code>$ADP.AdPlayerManager.domIdList</code>.
     * @param {string} domRef DOM ID used to mark the start point of a DOM search.
-    * @see AdPlayerManager#domIdList
+    * @see $ADP.AdPlayerManager#domIdList
     */
    function removeFromAdMgrList(domRef) {
-     for (var i=0; i < AdPlayerManager.domIdList().length; i++) {
-       if(AdPlayerManager.domIdList()[i] == domRef) {
-         AdPlayerManager.domIdList().splice(i, 1);
+     for (var i=0; i < $ADP.AdPlayerManager.domIdList().length; i++) {
+       if($ADP.AdPlayerManager.domIdList()[i] == domRef) {
+         $ADP.AdPlayerManager.domIdList().splice(i, 1);
          break;
        }
      }
    }
 
    /**
-    * @name PlayerFactory#parentDomSearch
+    * @name $ADP.PlayerFactory#parentDomSearch
     * @function
     * @description Attempts to locate a parent AdPlayer from a DOM reference point.
     * @param {string} uid Unique ID used to identify an <code>AdPlayer</code>.
@@ -149,24 +149,25 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
     * @param {function} fnInit Callback executed when a default <code>AdPlayer</code> is created.
     */
    function parentDomSearch(uid, domRef, fnInit) {
+     // TODO (chris.sancho): separate into methods...
+     
      // Attempt to find the top most player.
      var par = document.getElementById(domRef).parentNode;
-     while (!AdPlayerManager.getAdPlayerById(par.id)) {
+     while (!$ADP.AdPlayerManager.getAdPlayerById(par.id)) {
        par = par.parentNode;
        parName = par.nodeName.toLowerCase();
        if ((parName == 'body') || (parName == 'html')) { break; }
      }      
      if(par) {
-       var adPlayer = AdPlayerManager.getAdPlayerById(par.id); 
+       var adPlayer = $ADP.AdPlayerManager.getAdPlayerById(par.id); 
        if(adPlayer) {
-         // adPlayer.adDomElement().removeChild(document.getElementById(domRef));
          if(fnInit) {
-           Util.log('Found player at '+adPlayer.adDomElement().id);
+           $ADP.Util.log('Found player at ' + adPlayer.adDomElement().id);
            fnInit(adPlayer);  
          }
          removeFromAdMgrList(domRef);
        } else {
-         Util.log('No AdPlayer found after parent search. Creating new player for ' + uid);
+         $ADP.Util.log('No AdPlayer found after parent search for ' + uid);
           if (_isInIFrame) {
             
             // Check if Stub file is used
@@ -174,11 +175,12 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
               function setStub(uid, domRef) {
                 for (var i=0; i < parent.document.getElementsByTagName('iframe').length; i++){
                   if(parent.document.getElementsByTagName('iframe')[i].contentWindow == window) {
-                    var player =  parent.PostMessageHandler.getPlayerByDomSearch(parent.document.getElementsByTagName('iframe')[i]);
+                    var player =  parent.$ADP.PostMessageHandler.getPlayerByDomSearch(
+                        parent.document.getElementsByTagName('iframe')[i]);
                     if (player) {
                       fnInit(player);
                     } else {
-                      fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));
+                      fnInit(new $ADP.DefaultPlayer(uid, document.getElementById(domRef)));
                     }
                     break;
                   }
@@ -188,7 +190,7 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
               return;
             }
             
-            var iframePlayer = new IframePlayer(uid, document.getElementById(domRef));
+            var iframePlayer = new $ADP.IframePlayer(uid, document.getElementById(domRef));
             fnInit(iframePlayer);
             
             // Check parent frame & temporarily add this factory to the player list with a UID
@@ -198,18 +200,18 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
             }
             
             // Added for PostMessage target verification
-            AdPlayerManager.factoryList().push(_this);    
+            $ADP.AdPlayerManager.factoryList().push(_this);    
             
             var obj = new Object();
-            obj.postType = PostMessage.OUTGOING;
+            obj.postType = $ADP.PostMessage.OUTGOING;
             obj.uid = _this.uid();
             obj.fn = 'iframePlayerVerify';
-            PostMessage.send(obj, parent);
+            $ADP.PostMessage.send(obj, parent);
             
             _this.setIframePlayerType = function(json) {
-              for (var i = 0; i < AdPlayerManager.list().length; i++) {
-                if (AdPlayerManager.list()[i].uid() == _this.uid()) {
-                  AdPlayerManager.list().splice(i, 1);
+              for (var i = 0; i < $ADP.AdPlayerManager.list().length; i++) {
+                if ($ADP.AdPlayerManager.list()[i].uid() == _this.uid()) {
+                  $ADP.AdPlayerManager.list().splice(i, 1);
                   break;
                 }
               }              
@@ -218,7 +220,46 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
               } 
             }
          } else {
-           fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));  
+           // Fixes IE issue where ads delivered using document.write
+           // are written outside of container
+           if ($ADP.Util.isIE) {
+             $ADP.Util.log('isIE is set to true.  Searching for previous sibling player...');
+             function getPrevSibling(n) {
+               x = n.previousSibling;
+               if (x == null) {
+                 return false;
+               } else { 
+                 while (x && x.nodeType != 1) {
+                   x = x.previousSibling;
+                   if ($ADP.AdPlayerManager.getAdPlayerById(x.id)) { break; }
+                 }
+                 return x;
+               }
+             }
+             var ieAdPlayer = $ADP.AdPlayerManager.getAdPlayerById(getPrevSibling(
+                 document.getElementById(domRef)).id);
+             if (ieAdPlayer) {
+               $ADP.Util.log('Found player at ' + ieAdPlayer.adDomElement().id);
+               fnInit(ieAdPlayer);
+               return;
+             } else {
+               $ADP.Util.log('Searching parent div...');
+               var parChildren = document.getElementById(domRef).parentNode.childNodes;
+               for (var i = 0; i < parChildren.length; i++) {
+                 if (parChildren[i].id != '') {
+                   ieAdPlayer = $ADP.AdPlayerManager.getAdPlayerById(parChildren[i].id);
+                   if (ieAdPlayer) {
+                     fnInit(ieAdPlayer);
+                     return;
+                   }
+                 }
+               }
+               $ADP.Util.log('Creating new player for ' + uid);
+               fnInit(new $ADP.DefaultPlayer(uid, document.getElementById(domRef)));
+             }
+           }
+           $ADP.Util.log('Creating new player for ' + uid);
+           fnInit(new $ADP.DefaultPlayer(uid, document.getElementById(domRef)));
          }         
          removeFromAdMgrList(domRef);
        }
@@ -226,7 +267,7 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    }
 
    /**
-    * @name PlayerFactory#returnDefault
+    * @name $ADP.PlayerFactory#returnDefault
     * @function
     * @description Executes a callback function with a default <code>AdPlayer</code>.
     * @param {string} uid Unique ID used to identify an <code>AdPlayer</code>.
@@ -234,20 +275,20 @@ var PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
     * @param {function} fnInit Callback executed when a default <code>AdPlayer</code> is created.
     */
    function returnDefault(uid, domRef, fnInit) {
-     fnInit(new DefaultPlayer(uid, document.getElementById(domRef)));
+     fnInit(new $ADP.DefaultPlayer(uid, document.getElementById(domRef)));
    }
 
    /**
-    * @name PlayerFactory#setDocWriteRef
+    * @name $ADP.PlayerFactory#setDocWriteRef
     * @function
     * @description Sets a <code>span</code> element using <code>document.write</code>.
     * @return {string} domId ID of the generated <code>span</code> element.
     */
    function setDocWriteRef() {
      var uAdId = new Date().getTime();
-     Util.log('WARNING: No valid referral element specified for "'+uid+'". Referral will be created using "document.write"', 'parentDomSearch');
-     domId = 'ref'+ uAdId;
-     document.write('<span id="'+domId+'"></span>');
+     $ADP.Util.log('WARNING: No valid referral element specified for "'+uid+'". Referral will be created using "document.write"', 'parentDomSearch');
+     domId = 'ref' + uAdId;
+     document.write('<span id="' + domId + '"></span>');
      return domId;
    }
    

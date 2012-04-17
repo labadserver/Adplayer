@@ -1,20 +1,20 @@
 /**
  * @private
- * @name PrivacyInfoButton
+ * @name $ADP.PrivacyInfoButton
  * @class 
  * @description Handles display of privacy information button for current <code>AdPlayer</code> instance.
  * @param {function} callback Function to execute when button is clicked.
  * @param {string} openBtnTxt Optional - Text to use for button.
  * @author christopher.sancho@adtech.com
  */
-var PrivacyInfoButton = (function (callback, openBtnTxt) {
+$ADP.PrivacyInfoButton = (function (callback, openBtnTxt) {
   /** @private */ var _this = {};
   /** @private */ var _openBtnIcon;
   /** @private */ var _openBtnTxtObj;
   /** @private */ var _privBtnClassName = 'privacyButton';
 
   /**
-   * @name PrivacyInfoButton#button
+   * @name $ADP.PrivacyInfoButton#button
    * @field
    * @description DOM object of current privacy button.
    * @example
@@ -22,7 +22,7 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
   _this.button;
   
   /**
-   * @name PrivacyInfoButton#openBtnTxt
+   * @name $ADP.PrivacyInfoButton#openBtnTxt
    * @field 
    * @description 
    * @param {string} val
@@ -53,14 +53,14 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
     _this.openBtnTxt(openBtnTxt);
     
     _this.button = document.createElement('div');
-    Util.setClassName(_this.button, Util.cssPrefixed(_privBtnClassName));
+    $ADP.Util.setClassName(_this.button, $ADP.Util.cssPrefixed(_privBtnClassName));
     
     _openBtnIcon = document.createElement('div');
-    Util.setClassName(_openBtnIcon, Util.cssPrefixed('icon'));
+    $ADP.Util.setClassName(_openBtnIcon, $ADP.Util.cssPrefixed('icon'));
     _this.button.appendChild(_openBtnIcon);
     
     _openBtnTxtObj = document.createElement('div');
-    Util.setClassName(_openBtnTxtObj, Util.cssPrefixed('text'));
+    $ADP.Util.setClassName(_openBtnTxtObj, $ADP.Util.cssPrefixed('text'));
     _openBtnTxtObj.style.display = "none";
     _this.button.appendChild(_openBtnTxtObj);
     _openBtnTxtObj.innerHTML = _this.openBtnTxt();
@@ -76,7 +76,7 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
   }
 
   /**
-   * @name PrivacyInfoButton#setPosition
+   * @name $ADP.PrivacyInfoButton#setPosition
    * @function
    * @description Sets the position of the button relative to its parent DOM element.
    * @param {string} pos Position where to set panel.</br>  
@@ -93,8 +93,110 @@ var PrivacyInfoButton = (function (callback, openBtnTxt) {
    *                 </ul>
    */
   _this.setPosition = function (pos) {
+    _this.button.setAttribute('style', '');
+    _openBtnIcon.setAttribute('style', '');
     _openBtnTxtObj.setAttribute('style', 'display: none;');
-    Util.setClassName(_this.button, Util.cssPrefixed(_privBtnClassName) + ' ' + Util.cssPrefixed(pos));
+    
+    _this.button.style.position = "absolute";
+    _this.button.style.zIndex = "99999999";
+    _openBtnIcon.style.position = "absolute";
+    _openBtnTxtObj.style.position = "absolute";
+    _openBtnTxtObj.style.fontSize = "12px";
+    _openBtnTxtObj.style.fontWeight = "bold";
+    _openBtnTxtObj.style.width = "100px";
+    
+    switch (pos) {
+      case "bottom-left-out":
+        _this.button.style.bottom = "0px";
+        _this.button.style.left = "0px";
+        
+        _openBtnIcon.style.left = "0px";
+        _openBtnIcon.style.top = "0px";        
+        
+        _openBtnTxtObj.style.left = "16px";
+        _openBtnTxtObj.style.top = "3px";
+        _openBtnTxtObj.style.textAlign = "left";
+      break;
+      case "bottom-left":
+        _this.button.style.bottom = "20px";
+        _this.button.style.left = "0px";
+        
+        _openBtnIcon.style.left = "0px";
+        _openBtnIcon.style.top = "0px";        
+        
+        _openBtnTxtObj.style.left = "16px";
+        _openBtnTxtObj.style.top = "3px";
+        _openBtnTxtObj.style.textAlign = "left";
+        break;
+      case "bottom-right-out":
+        _this.button.style.bottom = "0px";
+        _this.button.style.right = "0px";
+        
+        _openBtnIcon.style.right = "0px";
+        _openBtnIcon.style.top = "0px";
+        
+        _openBtnTxtObj.style.right = "20px";
+        _openBtnTxtObj.style.top = "3px";
+        _openBtnTxtObj.style.textAlign = "right";
+        break;        
+      case "bottom-right":
+        _this.button.style.bottom = "20px";
+        _this.button.style.right = "0px";
+        
+        _openBtnIcon.style.right = "0px";
+        _openBtnIcon.style.top = "0px";
+        
+        _openBtnTxtObj.style.right = "20px";
+        _openBtnTxtObj.style.top = "3px";
+        _openBtnTxtObj.style.textAlign = "right";
+        break; 
+      case "top-right-out":
+        _this.button.style.top = "-20px";
+        _this.button.style.right = "0px";
+        
+        _openBtnIcon.style.right = "0px";
+        _openBtnIcon.style.top = "0px";
+        
+        _openBtnTxtObj.style.right = "20px";
+        _openBtnTxtObj.style.top = "3px";
+        _openBtnTxtObj.style.textAlign = "right";   
+        break;
+      case "top-right":
+        _this.button.style.top = "0px";
+        _this.button.style.right = "0px";
+        
+        _openBtnIcon.style.right = "0px";
+        _openBtnIcon.style.top = "0px";
+        
+        _openBtnTxtObj.style.right = "20px";
+        _openBtnTxtObj.style.top = "3px";
+        _openBtnTxtObj.style.textAlign = "right";
+        break;
+      case "top-left-out":
+        _this.button.style.top = "-20px";
+        _this.button.style.left = "0px";
+        
+        _openBtnIcon.style.left = "0px";
+        _openBtnIcon.style.top = "0px";        
+        
+        _openBtnTxtObj.style.left = "16px";
+        _openBtnTxtObj.style.top = "3px";
+        _openBtnTxtObj.style.textAlign = "left";    
+        break;
+      default: // top-left
+        _this.button.style.top = "0px";
+        _this.button.style.left = "0px";
+        
+        _openBtnIcon.style.left = "0px";
+        _openBtnIcon.style.top = "0px";        
+        
+        _openBtnTxtObj.style.left = "16px";
+        _openBtnTxtObj.style.top = "3px";
+        _openBtnTxtObj.style.textAlign = "left";
+        break;
+    }
+    
+    $ADP.Util.setClassName(_this.button, $ADP.Util.cssPrefixed(_privBtnClassName) + ' ' + $ADP.Util.cssPrefixed(pos));
   }    
   
   init();
