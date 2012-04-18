@@ -1,18 +1,10 @@
 /*
    -------------------------------------------------------------------------------------------
-<<<<<<< HEAD
    AdPlayer v0.8.1 (dev.041812)
    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
    -------------------------------------------------------------------------------------------
   
    This file is part of AdPlayer v0.8.1 (dev.041812).
-=======
-   AdPlayer v0.8.0 (dev.041712)
-   Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
-   -------------------------------------------------------------------------------------------
-  
-   This file is part of AdPlayer v0.8.0 (dev.041712).
->>>>>>> 4dccbcc04dd1e13c1e1c42bc56740b7eb6c9e5ef
    AdPlayer is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
