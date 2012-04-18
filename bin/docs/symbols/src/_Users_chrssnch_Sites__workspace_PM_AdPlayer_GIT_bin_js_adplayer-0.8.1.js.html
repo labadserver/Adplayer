@@ -7,11 +7,11 @@
 	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
 	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/*
 <span class='line'>  2</span>    -------------------------------------------------------------------------------------------
-<span class='line'>  3</span>    AdPlayer v0.8.0 (dev.041212)
+<span class='line'>  3</span>    AdPlayer v0.8.1 (dev.041812)
 <span class='line'>  4</span>    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
 <span class='line'>  5</span>    -------------------------------------------------------------------------------------------
 <span class='line'>  6</span>   
-<span class='line'>  7</span>    This file is part of AdPlayer v0.8.0 (dev.041212).
+<span class='line'>  7</span>    This file is part of AdPlayer v0.8.1 (dev.041812).
 <span class='line'>  8</span>    AdPlayer is free software: you can redistribute it and/or modify
 <span class='line'>  9</span>    it under the terms of the GNU General Public License as published by
 <span class='line'> 10</span>    the Free Software Foundation, either version 3 of the License, or
@@ -670,7 +670,7 @@
 <span class='line'>663</span>  * @private
 <span class='line'>664</span>  * @name $ADP.PrivacyInfoButton
 <span class='line'>665</span>  * @class 
-<span class='line'>666</span>  * @description Handles display of privacy information button for current &lt;code>AdPlayer&lt;/code> instance.
+<span class='line'>666</span>  * @description Handles display of privacy information button for current &lt;code>$ADP.AdPlayer&lt;/code> instance.
 <span class='line'>667</span>  * @param {function} callback Function to execute when button is clicked.
 <span class='line'>668</span>  * @param {string} openBtnTxt Optional - Text to use for button.
 <span class='line'>669</span>  * @author christopher.sancho@adtech.com
@@ -874,7 +874,7 @@
 <span class='line'>867</span>  * @private
 <span class='line'>868</span>  * @name $ADP.PrivacyPanel
 <span class='line'>869</span>  * @class 
-<span class='line'>870</span>  * @description Handles display of all privacy information passed to current &lt;code>AdPlayer&lt;/code> instance.
+<span class='line'>870</span>  * @description Handles display of all privacy information passed to current &lt;code>$ADP.AdPlayer&lt;/code> instance.
 <span class='line'>871</span>  * @param {array} infoList List containing &lt;code>$ADP.PrivacyInfo&lt;/code> objects. 
 <span class='line'>872</span>  * @param {string} closeTxt Optional - Close button text. 'X' is default value.
 <span class='line'>873</span>  * @param {string} headerTxt Optional - Header text.
@@ -1107,7 +1107,7 @@
 <span class='line'>1100</span>  * @class Contains reference to a party's ad privacy information.
 <span class='line'>1101</span>  * @description Contains reference to a party's ad privacy information.
 <span class='line'>1102</span>  * 
-<span class='line'>1103</span>  * @see AdPlayer#addPrivacyInfo
+<span class='line'>1103</span>  * @see $ADP.AdPlayer#addPrivacyInfo
 <span class='line'>1104</span>  * 
 <span class='line'>1105</span>  * @author christopher.sancho@adtech.com
 <span class='line'>1106</span>  * 
@@ -1191,10 +1191,10 @@
 <span class='line'>1184</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>1185</span> </span><span class="COMM">/**
 <span class='line'>1186</span>  * @class An $ADP.AdEvent object is dispatched into the event flow whenever an ad event occurs. 
-<span class='line'>1187</span>  * @description The &lt;code>AdPlayer.track()&lt;/code> method dispatches an $ADP.AdEvent object to suscribers.&lt;br/>
+<span class='line'>1187</span>  * @description The &lt;code>$ADP.AdPlayer.track()&lt;/code> method dispatches an $ADP.AdEvent object to suscribers.&lt;br/>
 <span class='line'>1188</span>  * 
-<span class='line'>1189</span>  * @see AdPlayer#track
-<span class='line'>1190</span>  * @see AdPlayer#addEventListener
+<span class='line'>1189</span>  * @see $ADP.AdPlayer#track
+<span class='line'>1190</span>  * @see $ADP.AdPlayer#addEventListener
 <span class='line'>1191</span>  * 
 <span class='line'>1192</span>  * @author christopher.sancho@adtech.com
 <span class='line'>1193</span>  * 
@@ -1216,7 +1216,7 @@
 <span class='line'>1209</span>  *
 <span class='line'>1210</span>  * @example
 <span class='line'>1211</span>  * var myDomObj = document.getElementById('myTagDivContainer');
-<span class='line'>1212</span>  * var adPlayer = new AdPlayer(myDomObj);
+<span class='line'>1212</span>  * var adPlayer = new $ADP.AdPlayer(myDomObj);
 <span class='line'>1213</span>  * 
 <span class='line'>1214</span>  * // Example 1:
 <span class='line'>1215</span>  * // Register countEventHandler() to $ADP.AdEvent.COUNT event.
@@ -1264,10 +1264,10 @@
 <span class='line'>1257</span>   </span><span class="COMM">/**
 <span class='line'>1258</span>    * @name $ADP.AdEvent#currentTarget 
 <span class='line'>1259</span>    * @field
-<span class='line'>1260</span>    * @description The current &lt;code>AdPlayer&lt;/code> instance associated with the &lt;code>$ADP.AdEvent&lt;/code> object. The current target
+<span class='line'>1260</span>    * @description The current &lt;code>$ADP.AdPlayer&lt;/code> instance associated with the &lt;code>$ADP.AdEvent&lt;/code> object. The current target
 <span class='line'>1261</span>    *           usually refers to the original AdPlayer dispatching the event. 
-<span class='line'>1262</span>    *           &lt;code>currentTarget&lt;/code> is set when &lt;code>AdPlayer.track()&lt;/code> dispatches the &lt;code>$ADP.AdEvent&lt;/code> object insance. 
-<span class='line'>1263</span>    * @returns {adplayer} Returns &lt;code>AdPlayer&lt;/code> instance associated with the an &lt;code>$ADP.AdEvent&lt;/code> instance.
+<span class='line'>1262</span>    *           &lt;code>currentTarget&lt;/code> is set when &lt;code>$ADP.AdPlayer.track()&lt;/code> dispatches the &lt;code>$ADP.AdEvent&lt;/code> object insance. 
+<span class='line'>1263</span>    * @returns {adplayer} Returns &lt;code>$ADP.AdPlayer&lt;/code> instance associated with the an &lt;code>$ADP.AdEvent&lt;/code> instance.
 <span class='line'>1264</span>    * @example
 <span class='line'>1265</span>    * // Get reference to property
 <span class='line'>1266</span>    * var adPlayer = adEvent.currentTarget();
@@ -1303,9 +1303,9 @@
 <span class='line'>1296</span> </span><span class="WHIT">  
 <span class='line'>1297</span>   </span><span class="COMM">/**
 <span class='line'>1298</span>    * @field
-<span class='line'>1299</span>    * @description The &lt;code>AdPlayer&lt;/code> instance associated with the &lt;code>$ADP.AdEvent&lt;/code> object.
-<span class='line'>1300</span>    *              &lt;code>target&lt;/code> is set when &lt;code>AdPlayer.track()&lt;/code> dispatches the &lt;code>$ADP.AdEvent&lt;/code> object insance.
-<span class='line'>1301</span>    * @returns {adplayer} Returns &lt;code>AdPlayer&lt;/code> instance associated with the an &lt;code>$ADP.AdEvent&lt;/code> instance.
+<span class='line'>1299</span>    * @description The &lt;code>$ADP.AdPlayer&lt;/code> instance associated with the &lt;code>$ADP.AdEvent&lt;/code> object.
+<span class='line'>1300</span>    *              &lt;code>target&lt;/code> is set when &lt;code>$ADP.AdPlayer.track()&lt;/code> dispatches the &lt;code>$ADP.AdEvent&lt;/code> object insance.
+<span class='line'>1301</span>    * @returns {adplayer} Returns &lt;code>$ADP.AdPlayer&lt;/code> instance associated with the an &lt;code>$ADP.AdEvent&lt;/code> instance.
 <span class='line'>1302</span>    * @example
 <span class='line'>1303</span>    * // Get reference to property
 <span class='line'>1304</span>    * var adPlayer = adEvent.target();
@@ -1448,7 +1448,7 @@
 <span class='line'>1441</span> </span><span class="COMM">/**
 <span class='line'>1442</span>  * @private 
 <span class='line'>1443</span>  * @name $ADP.DefaultPlayer
-<span class='line'>1444</span>  * @class Default &lt;code>AdPlayer&lt;/code> implementation.
+<span class='line'>1444</span>  * @class Default &lt;code>$ADP.AdPlayer&lt;/code> implementation.
 <span class='line'>1445</span>  * 
 <span class='line'>1446</span>  * @author christopher.sancho@adtech.com
 <span class='line'>1447</span>  */</span><span class="WHIT">
@@ -1683,8 +1683,8 @@
 <span class='line'>1676</span> </span><span class="COMM">/**
 <span class='line'>1677</span>  * @private 
 <span class='line'>1678</span>  * @name $ADP.ReferencePlayer
-<span class='line'>1679</span>  * @class &lt;code>AdPlayer&lt;/code> implementation responsible for players being referenced through 
-<span class='line'>1680</span>  *        another &lt;code>AdPlayer&lt;/code> instance.
+<span class='line'>1679</span>  * @class &lt;code>$ADP.AdPlayer&lt;/code> implementation responsible for players being referenced through 
+<span class='line'>1680</span>  *        another &lt;code>$ADP.AdPlayer&lt;/code> instance.
 <span class='line'>1681</span>  * 
 <span class='line'>1682</span>  * @author christopher.sancho@adtech.com
 <span class='line'>1683</span>  */</span><span class="WHIT">
@@ -1696,7 +1696,7 @@
 <span class='line'>1689</span>    * @name $ADP.ReferencePlayer#updateRef
 <span class='line'>1690</span>    * @function
 <span class='line'>1691</span>    * @description Updates the default player in order to keep information
-<span class='line'>1692</span>    *              synced between related &lt;code>AdPlayers&lt;/code>.
+<span class='line'>1692</span>    *              synced between related &lt;code>$ADP.AdPlayer&lt;/code>.
 <span class='line'>1693</span>    * @param {string} fnName Function name that will be executed.
 <span class='line'>1694</span>    * @param {array} params The parameters to pass to the executed function.
 <span class='line'>1695</span>    */</span><span class="WHIT">  
@@ -1756,7 +1756,7 @@
 <span class='line'>1749</span> </span><span class="COMM">/**
 <span class='line'>1750</span>  * @private 
 <span class='line'>1751</span>  * @name $ADP.IframePlayer
-<span class='line'>1752</span>  * @class &lt;code>AdPlayer&lt;/code> implementation responsible for iFrame communication using &lt;code>$ADP.PostMessage&lt;/code>.
+<span class='line'>1752</span>  * @class &lt;code>$ADP.AdPlayer&lt;/code> implementation responsible for iFrame communication using &lt;code>$ADP.PostMessage&lt;/code>.
 <span class='line'>1753</span>  * 
 <span class='line'>1754</span>  * @author christopher.sancho@adtech.com
 <span class='line'>1755</span>  */</span><span class="WHIT">
@@ -1768,7 +1768,7 @@
 <span class='line'>1761</span>    * @name $ADP.IframePlayer#updateRef
 <span class='line'>1762</span>    * @function
 <span class='line'>1763</span>    * @description Updates the default player in order to keep information
-<span class='line'>1764</span>    *              synced between related &lt;code>AdPlayers&lt;/code>. 
+<span class='line'>1764</span>    *              synced between related &lt;code>$ADP.AdPlayers&lt;/code>. 
 <span class='line'>1765</span>    * @param {string} fnName Function name that will be executed.
 <span class='line'>1766</span>    * @param {array} params The parameters to pass to the executed function.
 <span class='line'>1767</span>    */</span><span class="WHIT"> 
@@ -1984,13 +1984,13 @@
 <span class='line'>1977</span> </span><span class="COMM">/**
 <span class='line'>1978</span>  * @private
 <span class='line'>1979</span>  * @name $ADP.PlayerFactory
-<span class='line'>1980</span>  * @class Returns an instance of an &lt;code>AdPlayer&lt;/code>.
-<span class='line'>1981</span>  * @description Returns an instance of an &lt;code>AdPlayer&lt;/code>.&lt;/br>
-<span class='line'>1982</span>  * @param {string} uid Unique ID used to identify an &lt;code>AdPlayer&lt;/code>.
+<span class='line'>1980</span>  * @class Returns an instance of an &lt;code>$ADP.AdPlayer&lt;/code>.
+<span class='line'>1981</span>  * @description Returns an instance of an &lt;code>$ADP.AdPlayer&lt;/code>.&lt;/br>
+<span class='line'>1982</span>  * @param {string} uid Unique ID used to identify an &lt;code>$ADP.AdPlayer&lt;/code>.
 <span class='line'>1983</span>  * @param {string} domRefId DOM ID used to mark the start point of a DOM search.
-<span class='line'>1984</span>  * @param {function} fnInit Callback executed when an &lt;code>AdPlayer&lt;/code> is created.
+<span class='line'>1984</span>  * @param {function} fnInit Callback executed when an &lt;code>$ADP.AdPlayer&lt;/code> is created.
 <span class='line'>1985</span>  * @param {adplayer} refAdPlayer Optional - When defined, sets &lt;code>refAdPlayer&lt;/code> 
-<span class='line'>1986</span>  *                   as the primary &lt;code>AdPlayer&lt;/code>. 
+<span class='line'>1986</span>  *                   as the primary &lt;code>$ADP.AdPlayer&lt;/code>. 
 <span class='line'>1987</span>  * @return {adplayer} AdPlayer instance created through the factory search logic.
 <span class='line'>1988</span>  * @author christopher.sancho@adtech.com
 <span class='line'>1989</span>  */</span><span class="WHIT">
@@ -2004,7 +2004,7 @@
 <span class='line'>1997</span>     * @private
 <span class='line'>1998</span>     * @function
 <span class='line'>1999</span>     * @description
-<span class='line'>2000</span>     * Attempts to search for an &lt;code>AdPlayer&lt;/code> using the following conditional order:
+<span class='line'>2000</span>     * Attempts to search for an &lt;code>$ADP.AdPlayer&lt;/code> using the following conditional order:
 <span class='line'>2001</span>     * 1) uid, domId, null, refAdPlayer
 <span class='line'>2002</span>     * 2) uid, domId, null, null
 <span class='line'>2003</span>     * 3) uid, null, null, refAdPlayer
@@ -2047,11 +2047,11 @@
 <span class='line'>2040</span>    </span><span class="COMM">/**
 <span class='line'>2041</span>     * @name $ADP.PlayerFactory#refAdPlayerInit
 <span class='line'>2042</span>     * @function
-<span class='line'>2043</span>     * @description Executes a callback function with a reference &lt;code>AdPlayer&lt;/code>.
-<span class='line'>2044</span>     * @param {adplayer} refPlayer Primary &lt;code>AdPlayer&lt;/code>. to use.
-<span class='line'>2045</span>     * @param {string} uid Unique ID used to identify an &lt;code>AdPlayer&lt;/code>.
+<span class='line'>2043</span>     * @description Executes a callback function with a reference &lt;code>$ADP.AdPlayer&lt;/code>.
+<span class='line'>2044</span>     * @param {adplayer} refPlayer Primary &lt;code>$ADP.AdPlayer&lt;/code>. to use.
+<span class='line'>2045</span>     * @param {string} uid Unique ID used to identify an &lt;code>$ADP.AdPlayer&lt;/code>.
 <span class='line'>2046</span>     * @param {string} domRef domRef DOM ID used to mark the start point of a DOM search.
-<span class='line'>2047</span>     * @param {function} fnInit Callback executed when a reference &lt;code>AdPlayer&lt;/code> is created.
+<span class='line'>2047</span>     * @param {function} fnInit Callback executed when a reference &lt;code>$ADP.AdPlayer&lt;/code> is created.
 <span class='line'>2048</span>     */</span><span class="WHIT">
 <span class='line'>2049</span> </span><span class="WHIT">   </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">refAdPlayerInit</span><span class="PUNC">(</span><span class="NAME">refPlayer</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domRef</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">   
 <span class='line'>2050</span>      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">document.getElementById</span><span class="PUNC">(</span><span class="NAME">domRef</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -2064,9 +2064,9 @@
 <span class='line'>2057</span> </span><span class="WHIT">   </span><span class="COMM">/**
 <span class='line'>2058</span>     * @name $ADP.PlayerFactory#domRefAdPlayerInit
 <span class='line'>2059</span>     * @function
-<span class='line'>2060</span>     * @description Executes a callback function when an &lt;code>AdPlayer&lt;/code> is found by &lt;code>$ADP.AdPlayerManager.getAdPlayerById&lt;/code>.
+<span class='line'>2060</span>     * @description Executes a callback function when an &lt;code>$ADP.AdPlayer&lt;/code> is found by &lt;code>$ADP.AdPlayerManager.getAdPlayerById&lt;/code>.
 <span class='line'>2061</span>     * @param {string} domRef domRef DOM ID used to mark the start point of a DOM search.
-<span class='line'>2062</span>     * @param {function} fnInit Callback executed when an &lt;code>AdPlayer&lt;/code> is located by &lt;code>$ADP.AdPlayerManager.getAdPlayerById&lt;/code>.
+<span class='line'>2062</span>     * @param {function} fnInit Callback executed when an &lt;code>$ADP.AdPlayer&lt;/code> is located by &lt;code>$ADP.AdPlayerManager.getAdPlayerById&lt;/code>.
 <span class='line'>2063</span>     * @see $ADP.AdPlayerManager#getAdPlayerById 
 <span class='line'>2064</span>     */</span><span class="WHIT">
 <span class='line'>2065</span> </span><span class="WHIT">   </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">domRefAdPlayerInit</span><span class="PUNC">(</span><span class="NAME">domRef</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">   
@@ -2127,9 +2127,9 @@
 <span class='line'>2120</span>     * @name $ADP.PlayerFactory#parentDomSearch
 <span class='line'>2121</span>     * @function
 <span class='line'>2122</span>     * @description Attempts to locate a parent AdPlayer from a DOM reference point.
-<span class='line'>2123</span>     * @param {string} uid Unique ID used to identify an &lt;code>AdPlayer&lt;/code>.
+<span class='line'>2123</span>     * @param {string} uid Unique ID used to identify an &lt;code>$ADP.AdPlayer&lt;/code>.
 <span class='line'>2124</span>     * @param {string} domRef DOM ID used to mark the start point of a DOM search.
-<span class='line'>2125</span>     * @param {function} fnInit Callback executed when a default &lt;code>AdPlayer&lt;/code> is created.
+<span class='line'>2125</span>     * @param {function} fnInit Callback executed when a default &lt;code>$ADP.AdPlayer&lt;/code> is created.
 <span class='line'>2126</span>     */</span><span class="WHIT">
 <span class='line'>2127</span> </span><span class="WHIT">   </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">parentDomSearch</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domRef</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>2128</span> </span><span class="WHIT">     </span><span class="COMM">// TODO (chris.sancho): separate into methods...</span><span class="WHIT">
@@ -2252,10 +2252,10 @@
 <span class='line'>2245</span> </span><span class="WHIT">   </span><span class="COMM">/**
 <span class='line'>2246</span>     * @name $ADP.PlayerFactory#returnDefault
 <span class='line'>2247</span>     * @function
-<span class='line'>2248</span>     * @description Executes a callback function with a default &lt;code>AdPlayer&lt;/code>.
-<span class='line'>2249</span>     * @param {string} uid Unique ID used to identify an &lt;code>AdPlayer&lt;/code>.
+<span class='line'>2248</span>     * @description Executes a callback function with a default &lt;code>$ADP.AdPlayer&lt;/code>.
+<span class='line'>2249</span>     * @param {string} uid Unique ID used to identify an &lt;code>$ADP.AdPlayer&lt;/code>.
 <span class='line'>2250</span>     * @param {string} domRef DOM ID used to mark the start point of a DOM search.
-<span class='line'>2251</span>     * @param {function} fnInit Callback executed when a default &lt;code>AdPlayer&lt;/code> is created.
+<span class='line'>2251</span>     * @param {function} fnInit Callback executed when a default &lt;code>$ADP.AdPlayer&lt;/code> is created.
 <span class='line'>2252</span>     */</span><span class="WHIT">
 <span class='line'>2253</span> </span><span class="WHIT">   </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">returnDefault</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domRef</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>2254</span> </span><span class="WHIT">     </span><span class="NAME">fnInit</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">$ADP.DefaultPlayer</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">document.getElementById</span><span class="PUNC">(</span><span class="NAME">domRef</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
@@ -2279,9 +2279,9 @@
 <span class='line'>2272</span> </span><span class="WHIT">   </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2273</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2274</span> </span><span class="COMM">/**
-<span class='line'>2275</span>  * @name AdPlayer
+<span class='line'>2275</span>  * @name $ADP.AdPlayer
 <span class='line'>2276</span>  * @class Main class to be associated with an ad element object. 
-<span class='line'>2277</span>  * @description The &lt;code>AdPlayer&lt;/code> class.
+<span class='line'>2277</span>  * @description The &lt;code>$ADP.AdPlayer&lt;/code> class.
 <span class='line'>2278</span>  * 
 <span class='line'>2279</span>  * @author christopher.sancho@adtech.com
 <span class='line'>2280</span>  * 
@@ -2290,15 +2290,15 @@
 <span class='line'>2283</span>  *   &lt;!-- creative --&gt;
 <span class='line'>2284</span>  * &lt;/div&gt;
 <span class='line'>2285</span>  * &lt;script type=&quot;text/javascript&quot;&gt;
-<span class='line'>2286</span>  *   var adPlayer = new AdPlayer('placement123', 'ad-container');
+<span class='line'>2286</span>  *   var adPlayer = new $ADP.AdPlayer('placement123', 'ad-container');
 <span class='line'>2287</span>  * &lt;/script&gt;
 <span class='line'>2288</span>  */</span><span class="WHIT">
-<span class='line'>2289</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">AdPlayer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">refAdPlayer</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>2289</span> </span><span class="NAME">$ADP.AdPlayer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">domId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fnInit</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">refAdPlayer</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>2290</span> </span><span class="WHIT">  </span><span class="COMM">/** @private */</span><span class="WHIT"> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_this</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">$ADP.AbstractPlayer</span><span class="PUNC">(</span><span class="NAME">uid</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2291</span> </span><span class="WHIT">  </span><span class="COMM">/** @private */</span><span class="WHIT"> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_queue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2292</span> </span><span class="WHIT">  
 <span class='line'>2293</span>   </span><span class="COMM">/**
-<span class='line'>2294</span>    * @name AdPlayer#player
+<span class='line'>2294</span>    * @name $ADP.AdPlayer#player
 <span class='line'>2295</span>    * @field
 <span class='line'>2296</span>    * @description Returns a direct reference to the parent AdPlayer within the setup hierarchy.
 <span class='line'>2297</span>    * @returns {DOM Object} The direct reference to the parent AdPlayer within the setup hierarchy.
@@ -2315,7 +2315,7 @@
 <span class='line'>2308</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2309</span> </span><span class="WHIT">  
 <span class='line'>2310</span>   </span><span class="COMM">/**
-<span class='line'>2311</span>    * @name AdPlayer#adDomElement
+<span class='line'>2311</span>    * @name $ADP.AdPlayer#adDomElement
 <span class='line'>2312</span>    * @field
 <span class='line'>2313</span>    * @description The associated ad's parent DOM object. 
 <span class='line'>2314</span>    * @returns {DOM Object} The associated ad's parent DOM object.
@@ -2331,10 +2331,10 @@
 <span class='line'>2324</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2325</span> 
 <span class='line'>2326</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>2327</span>    * @name AdPlayer#adEventListObj
+<span class='line'>2327</span>    * @name $ADP.AdPlayer#adEventListObj
 <span class='line'>2328</span>    * @field
 <span class='line'>2329</span>    * @description The associated ad's event object containing a set of events
-<span class='line'>2330</span>    *              registered to an instance of &lt;code>AdPlayer&lt;/code>. 
+<span class='line'>2330</span>    *              registered to an instance of &lt;code>$ADP.AdPlayer&lt;/code>. 
 <span class='line'>2331</span>    * @returns {Object - Read Only} Returns an object.
 <span class='line'>2332</span>    * @see $ADP.AdEvent
 <span class='line'>2333</span>    * @example
@@ -2346,7 +2346,7 @@
 <span class='line'>2339</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2340</span> 
 <span class='line'>2341</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>2342</span>    * @name AdPlayer#isLoaded
+<span class='line'>2342</span>    * @name $ADP.AdPlayer#isLoaded
 <span class='line'>2343</span>    * @field
 <span class='line'>2344</span>    * @description The associated ad's load status, which is usually set by ad or ad delivery code.
 <span class='line'>2345</span>    * @returns {Boolean} Returns true or false.
@@ -2362,7 +2362,7 @@
 <span class='line'>2355</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2356</span> 
 <span class='line'>2357</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>2358</span>    * @name AdPlayer#isPrivacyPanelEnabled
+<span class='line'>2358</span>    * @name $ADP.AdPlayer#isPrivacyPanelEnabled
 <span class='line'>2359</span>    * @field
 <span class='line'>2360</span>    * @description Determines whether ad choice info button is enabled.
 <span class='line'>2361</span>    * @returns {Boolean} Returns true or false.
@@ -2378,7 +2378,7 @@
 <span class='line'>2371</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2372</span> 
 <span class='line'>2373</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>2374</span>    * @name AdPlayer#adWidth
+<span class='line'>2374</span>    * @name $ADP.AdPlayer#adWidth
 <span class='line'>2375</span>    * @field
 <span class='line'>2376</span>    * @description The associated ad's width size, which is usually set by ad or ad delivery code.
 <span class='line'>2377</span>    * @returns {Number} Returns a number.
@@ -2394,7 +2394,7 @@
 <span class='line'>2387</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2388</span> 
 <span class='line'>2389</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>2390</span>    * @name AdPlayer#adHeight
+<span class='line'>2390</span>    * @name $ADP.AdPlayer#adHeight
 <span class='line'>2391</span>    * @field
 <span class='line'>2392</span>    * @description The associated ad's height size, which is usually set by ad or ad delivery code.
 <span class='line'>2393</span>    * @returns {Number} Returns a number.
@@ -2410,12 +2410,12 @@
 <span class='line'>2403</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2404</span> 
 <span class='line'>2405</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>2406</span>    * @name AdPlayer#privacyInfoList
+<span class='line'>2406</span>    * @name $ADP.AdPlayer#privacyInfoList
 <span class='line'>2407</span>    * @field
 <span class='line'>2408</span>    * @description Provides a list containing instances of &lt;code>$ADP.PrivacyInfo&lt;/code> objects added
 <span class='line'>2409</span>    *              through &lt;code>addPrivacyInfo&lt;/code>.
 <span class='line'>2410</span>    * @returns {Array - Read Only} Returns a list of &lt;code>$ADP.PrivacyInfo&lt;/code> objects
-<span class='line'>2411</span>    * @see AdPlayer#addPrivacyInfo
+<span class='line'>2411</span>    * @see $ADP.AdPlayer#addPrivacyInfo
 <span class='line'>2412</span>    * @see $ADP.PrivacyInfo
 <span class='line'>2413</span>    * @example
 <span class='line'>2414</span>    * // Get reference to property
@@ -2442,7 +2442,7 @@
 <span class='line'>2435</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>2436</span> </span><span class="WHIT">  
 <span class='line'>2437</span>   </span><span class="COMM">/** 
-<span class='line'>2438</span>    * @name AdPlayer#addEventListener
+<span class='line'>2438</span>    * @name $ADP.AdPlayer#addEventListener
 <span class='line'>2439</span>    * @function
 <span class='line'>2440</span>    * @description Adds a callback function to an &lt;code>$ADP.AdEvent&lt;/code> flow. Callback handler function 
 <span class='line'>2441</span>    *              returns an &lt;code>$ADP.AdEvent&lt;/code> object instance, which contains the following:
@@ -2457,7 +2457,7 @@
 <span class='line'>2450</span>    * @param callback {Function} The callback handler to call when an &lt;code>$ADP.AdEvent&lt;/code> is dispatched. 
 <span class='line'>2451</span>    * 
 <span class='line'>2452</span>    * @see $ADP.AdEvent
-<span class='line'>2453</span>    * @see AdPlayer#track
+<span class='line'>2453</span>    * @see $ADP.AdPlayer#track
 <span class='line'>2454</span>    * 
 <span class='line'>2455</span>    * @example
 <span class='line'>2456</span>    * function trackEventHandler(adEvent) {
@@ -2475,14 +2475,14 @@
 <span class='line'>2468</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2469</span> </span><span class="WHIT">  
 <span class='line'>2470</span>   </span><span class="COMM">/** 
-<span class='line'>2471</span>    * @name AdPlayer#removeEventListener
+<span class='line'>2471</span>    * @name $ADP.AdPlayer#removeEventListener
 <span class='line'>2472</span>    * @function
 <span class='line'>2473</span>    * @description Removes a callback function registered to an &lt;code>$ADP.AdEvent&lt;/code> flow.
 <span class='line'>2474</span>    * @param adEvent {$ADP.AdEvent} The &lt;code>$ADP.AdEvent&lt;/code> to listen to.
 <span class='line'>2475</span>    * @param callback {Function} The callback handler being called when an &lt;code>$ADP.AdEvent&lt;/code> is dispatched. 
 <span class='line'>2476</span>    * 
 <span class='line'>2477</span>    * @see $ADP.AdEvent
-<span class='line'>2478</span>    * @see AdPlayer#track
+<span class='line'>2478</span>    * @see $ADP.AdPlayer#track
 <span class='line'>2479</span>    * 
 <span class='line'>2480</span>    * @example
 <span class='line'>2481</span>    * function trackEventHandler(adEvent) {
@@ -2501,7 +2501,7 @@
 <span class='line'>2494</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2495</span> 
 <span class='line'>2496</span> </span><span class="WHIT">  </span><span class="COMM">/** 
-<span class='line'>2497</span>    * @name AdPlayer#addTrackingPixel
+<span class='line'>2497</span>    * @name $ADP.AdPlayer#addTrackingPixel
 <span class='line'>2498</span>    * @function
 <span class='line'>2499</span>    * @description A convenience function that adds a pixel URL to an &lt;code>$ADP.AdEvent&lt;/code> flow.  
 <span class='line'>2500</span>    *              
@@ -2510,7 +2510,7 @@
 <span class='line'>2503</span>    * @param repeat {Boolean} Optional - Default is 'true.'  If set to 'false,' pixel will only fire once.
 <span class='line'>2504</span>    * 
 <span class='line'>2505</span>    * @see $ADP.AdEvent
-<span class='line'>2506</span>    * @see AdPlayer#track
+<span class='line'>2506</span>    * @see $ADP.AdPlayer#track
 <span class='line'>2507</span>    * @see $ADP.PixelRequest#load
 <span class='line'>2508</span>    * 
 <span class='line'>2509</span>    * @example
@@ -2525,7 +2525,7 @@
 <span class='line'>2518</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2519</span> 
 <span class='line'>2520</span> </span><span class="WHIT">  </span><span class="COMM">/** 
-<span class='line'>2521</span>    * @name AdPlayer#removeTrackingPixel
+<span class='line'>2521</span>    * @name $ADP.AdPlayer#removeTrackingPixel
 <span class='line'>2522</span>    * @function
 <span class='line'>2523</span>    * @description Removes a matching &lt;code>url&lt;/code> or &lt;code>callback&lt;/code> associated with
 <span class='line'>2524</span>    *              an &lt;code>$ADP.AdEvent&lt;/code> and registered using &lt;code>addTrackingPixel()&lt;/code>
@@ -2543,7 +2543,7 @@
 <span class='line'>2536</span>    * @param url {String - URL} Optional - URL of pixel to call when associated &lt;code>$ADP.AdEvent&lt;/code> is dispatched.
 <span class='line'>2537</span>    * 
 <span class='line'>2538</span>    * @see $ADP.AdEvent
-<span class='line'>2539</span>    * @see AdPlayer#addTrackingPixel
+<span class='line'>2539</span>    * @see $ADP.AdPlayer#addTrackingPixel
 <span class='line'>2540</span>    * 
 <span class='line'>2541</span>    * @example
 <span class='line'>2542</span>    * adPlayer.addTrackingPixel($ADP.AdEvent.TRACK, 'http://my.pixel.url');
@@ -2560,7 +2560,7 @@
 <span class='line'>2553</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2554</span> 
 <span class='line'>2555</span> </span><span class="WHIT">  </span><span class="COMM">/** 
-<span class='line'>2556</span>    * @name AdPlayer#track
+<span class='line'>2556</span>    * @name $ADP.AdPlayer#track
 <span class='line'>2557</span>    * @function
 <span class='line'>2558</span>    * @description Dispatches an &lt;code>$ADP.AdEvent&lt;/code> object to all suscribers.
 <span class='line'>2559</span>    *              
@@ -2579,7 +2579,7 @@
 <span class='line'>2572</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2573</span> 
 <span class='line'>2574</span> </span><span class="WHIT">  </span><span class="COMM">/** 
-<span class='line'>2575</span>    * @name AdPlayer#addPrivacyInfo
+<span class='line'>2575</span>    * @name $ADP.AdPlayer#addPrivacyInfo
 <span class='line'>2576</span>    * @function
 <span class='line'>2577</span>    * @description Creates a &lt;code>$ADP.PrivacyInfo&lt;/code> instance and adds it to &lt;code>privacyInfoList&lt;/code>
 <span class='line'>2578</span>    *              
@@ -2591,8 +2591,8 @@
 <span class='line'>2584</span>    *                                 Defaults to &lt;code>true&lt;/code>.
 <span class='line'>2585</span>    * 
 <span class='line'>2586</span>    * @see $ADP.PrivacyInfo
-<span class='line'>2587</span>    * @see AdPlayer#privacyInfoList
-<span class='line'>2588</span>    * @see AdPlayer#enableAdChoice
+<span class='line'>2587</span>    * @see $ADP.AdPlayer#privacyInfoList
+<span class='line'>2588</span>    * @see $ADP.AdPlayer#enableAdChoice
 <span class='line'>2589</span>    * 
 <span class='line'>2590</span>    * @example
 <span class='line'>2591</span>    * adPlayer.addPrivacyInfo("MyAdServer",  "This is my privacy message.", "http://adplayer.aboutthisad.com", "Find out more.", true);
@@ -2602,7 +2602,7 @@
 <span class='line'>2595</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2596</span> </span><span class="WHIT">  
 <span class='line'>2597</span>   </span><span class="COMM">/**
-<span class='line'>2598</span>    * @name AdPlayer#enableAdChoice
+<span class='line'>2598</span>    * @name $ADP.AdPlayer#enableAdChoice
 <span class='line'>2599</span>    * @function
 <span class='line'>2600</span>    * @description Enables ad choice info button. Button calls method &lt;code>showPrivacyInfo&lt;/code>.
 <span class='line'>2601</span>    * 
@@ -2613,8 +2613,8 @@
 <span class='line'>2606</span>    * @param iconPos {String} Optional - The position of where the ad player button should be setup. 
 <span class='line'>2607</span>    *          See &lt;code>setPosition()&lt;/code> for acceptable values. 
 <span class='line'>2608</span>    *
-<span class='line'>2609</span>    * @see AdPlayer#setPosition
-<span class='line'>2610</span>    * @see AdPlayer#showPrivacyInfo
+<span class='line'>2609</span>    * @see $ADP.AdPlayer#setPosition
+<span class='line'>2610</span>    * @see $ADP.AdPlayer#showPrivacyInfo
 <span class='line'>2611</span>    * @see $ADP.PrivacyInfo
 <span class='line'>2612</span>   */</span><span class="WHIT">  
 <span class='line'>2613</span>   </span><span class="NAME">_this.enableAdChoice</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">openBtnTxt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">closeTxt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">headerTxt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">footerTxt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">iconPos</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -2622,13 +2622,13 @@
 <span class='line'>2615</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2616</span> 
 <span class='line'>2617</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>2618</span>    * @name AdPlayer#disableAdChoice
+<span class='line'>2618</span>    * @name $ADP.AdPlayer#disableAdChoice
 <span class='line'>2619</span>    * @function
 <span class='line'>2620</span>    * @description Disables ad choice info button. By default, ad choice button is disabled until privacy info
 <span class='line'>2621</span>    *              is added through &lt;code>addPrivacyInfo&lt;/code>.
 <span class='line'>2622</span>    * 
-<span class='line'>2623</span>    * @see AdPlayer#enableAdChoice
-<span class='line'>2624</span>    * @see AdPlayer#addPrivacyInfo
+<span class='line'>2623</span>    * @see $ADP.AdPlayer#enableAdChoice
+<span class='line'>2624</span>    * @see $ADP.AdPlayer#addPrivacyInfo
 <span class='line'>2625</span>    * @see $ADP.PrivacyInfo
 <span class='line'>2626</span>   */</span><span class="WHIT">  
 <span class='line'>2627</span>   </span><span class="NAME">_this.disableAdChoice</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -2636,7 +2636,7 @@
 <span class='line'>2629</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2630</span> </span><span class="WHIT">  
 <span class='line'>2631</span>   </span><span class="COMM">/**
-<span class='line'>2632</span>    * @name AdPlayer#showPrivacyInfo
+<span class='line'>2632</span>    * @name $ADP.AdPlayer#showPrivacyInfo
 <span class='line'>2633</span>    * @function
 <span class='line'>2634</span>    * @description Convenience function that creates a layer that displays the privacy info added to &lt;code>privacyInfoList&lt;/code>. &lt;br/>
 <span class='line'>2635</span>    *              &lt;code>$ADP.AdEvent.PRIVACY_CLOSE&lt;/code> is dispatched when method is called. &lt;br/>
@@ -2660,7 +2660,7 @@
 <span class='line'>2653</span>    *                &lt;li>.bottom-left-out&lt;/li>
 <span class='line'>2654</span>    *              &lt;/ul>
 <span class='line'>2655</span>    * 
-<span class='line'>2656</span>    * @see AdPlayer#privacyInfoList
+<span class='line'>2656</span>    * @see $ADP.AdPlayer#privacyInfoList
 <span class='line'>2657</span>    * @see $ADP.PrivacyInfo
 <span class='line'>2658</span>   */</span><span class="WHIT">  
 <span class='line'>2659</span>   </span><span class="NAME">_this.showPrivacyInfo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -2668,12 +2668,12 @@
 <span class='line'>2661</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2662</span> 
 <span class='line'>2663</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>2664</span>    * @name AdPlayer#hidePrivacyInfo
+<span class='line'>2664</span>    * @name $ADP.AdPlayer#hidePrivacyInfo
 <span class='line'>2665</span>    * @function
 <span class='line'>2666</span>    * @description Used in conjunction with &lt;code>showPrivacyInfo&lt;/code> to remove privacy info layer.&lt;br/>
 <span class='line'>2667</span>    *              &lt;code>$ADP.AdEvent.PRIVACY_CLOSE&lt;/code> is dispatched when method is called.
 <span class='line'>2668</span>    * 
-<span class='line'>2669</span>    * @see AdPlayer#showPrivacyInfo
+<span class='line'>2669</span>    * @see $ADP.AdPlayer#showPrivacyInfo
 <span class='line'>2670</span>    * @see $ADP.PrivacyInfo
 <span class='line'>2671</span>   */</span><span class="WHIT">  
 <span class='line'>2672</span>   </span><span class="NAME">_this.hidePrivacyInfo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -2681,7 +2681,7 @@
 <span class='line'>2674</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>2675</span> 
 <span class='line'>2676</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>2677</span>    * @name AdPlayer#setPosition
+<span class='line'>2677</span>    * @name $ADP.AdPlayer#setPosition
 <span class='line'>2678</span>    * @function
 <span class='line'>2679</span>    * @description Sets the css position of the adPlayer button and panel.
 <span class='line'>2680</span>    *              Acceptable values:
@@ -2727,8 +2727,8 @@
 <span class='line'>2720</span> </span><span class="WHIT">  
 <span class='line'>2721</span> </span><span class="COMM">/**
 <span class='line'>2722</span>  * @name $ADP.AdPlayerManager
-<span class='line'>2723</span>  * @class Global Static Class - Manages all created &lt;code>AdPlayer&lt;/code> instances.
-<span class='line'>2724</span>  * @description Globally Manages all created &lt;code>AdPlayer&lt;/code> instances.
+<span class='line'>2723</span>  * @class Global Static Class - Manages all created &lt;code>$ADP.AdPlayer&lt;/code> instances.
+<span class='line'>2724</span>  * @description Globally Manages all created &lt;code>$ADP.AdPlayer&lt;/code> instances.
 <span class='line'>2725</span>  *              &lt;code>$ADP.AdPlayerManager&lt;/code> is a singleton class and ensures it
 <span class='line'>2726</span>  *              is the only available &lt;code>$ADP.AdPlayerManager&lt;/code> throughout an
 <span class='line'>2727</span>  *              ad delivery flow.&lt;/br>
@@ -2745,9 +2745,9 @@
 <span class='line'>2738</span>   </span><span class="COMM">/**
 <span class='line'>2739</span>    * @name $ADP.AdPlayerManager#list
 <span class='line'>2740</span>    * @field
-<span class='line'>2741</span>    * @description List that contains instances of &lt;code>AdPlayer&lt;/code>
+<span class='line'>2741</span>    * @description List that contains instances of &lt;code>$ADP.AdPlayer&lt;/code>
 <span class='line'>2742</span>    *              added to the manager.  
-<span class='line'>2743</span>    * @returns {array - read only} Returns a list list of &lt;code>AdPlayer&lt;/code> instances.
+<span class='line'>2743</span>    * @returns {array - read only} Returns a list list of &lt;code>$ADP.AdPlayer&lt;/code> instances.
 <span class='line'>2744</span>    * @see $ADP.AdPlayerManager#register
 <span class='line'>2745</span>    * @example
 <span class='line'>2746</span>    * // Get reference to property
@@ -2784,16 +2784,16 @@
 <span class='line'>2777</span>   </span><span class="COMM">/**
 <span class='line'>2778</span>    * @name $ADP.AdPlayerManager#addAdPlayer
 <span class='line'>2779</span>    * @function
-<span class='line'>2780</span>    * @description Adds an &lt;code>AdPlayer&lt;/code> instance to the management list.  When a new
-<span class='line'>2781</span>    *              &lt;code>AdPlayer&lt;/code> instance is created, it is automatically passed to
+<span class='line'>2780</span>    * @description Adds an &lt;code>$ADP.AdPlayer&lt;/code> instance to the management list.  When a new
+<span class='line'>2781</span>    *              &lt;code>$ADP.AdPlayer&lt;/code> instance is created, it is automatically passed to
 <span class='line'>2782</span>    *              this method.  Immediately following, all call-backs, registerd through
 <span class='line'>2783</span>    *              &lt;code>AdPlayerManger.register(adPlayer)&lt;/code> are dispatched and passed
-<span class='line'>2784</span>    *              with the newly created &lt;code>AdPlayer&lt;/code>.
-<span class='line'>2785</span>    * @param {adplayer} adPlayer &lt;code>AdPlayer&lt;/code> instance to add to management list.
+<span class='line'>2784</span>    *              with the newly created &lt;code>$ADP.AdPlayer&lt;/code>.
+<span class='line'>2785</span>    * @param {adplayer} adPlayer &lt;code>$ADP.AdPlayer&lt;/code> instance to add to management list.
 <span class='line'>2786</span>    * @see AdPlayerManger#register
 <span class='line'>2787</span>    * @example
 <span class='line'>2788</span>    * // Add an AdPlayer instance to the manager.
-<span class='line'>2789</span>    * var adPlayer = new AdPlayer(document.getElementById('myTagDivContainer'));
+<span class='line'>2789</span>    * var adPlayer = new $ADP.AdPlayer(document.getElementById('myTagDivContainer'));
 <span class='line'>2790</span>    * $ADP.AdPlayerManager.addAdPlayer(adPlayer);
 <span class='line'>2791</span>    */</span><span class="WHIT">
 <span class='line'>2792</span> </span><span class="WHIT">  </span><span class="NAME">_this.addAdPlayer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">adPlayer</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -2811,9 +2811,9 @@
 <span class='line'>2804</span>   </span><span class="COMM">/**
 <span class='line'>2805</span>    * @name $ADP.AdPlayerManager#register
 <span class='line'>2806</span>    * @function
-<span class='line'>2807</span>    * @description Registers a function that will be called when an &lt;code>AdPlayer&lt;/code> instance
+<span class='line'>2807</span>    * @description Registers a function that will be called when an &lt;code>$ADP.AdPlayer&lt;/code> instance
 <span class='line'>2808</span>    *              is created. Call-back handler function must expect a parameter that accepts
-<span class='line'>2809</span>    *              an &lt;code>AdPlayer&lt;/code> instance.
+<span class='line'>2809</span>    *              an &lt;code>$ADP.AdPlayer&lt;/code> instance.
 <span class='line'>2810</span>    * @param {function} callback The call-back handler function.
 <span class='line'>2811</span>    * @example
 <span class='line'>2812</span>    * function myCallBackHandler(adPlayer) {
@@ -2848,14 +2848,14 @@
 <span class='line'>2841</span>   </span><span class="COMM">/**
 <span class='line'>2842</span>    * @name $ADP.AdPlayerManager#getAdPlayerById
 <span class='line'>2843</span>    * @function
-<span class='line'>2844</span>    * @description Returns an instance of an &lt;code>AdPlayer&lt;/code> associated with
+<span class='line'>2844</span>    * @description Returns an instance of an &lt;code>$ADP.AdPlayer&lt;/code> associated with
 <span class='line'>2845</span>    *              a DOM element id name
-<span class='line'>2846</span>    * @param {string} id Id of DOM element associated with &lt;code>AdPlayer&lt;/code>.
+<span class='line'>2846</span>    * @param {string} id Id of DOM element associated with &lt;code>$ADP.AdPlayer&lt;/code>.
 <span class='line'>2847</span>    * @return {adplayer} AdPlayer instance associated with id. 
 <span class='line'>2848</span>    * @example
 <span class='line'>2849</span>    * &lt;div id=&quot;adPlayerContainer&quot;&gt;
 <span class='line'>2850</span>    *  &lt;script type=&quot;text/javascript&quot;&gt;
-<span class='line'>2851</span>    *    var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
+<span class='line'>2851</span>    *    var adPlayer = new $ADP.AdPlayer(document.getElementById('adPlayerContainer'));
 <span class='line'>2852</span>    *    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
 <span class='line'>2853</span>    *  &lt;/script&gt;
 <span class='line'>2854</span>    * &lt;/div&gt;
@@ -2879,14 +2879,14 @@
 <span class='line'>2872</span> </span><span class="WHIT">  </span><span class="COMM">/**
 <span class='line'>2873</span>    * @name $ADP.AdPlayerManager#getPlayerByDomElement
 <span class='line'>2874</span>    * @function
-<span class='line'>2875</span>    * @description Returns an instance of an &lt;code>AdPlayer&lt;/code> associated with
+<span class='line'>2875</span>    * @description Returns an instance of an &lt;code>$ADP.AdPlayer&lt;/code> associated with
 <span class='line'>2876</span>    *              a DOM element. 
-<span class='line'>2877</span>    * @param {string} dom DOM element object associated with &lt;code>AdPlayer&lt;/code>.
+<span class='line'>2877</span>    * @param {string} dom DOM element object associated with &lt;code>$ADP.AdPlayer&lt;/code>.
 <span class='line'>2878</span>    * @return {adplayer} AdPlayer instance associated with dom element. 
 <span class='line'>2879</span>    * @example
 <span class='line'>2880</span>    * &lt;div id=&quot;adPlayerContainer&quot;&gt;
 <span class='line'>2881</span>    *  &lt;script type=&quot;text/javascript&quot;&gt;
-<span class='line'>2882</span>    *    var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
+<span class='line'>2882</span>    *    var adPlayer = new $ADP.AdPlayer(document.getElementById('adPlayerContainer'));
 <span class='line'>2883</span>    *    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
 <span class='line'>2884</span>    *  &lt;/script&gt;
 <span class='line'>2885</span>    * &lt;/div&gt;
@@ -2910,9 +2910,9 @@
 <span class='line'>2903</span>   </span><span class="COMM">/**
 <span class='line'>2904</span>    * @name $ADP.AdPlayerManager#getPlayerByUID
 <span class='line'>2905</span>    * @function
-<span class='line'>2906</span>    * @description Returns an instance of an &lt;code>AdPlayer&lt;/code> associated with
+<span class='line'>2906</span>    * @description Returns an instance of an &lt;code>$ADP.AdPlayer&lt;/code> associated with
 <span class='line'>2907</span>    *              a UID string. 
-<span class='line'>2908</span>    * @param {string} uid UID string associated with &lt;code>AdPlayer&lt;/code>.
+<span class='line'>2908</span>    * @param {string} uid UID string associated with &lt;code>$ADP.AdPlayer&lt;/code>.
 <span class='line'>2909</span>    * @return {adplayer} AdPlayer instance associated with dom element. 
 <span class='line'>2910</span>    * @example
 <span class='line'>2911</span>    * 

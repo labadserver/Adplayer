@@ -2,7 +2,7 @@
  * @private
  * @name $ADP.PrivacyInfoButton
  * @class 
- * @description Handles display of privacy information button for current <code>AdPlayer</code> instance.
+ * @description Handles display of privacy information button for current <code>$ADP.AdPlayer</code> instance.
  * @param {function} callback Function to execute when button is clicked.
  * @param {string} openBtnTxt Optional - Text to use for button.
  * @author christopher.sancho@adtech.com

@@ -1,7 +1,7 @@
 /**
- * @name AdPlayer
+ * @name $ADP.AdPlayer
  * @class Main class to be associated with an ad element object. 
- * @description The <code>AdPlayer</code> class.
+ * @description The <code>$ADP.AdPlayer</code> class.
  * 
  * @author christopher.sancho@adtech.com
  * 
@@ -10,15 +10,15 @@
  *   &lt;!-- creative --&gt;
  * &lt;/div&gt;
  * &lt;script type=&quot;text/javascript&quot;&gt;
- *   var adPlayer = new AdPlayer('placement123', 'ad-container');
+ *   var adPlayer = new $ADP.AdPlayer('placement123', 'ad-container');
  * &lt;/script&gt;
  */
-var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
+$ADP.AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   /** @private */ var _this = new $ADP.AbstractPlayer(uid, null);
   /** @private */ var _queue = [];
   
   /**
-   * @name AdPlayer#player
+   * @name $ADP.AdPlayer#player
    * @field
    * @description Returns a direct reference to the parent AdPlayer within the setup hierarchy.
    * @returns {DOM Object} The direct reference to the parent AdPlayer within the setup hierarchy.
@@ -35,7 +35,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
   
   /**
-   * @name AdPlayer#adDomElement
+   * @name $ADP.AdPlayer#adDomElement
    * @field
    * @description The associated ad's parent DOM object. 
    * @returns {DOM Object} The associated ad's parent DOM object.
@@ -51,10 +51,10 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /**
-   * @name AdPlayer#adEventListObj
+   * @name $ADP.AdPlayer#adEventListObj
    * @field
    * @description The associated ad's event object containing a set of events
-   *              registered to an instance of <code>AdPlayer</code>. 
+   *              registered to an instance of <code>$ADP.AdPlayer</code>. 
    * @returns {Object - Read Only} Returns an object.
    * @see $ADP.AdEvent
    * @example
@@ -66,7 +66,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /**
-   * @name AdPlayer#isLoaded
+   * @name $ADP.AdPlayer#isLoaded
    * @field
    * @description The associated ad's load status, which is usually set by ad or ad delivery code.
    * @returns {Boolean} Returns true or false.
@@ -82,7 +82,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /**
-   * @name AdPlayer#isPrivacyPanelEnabled
+   * @name $ADP.AdPlayer#isPrivacyPanelEnabled
    * @field
    * @description Determines whether ad choice info button is enabled.
    * @returns {Boolean} Returns true or false.
@@ -98,7 +98,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /**
-   * @name AdPlayer#adWidth
+   * @name $ADP.AdPlayer#adWidth
    * @field
    * @description The associated ad's width size, which is usually set by ad or ad delivery code.
    * @returns {Number} Returns a number.
@@ -114,7 +114,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /**
-   * @name AdPlayer#adHeight
+   * @name $ADP.AdPlayer#adHeight
    * @field
    * @description The associated ad's height size, which is usually set by ad or ad delivery code.
    * @returns {Number} Returns a number.
@@ -130,12 +130,12 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /**
-   * @name AdPlayer#privacyInfoList
+   * @name $ADP.AdPlayer#privacyInfoList
    * @field
    * @description Provides a list containing instances of <code>$ADP.PrivacyInfo</code> objects added
    *              through <code>addPrivacyInfo</code>.
    * @returns {Array - Read Only} Returns a list of <code>$ADP.PrivacyInfo</code> objects
-   * @see AdPlayer#addPrivacyInfo
+   * @see $ADP.AdPlayer#addPrivacyInfo
    * @see $ADP.PrivacyInfo
    * @example
    * // Get reference to property
@@ -162,7 +162,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   }
   
   /** 
-   * @name AdPlayer#addEventListener
+   * @name $ADP.AdPlayer#addEventListener
    * @function
    * @description Adds a callback function to an <code>$ADP.AdEvent</code> flow. Callback handler function 
    *              returns an <code>$ADP.AdEvent</code> object instance, which contains the following:
@@ -177,7 +177,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * @param callback {Function} The callback handler to call when an <code>$ADP.AdEvent</code> is dispatched. 
    * 
    * @see $ADP.AdEvent
-   * @see AdPlayer#track
+   * @see $ADP.AdPlayer#track
    * 
    * @example
    * function trackEventHandler(adEvent) {
@@ -195,14 +195,14 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
   
   /** 
-   * @name AdPlayer#removeEventListener
+   * @name $ADP.AdPlayer#removeEventListener
    * @function
    * @description Removes a callback function registered to an <code>$ADP.AdEvent</code> flow.
    * @param adEvent {$ADP.AdEvent} The <code>$ADP.AdEvent</code> to listen to.
    * @param callback {Function} The callback handler being called when an <code>$ADP.AdEvent</code> is dispatched. 
    * 
    * @see $ADP.AdEvent
-   * @see AdPlayer#track
+   * @see $ADP.AdPlayer#track
    * 
    * @example
    * function trackEventHandler(adEvent) {
@@ -221,7 +221,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /** 
-   * @name AdPlayer#addTrackingPixel
+   * @name $ADP.AdPlayer#addTrackingPixel
    * @function
    * @description A convenience function that adds a pixel URL to an <code>$ADP.AdEvent</code> flow.  
    *              
@@ -230,7 +230,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * @param repeat {Boolean} Optional - Default is 'true.'  If set to 'false,' pixel will only fire once.
    * 
    * @see $ADP.AdEvent
-   * @see AdPlayer#track
+   * @see $ADP.AdPlayer#track
    * @see $ADP.PixelRequest#load
    * 
    * @example
@@ -245,7 +245,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /** 
-   * @name AdPlayer#removeTrackingPixel
+   * @name $ADP.AdPlayer#removeTrackingPixel
    * @function
    * @description Removes a matching <code>url</code> or <code>callback</code> associated with
    *              an <code>$ADP.AdEvent</code> and registered using <code>addTrackingPixel()</code>
@@ -263,7 +263,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * @param url {String - URL} Optional - URL of pixel to call when associated <code>$ADP.AdEvent</code> is dispatched.
    * 
    * @see $ADP.AdEvent
-   * @see AdPlayer#addTrackingPixel
+   * @see $ADP.AdPlayer#addTrackingPixel
    * 
    * @example
    * adPlayer.addTrackingPixel($ADP.AdEvent.TRACK, 'http://my.pixel.url');
@@ -280,7 +280,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /** 
-   * @name AdPlayer#track
+   * @name $ADP.AdPlayer#track
    * @function
    * @description Dispatches an <code>$ADP.AdEvent</code> object to all suscribers.
    *              
@@ -299,7 +299,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /** 
-   * @name AdPlayer#addPrivacyInfo
+   * @name $ADP.AdPlayer#addPrivacyInfo
    * @function
    * @description Creates a <code>$ADP.PrivacyInfo</code> instance and adds it to <code>privacyInfoList</code>
    *              
@@ -311,8 +311,8 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    *                                 Defaults to <code>true</code>.
    * 
    * @see $ADP.PrivacyInfo
-   * @see AdPlayer#privacyInfoList
-   * @see AdPlayer#enableAdChoice
+   * @see $ADP.AdPlayer#privacyInfoList
+   * @see $ADP.AdPlayer#enableAdChoice
    * 
    * @example
    * adPlayer.addPrivacyInfo("MyAdServer",  "This is my privacy message.", "http://adplayer.aboutthisad.com", "Find out more.", true);
@@ -322,7 +322,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
   
   /**
-   * @name AdPlayer#enableAdChoice
+   * @name $ADP.AdPlayer#enableAdChoice
    * @function
    * @description Enables ad choice info button. Button calls method <code>showPrivacyInfo</code>.
    * 
@@ -333,8 +333,8 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    * @param iconPos {String} Optional - The position of where the ad player button should be setup. 
    *          See <code>setPosition()</code> for acceptable values. 
    *
-   * @see AdPlayer#setPosition
-   * @see AdPlayer#showPrivacyInfo
+   * @see $ADP.AdPlayer#setPosition
+   * @see $ADP.AdPlayer#showPrivacyInfo
    * @see $ADP.PrivacyInfo
   */  
   _this.enableAdChoice = function(openBtnTxt, closeTxt, headerTxt, footerTxt, iconPos) {
@@ -342,13 +342,13 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /**
-   * @name AdPlayer#disableAdChoice
+   * @name $ADP.AdPlayer#disableAdChoice
    * @function
    * @description Disables ad choice info button. By default, ad choice button is disabled until privacy info
    *              is added through <code>addPrivacyInfo</code>.
    * 
-   * @see AdPlayer#enableAdChoice
-   * @see AdPlayer#addPrivacyInfo
+   * @see $ADP.AdPlayer#enableAdChoice
+   * @see $ADP.AdPlayer#addPrivacyInfo
    * @see $ADP.PrivacyInfo
   */  
   _this.disableAdChoice = function() {
@@ -356,7 +356,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
   
   /**
-   * @name AdPlayer#showPrivacyInfo
+   * @name $ADP.AdPlayer#showPrivacyInfo
    * @function
    * @description Convenience function that creates a layer that displays the privacy info added to <code>privacyInfoList</code>. <br/>
    *              <code>$ADP.AdEvent.PRIVACY_CLOSE</code> is dispatched when method is called. <br/>
@@ -380,7 +380,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
    *                <li>.bottom-left-out</li>
    *              </ul>
    * 
-   * @see AdPlayer#privacyInfoList
+   * @see $ADP.AdPlayer#privacyInfoList
    * @see $ADP.PrivacyInfo
   */  
   _this.showPrivacyInfo = function() {
@@ -388,12 +388,12 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /**
-   * @name AdPlayer#hidePrivacyInfo
+   * @name $ADP.AdPlayer#hidePrivacyInfo
    * @function
    * @description Used in conjunction with <code>showPrivacyInfo</code> to remove privacy info layer.<br/>
    *              <code>$ADP.AdEvent.PRIVACY_CLOSE</code> is dispatched when method is called.
    * 
-   * @see AdPlayer#showPrivacyInfo
+   * @see $ADP.AdPlayer#showPrivacyInfo
    * @see $ADP.PrivacyInfo
   */  
   _this.hidePrivacyInfo = function() {
@@ -401,7 +401,7 @@ var AdPlayer = (function (uid, domId, fnInit, refAdPlayer) {
   };
 
   /**
-   * @name AdPlayer#setPosition
+   * @name $ADP.AdPlayer#setPosition
    * @function
    * @description Sets the css position of the adPlayer button and panel.
    *              Acceptable values:

@@ -1,13 +1,13 @@
 /**
  * @private
  * @name $ADP.PlayerFactory
- * @class Returns an instance of an <code>AdPlayer</code>.
- * @description Returns an instance of an <code>AdPlayer</code>.</br>
- * @param {string} uid Unique ID used to identify an <code>AdPlayer</code>.
+ * @class Returns an instance of an <code>$ADP.AdPlayer</code>.
+ * @description Returns an instance of an <code>$ADP.AdPlayer</code>.</br>
+ * @param {string} uid Unique ID used to identify an <code>$ADP.AdPlayer</code>.
  * @param {string} domRefId DOM ID used to mark the start point of a DOM search.
- * @param {function} fnInit Callback executed when an <code>AdPlayer</code> is created.
+ * @param {function} fnInit Callback executed when an <code>$ADP.AdPlayer</code> is created.
  * @param {adplayer} refAdPlayer Optional - When defined, sets <code>refAdPlayer</code> 
- *                   as the primary <code>AdPlayer</code>. 
+ *                   as the primary <code>$ADP.AdPlayer</code>. 
  * @return {adplayer} AdPlayer instance created through the factory search logic.
  * @author christopher.sancho@adtech.com
  */
@@ -21,7 +21,7 @@ $ADP.PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
     * @private
     * @function
     * @description
-    * Attempts to search for an <code>AdPlayer</code> using the following conditional order:
+    * Attempts to search for an <code>$ADP.AdPlayer</code> using the following conditional order:
     * 1) uid, domId, null, refAdPlayer
     * 2) uid, domId, null, null
     * 3) uid, null, null, refAdPlayer
@@ -64,11 +64,11 @@ $ADP.PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    /**
     * @name $ADP.PlayerFactory#refAdPlayerInit
     * @function
-    * @description Executes a callback function with a reference <code>AdPlayer</code>.
-    * @param {adplayer} refPlayer Primary <code>AdPlayer</code>. to use.
-    * @param {string} uid Unique ID used to identify an <code>AdPlayer</code>.
+    * @description Executes a callback function with a reference <code>$ADP.AdPlayer</code>.
+    * @param {adplayer} refPlayer Primary <code>$ADP.AdPlayer</code>. to use.
+    * @param {string} uid Unique ID used to identify an <code>$ADP.AdPlayer</code>.
     * @param {string} domRef domRef DOM ID used to mark the start point of a DOM search.
-    * @param {function} fnInit Callback executed when a reference <code>AdPlayer</code> is created.
+    * @param {function} fnInit Callback executed when a reference <code>$ADP.AdPlayer</code> is created.
     */
    function refAdPlayerInit(refPlayer, uid, domRef, fnInit) {   
      if (document.getElementById(domRef)) {
@@ -81,9 +81,9 @@ $ADP.PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    /**
     * @name $ADP.PlayerFactory#domRefAdPlayerInit
     * @function
-    * @description Executes a callback function when an <code>AdPlayer</code> is found by <code>$ADP.AdPlayerManager.getAdPlayerById</code>.
+    * @description Executes a callback function when an <code>$ADP.AdPlayer</code> is found by <code>$ADP.AdPlayerManager.getAdPlayerById</code>.
     * @param {string} domRef domRef DOM ID used to mark the start point of a DOM search.
-    * @param {function} fnInit Callback executed when an <code>AdPlayer</code> is located by <code>$ADP.AdPlayerManager.getAdPlayerById</code>.
+    * @param {function} fnInit Callback executed when an <code>$ADP.AdPlayer</code> is located by <code>$ADP.AdPlayerManager.getAdPlayerById</code>.
     * @see $ADP.AdPlayerManager#getAdPlayerById 
     */
    function domRefAdPlayerInit(domRef, fnInit) {   
@@ -144,9 +144,9 @@ $ADP.PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
     * @name $ADP.PlayerFactory#parentDomSearch
     * @function
     * @description Attempts to locate a parent AdPlayer from a DOM reference point.
-    * @param {string} uid Unique ID used to identify an <code>AdPlayer</code>.
+    * @param {string} uid Unique ID used to identify an <code>$ADP.AdPlayer</code>.
     * @param {string} domRef DOM ID used to mark the start point of a DOM search.
-    * @param {function} fnInit Callback executed when a default <code>AdPlayer</code> is created.
+    * @param {function} fnInit Callback executed when a default <code>$ADP.AdPlayer</code> is created.
     */
    function parentDomSearch(uid, domRef, fnInit) {
      // TODO (chris.sancho): separate into methods...
@@ -269,10 +269,10 @@ $ADP.PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
    /**
     * @name $ADP.PlayerFactory#returnDefault
     * @function
-    * @description Executes a callback function with a default <code>AdPlayer</code>.
-    * @param {string} uid Unique ID used to identify an <code>AdPlayer</code>.
+    * @description Executes a callback function with a default <code>$ADP.AdPlayer</code>.
+    * @param {string} uid Unique ID used to identify an <code>$ADP.AdPlayer</code>.
     * @param {string} domRef DOM ID used to mark the start point of a DOM search.
-    * @param {function} fnInit Callback executed when a default <code>AdPlayer</code> is created.
+    * @param {function} fnInit Callback executed when a default <code>$ADP.AdPlayer</code> is created.
     */
    function returnDefault(uid, domRef, fnInit) {
      fnInit(new $ADP.DefaultPlayer(uid, document.getElementById(domRef)));

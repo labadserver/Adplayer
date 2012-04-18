@@ -191,6 +191,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/%24ADP.AdEvent.html">$ADP.AdEvent</a></li>
 	
+	<li><a href="../symbols/%24ADP.AdPlayer.html">$ADP.AdPlayer</a></li>
+	
 	<li><a href="../symbols/%24ADP.AdPlayerManager.html">$ADP.AdPlayerManager</a></li>
 	
 	<li><a href="../symbols/%24ADP.PixelRequest.html">$ADP.PixelRequest</a></li>
@@ -202,8 +204,6 @@ ul.inheritsList
 	<li><a href="../symbols/%24ADP.Util.html">$ADP.Util</a></li>
 	
 	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
-	
-	<li><a href="../symbols/AdPlayer.html">AdPlayer</a></li>
 	
 </ul>
 <hr />
@@ -222,10 +222,10 @@ ul.inheritsList
 				
 				
 			
-				Global Static Class - Manages all created <code>AdPlayer</code> instances.
+				Global Static Class - Manages all created <code>$ADP.AdPlayer</code> instances.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_chrssnch_Sites__workspace_PM_AdPlayer_GIT_bin_js_adplayer-0.8.0.js.html">adplayer-0.8.0.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_chrssnch_Sites__workspace_PM_AdPlayer_GIT_bin_js_adplayer-0.8.1.js.html">adplayer-0.8.1.js</a>.
 				
 			</p>
 
@@ -246,7 +246,7 @@ ul.inheritsList
 							<div class="fixedFont">
 								<b><a href="../symbols/%24ADP.AdPlayerManager.html#constructor">$ADP.AdPlayerManager</a></b>()
 							</div>
-							<div class="description">Globally Manages all created <code>AdPlayer</code> instances.</div>
+							<div class="description">Globally Manages all created <code>$ADP.AdPlayer</code> instances.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -273,7 +273,7 @@ ul.inheritsList
 								<div class="fixedFont">
 								<b><a href="../symbols/%24ADP.AdPlayerManager.html#list">list</a></b>
 								</div>
-								<div class="description">List that contains instances of <code>AdPlayer</code>
+								<div class="description">List that contains instances of <code>$ADP.AdPlayer</code>
              added to the manager.</div>
 							</td>
 						</tr>
@@ -304,7 +304,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/%24ADP.AdPlayerManager.html#addAdPlayer">addAdPlayer</a></b>(adPlayer)
 								</div>
-								<div class="description">Adds an <code>AdPlayer</code> instance to the management list.</div>
+								<div class="description">Adds an <code>$ADP.AdPlayer</code> instance to the management list.</div>
 							</td>
 						</tr>
 					
@@ -313,7 +313,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/%24ADP.AdPlayerManager.html#getAdPlayerById">getAdPlayerById</a></b>(id)
 								</div>
-								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with
+								<div class="description">Returns an instance of an <code>$ADP.AdPlayer</code> associated with
              a DOM element id name</div>
 							</td>
 						</tr>
@@ -323,7 +323,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/%24ADP.AdPlayerManager.html#getPlayerByDomElement">getPlayerByDomElement</a></b>(dom)
 								</div>
-								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with
+								<div class="description">Returns an instance of an <code>$ADP.AdPlayer</code> associated with
              a DOM element.</div>
 							</td>
 						</tr>
@@ -333,7 +333,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/%24ADP.AdPlayerManager.html#getPlayerByUID">getPlayerByUID</a></b>(uid)
 								</div>
-								<div class="description">Returns an instance of an <code>AdPlayer</code> associated with
+								<div class="description">Returns an instance of an <code>$ADP.AdPlayer</code> associated with
              a UID string.</div>
 							</td>
 						</tr>
@@ -343,7 +343,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/%24ADP.AdPlayerManager.html#register">register</a></b>(callback)
 								</div>
-								<div class="description">Registers a function that will be called when an <code>AdPlayer</code> instance
+								<div class="description">Registers a function that will be called when an <code>$ADP.AdPlayer</code> instance
              is created.</div>
 							</td>
 						</tr>
@@ -378,7 +378,7 @@ ul.inheritsList
 				</div>
 				
 				<div class="description">
-					Globally Manages all created <code>AdPlayer</code> instances.
+					Globally Manages all created <code>$ADP.AdPlayer</code> instances.
              <code>$ADP.AdPlayerManager</code> is a singleton class and ensures it
              is the only available <code>$ADP.AdPlayerManager</code> throughout an
              ad delivery flow.</br>
@@ -413,7 +413,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						List that contains instances of <code>AdPlayer</code>
+						List that contains instances of <code>$ADP.AdPlayer</code>
              added to the manager.
 						
 						
@@ -456,11 +456,11 @@ var adPlayerList = $ADP.AdPlayerManager.list();</pre>
 					
 					</div>
 					<div class="description">
-						Adds an <code>AdPlayer</code> instance to the management list.  When a new
-             <code>AdPlayer</code> instance is created, it is automatically passed to
+						Adds an <code>$ADP.AdPlayer</code> instance to the management list.  When a new
+             <code>$ADP.AdPlayer</code> instance is created, it is automatically passed to
              this method.  Immediately following, all call-backs, registerd through
              <code>AdPlayerManger.register(adPlayer)</code> are dispatched and passed
-             with the newly created <code>AdPlayer</code>.
+             with the newly created <code>$ADP.AdPlayer</code>.
 						
 						
 					</div>
@@ -468,7 +468,7 @@ var adPlayerList = $ADP.AdPlayerManager.list();</pre>
 					
 					
 					<pre class="code">// Add an AdPlayer instance to the manager.
-var adPlayer = new AdPlayer(document.getElementById('myTagDivContainer'));
+var adPlayer = new $ADP.AdPlayer(document.getElementById('myTagDivContainer'));
 $ADP.AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					
 					
@@ -481,7 +481,7 @@ $ADP.AdPlayerManager.addAdPlayer(adPlayer);</pre>
 									<span class="light fixedFont">{adplayer}</span> <b>adPlayer</b>
 									
 								</dt>
-								<dd><code>AdPlayer</code> instance to add to management list.</dd>
+								<dd><code>$ADP.AdPlayer</code> instance to add to management list.</dd>
 							
 							</dl>
 						
@@ -509,7 +509,7 @@ $ADP.AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					
 					</div>
 					<div class="description">
-						Returns an instance of an <code>AdPlayer</code> associated with
+						Returns an instance of an <code>$ADP.AdPlayer</code> associated with
              a DOM element id name
 						
 						
@@ -519,7 +519,7 @@ $ADP.AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					
 					<pre class="code">&lt;div id=&quot;adPlayerContainer&quot;&gt;
  &lt;script type=&quot;text/javascript&quot;&gt;
-   var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
+   var adPlayer = new $ADP.AdPlayer(document.getElementById('adPlayerContainer'));
    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
  &lt;/script&gt;
 &lt;/div&gt;
@@ -537,7 +537,7 @@ $ADP.AdPlayerManager.addAdPlayer(adPlayer);</pre>
 									<span class="light fixedFont">{string}</span> <b>id</b>
 									
 								</dt>
-								<dd>Id of DOM element associated with <code>AdPlayer</code>.</dd>
+								<dd>Id of DOM element associated with <code>$ADP.AdPlayer</code>.</dd>
 							
 							</dl>
 						
@@ -565,7 +565,7 @@ $ADP.AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					
 					</div>
 					<div class="description">
-						Returns an instance of an <code>AdPlayer</code> associated with
+						Returns an instance of an <code>$ADP.AdPlayer</code> associated with
              a DOM element.
 						
 						
@@ -575,7 +575,7 @@ $ADP.AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					
 					<pre class="code">&lt;div id=&quot;adPlayerContainer&quot;&gt;
  &lt;script type=&quot;text/javascript&quot;&gt;
-   var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
+   var adPlayer = new $ADP.AdPlayer(document.getElementById('adPlayerContainer'));
    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
  &lt;/script&gt;
 &lt;/div&gt;
@@ -593,7 +593,7 @@ $ADP.AdPlayerManager.addAdPlayer(adPlayer);</pre>
 									<span class="light fixedFont">{string}</span> <b>dom</b>
 									
 								</dt>
-								<dd>DOM element object associated with <code>AdPlayer</code>.</dd>
+								<dd>DOM element object associated with <code>$ADP.AdPlayer</code>.</dd>
 							
 							</dl>
 						
@@ -621,7 +621,7 @@ $ADP.AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					
 					</div>
 					<div class="description">
-						Returns an instance of an <code>AdPlayer</code> associated with
+						Returns an instance of an <code>$ADP.AdPlayer</code> associated with
              a UID string.
 						
 						
@@ -641,7 +641,7 @@ $ADP.AdPlayerManager.addAdPlayer(adPlayer);</pre>
 									<span class="light fixedFont">{string}</span> <b>uid</b>
 									
 								</dt>
-								<dd>UID string associated with <code>AdPlayer</code>.</dd>
+								<dd>UID string associated with <code>$ADP.AdPlayer</code>.</dd>
 							
 							</dl>
 						
@@ -669,9 +669,9 @@ $ADP.AdPlayerManager.addAdPlayer(adPlayer);</pre>
 					
 					</div>
 					<div class="description">
-						Registers a function that will be called when an <code>AdPlayer</code> instance
+						Registers a function that will be called when an <code>$ADP.AdPlayer</code> instance
              is created. Call-back handler function must expect a parameter that accepts
-             an <code>AdPlayer</code> instance.
+             an <code>$ADP.AdPlayer</code> instance.
 						
 						
 					</div>
@@ -761,7 +761,7 @@ $ADP.AdPlayerManager.unregister(myCallBackHandler);</pre>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Apr 12 2012 15:05:06 GMT-0700 (PDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Apr 18 2012 02:33:48 GMT-0700 (PDT)
 		</div>
 	</body>
 </html>

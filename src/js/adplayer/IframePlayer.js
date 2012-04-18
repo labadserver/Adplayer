@@ -1,7 +1,7 @@
 /**
  * @private 
  * @name $ADP.IframePlayer
- * @class <code>AdPlayer</code> implementation responsible for iFrame communication using <code>$ADP.PostMessage</code>.
+ * @class <code>$ADP.AdPlayer</code> implementation responsible for iFrame communication using <code>$ADP.PostMessage</code>.
  * 
  * @author christopher.sancho@adtech.com
  */
@@ -13,7 +13,7 @@ $ADP.IframePlayer = (function (uid, adDomElement) {
    * @name $ADP.IframePlayer#updateRef
    * @function
    * @description Updates the default player in order to keep information
-   *              synced between related <code>AdPlayers</code>. 
+   *              synced between related <code>$ADP.AdPlayers</code>. 
    * @param {string} fnName Function name that will be executed.
    * @param {array} params The parameters to pass to the executed function.
    */ 

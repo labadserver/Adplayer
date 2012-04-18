@@ -1,7 +1,7 @@
 /**
  * @private 
  * @name $ADP.DefaultPlayer
- * @class Default <code>AdPlayer</code> implementation.
+ * @class Default <code>$ADP.AdPlayer</code> implementation.
  * 
  * @author christopher.sancho@adtech.com
  */

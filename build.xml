@@ -1,7 +1,7 @@
 <project name="AdPlayer" default="execute" basedir=".">
   <description>AdPlayer build script.</description>
 
-  <property name="version" value="0.8.0"/>
+  <property name="version" value="0.8.1"/>
   <property name="jsfilename" value="adplayer-${version}"/>
   <property name="cssfilename" value="adplayer-${version}"/>
 

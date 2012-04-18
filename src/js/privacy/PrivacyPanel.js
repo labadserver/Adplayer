@@ -2,7 +2,7 @@
  * @private
  * @name $ADP.PrivacyPanel
  * @class 
- * @description Handles display of all privacy information passed to current <code>AdPlayer</code> instance.
+ * @description Handles display of all privacy information passed to current <code>$ADP.AdPlayer</code> instance.
  * @param {array} infoList List containing <code>$ADP.PrivacyInfo</code> objects. 
  * @param {string} closeTxt Optional - Close button text. 'X' is default value.
  * @param {string} headerTxt Optional - Header text.

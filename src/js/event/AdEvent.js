@@ -1,9 +1,9 @@
 /**
  * @class An $ADP.AdEvent object is dispatched into the event flow whenever an ad event occurs. 
- * @description The <code>AdPlayer.track()</code> method dispatches an $ADP.AdEvent object to suscribers.<br/>
+ * @description The <code>$ADP.AdPlayer.track()</code> method dispatches an $ADP.AdEvent object to suscribers.<br/>
  * 
- * @see AdPlayer#track
- * @see AdPlayer#addEventListener
+ * @see $ADP.AdPlayer#track
+ * @see $ADP.AdPlayer#addEventListener
  * 
  * @author christopher.sancho@adtech.com
  * 
@@ -25,7 +25,7 @@
  *
  * @example
  * var myDomObj = document.getElementById('myTagDivContainer');
- * var adPlayer = new AdPlayer(myDomObj);
+ * var adPlayer = new $ADP.AdPlayer(myDomObj);
  * 
  * // Example 1:
  * // Register countEventHandler() to $ADP.AdEvent.COUNT event.
@@ -73,10 +73,10 @@ $ADP.AdEvent = function (type, data) {
   /**
    * @name $ADP.AdEvent#currentTarget 
    * @field
-   * @description The current <code>AdPlayer</code> instance associated with the <code>$ADP.AdEvent</code> object. The current target
+   * @description The current <code>$ADP.AdPlayer</code> instance associated with the <code>$ADP.AdEvent</code> object. The current target
    *           usually refers to the original AdPlayer dispatching the event. 
-   *           <code>currentTarget</code> is set when <code>AdPlayer.track()</code> dispatches the <code>$ADP.AdEvent</code> object insance. 
-   * @returns {adplayer} Returns <code>AdPlayer</code> instance associated with the an <code>$ADP.AdEvent</code> instance.
+   *           <code>currentTarget</code> is set when <code>$ADP.AdPlayer.track()</code> dispatches the <code>$ADP.AdEvent</code> object insance. 
+   * @returns {adplayer} Returns <code>$ADP.AdPlayer</code> instance associated with the an <code>$ADP.AdEvent</code> instance.
    * @example
    * // Get reference to property
    * var adPlayer = adEvent.currentTarget();
@@ -112,9 +112,9 @@ $ADP.AdEvent = function (type, data) {
   
   /**
    * @field
-   * @description The <code>AdPlayer</code> instance associated with the <code>$ADP.AdEvent</code> object.
-   *              <code>target</code> is set when <code>AdPlayer.track()</code> dispatches the <code>$ADP.AdEvent</code> object insance.
-   * @returns {adplayer} Returns <code>AdPlayer</code> instance associated with the an <code>$ADP.AdEvent</code> instance.
+   * @description The <code>$ADP.AdPlayer</code> instance associated with the <code>$ADP.AdEvent</code> object.
+   *              <code>target</code> is set when <code>$ADP.AdPlayer.track()</code> dispatches the <code>$ADP.AdEvent</code> object insance.
+   * @returns {adplayer} Returns <code>$ADP.AdPlayer</code> instance associated with the an <code>$ADP.AdEvent</code> instance.
    * @example
    * // Get reference to property
    * var adPlayer = adEvent.target();

@@ -3,7 +3,7 @@
  * @class Contains reference to a party's ad privacy information.
  * @description Contains reference to a party's ad privacy information.
  * 
- * @see AdPlayer#addPrivacyInfo
+ * @see $ADP.AdPlayer#addPrivacyInfo
  * 
  * @author christopher.sancho@adtech.com
  * 
