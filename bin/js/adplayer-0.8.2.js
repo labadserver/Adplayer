@@ -1,10 +1,10 @@
 /*
    -------------------------------------------------------------------------------------------
-   AdPlayer v0.8.1 (dev.041812)
+   AdPlayer v0.8.2 (dev.042012)
    Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
    -------------------------------------------------------------------------------------------
   
-   This file is part of AdPlayer v0.8.1 (dev.041812).
+   This file is part of AdPlayer v0.8.2 (dev.042012).
    AdPlayer is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
@@ -1213,40 +1213,43 @@ $ADP.AdEvent = function (type, data) {
 }
 
 /** @private */
-var defaultAdEvents = ['INIT', 'LOAD', 'REMOVE', 'SHOW', 'HIDE', 'PROGRESS', 'TRACK', 'COUNT', 'CLICK', 'PRIVACY_CLICK', 'PRIVACY_OPEN', 'PRIVACY_CLOSE'];
-$ADP.AdEvent.list = new Object();
-
-/**
- * @description Checks if a certain event has been mapped to the <code>$ADP.AdEvent</code> class.
- * @function
- * @param {string} val The string value to check.
- * @returns {Boolean} Returns true or false.
- */
-$ADP.AdEvent.check = function(val) {
-  /* Check if an event is valid */
-  for (var evt in $ADP.AdEvent.list) {
-    if($ADP.AdEvent.list[evt] == val) {
-      return true;
+$ADP.adEventSetup = (function () {
+  /** @private */
+  var defaultAdEvents = ['INIT', 'LOAD', 'REMOVE', 'SHOW', 'HIDE', 'PROGRESS', 'TRACK', 'COUNT', 'CLICK', 'PRIVACY_CLICK', 'PRIVACY_OPEN', 'PRIVACY_CLOSE'];
+  $ADP.AdEvent.list = new Object();
+  
+  /**
+   * @description Checks if a certain event has been mapped to the <code>$ADP.AdEvent</code> class.
+   * @function
+   * @param {string} val The string value to check.
+   * @returns {Boolean} Returns true or false.
+   */
+  $ADP.AdEvent.check = function(val) {
+    /* Check if an event is valid */
+    for (var evt in $ADP.AdEvent.list) {
+      if($ADP.AdEvent.list[evt] == val) {
+        return true;
+      }
     }
+    $ADP.Util.log('Ad Event type is not valid: ' + val, '$ADP.AdEvent');
+    return false;
   }
-  $ADP.Util.log('Ad Event type is not valid: ' + val, '$ADP.AdEvent');
-  return false;
-}
-
-/** 
- * @description Dynamically maps a string value to the <code>$ADP.AdEvent</code> class.
- * @function
- * @param {string} val The string value to map.
- */
-$ADP.AdEvent.map = function(val) {
-  $ADP.AdEvent.list[val] = '$ADP.AdEvent.' + val;
-  $ADP.AdEvent[val] = '$ADP.AdEvent.' + val;
-}
-
-/* Setup default Ad Events */
-for (var dae = 0; dae < defaultAdEvents.length; dae++) {
-  $ADP.AdEvent.map(defaultAdEvents[dae]);
-}
+  
+  /** 
+   * @description Dynamically maps a string value to the <code>$ADP.AdEvent</code> class.
+   * @function
+   * @param {string} val The string value to map.
+   */
+  $ADP.AdEvent.map = function(val) {
+    $ADP.AdEvent.list[val] = '$ADP.AdEvent.' + val;
+    $ADP.AdEvent[val] = '$ADP.AdEvent.' + val;
+  }
+  
+  /* Setup default Ad Events */
+  for (var dae = 0; dae < defaultAdEvents.length; dae++) {
+    $ADP.AdEvent.map(defaultAdEvents[dae]);
+  }
+})();
 /**
  * @private
  * @name $ADP.AbstractPlayer
