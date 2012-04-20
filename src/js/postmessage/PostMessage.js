@@ -15,9 +15,9 @@ $ADP.PostMessage = (function () {
   /** @private */ var _this = {};
   /** @private */ var _postMsg;
 
-  _this.OUTGOING = 'PostMessage.Outgoing';
-  _this.INCOMING = 'PostMessage.Incoming';
-  _this.FUNCTION = 'PostMessage.Function: ';
+  _this.OUTGOING = 'ADP_PostMessage.Outgoing';
+  _this.INCOMING = 'ADP_PostMessage.Incoming';
+  _this.FUNCTION = 'ADP_PostMessage.Function: ';
   
   /**
    * @private
