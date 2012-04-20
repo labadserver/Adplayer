@@ -2103,7 +2103,7 @@ $ADP.PlayerFactory = (function(uid, domRefId, fnInit, refAdPlayer){
            if ($ADP.Util.isIE) {
              $ADP.Util.log('isIE is set to true.  Searching for previous sibling player...');
              function getPrevSibling(n) {
-               x = n.previousSibling;
+               var x = n.previousSibling;
                if (x == null) {
                  return false;
                } else { 
