@@ -1,69 +1,173 @@
-body, html {
-  font-family: 'Arial'; 
+/**
+ * Privacy button / Ad Marker
+ *
+ * These properties affect the positioning and style of the
+ * OBA Icon and the OBA Text displayed in one corner of an ad.
+ */
+.adplayer-privacyButton {
+  position: absolute;
+  z-index: 99999999;
 }
+.adplayer-privacyButton.adplayer-top-left { top: 0; left: 0; }
+.adplayer-privacyButton.adplayer-top-right { top: 0; right: 0; }
+.adplayer-privacyButton.adplayer-bottom-left { bottom: 20px; left: 0; }
+.adplayer-privacyButton.adplayer-bottom-right { bottom: 20px; right: 0; }
+.adplayer-privacyButton.adplayer-top-left-out { top: -20px; left: 0; }
+.adplayer-privacyButton.adplayer-top-right-out { top: -20px; right: 0; }
+.adplayer-privacyButton.adplayer-bottom-left-out { bottom: 0; left: 0; }
+.adplayer-privacyButton.adplayer-bottom-right-out { bottom: 0; right: 0; }
 
-.privacyButton .icon {
+/**
+ * Privacy button / Ad Marker
+ *
+ * These properties affect the style of the OBA Icon and
+ * the OBA Text displayed in one corner of an ad.
+ */
+.adplayer-privacyButton .adplayer-icon {
+  /*
+   * Replace the background URL with the path the
+   * OBA Icon is accessible from.
+   * Note, that relative URLs must be relative from
+   * this stylesheet file. 
+   */
+  background: url('oba_icon_15x20.jpg') no-repeat top left;
   width: 15px;
   height: 20px;
-  background: url('oba_icon_15x20.jpg') no-repeat top left; 
+  position: absolute;
+  cursor: pointer;
 }
+.adplayer-privacyButton.adplayer-top-left .adplayer-icon { top: 0; left: 0; }
+.adplayer-privacyButton.adplayer-top-right .adplayer-icon { top: 0; right: 0; }
+.adplayer-privacyButton.adplayer-bottom-left .adplayer-icon { top: 0; left: 0; }
+.adplayer-privacyButton.adplayer-bottom-right .adplayer-icon { top: 0; right: 0; }
+.adplayer-privacyButton.adplayer-top-left-out .adplayer-icon { top: 0; left: 0; }
+.adplayer-privacyButton.adplayer-top-right-out .adplayer-icon { top: 0; right: 0; }
+.adplayer-privacyButton.adplayer-bottom-left-out .adplayer-icon { top: 0; left: 0; }
+.adplayer-privacyButton.adplayer-bottom-right-out .adplayer-icon { top: 0; right: 0; }
 
-.privacyPanel {
-  font-family: Calibri, Ariel Bold, Sans-Serif, Geneva;
+.adplayer-privacyButton .adplayer-text {
+  font-family: Calibri, Arial Bold, Sans-Serif, Geneva;
+  position: absolute;
   font-size: 12px;
-  background:#ffffff;
+  font-weight: bold;
+  width: 100px;
+}
+.adplayer-privacyButton.adplayer-top-left .adplayer-text { top: 3px; left: 16px; text-align: left; }
+.adplayer-privacyButton.adplayer-top-right .adplayer-text { top: 3px; right: 20px; text-align: right; }
+.adplayer-privacyButton.adplayer-bottom-left .adplayer-text { top: 3px; left: 16px; text-align: left; }
+.adplayer-privacyButton.adplayer-bottom-right .adplayer-text { top: 3px; right: 20px; text-align: right; }
+.adplayer-privacyButton.adplayer-top-left-out .adplayer-text { top: 3px; left: 16px; text-align: left; }
+.adplayer-privacyButton.adplayer-top-right-out .adplayer-text { top: 3px; right: 20px; text-align: right; }
+.adplayer-privacyButton.adplayer-bottom-left-out .adplayer-text { top: 3px; left: 16px; text-align: left; }
+.adplayer-privacyButton.adplayer-bottom-right-out .adplayer-text { top: 3px; right: 20px; text-align: right; }
+
+/**
+ * Privacy Panel
+ *
+ * These properties affect the style of the panel which is
+ * displayed as overlay after the user clicks the OBA Icon.
+ */
+.adplayer-privacyPanel {
+  
+  background: #ffffff;
   border: 1px solid #cccccc;
   padding: 5px 5px 0 5px;
+  margin: 0 0;
+  text-align: left;
+  min-height: 25px;
+  position: absolute;
+  z-index: 999999999;
+  
+  /*
+   * Remove this to not have a fixed width or change this
+   * value to set another specific width.
+   */
   width: 250px;
+  
+  /* Rounded corners and shadow */
   border-radius: 0 0 5px 0;
   -moz-border-radius: 0 0 5px 0;
+  -webkit-border-radius: 0 0 5px 0;
   box-shadow: 2px 2px 2px #333;
   -moz-box-shadow: 2px 2px 2px #333;
   -webkit-box-shadow: 2px 2px 2px #333;
+  
+  /* Opacity Settings */
+  opacity: 1;
+}
+.adplayer-privacyPanel.adplayer-top-left,
+.adplayer-privacyPanel.adplayer-top-left-out { top: 0; left: 0; }
+.adplayer-privacyPanel.adplayer-top-right,
+.adplayer-privacyPanel.adplayer-top-right-out { top: 0; right: 0; }
+.adplayer-privacyPanel.adplayer-bottom-left,
+.adplayer-privacyPanel.adplayer-bottom-left-out { bottom: 0; left: 0; }
+.adplayer-privacyPanel.adplayer-bottom-right,
+.adplayer-privacyPanel.adplayer-bottom-right-out { bottom: 0; right: 0; }
+
+.adplayer-privacyPanel div, .adplayer-privacyPanel h4 , .adplayer-privacyPanel p, .adplayer-privacyPanel li, .adplayer-privacyPanel a {
+  color:#000000;
+  background: #ffffff;
   text-align: left;
-  min-height: 25px;
+  font-family: Calibri, 'Arial Bold', sans-serif, Geneva;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: normal;
+  text-align: left;
+  text-decoration: none;
+  line-height:normal;
+  margin: 0;
+  padding:0;
+  border: none;
+  opacity: 1;
 }
 
-.privacyPanel div.header {
-  text-align: left;
-  font-size: 12px;
+.adplayer-privacyPanel a, .adplayer-privacyPanel a :hover, .adplayer-privacyPanel a :visited {
+  color: #00E;
+  cursor: auto;
+  text-decoration: underline;
+}
+
+.adplayer-privacyPanel div.adplayer-header {
   padding: 5px;
   border-bottom: 1px solid #ccc;
 }
 
-.privacyPanel div.footer {
-  text-align: left;
+.adplayer-privacyPanel div.adplayer-footer {
   font-size: 10px;
   padding: 5px;
   border-top: 1px solid #ccc;
-  margin: 0px;
   height: auto;
 }
 
-.privacyPanel div.list {
+.adplayer-privacyPanel ul.adplayer-privacyInfoList {
   margin: 10px 5px;
+  padding-left: 15px;
+  list-style: disc;
 }
 
-.privacyPanel div.list div.item {
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem {
   margin-bottom: 10px;
-}
-
-.privacyPanel div.list div.item {
   margin: 0 0 8px 0;
-  padding: 0;
 }
 
-.privacyPanel div.list div.item h4 span {
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem h4.adplayer-privacyItemHeader {
   font-weight: bold !important;
 }
 
-.privacyPanel div.list div.item p {
-  border: none;
-  margin: 0 0 0 5px;
-  padding: 0;
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemInfo {
 }
 
-.privacyPanel div.close {
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLinkOuter {
+}
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLink {
+}
+
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLink :hover{
+}
+.adplayer-privacyPanel ul.adplayer-privacyInfoList li.adplayer-privacyItem p.adplayer-privacyItemLink :visited{
+}
+
+.adplayer-privacyPanel div.adplayer-close {
   cursor: pointer;
   position: absolute;
   top: -1px;
@@ -74,12 +178,4 @@ body, html {
   padding: 5px;
   border-radius: 0 5px 0 5px;
   -moz-border-radius: 0 5px 0 5px;
-}
-
-.privacyPanel p {
-  text-align: left;
-  font-size: 12px;
-  font-weight: normal;
-  padding: 5px;
-  border-top: 1px solid #ccc;
 }

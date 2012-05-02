@@ -1,27 +1,27 @@
 /**
  * @private
- * @name PrivacyPanel
+ * @name $ADP.PrivacyPanel
  * @class 
- * @description Handles display of all privacy information passed to current <code>AdPlayer</code> instance.
- * @param {array} infoList List containing <code>PrivacyInfo</code> objects. 
+ * @description Handles display of all privacy information passed to current <code>$ADP.AdPlayer</code> instance.
+ * @param {array} infoList List containing <code>$ADP.PrivacyInfo</code> objects. 
  * @param {string} closeTxt Optional - Close button text. 'X' is default value.
  * @param {string} headerTxt Optional - Header text.
  * @param {string} footerTxt Optional - Footer text.
  * @param {string} closeCallback Function to call when close button is clicked.
  * @param {string} trackCallback Function to call when link is clicked.  <code>trackCallback</code> passes an
  *                  a new <code>Advent.PRIVACY_CLICK</code> instance.
- * @see PrivacyInfo
- * @see AdEvent
+ * @see $ADP.PrivacyInfo
+ * @see $ADP.AdEvent
  * @author christopher.sancho@adtech.com
  */
-var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, headerTxt, footerTxt) {
+$ADP.PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, headerTxt, footerTxt) {
   /** @private */ var _this = {};
   /** @private */ var _listObj;
   /** @private */ var _infoList;
   /** @private */ var _privPanelClassName = 'privacyPanel';
   
   /**
-   * @name PrivacyPanel#panel
+   * @name $ADP.PrivacyPanel#panel
    * @field
    * @description DOM object of current privacy panel.
    * @example
@@ -29,13 +29,13 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
   _this.panel;
   
   /**
-   * @name PrivacyPanel#infoList
+   * @name $ADP.PrivacyPanel#infoList
    * @field
-   * @description List containing <code>PrivacyInfo</code> objects. 
-   * @param {string} val List to set, which contains <code>PrivacyInfo</code> objects.
+   * @description List containing <code>$ADP.PrivacyInfo</code> objects. 
+   * @param {string} val List to set, which contains <code>$ADP.PrivacyInfo</code> objects.
    * @example
    * // Get reference to property
-   * var infoList = privacyPanel.infoList();
+   * var infoList = $ADP.PrivacyPanel.infoList();
    * 
    * // Set property's value
    * privacyPanel.infoList(objList);  
@@ -78,7 +78,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
   }  
 
   /**
-   * @name PrivacyPanel#headerTxt
+   * @name $ADP.PrivacyPanel#headerTxt
    * @field
    * @description Header text positioned above ad privacy list. 
    * @param {string} val Header text.
@@ -97,7 +97,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
       if (_headerTxtObj) {
         _headerTxtObj.innerHTML = _headerTxt;
         if (_headerTxt != '') {
-          if (!checkPanel('div', 'header')) {
+          if (!checkPanel('div', $ADP.Util.cssPrefixed('header'))) {
             if (_listObj) {
               _this.panel.insertBefore(_headerTxtObj, _listObj);  
             } else {
@@ -111,7 +111,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
   }
   
   /**
-   * @name PrivacyPanel#footerTxt
+   * @name $ADP.PrivacyPanel#footerTxt
    * @field
    * @description Footer text positioned below ad privacy list. 
    * @param {string} val Footer text.
@@ -130,7 +130,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
       if (_footerTxtObj) {
         _footerTxtObj.innerHTML = _footerTxt;
         if (_footerTxt != '') {
-          if (!checkPanel('div', 'footer')) {
+          if (!checkPanel('div', $ADP.Util.cssPrefixed('footer'))) {
             _this.panel.appendChild(_footerTxtObj);
           }
         }
@@ -146,51 +146,51 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
    */
   function init() {
     _this.panel = document.createElement('div');
-    Util.setClassName(_this.panel, _privPanelClassName);
+    $ADP.Util.setClassName(_this.panel, $ADP.Util.cssPrefixed(_privPanelClassName));
     
     _closeTxtObj = document.createElement('div');
-    Util.setClassName(_closeTxtObj, 'close');
+    $ADP.Util.setClassName(_closeTxtObj, $ADP.Util.cssPrefixed('close'));
     _closeTxtObj.innerHTML = _this.closeTxt(closeTxt);
     _closeTxtObj.onclick = closeCallback;
     _this.panel.appendChild(_closeTxtObj);
     
     _headerTxtObj = document.createElement('div');
-    Util.setClassName(_headerTxtObj, 'header');
+    $ADP.Util.setClassName(_headerTxtObj, $ADP.Util.cssPrefixed('header'));
     _this.headerTxt(headerTxt);
 
-    _listObj = document.createElement('div');
-    Util.setClassName(_listObj, 'list');
+    _listObj = document.createElement('ul');
+    $ADP.Util.setClassName(_listObj, $ADP.Util.cssPrefixed('privacyInfoList'));
     _this.panel.appendChild(_listObj);
     _this.infoList(infoList);
     
     _footerTxtObj = document.createElement('div');
-    Util.setClassName(_footerTxtObj, 'footer');
+    $ADP.Util.setClassName(_footerTxtObj, $ADP.Util.cssPrefixed('footer'));
     _this.footerTxt(footerTxt);
   }
   
   /**
-   * @name PrivacyPanel#addPrivacyInfo
+   * @name $ADP.PrivacyPanel#addPrivacyInfo
    * @function
    * @description Adds <code>PrivacyInfo</code> to privacy DOM panel.
    * @param {object} privacyInfoObj <code>PrivacyInfo</code> object.
-   * @see PrivacyInfo
+   * @see $ADP.PrivacyInfo
    */
   function addPrivacyInfo(privacyInfoObj) {
-    var privacyObj =  document.createElement('div');
-    privacyObj.setAttribute('class', 'item');
-    if (Util.isIE) { privacyObj.setAttribute('className', 'item'); } // IE Fix        
+    var privacyObj =  document.createElement('li');
+    privacyObj.setAttribute('class', $ADP.Util.cssPrefixed('privacyItem'));
+    if ($ADP.Util.isIE) { privacyObj.setAttribute('className', $ADP.Util.cssPrefixed('privacyItem')); } // IE Fix        
     privacyClick = function(url) {
       var data = new Object();
       data.url = url;
-      trackCallback(new AdEvent(AdEvent.PRIVACY_CLICK, data));
+      trackCallback(new $ADP.AdEvent($ADP.AdEvent.PRIVACY_CLICK, data));
       window.open(url);          
     }
-    privacyObj.innerHTML = '<h4 style="margin:0; padding:0;">- ' + '<span>' + privacyInfoObj.adServer + '</span></h4><p>' + privacyInfoObj.message+'</p><p><a href="javascript:privacyClick(\''+privacyInfoObj.url+'\');" target="_self">'+privacyInfoObj.urlText+'</a></p>';
+    privacyObj.innerHTML = '<h4 class="' + $ADP.Util.cssPrefixed('privacyItemHeader') + '">' + privacyInfoObj.adServer + '</h4><p class="' + $ADP.Util.cssPrefixed('privacyItemInfo') + '">' + privacyInfoObj.message+'</p><p class="' + $ADP.Util.cssPrefixed('privacyItemLinkOuter') + '"><a class="'+ $ADP.Util.cssPrefixed('privacyItemLink')+'" href="javascript:privacyClick(\''+privacyInfoObj.url+'\');" target="_self">'+privacyInfoObj.urlText+'</a></p>';
     _listObj.appendChild(privacyObj);
   }
   
   /**
-   * @name PrivacyPanel#checkPanel
+   * @name $ADP.PrivacyPanel#checkPanel
    * @function
    * @description Checks if panel contains a certain element with a defined class name.
    * @param {string} tagName DOM element.
@@ -206,7 +206,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
   }
   
   /**
-   * @name PrivacyPanel#setPosition
+   * @name $ADP.PrivacyPanel#setPosition
    * @function
    * @description Sets the position of the panel relative to its parent DOM element.
    * @param {string} pos Position where to set panel.</br>  
@@ -223,32 +223,7 @@ var PrivacyPanel = (function (infoList, closeCallback, trackCallback, closeTxt, 
    *                 </ul>
    */
   _this.setPosition = function (pos) {
-    _this.panel.setAttribute('style', '');
-    _this.panel.style.position = "absolute";
-    _this.panel.style.zIndex = "999999999";
-    switch (pos) {
-      case "bottom-left-out":
-      case "bottom-left":
-        _this.panel.style.bottom = "0px";
-        _this.panel.style.left = "0px";        
-      break; 
-      case "bottom-right-out":
-      case "bottom-right":
-        _this.panel.style.bottom = "0px";
-        _this.panel.style.right = "0px";        
-      break;
-      case "top-right-out":
-      case "top-right":
-        _this.panel.style.top = "0px";
-        _this.panel.style.right = "0px";        
-        break;
-      default: // top-left
-        _this.panel.style.top = "0px";
-        _this.panel.style.left = "0px";
-        break;
-    }
-    
-    Util.setClassName(_this.panel, _privPanelClassName + ' ' + pos);
+    $ADP.Util.setClassName(_this.panel, $ADP.Util.cssPrefixed(_privPanelClassName) + ' ' + $ADP.Util.cssPrefixed(pos));
   }    
     
   

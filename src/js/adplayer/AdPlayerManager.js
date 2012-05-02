@@ -1,16 +1,19 @@
-if (typeof AdPlayerManager === 'undefined') {
+if (typeof $ADP === 'undefined') {
+
+var $ADP = {};
+  
 /*@CLASS_INSERTS@*/
   
 /**
- * @name AdPlayerManager
- * @class Global Static Class - Manages all created <code>AdPlayer</code> instances.
- * @description Globally Manages all created <code>AdPlayer</code> instances.
- *              <code>AdPlayerManager</code> is a singleton class and ensures it
- *              is the only available <code>AdPlayerManager</code> throughout an
+ * @name $ADP.AdPlayerManager
+ * @class Global Static Class - Manages all created <code>$ADP.AdPlayer</code> instances.
+ * @description Globally Manages all created <code>$ADP.AdPlayer</code> instances.
+ *              <code>$ADP.AdPlayerManager</code> is a singleton class and ensures it
+ *              is the only available <code>$ADP.AdPlayerManager</code> throughout an
  *              ad delivery flow.</br>
  * @author christopher.sancho@adtech.com
  */
-var AdPlayerManager = (function () {
+$ADP.AdPlayerManager = (function () {
   /** @private */ var _this = {};
   /** @private */ var _adPlayerList = [];
   /** @private */ var _callBackList = [];
@@ -19,15 +22,15 @@ var AdPlayerManager = (function () {
   /** @private */ function init() {}
   
   /**
-   * @name AdPlayerManager#list
+   * @name $ADP.AdPlayerManager#list
    * @field
-   * @description List that contains instances of <code>AdPlayer</code>
+   * @description List that contains instances of <code>$ADP.AdPlayer</code>
    *              added to the manager.  
-   * @returns {array - read only} Returns a list list of <code>AdPlayer</code> instances.
-   * @see AdPlayerManager#register
+   * @returns {array - read only} Returns a list list of <code>$ADP.AdPlayer</code> instances.
+   * @see $ADP.AdPlayerManager#register
    * @example
    * // Get reference to property
-   * var adPlayerList = AdPlayerManager.list();
+   * var adPlayerList = $ADP.AdPlayerManager.list();
    */
   _this.list = function() {
     return _adPlayerList;
@@ -35,10 +38,10 @@ var AdPlayerManager = (function () {
 
   /**
    * @private
-   * @name AdPlayerManager#factoryList
+   * @name $ADP.AdPlayerManager#factoryList
    * @field
    * @description Currently used by as universal list for verifying iframe identification incoming post-messaging.  
-   * @returns {array - read only} Returns a list of <code>PlayerFactory</code> instances.
+   * @returns {array - read only} Returns a list of <code>$ADP.PlayerFactory</code> instances.
    */
   var _factoryList = [];
   _this.factoryList = function() {
@@ -47,7 +50,7 @@ var AdPlayerManager = (function () {
   
   /**
    * @private
-   * @name AdPlayerManager#domIdList
+   * @name $ADP.AdPlayerManager#domIdList
    * @field
    * @description Currently used by as universal list for tracking DOM IDs associated with an AdPlayer.
    * @returns {Array - Read Only} Returns a list of <code>DOM</code> id values.
@@ -58,19 +61,19 @@ var AdPlayerManager = (function () {
   }; 
   
   /**
-   * @name AdPlayerManager#addAdPlayer
+   * @name $ADP.AdPlayerManager#addAdPlayer
    * @function
-   * @description Adds an <code>AdPlayer</code> instance to the management list.  When a new
-   *              <code>AdPlayer</code> instance is created, it is automatically passed to
+   * @description Adds an <code>$ADP.AdPlayer</code> instance to the management list.  When a new
+   *              <code>$ADP.AdPlayer</code> instance is created, it is automatically passed to
    *              this method.  Immediately following, all call-backs, registerd through
    *              <code>AdPlayerManger.register(adPlayer)</code> are dispatched and passed
-   *              with the newly created <code>AdPlayer</code>.
-   * @param {adplayer} adPlayer <code>AdPlayer</code> instance to add to management list.
+   *              with the newly created <code>$ADP.AdPlayer</code>.
+   * @param {adplayer} adPlayer <code>$ADP.AdPlayer</code> instance to add to management list.
    * @see AdPlayerManger#register
    * @example
    * // Add an AdPlayer instance to the manager.
-   * var adPlayer = new AdPlayer(document.getElementById('myTagDivContainer'));
-   * AdPlayerManager.addAdPlayer(adPlayer);
+   * var adPlayer = new $ADP.AdPlayer(document.getElementById('myTagDivContainer'));
+   * $ADP.AdPlayerManager.addAdPlayer(adPlayer);
    */
   _this.addAdPlayer = function(adPlayer) {
     for (var i=0; i < _adPlayerList.length; i++) {
@@ -85,24 +88,24 @@ var AdPlayerManager = (function () {
   };
   
   /**
-   * @name AdPlayerManager#register
+   * @name $ADP.AdPlayerManager#register
    * @function
-   * @description Registers a function that will be called when an <code>AdPlayer</code> instance
+   * @description Registers a function that will be called when an <code>$ADP.AdPlayer</code> instance
    *              is created. Call-back handler function must expect a parameter that accepts
-   *              an <code>AdPlayer</code> instance.
+   *              an <code>$ADP.AdPlayer</code> instance.
    * @param {function} callback The call-back handler function.
    * @example
    * function myCallBackHandler(adPlayer) {
    *   adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');
    * }
-   * AdPlayerManager.register(myCallBackHandler);
+   * $ADP.AdPlayerManager.register(myCallBackHandler);
    */
   _this.register = function(callback) {
     _callBackList.push(callback);
   };
   
   /**
-   * @name AdPlayerManager#unregister
+   * @name $ADP.AdPlayerManager#unregister
    * @function
    * @description Un-Registers a function added to the manager list.
    * @param {function} callback The call-back handler function.
@@ -110,7 +113,7 @@ var AdPlayerManager = (function () {
    * function myCallBackHandler(adPlayer) {
    *   adPlayer.addPrivacyInfo('AD_SERVER', 'My message goes here.', 'http://adplayer.aboutthisad.com');
    * }
-   * AdPlayerManager.unregister(myCallBackHandler);
+   * $ADP.AdPlayerManager.unregister(myCallBackHandler);
    */
   _this.unregister = function(callback) {
     for (var i = 0; i < _callBackList.length; i++) {
@@ -122,21 +125,21 @@ var AdPlayerManager = (function () {
   };
   
   /**
-   * @name AdPlayerManager#getAdPlayerById
+   * @name $ADP.AdPlayerManager#getAdPlayerById
    * @function
-   * @description Returns an instance of an <code>AdPlayer</code> associated with
+   * @description Returns an instance of an <code>$ADP.AdPlayer</code> associated with
    *              a DOM element id name
-   * @param {string} id Id of DOM element associated with <code>AdPlayer</code>.
+   * @param {string} id Id of DOM element associated with <code>$ADP.AdPlayer</code>.
    * @return {adplayer} AdPlayer instance associated with id. 
    * @example
    * &lt;div id=&quot;adPlayerContainer&quot;&gt;
    *  &lt;script type=&quot;text/javascript&quot;&gt;
-   *    var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
+   *    var adPlayer = new $ADP.AdPlayer(document.getElementById('adPlayerContainer'));
    *    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
    *  &lt;/script&gt;
    * &lt;/div&gt;
    * &lt;script type=&quot;text/javascript&quot;&gt;
-   *  var adPlayer = AdPlayerManager.getAdPlayerById('adPlayerContainer');
+   *  var adPlayer = $ADP.AdPlayerManager.getAdPlayerById('adPlayerContainer');
    * &lt;/script&gt;
    */
   _this.getAdPlayerById = function(id) {
@@ -146,28 +149,28 @@ var AdPlayerManager = (function () {
           return _adPlayerList[i];
         }
       } else {
-        Util.log('DOM element is not properly specified.','getPlayerById');
+        $ADP.Util.log('DOM element is not properly specified.','getPlayerById');
       }
     }
     return null;
   };
 
   /**
-   * @name AdPlayerManager#getPlayerByDomElement
+   * @name $ADP.AdPlayerManager#getPlayerByDomElement
    * @function
-   * @description Returns an instance of an <code>AdPlayer</code> associated with
+   * @description Returns an instance of an <code>$ADP.AdPlayer</code> associated with
    *              a DOM element. 
-   * @param {string} dom DOM element object associated with <code>AdPlayer</code>.
+   * @param {string} dom DOM element object associated with <code>$ADP.AdPlayer</code>.
    * @return {adplayer} AdPlayer instance associated with dom element. 
    * @example
    * &lt;div id=&quot;adPlayerContainer&quot;&gt;
    *  &lt;script type=&quot;text/javascript&quot;&gt;
-   *    var adPlayer = new AdPlayer(document.getElementById('adPlayerContainer'));
+   *    var adPlayer = new $ADP.AdPlayer(document.getElementById('adPlayerContainer'));
    *    adPlayer.addPrivacyInfo('1ST_SERVER', 'My info message.', 'http://adplayer.aboutthisad.com');
    *  &lt;/script&gt;
    * &lt;/div&gt;
    * &lt;script type=&quot;text/javascript&quot;&gt;
-   *  var adPlayer = AdPlayerManager.getPlayerByDomElement('adPlayerContainer');
+   *  var adPlayer = $ADP.AdPlayerManager.getPlayerByDomElement('adPlayerContainer');
    * &lt;/script&gt;
    */
   _this.getPlayerByDomElement = function(dom) {
@@ -177,18 +180,18 @@ var AdPlayerManager = (function () {
           return _adPlayerList[i];
         }
       } else {
-        Util.log('DOM element is not properly specified.','getPlayerByDomElement');
+        $ADP.Util.log('DOM element is not properly specified.','getPlayerByDomElement');
       }
     }
     return null;
   };    
 
   /**
-   * @name AdPlayerManager#getPlayerByUID
+   * @name $ADP.AdPlayerManager#getPlayerByUID
    * @function
-   * @description Returns an instance of an <code>AdPlayer</code> associated with
+   * @description Returns an instance of an <code>$ADP.AdPlayer</code> associated with
    *              a UID string. 
-   * @param {string} uid UID string associated with <code>AdPlayer</code>.
+   * @param {string} uid UID string associated with <code>$ADP.AdPlayer</code>.
    * @return {adplayer} AdPlayer instance associated with dom element. 
    * @example
    * 

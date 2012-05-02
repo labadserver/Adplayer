@@ -1,15 +1,15 @@
 /**
  * @private
- * @name PostMessageHandler
+ * @name $ADP.PostMessageHandler
  * @class 
- * @description Handles both incoming and outgoing messages from <code>PostMessage</code>.
+ * @description Handles both incoming and outgoing messages from <code>$ADP.PostMessage</code>.
  * @author christopher.sancho@adtech.com
  */
-var PostMessageHandler = (function () {
+$ADP.PostMessageHandler = (function () {
   /** @private */ var _this = {};
 
   /**
-   * @name PostMessageHandler#domRefPlayerWait
+   * @name $ADP.PostMessageHandler#domRefPlayerWait
    * @function
    * @description Waits for DOM element to become available and then determines if iframe
    *              verification is needed or message can be processed.
@@ -22,55 +22,55 @@ var PostMessageHandler = (function () {
     
     function iframeVerify(dom, json) {
       var obj = new Object();
-      obj.postType = PostMessage.INCOMING;
+      obj.postType = $ADP.PostMessage.INCOMING;
       obj.uid = json.uid;
       obj.fn = 'iframePlayerVerify';      
       var player = _this.getPlayerByDomSearch(dom);
       if (player) {
         if (json.fn == "iframePlayerVerify") {
           obj.params = true;
-          PostMessage.send(obj, dom.contentWindow);   
+          $ADP.PostMessage.send(obj, dom.contentWindow);   
           return;
         }
         readyTest(dom, json, player);
       } else {
         obj.params = false;
-        PostMessage.send(obj, dom.contentWindow);          
+        $ADP.PostMessage.send(obj, dom.contentWindow);          
       }
     }
     function iframeVerifyErr() {
-      Util.log('Could not verify a parent iframe AdPlayer.');
+      $ADP.Util.log('Could not verify a parent iframe AdPlayer.');
     }
-    Util.ready(function(){return _this.dom;}, this, iframeVerify, [_this.dom, _this.json], iframeVerifyErr, null);
+    $ADP.Util.ready(function(){return _this.dom;}, this, iframeVerify, [_this.dom, _this.json], iframeVerifyErr, null);
   }
 
   /**
-   * @name PostMessageHandler#getPlayerByDomSearch
+   * @name $ADP.PostMessageHandler#getPlayerByDomSearch
    * @function
    * @description Attempts to locate a parent AdPlayer from a DOM reference point.
    * @param {dom} dom DOM object that needs to be checked.
    */
   _this.getPlayerByDomSearch = function (dom) {
     var par = dom.parentNode;
-    while (!AdPlayerManager.getAdPlayerById(par.id)) {
+    while (!$ADP.AdPlayerManager.getAdPlayerById(par.id)) {
       par = par.parentNode;
       parName = par.nodeName.toLowerCase();
       if ((parName == 'body') || (parName == 'html')) { break; }
     }
     if(par) {
-      var adPlayer = AdPlayerManager.getAdPlayerById(par.id);
+      var adPlayer = $ADP.AdPlayerManager.getAdPlayerById(par.id);
       if(adPlayer) {
-        Util.log('Found player at '+adPlayer.adDomElement().id);
+        $ADP.Util.log('Found player at '+adPlayer.adDomElement().id);
           return(adPlayer);
       } else {
-        Util.log('No AdPlayer found after parent search for "' + dom.id + '."');
+        $ADP.Util.log('No AdPlayer found after parent search for "' + dom.id + '."');
         return null;
       }
     }     
   }    
 
   /**
-   * @name PostMessageHandler#readyTest
+   * @name $ADP.PostMessageHandler#readyTest
    * @function
    * @description Parses JSON object and executes requests.
    * @param {dom} iframe Target iframe to communicate with.
@@ -84,16 +84,16 @@ var PostMessageHandler = (function () {
         // Checks if it contains a function, which is needs to be properly wrapped and send off
         switch (json.fn){
           case 'addEventListener':
-            if (unescape(params[t]).match(PostMessage.FUNCTION)) {
-              var funcN = unescape(params[t]).slice(PostMessage.FUNCTION.length);
+            if (unescape(params[t]).match($ADP.PostMessage.FUNCTION)) {
+              var funcN = unescape(params[t]).slice($ADP.PostMessage.FUNCTION.length);
               function funcMe (evt) {
                 var obj = new Object();
-                obj.postType = PostMessage.INCOMING;
+                obj.postType = $ADP.PostMessage.INCOMING;
                 obj.uid = json.uid;
                 obj.fn = funcN;
                 obj.evtType = evt.type();
                 obj.uidName = json.uidName;
-                PostMessage.send(obj, iframe.contentWindow);
+                $ADP.PostMessage.send(obj, iframe.contentWindow);
               }
               funcMe.uidName = json.uidName;
               params[t] = funcMe;
@@ -107,10 +107,10 @@ var PostMessageHandler = (function () {
             params.push(json.uidName.toString());
           break;
         case 'track':
-          adEvtObj = new AdEvent(params[0]);
+          adEvtObj = new $ADP.AdEvent(params[0]);
           adEvtObj.target(player);
           adEvtObj.currentTarget(player);
-          player.track(new AdEvent(params[0]), params[1]);
+          player.track(new $ADP.AdEvent(params[0]), params[1]);
           return;
           break;
       }
@@ -120,7 +120,7 @@ var PostMessageHandler = (function () {
   }      
   
   /**
-   * @name PostMessageHandler#inMsgHandler
+   * @name $ADP.PostMessageHandler#inMsgHandler
    * @function
    * @description Handles specific incoming messages.
    * @param {object} json JSON object evaluate.
@@ -129,9 +129,9 @@ var PostMessageHandler = (function () {
     switch (json.fn){
       case 'iframePlayerVerify':
         var factoryPlayer; 
-        for (var i = 0; i < AdPlayerManager.factoryList().length; i++) {
-          if (AdPlayerManager.factoryList()[i].uid() == json.uid) {
-            factoryPlayer = AdPlayerManager.factoryList()[i];
+        for (var i = 0; i < $ADP.AdPlayerManager.factoryList().length; i++) {
+          if ($ADP.AdPlayerManager.factoryList()[i].uid() == json.uid) {
+            factoryPlayer = $ADP.AdPlayerManager.factoryList()[i];
             break;
           }
         }
@@ -144,10 +144,10 @@ var PostMessageHandler = (function () {
       break;
     default: 
       var func = (new Function( "return( " + json.fn + " );" ))();
-      var player = AdPlayerManager.getPlayerByUID(json.uid);  
+      var player = $ADP.AdPlayerManager.getPlayerByUID(json.uid);  
       // Need to target the current player and send back
       if (player) {
-        var event = new AdEvent(json.evtType);
+        var event = new $ADP.AdEvent(json.evtType);
         event.target(player);
         func(event);
       }
