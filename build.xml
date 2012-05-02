@@ -1,7 +1,7 @@
 <project name="AdPlayer" default="execute" basedir=".">
   <description>AdPlayer build script.</description>
 
-  <property name="version" value="0.8.3"/>
+  <property name="version" value="0.9.0"/>
   <property name="jsfilename" value="adplayer-${version}"/>
   <property name="cssfilename" value="adplayer-${version}"/>
 
@@ -23,148 +23,16 @@
   </target>
 
   <target name="copy" depends="init" description="copy source to bin">
-    <copy todir="${bin}/tmp" overwrite="true">
-      <fileset dir="${src}/html" includes="*.html" /> 
+    <copy todir="${bin}" overwrite="true">
+      <fileset dir="${src}" includes="*" /> 
     </copy>
-    <copy todir="${bin}/tmp/demo" overwrite="true">
-      <fileset dir="${src}/html/demo" includes="*.html" />
-    	<fileset dir="${src}/html/demo" includes="*.js" />
-    </copy>
-    <copy tofile="${bin}/tmp/${jsfilename}.js" file="${src}/js/adplayer/AdPlayerManager.js" overwrite="true" />
-    <copy todir="${bin}/css" overwrite="true">
-      <fileset dir="${src}/css" includes="*.jpg" />  
-    </copy>
-    <copy todir="${bin}/css" overwrite="true">
-      <fileset dir="${src}/css" includes="*.png" />  
-    </copy>
-    <copy tofile="${bin}/js/json2.min.js" file="${src}/js/lib/json2.min.js" overwrite="true" />
-    <replace dir="${bin}" token="_@ADPLAYER_JS_FILE@_" value="${jsfilename}.js" />
-    <replace dir="${bin}" token="_@ADPLAYER_JS_FILE_MIN@_" value="${jsfilename}.min.js" />
-    <replace dir="${bin}" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}-style.css" />
-    <replace dir="${bin}" token="_@ADPLAYER_CSS-IE_FILE@_" value="${cssfilename}-style-ie.css" />
-    <replace dir="${bin}" token="_@VERSION@_" value="${version} (${dist.revision}.${today})" />
-  </target>
-
-  <target name="compile" depends="copy" description="compile the source">
-    <concat destfile="${bin}/tmp/class_insert.txt" fixlastline="true">  
-      <filelist dir="${src}">
-        <!-- DEFINE Class list order -->
-        <file name="js/util/Util.js"/>
-        <file name="js/postmessage/AbstractPostMsg.js"/>
-        <file name="js/postmessage/PostMsgDefault.js"/>
-        <file name="js/postmessage/PostMessageHandler.js"/>
-        <file name="js/postmessage/PostMessage.js"/>
-        <file name="js/privacy/PrivacyInfoButton.js"/>
-        <file name="js/privacy/PrivacyPanel.js"/>
-        <file name="js/privacy/PrivacyInfo.js"/>
-        <file name="js/util/PixelRequest.js"/>
-        <file name="js/event/AdEvent.js"/>
-        <file name="js/adplayer/AbstractPlayer.js"/>
-        <file name="js/adplayer/DefaultPlayer.js"/>
-        <file name="js/adplayer/ReferencePlayer.js"/>
-        <file name="js/adplayer/IframePlayer.js"/>
-        <file name="js/adplayer/PlayerFactory.js"/>
-        <file name="js/adplayer/AdPlayer.js"/>
-      </filelist>
-    </concat>   
-    <loadfile property="CLASS_INSERTS" srcfile="${bin}/tmp/class_insert.txt" />
-    <replace file="${bin}/tmp/${jsfilename}.js" token="/*@CLASS_INSERTS@*/" value="${CLASS_INSERTS}" />
-    <replace file="${bin}/tmp/${jsfilename}.js" token="_@VERSION@_" value="${version}.${dist.revision}.${today}" />
   </target>
   
-  <target name="js.minify" depends="compile">
-    <apply executable="java" parallel="false">
-      <fileset dir="${bin}/tmp/" includes="${jsfilename}.js"/>
-      <arg line="-jar"/>
-      <arg path="tools/yui/yuicompressor-2.4.2.jar"/>
-      <srcfile/>
-      <arg line="-o"/>
-      <mapper type="glob" from="*.js" to="${bin}/tmp/*-min.js"/>
-      <targetfile/>
-    </apply>
-  </target>
-
-  <target name="css.minify" depends="js.minify">
-    <mkdir dir="${bin}/css"/>
-    <apply executable="java" parallel="false">
-      <fileset dir="${src}/css/" includes="*.css"/>
-      <arg line="-jar"/>
-      <arg path="tools/yui/yuicompressor-2.4.2.jar"/>
-      <srcfile/>
-      <arg line="-o"/>
-      <mapper type="glob" from="*.css" to="${bin}/tmp/${cssfilename}-*.css"/>
-      <targetfile/>
-    </apply>
-  </target>
-
-  <target name="gnu" depends="css.minify">
+  <target name="gnu" depends="copy">
     <copy tofile="${bin}/gpl.txt" file="gpl.txt" overwrite="true" />
-    
-    <copy todir="${bin}/tmp/" file="gnu.txt" overwrite="true" />
-    <replace file="${bin}/tmp/gnu.txt" token="_@VERSION@_" value="${version} (${dist.revision}.${today})" />
-    
-    <concat destfile="${bin}/js/${jsfilename}.min.js">
-      <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/${jsfilename}-min.js"/>
-    </concat>
-   
-    <concat destfile="${bin}/js/${jsfilename}.js">
-      <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/${jsfilename}.js"/>
-    </concat>
-    
-  	 <!-- DEMO -->
-    <concat destfile="${bin}/demo/example1.js">
-      <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/demo/example1.js"/>
-    </concat>
-    <concat destfile="${bin}/demo/example2.js">
-      <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/demo/example2.js"/>
-    </concat>
-    <concat destfile="${bin}/demo/example3.js">
-      <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/demo/example3.js"/>
-    </concat>
-  	
-    <concat destfile="${bin}/css/${cssfilename}-style.css">
-      <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/${cssfilename}-style.css"/>
-    </concat>
-    <concat destfile="${bin}/css/${cssfilename}-style-ie.css">
-      <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/${cssfilename}-style-ie.css"/>
-    </concat>
-    
-    <replace file="${bin}/tmp/gnu.txt" token="/*" value="&lt;!--" />
-    <replace file="${bin}/tmp/gnu.txt" token="*/" value="--&gt;" />
-    <concat destfile="${bin}/apstub.html">
-      <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/apstub.html"/>
-    </concat>
-    
-    <!-- DEMO -->
-    <concat destfile="${bin}/index.html">
-      <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/demo/index.html"/>
-    </concat>
-    <concat destfile="${bin}/demo/iframe.html">
-      <header filtering="no" trimleading="no" file="${bin}/tmp/gnu.txt"></header>
-      <path path="${bin}/tmp/demo/iframe.html"/>
-    </concat>
-    
-    <replace file="${bin}/tmp/gnu.txt" token="&lt;!--" value="" />
-    <replace file="${bin}/tmp/gnu.txt" token="--&gt;" value="" />
   </target>
 
-  <target name="jsdoc" depends="gnu">
-    <taskdef name="jsdoctoolkit" classname="uk.co.darrenhurley.ant.tasks.JsDocToolkit" classpath="tools/jsdoc/jsdoc-toolkit-ant-task-1.1.2.jar;tools/jsdoc/jsrun.jar" />
-    <jsdoctoolkit jsdochome="tools/jsdoc/" template="jsdoc" outputdir="${bin}/docs/">
-      <source file="${bin}/js/${jsfilename}.js" />
-    </jsdoctoolkit>
-  </target>
-
-  <target name="execute" depends="jsdoc" description="execute the source">
+  <target name="execute" depends="gnu" description="execute the source">
     <delete dir="${bin}/tmp" />
   </target>
 </project>
