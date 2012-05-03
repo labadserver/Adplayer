@@ -1,13 +1,14 @@
-=============================================================================================
+=================================================================================
 Getting Started
-=============================================================================================
+=================================================================================
 
 Importing AdPlayer Project into Eclipse
 -----------------------------------------
 
 1) File > Import > General > Existing Projects into Workspace
 2) Check "Select root directory"
-2) Click Browse and select the GIT repository, which should already be cloned to the system.
+2) Click Browse and select the GIT repository, which should already be cloned
+   to the system.
 3) Ensure the directory is selected under the "Projects" section.
 4) Click "Finish"
 5) Project should be imported to current workspace
@@ -17,29 +18,31 @@ Building AdPlayer Project
 -----------------------------------------
 1) Right click "build.xml" > Run As > Ant Build
 2) A new "build" directory will be created containing the Ant build output.
-3) Note: Eclipse may require you to refresh the project folder's view.
-	 This can be done easily by right clicking the project folder and clicking "Refresh."
+3) Note: Eclipse may require you to refresh the project folder's view. This can
+   be done easily by right clicking the project folder and clicking "Refresh."
 	
 
 Testing
 -----------------------------------------
-1) Open the generated demo.html file from the demo directory in your favorite browser	
+1) Open the generated demo.html file from the demo directory in your 
+   favorite browser.
+	
 	 Note:
-	   - The demo.html file in the demo folder can not be used for testing directly. Use
-	     the one in the build folder instead!
+     - The demo.html file in the demo folder can not be used for
+       testing directly. Use the one in the build folder instead!
      - The test page (demo.html) currently uses static ADTECH test tags.
 
 
-=============================================================================================
+=================================================================================
 Additional Info
-=============================================================================================
+=================================================================================
 Additional info:  https://github.com/labadserver/
 Latest version of AdPlayer: https://github.com/labadserver/Adplayer/downloads
 
 
-=============================================================================================
+=================================================================================
 ChangeLog
-=============================================================================================
+=================================================================================
 
 1.0.0
 ------------------
