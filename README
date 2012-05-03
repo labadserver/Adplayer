@@ -27,7 +27,7 @@ Testing
 1) Open the generated demo.html file from the demo directory in your 
    favorite browser.
 	
-	 Note:
+   Note:
      - The demo.html file in the demo folder can not be used for
        testing directly. Use the one in the build folder instead!
      - The test page (demo.html) currently uses static ADTECH test tags.
