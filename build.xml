@@ -1,38 +1,148 @@
-<project name="AdPlayer" default="execute" basedir=".">
+<project name="AdPlayer" default="_default-build" basedir=".">
   <description>AdPlayer build script.</description>
-
-  <property name="version" value="0.9.0"/>
-  <property name="jsfilename" value="adplayer-${version}"/>
-  <property name="cssfilename" value="adplayer-${version}"/>
-
-  <property name="src" location="src"/>
-  <property name="lib" location="lib"/>
-  <property name="bin" location="bin"/>
-
-  <property name="dist.revision" value="dev"/>
-
+	
+	<xmlproperty file=".project" keeproot="true"/>
+  <property name="version" value="${projectDescription.version}"/>
+  <property name="dist.revision" value="alpha"/>
   <tstamp>
     <format property="today" pattern="MMddyy" locale="en,UK"/>
   </tstamp>
-  
-  <delete dir="${bin}" />
-  
-  <target name="init">
-    <tstamp/>
-    <mkdir dir="${bin}"/>
-  </target>
-
-  <target name="copy" depends="init" description="copy source to bin">
-    <copy todir="${bin}" overwrite="true">
-      <fileset dir="${src}" includes="*" /> 
+	<property name="version-detailed" value="v${version} (${dist.revision}.${today})"/>
+  <property name="jsfilename" value="adplayer-${version}"/>
+  <property name="cssfilename" value="adplayer-${version}"/>
+  <property name="build-dir" location="build"/>
+  <property name="lib-dir" location="lib"/>
+  <property name="src-dir" location="src"/>
+  <property name="js-dir" location="src/js"/>
+  <property name="css-dir" location="src/css"/>
+  <property name="html-dir" location="src/html"/>  
+	
+  <target name="prepare" description="Prepares the build directory.">
+    <delete dir="${build-dir}" />
+    <mkdir dir="${build-dir}"/>
+  	<copy todir="${build-dir}/css" overwrite="true">
+      <fileset dir="${css-dir}" includes="*">
+      	<exclude name="*.jpg"/>
+      </fileset>
+  		<mapper type="glob" from="*" to="${cssfilename}-*" />
     </copy>
+    <copy todir="${build-dir}/css" overwrite="true">
+      <fileset dir="${css-dir}" includes="*.jpg, *.png" />
+    </copy>
+    <copy todir="${build-dir}/demo" overwrite="true">
+      <fileset dir="${html-dir}/demo" />
+    </copy>
+    <copy file="${html-dir}/apstub.html" todir="${build-dir}" />
+  	<copy file="README" todir="${build-dir}" />
   </target>
   
-  <target name="gnu" depends="copy">
-    <copy tofile="${bin}/gpl.txt" file="gpl.txt" overwrite="true" />
+  <target name="compile" depends="prepare" description="Compiles source and replaces all tokens.">
+    <concat destfile="${build-dir}/js/${jsfilename}.js" fixlastline="true">  
+      <filelist dir="${js-dir}">
+        <!-- DEFINE Class list order -->
+      	<file name="Namespace.js"/>
+      	<file name="Registry.js"/>
+        <file name="Player.js"/>
+      	<file name="PrivacyInfo.js"/>
+      	<!-- END DEFINE Class list order -->
+      </filelist>
+    </concat>
+    <replace dir="${build-dir}" token="_@ADPLAYER_JS_FILE@_" value="${jsfilename}.js" />
+    <replace dir="${build-dir}" token="_@ADPLAYER_JS_FILE_MIN@_" value="${jsfilename}.min.js" />
+    <replace dir="${build-dir}" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}-style.css" />
+    <replace dir="${build-dir}" token="_@ADPLAYER_CSS-IE_FILE@_" value="${cssfilename}-style-ie.css" />
+    <replace dir="${build-dir}" token="_@VERSION@_" value="${version-detailed}" />
+  </target>
+  
+  <target name="compress" depends="compile" description="Compresses js and css files.">
+    <apply executable="java" parallel="false">
+      <fileset dir="${build-dir}/js/" includes="${jsfilename}.js"/>
+      <arg line="-jar"/>
+      <arg path="tools/yui/yuicompressor-2.4.2.jar"/>
+      <srcfile/>
+      <arg line="-o"/>
+      <mapper type="glob" from="*.js" to="${build-dir}/js/*.min.js"/>
+      <targetfile/>
+    </apply>
+    <apply executable="java" parallel="false">
+      <fileset dir="${build-dir}/css/" includes="*.css"/>
+      <arg line="-jar"/>
+      <arg path="tools/yui/yuicompressor-2.4.2.jar"/>
+      <srcfile/>
+      <arg line="-o"/>
+      <mapper type="glob" from="*.css" to="${build-dir}/css/*.min.css"/>
+      <targetfile/>
+    </apply>
+  </target>
+	
+  <target name="gnu" depends="compress" description="Appends GPL liscense to all build files.">
+    <copy tofile="${build-dir}/gpl.txt" file="gpl.txt" overwrite="true" />
+    <copy todir="${build-dir}/tmp" file="gnu.txt" overwrite="true" />
+    <replace file="${build-dir}/tmp/gnu.txt" token="_@VERSION@_" value="${version-detailed}" />
+    
+  	<!-- TODO: Possibly loop through files, but will require ant-contrib -->
+  	
+  	<!-- JS/CSS Files -->
+  	<antcall target="gnu.me">
+  	  <param name="filepath" value="${build-dir}/css/${cssfilename}-style.css" />
+  	</antcall>
+    <antcall target="gnu.me">
+      <param name="filepath" value="${build-dir}/css/${cssfilename}-style.min.css" />
+    </antcall>
+    <antcall target="gnu.me">
+      <param name="filepath" value="${build-dir}/css/${cssfilename}-style-ie.css" />
+    </antcall>
+    <antcall target="gnu.me">
+      <param name="filepath" value="${build-dir}/css/${cssfilename}-style-ie.min.css" />
+    </antcall>
+    <antcall target="gnu.me">
+      <param name="filepath" value="${build-dir}/js/${jsfilename}.js" />
+    </antcall>
+    <antcall target="gnu.me">
+      <param name="filepath" value="${build-dir}/js/${jsfilename}.min.js" />
+    </antcall>
+    <antcall target="gnu.me">
+      <param name="filepath" value="${build-dir}/demo/example1.js" />
+    </antcall>
+    <antcall target="gnu.me">
+      <param name="filepath" value="${build-dir}/demo/example2.js" />
+    </antcall>
+    <antcall target="gnu.me">
+      <param name="filepath" value="${build-dir}/demo/example3.js" />
+    </antcall>
+  	
+  	<!-- HTML Files -->
+    <replace file="${build-dir}/tmp/gnu.txt" token="/*" value="&lt;!--" />
+    <replace file="${build-dir}/tmp/gnu.txt" token="*/" value="--&gt;" />
+    <loadfile property="gnulicense" srcfile="${build-dir}/tmp/gnu.txt" />
+  	<replace dir="${build-dir}" token="&lt;!--_@GNULICENSE@_--&gt;" value="${gnulicense}" />
+  </target>
+	
+  <target name="gnu.me">
+    <concat destfile="${build-dir}/tmp/gnutemp.tmp" fixlastline="true">
+      <header filtering="no" trimleading="no" file="${build-dir}/tmp/gnu.txt"></header>
+      <path path="${filepath}"/>
+    </concat>
+    <move overwrite="true" file="${build-dir}/tmp/gnutemp.tmp" tofile="${filepath}"></move>
   </target>
 
-  <target name="execute" depends="gnu" description="execute the source">
-    <delete dir="${bin}/tmp" />
+  <target name="_default-build" depends="gnu" description="Processes default and cleans up all temp files.">
+    <delete dir="${build-dir}/tmp" />
+    <echo>AdPlayer ${version-detailed} - Default Build Complete</echo>
+  </target>
+	
+  <target name="_jsdoc-build" depends="_default-build" description="Builds default and jsdoc output.">
+    <taskdef name="jsdoctoolkit" classname="uk.co.darrenhurley.ant.tasks.JsDocToolkit" classpath="tools/jsdoc/jsdoc-toolkit-ant-task-1.1.2.jar;tools/jsdoc/jsrun.jar" />
+    <jsdoctoolkit jsdochome="tools/jsdoc/" template="jsdoc" outputdir="${build-dir}/docs/">
+      <source file="${build-dir}/js/${jsfilename}.js" />
+    </jsdoctoolkit>
+  	<echo>AdPlayer ${version-detailed} - JSDoc Build Complete</echo>
+  </target>
+	
+  <target name="_release-build" depends="_jsdoc-build" description="Compiles and packages entire build to a zip.">
+  	<zip destfile="${build-dir}/adplayer-v${version}.zip">
+	    <zipfileset dir="${build-dir}" />
+	  </zip>
+  	<echo>AdPlayer ${version-detailed} - Release Build Complete</echo>
   </target>
 </project>

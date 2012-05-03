@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>AdPlayer_v0.8.3</name>
+	<name>AdPlayer</name>
+  <version>1.0.0</version>
 	<comment></comment>
 	<projects>
 	</projects>

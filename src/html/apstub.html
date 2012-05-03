@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<!--_@GNULICENSE@_-->
+<head>
+  <script type="text/javascript">var inDapIF = true;</script>
+  <!-- 
+    Notes: For older browsers, JSON2 script must be loaded in this files head 
+    to avoid issues with ad responses using 'document.write' statements.
+   -->
+  <script type="text/javascript">
+    if (typeof JSON == 'undefined') {
+      document.write('<script type="text/javascript" src="js/json2.min.js"><\/script>');
+    }
+  </script>
+  <script type="text/javascript" src="js/_@ADPLAYER_JS_FILE_MIN@_"></script>
+  <!-- script type="text/javascript" src="js/_@ADPLAYER_JS_FILE@_"></script-->
+  <style> html, body {margin:0px; padding:0px;} </style>
+</head>	
+<body>
+  <div id="apstub"></div>
+	  <script type="text/javascript">
+		  if(window.location.hash) {
+		    try {
+		      $ADP.Util.jsonParse(unescape(window.location.hash).replace('#', ''), null, function(json){
+		        document.write("<scr"+'ipt type="text/javascript" src="'+json.adloc+'"></scri'+"pt>");
+		      });
+		    } catch (e) {
+		      $ADP.Util.log('AdPlayer "adloc" string not valid');
+		    }
+		  }
+	  </script>
+</body>
+</html>

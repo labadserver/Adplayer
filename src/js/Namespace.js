@@ -1,0 +1,2 @@
+if (!window.ADP) ADP = {};
+

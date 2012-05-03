@@ -1,7 +1,10 @@
 /*
    -------------------------------------------------------------------------------------------
-   AdPlayer v_@VERSION@_
-   Author: christopher.sancho@adtech.com, felix.ritter@adtech.com
+   AdPlayer _@VERSION@_
+   Authors: christopher.sancho@adtech.com
+            felix.ritter@adtech.com
+            ingrid.graefen@sevenonemedia.de
+            marius.naumann
    -------------------------------------------------------------------------------------------
   
    This file is part of AdPlayer v_@VERSION@_.

@@ -1,0 +1,16 @@
+.adplayer-privacyPanel ul {
+  margin-left: 5px;
+  margin-top:15px;
+}
+
+.adplayer-privacyPanel button {
+  width: 65px;
+}
+
+.adplayer-privacyPanel {
+  filter: alpha(opacity=100);
+}
+
+.adplayer-privacyPanel div, .adplayer-privacyPanel h4 , .adplayer-privacyPanel p, .adplayer-privacyPanel li, .adplayer-privacyPanel a {
+  filter: alpha(opacity=100);
+}
