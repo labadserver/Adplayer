@@ -9,6 +9,7 @@
   </tstamp>
 	<property name="version-detailed" value="v${version} (${dist.revision}.${today})"/>
   <property name="jsfilename" value="adplayer-${version}"/>
+	<property name="serverfilename" value="adplayer_server-${version}"/>
   <property name="cssfilename" value="adplayer-${version}"/>
   <property name="build-dir" location="build"/>
   <property name="lib-dir" location="lib"/>
@@ -34,11 +35,12 @@
     </copy>
     <copy file="${html-dir}/apstub.html" todir="${build-dir}" />
   	<copy file="README" todir="${build-dir}" />
+  	<copy file="${js-dir}/server/adserver.js" tofile="${build-dir}/js/${serverfilename}.js" />
   </target>
   
   <target name="compile" depends="prepare" description="Compiles source and replaces all tokens.">
     <concat destfile="${build-dir}/js/${jsfilename}.js" fixlastline="true">  
-      <filelist dir="${js-dir}">
+      <filelist dir="${js-dir}/player">
         <!-- DEFINE Class list order -->
       	<file name="Namespace.js"/>
       	<file name="Registry.js"/>
@@ -58,7 +60,7 @@
   
   <target name="compress" depends="compile" description="Compresses js and css files.">
     <apply executable="java" parallel="false">
-      <fileset dir="${build-dir}/js/" includes="${jsfilename}.js"/>
+      <fileset dir="${build-dir}/js/" includes="*.js"/>
       <arg line="-jar"/>
       <arg path="tools/yui/yuicompressor-2.4.2.jar"/>
       <srcfile/>
