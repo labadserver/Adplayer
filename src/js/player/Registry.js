@@ -164,6 +164,7 @@ $ADP.Registry = {
         }
         while(this.hasId(id));
         return id;
+      },
     /**
      * ADP.Registry.postHandler - Post Message Handler 
      * 
