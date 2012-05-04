@@ -8,7 +8,7 @@
             anton.parsons@adition.com
    -------------------------------------------------------------------------------------------
   
-   This file is part of AdPlayer v_@VERSION@_.
+   This file is part of AdPlayer _@VERSION@_.
    AdPlayer is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
