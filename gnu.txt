@@ -4,7 +4,7 @@
    Authors: christopher.sancho@adtech.com
             felix.ritter@adtech.com
             ingrid.graefen@sevenonemedia.de
-            marius.naumann
+            marius.naumann@bauermedia.com
    -------------------------------------------------------------------------------------------
   
    This file is part of AdPlayer v_@VERSION@_.
