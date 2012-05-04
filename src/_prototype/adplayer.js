@@ -30,16 +30,16 @@
 	}
 */
 
-if (!window.ADP) ADP = {};
+if (!window.$ADP) $ADP = {};
 
-ADP.Registry = {
+$ADP.Registry = {
 		data: {},
 		wait: 2000,
 		register: function(id, args) {
 				if (!args) args = {};
 				if (!this.data[id]) {
 					this.data[id] = {items: []};
-					this.data[id].timeoutId = setTimeout(function() {ADP.Registry.createPlayer(id, {position: 'top-left'})}, this.wait);
+					this.data[id].timeoutId = setTimeout(function() {$ADP.Registry.createPlayer(id, {position: 'top-left'})}, this.wait);
 				}
 				var item = {};
 				for (var k in args) {
@@ -95,14 +95,14 @@ ADP.Registry = {
 				}
 
 				var items = this.getById(id);
-				var player = new ADP.Player(id, {domId: domId, position: position, header: header, footer: footer, items: items});
+				var player = new $ADP.Player(id, {domId: domId, position: position, header: header, footer: footer, items: items});
 				player.inject();
 
 				return player;
 			}
 	};
 
-ADP.Player = function(id, args) {
+$ADP.Player = function(id, args) {
 		var self = arguments.callee;
 		if (!self.prototype.init) {
 			self.prototype.attempts = 0;
@@ -117,7 +117,7 @@ ADP.Player = function(id, args) {
 					this.items    = [];
 					var items = args.items || [];
 					for (var i = 0; i < items.length; i++) {
-						var privacyInfo = new ADP.PrivacyInfo(items[i]);
+						var privacyInfo = new $ADP.PrivacyInfo(items[i]);
 						if (privacyInfo.isValid())
 							this.items.push(privacyInfo);
 					}
@@ -154,7 +154,7 @@ ADP.Player = function(id, args) {
 					var footer   = this.getFooter();
 					var items    = this.getPrivacyInfos();
 					if (!obaId) {
-						alert('No obaId specified for ADP.Player.inject into ' + domId);
+						alert('No obaId specified for $ADP.Player.inject into ' + domId);
 						return;
 					}
 					if (!domId) {
@@ -214,7 +214,7 @@ ADP.Player = function(id, args) {
 		this.init(id, args);
 	};
 
-ADP.PrivacyInfo = function(args) {
+$ADP.PrivacyInfo = function(args) {
 		var self = arguments.callee;
 		if (!self.prototype.init) {
 			self.prototype.init = function(args) {

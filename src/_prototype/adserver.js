@@ -164,7 +164,7 @@
 */
 
 function checkADPScript() {
-	if (window.ADP) return true;
+	if (window.$ADP) return true;
 
 	var script = document.createElement('script');
 	script.type = 'text/javascript';
@@ -189,7 +189,7 @@ function registerPrivacyInfo(oba, args) {
 		document.write('<div id="' + domId + '" style="position:relative;z-index:99999999;height:0px;"></div>');
 	}
 
-	if (!window.ADP) {
+	if (!window.$ADP) {
 		var ok = checkADPScript();
 		if (!ok) {
 			if (!arguments.callee.attempts) arguments.callee.attempts = 0;
@@ -213,7 +213,7 @@ function registerPrivacyInfo(oba, args) {
 	info.text += ' ' + oba;
 
 	try {
-		ADP.Registry.register(oba, info);
+		$ADP.Registry.register(oba, info);
 	}
 	catch(e) {
 		alert(e.message);
@@ -224,7 +224,7 @@ function registerPrivacyInfo(oba, args) {
 
 // Publisher N
 function injectPrivacyInfo(oba, args) {
-	if (!window.ADP) {
+	if (!window.$ADP) {
 		var ok = checkADPScript();
 		if (!ok) {
 			if (!arguments.callee.attempts) arguments.callee.attempts = 0;
@@ -242,7 +242,7 @@ function injectPrivacyInfo(oba, args) {
 	var domId = 'publisher-oba-' + sz; // this publisher knows that this id is unique
 	document.write('<div id="' + domId + '" style="position:relative;z-index:' + z + ';width:' + w + 'px;height:0px;"></div>');
 	try {
-		ADP.Registry.createPlayer(oba, {domId: domId, position: 'top-right', header: 'Datenschutz-Info', footer: 'Footer-Info'});
+		$ADP.Registry.createPlayer(oba, {domId: domId, position: 'top-right', header: 'Datenschutz-Info', footer: 'Footer-Info'});
 	}
 	catch(e) {
 		alert(e.message);

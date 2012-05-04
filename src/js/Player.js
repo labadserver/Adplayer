@@ -1,4 +1,4 @@
-ADP.Player = function(id, args) {
+$ADP.Player = function(id, args) {
     var self = arguments.callee;
     if (!self.prototype.init) {
       self.prototype.attempts = 0;
@@ -13,7 +13,7 @@ ADP.Player = function(id, args) {
           this.items    = [];
           var items = args.items || [];
           for (var i = 0; i < items.length; i++) {
-            var privacyInfo = new ADP.PrivacyInfo(items[i]);
+            var privacyInfo = new $ADP.PrivacyInfo(items[i]);
             if (privacyInfo.isValid())
               this.items.push(privacyInfo);
           }
@@ -50,7 +50,7 @@ ADP.Player = function(id, args) {
           var footer   = this.getFooter();
           var items    = this.getPrivacyInfos();
           if (!obaId) {
-            alert('No obaId specified for ADP.Player.inject into ' + domId);
+            alert('No obaId specified for $ADP.Player.inject into ' + domId);
             return;
           }
           if (!domId) {

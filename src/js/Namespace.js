@@ -1,2 +1,2 @@
-if (!window.ADP) ADP = {};
+if (!window.$ADP) $ADP = {};
 

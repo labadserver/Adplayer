@@ -25,14 +25,14 @@
   }
 */
 
-ADP.Registry = {
+$ADP.Registry = {
     data: {},
     wait: 2000,
     register: function(id, args) {
         if (!args) args = {};
         if (!this.data[id]) {
           this.data[id] = {items: []};
-          this.data[id].timeoutId = setTimeout(function() {ADP.Registry.createPlayer(id, {position: 'top-left'})}, this.wait);
+          this.data[id].timeoutId = setTimeout(function() {$ADP.Registry.createPlayer(id, {position: 'top-left'})}, this.wait);
         }
         var item = {};
         for (var k in args) {
@@ -88,7 +88,7 @@ ADP.Registry = {
         }
 
         var items = this.getById(id);
-        var player = new ADP.Player(id, {domId: domId, position: position, header: header, footer: footer, items: items});
+        var player = new $ADP.Player(id, {domId: domId, position: position, header: header, footer: footer, items: items});
         player.inject();
 
         return player;

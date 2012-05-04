@@ -1,4 +1,4 @@
-ADP.PrivacyInfo = function(args) {
+$ADP.PrivacyInfo = function(args) {
     var self = arguments.callee;
     if (!self.prototype.init) {
       self.prototype.init = function(args) {
