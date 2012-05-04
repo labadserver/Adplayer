@@ -5,6 +5,7 @@
             felix.ritter@adtech.com
             ingrid.graefen@sevenonemedia.de
             marius.naumann@bauermedia.com
+            anton.parsons@adition.com
    -------------------------------------------------------------------------------------------
   
    This file is part of AdPlayer v_@VERSION@_.
