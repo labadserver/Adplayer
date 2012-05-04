@@ -46,4 +46,10 @@ ChangeLog
 
 1.0.0
 ------------------
-Workspace preparation for complete re-factor of existing AdPlayer. 
+- Workspace preparation for complete re-factor of existing AdPlayer.
+- build.xml file updated to address new file organization changes.  Three build
+  options are now available:
+  1) default - Builds js, css, and demo files.
+  2) jsdoc - As above and along with a jsdoc output.
+  3) release - All above and also zipped for release.
+- Prototype split to separate files.  Direct copies for now.
