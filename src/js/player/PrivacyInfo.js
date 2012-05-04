@@ -1,3 +1,11 @@
+/**
+* @name $ADP.PrivacyInfo
+* @class
+* @description The <code>$ADP.PrivacyInfo</code> class.
+*
+* @example
+* TODO
+*/
 $ADP.PrivacyInfo = function(args) {
     var self = arguments.callee;
     if (!self.prototype.init) {
@@ -37,6 +45,5 @@ $ADP.PrivacyInfo = function(args) {
           return s;
         };
     }
-
     this.init(args);
   };

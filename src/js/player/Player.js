@@ -1,9 +1,16 @@
+/**
+* @name $ADP.Player
+* @class
+* @description The <code>$ADP.Player</code> class.
+*
+* @example
+* TODO
+*/
 $ADP.Player = function(id, args) {
     var self = arguments.callee;
     if (!self.prototype.init) {
       self.prototype.attempts = 0;
       self.prototype.maxAttempts = 50;
-
       self.prototype.init = function(id, args) {
           this.id       = id;
           this.domId    = args.domId;
@@ -106,7 +113,6 @@ $ADP.Player = function(id, args) {
           }
         };
     }
-
     this.init(id, args);
   };
 

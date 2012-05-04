@@ -1,30 +1,37 @@
-/*
-  // structure of OBA.Registry.data
-  // plain data, no reference to other OBA objects
-  {
-    123: {
-        timeoutId: 7,
-        domId: oba123,
-        header: 'Header',
-        footer: 'Footer',
-        items: [
-            {
-              title:    'title1',
-              text:     'text1',
-              url:      'url1',
-              linkText: 'linkText1'
-            },
-            {
-              title:    'title2',
-              text:     'text2',
-              url:      'url2',
-              linkText: 'linkText2'
-            }
-          ]
-      }
-  }
+/**
+* @name $ADP.Registry
+* @class
+* @description The <code>$ADP.Registry</code> class.
+*
+* @example
+* TODO
+* 
+*  // structure of OBA.Registry.data
+*  // plain data, no reference to other OBA objects
+*  {
+*    123: {
+*        timeoutId: 7,
+*        domId: oba123,
+*        header: 'Header',
+*        footer: 'Footer',
+*        items: [
+*            {
+*              title:    'title1',
+*              text:     'text1',
+*              url:      'url1',
+*              linkText: 'linkText1'
+*            },
+*            {
+*              title:    'title2',
+*              text:     'text2',
+*              url:      'url2',
+*              linkText: 'linkText2'
+*            }
+*          ]
+*      }
+*  }
+*  
 */
-
 $ADP.Registry = {
     data: {},
     wait: 2000,
@@ -92,6 +99,23 @@ $ADP.Registry = {
         player.inject();
 
         return player;
+      },
+      
+      /**
+       * @name    $ADP.Registry#generateId
+       * @function
+       * @description Generates a new and not used id.<br/><br/>
+       *        <b>Note:</b> This method does not register any data at $ADP.Registry.
+       * 
+       * @returns   {Integer} Returns the generated id.
+       */
+      generateId: function() {
+        var id;
+        do {
+          id = parseInt(Math.random() * 100000000);
+        }
+        while(this.hasId(id));
+        return id;
       }
   };
 
