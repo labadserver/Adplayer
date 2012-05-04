@@ -44,6 +44,8 @@
       	<file name="Registry.js"/>
         <file name="Player.js"/>
       	<file name="PrivacyInfo.js"/>
+      	<file name="Message.js"/>
+      	<file name="Init.js"/>
       	<!-- END DEFINE Class list order -->
       </filelist>
     </concat>

@@ -54,11 +54,14 @@ $ADP.Player = function(id, args) {
             return;
           }
           if (!domId) {
-            // FIXME: not working yet in iframe case (transfer still missing)
-            // alert('No domId available for ' + obaId);
-            return;
+            if (window == window.top && document.body) return;
+            var iframeButton = document.createElement('DIV');
+            iframeButton.id = domId = 'iframe-button-'+Math.round(Math.random()*9999);
+            iframeButton.style.height='0px';
+            iframeButton.style.position='relative';
+            document.body.insertBefore(iframeButton,document.body.firstChild);
           }
-          var container = document.getElementById(domId);
+          var container = iframeButton || document.getElementById(domId);
           if (container) {
             var privacy_info = '';
             for (var i = 0; i < items.length; i++) {

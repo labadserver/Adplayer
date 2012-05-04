@@ -28,11 +28,18 @@
 $ADP.Registry = {
     data: {},
     wait: 2000,
-    register: function(id, args) {
+    /**
+     * Register 
+     * 
+     * @var boolean useUnshift The unShift variable is set when the item needs to be inserted in front of the current items, This occurs when one is adding items from a parent Registry object
+     *  
+     */
+    register: function(id, args, useUnshift) {
         if (!args) args = {};
         if (!this.data[id]) {
           this.data[id] = {items: []};
           this.data[id].timeoutId = setTimeout(function() {$ADP.Registry.createPlayer(id, {position: 'top-left'})}, this.wait);
+          $ADP.Registry.locateParentRegistry(id);
         }
         var item = {};
         for (var k in args) {
@@ -53,15 +60,16 @@ $ADP.Registry = {
               break;
           }
         }
-        this.data[id].items.push(item);
+        if(!useUnshift) {
+          this.data[id].items.push(item);
+        } else {
+          this.data[id].items.unshift(item);
+        }
       },
     unregister: function(id) {
         if (this.data[id].timeoutId)
           clearTimeout(this.data[id].timeoutId);
         delete this.data[id];
-      },
-    transfer: function(id) {
-        this.unregister(id);
       },
     getById: function(id) {
         var items = [];
@@ -74,6 +82,46 @@ $ADP.Registry = {
     hasId: function(id) {
         return this.data[id] ? true : false;
       },
+    locateParentRegistry: function(id) {
+    		var parentWindow = window.parent, data;
+    		if(parentWindow != window) {
+    			while(parentWindow != window.top && !parentWindow.$ADP) {
+    				parentWindow = parentWindow.parent;
+    			}
+    			if (!parentWindow.$ADP) { //Non friendly IFrame 
+    				$ADP.Registry.askParentForPrivacyItems(id); 
+    			} else { //Friendly Iframe
+    				items = parentWindow.$ADP.Registry.getById(id);
+    				$ADP.Registry.registerParentItems(id, items);
+    				parentWindow.$ADP.Registry.unregister(id);
+    			}
+    		}
+  	  },
+  	  askParentForPrivacyItems: function (id) {
+    		if (!this.data[id].iframeSearch) {
+    			this.data[id].iframeSearch = { target: window.parent };
+    		}
+    		var obaId = id, data = this.data[id],target = data.iframeSearch.target; 
+    		$ADP.Message.send(target,$ADP.Message.types.pullOBA,id);
+    		data.iframeSearch.timeoutId = setTimeout(function() { $ADP.Registry.askNextParent(id);}, 300);
+    	},
+  	askNextParent: function(id) {
+  	  if (this.data[id].iframeSearch.target != this.data[id].iframeSearch.target.parent ) {
+    	    this.data[id].iframeSearch.target = this.data[id].iframeSearch.target.parent;
+    		  $ADP.Registry.askParentForPrivacyItems(id);
+  	    }
+    	},
+  	registerParentItems: function (id,items) {
+    		if (!items) items = [];
+    		if (!this.data[id]) return;
+    		if (this.data[id].iframeSearch) {
+    		  clearTimeout(this.data[id].iframeSearch.timeoutId);
+    		}
+    		items.reverse();
+  	    for (var k in items) {
+    			$ADP.Registry.register(id,items[k],true);
+    		}
+    	},
     createPlayer: function(id, args) {
         if (!args) args = {};
         var header = args.header;
@@ -92,6 +140,45 @@ $ADP.Registry = {
         player.inject();
 
         return player;
+      },
+    /**
+     * ADP.Registry.postHandler - Post Message Handler 
+     * 
+     * this function will register as a postMessage listener and will assign return the 
+     * message handler
+     */ 
+    messageHandler: function (event) {
+        try {
+          var msg = $ADP.Message.parse(event.data), src=event.source, result="";
+          if (src == window) { return null;}
+
+          switch(msg.type) {
+          	case $ADP.Message.types.pullOBA:
+          		result = $ADP.Registry.getById(msg.data);
+          		$ADP.Message.send(src, $ADP.Message.types.pullOBA_ACK, {id: msg.data, items: result});
+          		break;
+          	case $ADP.Message.types.unRegOBA:
+          		result = $ADP.Registry.unregister(msg.data);
+          		$ADP.Message.send(src, $ADP.Message.types.unRegOBA_ACK, {id: msg.data, result: result});
+          		break;
+          	case $ADP.Message.types.pullOBA_ACK:
+          		if (msg.data.id && msg.data.items && msg.data.items.length) {
+          			$ADP.Registry.registerParentItems(msg.data.id, msg.data.items);
+          			$ADP.Message.send(src, $ADP.Message.types.unRegOBA, msg.data.id);
+          		}
+          		break;
+          	case $ADP.Message.types.unRegOBA_ACK:
+          		//nothing todo here really
+          		break;
+          }
+        } catch (e) {}
+      },
+    init: function() {
+      if (window.addEventListener) {
+        window.addEventListener("message", $ADP.Registry.messageHandler, false);  
+      } else if (window.attachEvent) {
+         window.attachEvent('onmessage', $ADP.Registry.messageHandler);
       }
+    }
   };
 
