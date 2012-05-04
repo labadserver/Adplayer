@@ -44,6 +44,13 @@ Latest version of AdPlayer: https://github.com/labadserver/Adplayer/downloads
 ChangeLog
 =================================================================================
 
+1.1.0
+------------------
+- Folders added and build.xml updated for player/server separation.
+- Namespace updated to specification; $ADP.
+- Registry class updated with 'generateId' method.
+
+
 1.0.0
 ------------------
 - Workspace preparation for complete re-factor of existing AdPlayer.
@@ -53,9 +60,3 @@ ChangeLog
   2) jsdoc - As above and along with a jsdoc output.
   3) release - All above and also zipped for release.
 - Prototype split to separate files.  Direct copies for now.
-
-1.1.0
-------------------
-- Folders added and build.xml updated for player and server separation.
-- Namespace updated to specification; $ADP.
-- Registry class updated with 'generateId' method.
