@@ -35,13 +35,10 @@ $ADP.Player = function(id, args) {
           return this.position || 'top-right';
         };
       self.prototype.getHeader = function() {
-          return (this.header || 'Datenschutzbestimmungen')
-            + '<hr />';
+    	  return (this.header || 'Datenschutzbestimmungen');
         };
       self.prototype.getFooter = function() {
-          var footer = this.footer || '';
-          if (footer) footer = '<hr />' + footer;
-          return footer;
+          return (this.footer || '');
         };
       self.prototype.hasPrivacyInfo = function() {
           return this.items.length;
@@ -79,27 +76,40 @@ $ADP.Player = function(id, args) {
               catch(e) {}
               
             }
-            if (privacy_info) privacy_info = header + privacy_info + footer;
+            
+            var panelContent =
+                '<div class="adp-panel-header">' + header + '<\/div>'
+              + '<div class="adp-panel-info">' + privacy_info + '<\/div>'
+              + '<div class="adp-panel-footer">' + footer + '<\/div>';
 
-            var aligned = position == 'top-right' ? 'right' : 'left';
             container.innerHTML =
-                '<div id="oba-wrapper-' + obaId + '" style="position:absolute;top:0px;' + aligned + ':0px;z-index:99999999;font-size:11px;line-height:1.2;font-family:Verdana;">'
-              + '<img id="oba-button-' + obaId + '" src="./oba_icon_15x20.jpg" style="cursor:pointer;position:absolute;z-index:1;top:0px;' + aligned + ':0px;width:15px;height:20px;border-style:none;" />'
-              + '<div id="oba-panel-' + obaId + '" style="display:none;white-space:nowrap;position:absolute;z-index:3;top:0px;' + aligned + ':0px;padding:10px 10px 5px 5px;background-color:#fff;border:2px solid black;">'
-                + '<div id="oba-close-' + obaId + '" style="cursor:pointer;position:absolute;top:0px;right:0px;padding:1px;">X</div>'
-                + privacy_info
-              + '<\/div>'
+                '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;">'
+              +   '<div id="adp-admarker-' + obaId + '" class="adp-admarker">'
+              +     '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '"><\/div>'
+              +     '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '">Datenschutzinfo<\/div>'
+              +   '<\/div>'
+              +   '<div id="adp-panel-' + obaId + '" class="adp-panel adp-' + position + '" style="display:none;">'
+              +     '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close">Schlie&szlig;en<\/div>'
+              +     panelContent
+              +   '<\/div>'
               + '<\/div>';
-            var button = document.getElementById('oba-button-' + obaId);
-            if (button) button.onclick = function() {
-                  var panel = document.getElementById('oba-panel-' + obaId);
-                  if (panel) panel.style.display = 'block';
-                };
-            var close = document.getElementById('oba-close-' + obaId);
+            
+            // add event handler            
+            var adMarkerIcon = document.getElementById('adp-admarker-icon-' + obaId);
+            if (adMarkerIcon) adMarkerIcon.onclick = function() {
+              var panel = document.getElementById('adp-panel-' + obaId);
+              if (panel) panel.style.display = 'block';
+            }
+            var adMarkerText = document.getElementById('adp-admarker-text-' + obaId);
+            if (adMarkerText) adMarkerText.onclick = function() {
+              var panel = document.getElementById('adp-panel-' + obaId);
+              if (panel) panel.style.display = 'block';
+            };
+            var close = document.getElementById('adp-panel-close-' + obaId);
             if (close) close.onclick = function() {
-                  var panel = document.getElementById('oba-panel-' + obaId);
-                  if (panel) panel.style.display = 'none';
-                };
+              var panel = document.getElementById('adp-panel-' + obaId);
+              if (panel) panel.style.display = 'none';
+            };
           }
           else {
             if (this.attempts > this.maxAttempts) {
