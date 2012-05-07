@@ -47,6 +47,7 @@
   margin: 0 0;
   text-align: left;
   min-height: 25px;
+  max-width: 200px;
   
   position: absolute;
 }
@@ -77,6 +78,9 @@
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 12px;
   text-align: left;
+  white-space: nowrap;
+  
+  padding: 5px 0;
 }
 
 .adp-panel-footer {
