@@ -57,7 +57,7 @@ $ADP.Player = function(id, args) {
           var footer   = this.getFooter();
           var items    = this.getPrivacyInfos();
           if (!obaId) {
-            alert('No obaId specified for $ADP.Player.inject into ' + domId);
+            // No obaId specified for $ADP.Play/er.inject into ' + domId
             return;
           }
           if (!domId) {
@@ -76,9 +76,7 @@ $ADP.Player = function(id, args) {
               try {
                 privacy_info += item.render() + '<br />\n';
               }
-              catch(e) {
-                alert(e.message)
-              }
+              catch(e) {}
               
             }
             if (privacy_info) privacy_info = header + privacy_info + footer;
@@ -105,7 +103,7 @@ $ADP.Player = function(id, args) {
           }
           else {
             if (this.attempts > this.maxAttempts) {
-              alert('Too many attempts for ' + obaId + ', ' + domId);
+              //Too many attempts for ' + obaId + ', ' + domId
               return;
             }
             else {

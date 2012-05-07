@@ -36,9 +36,21 @@ $ADP.Registry = {
     data: {},
     wait: 2000,
     /**
-     * Register 
+     * @name $ADP.Registery#register
+     * @function
+     * @description The register function is used to register the privacy item for an Adplayer chain. 
      * 
-     * @var boolean useUnshift The unShift variable is set when the item needs to be inserted in front of the current items, This occurs when one is adding items from a parent Registry object
+     * @param {integer} id     The oba id that is used to identify this adverts unique privacy messages 
+     * @param {object}  args   The Arguments 
+     * @param {string}  args.domId   The domId where the privacy button must be rendered
+     * @param {string}  args.header  The header message to be displayed in the privacy window
+     * @param {string}  args.footer  The footer to be displayed in the information window
+     * @param {array}   args.items   The array of privacy items 
+     * @param {string}  args.items.title  The name of the privacy party
+     * @param {string}  args.items.text   The short description 
+     * @param {string}  args.items.url    The opt out or more information url
+     * @param {string}  args.items.linkText  The text that should be displayed instead of the link url
+     * @param {boolean} useUnshift   The unShift variable is set when the item needs to be inserted in front of the current items, This occurs when one is adding items from a parent Registry object
      *  
      */
     register: function(id, args, useUnshift) {
@@ -73,6 +85,7 @@ $ADP.Registry = {
           this.data[id].items.unshift(item);
         }
       },
+      
     unregister: function(id) {
         if (this.data[id].timeoutId)
           clearTimeout(this.data[id].timeoutId);
@@ -104,24 +117,48 @@ $ADP.Registry = {
     			}
     		}
   	  },
-  	  askParentForPrivacyItems: function (id) {
-    		if (!this.data[id].iframeSearch) {
-    			this.data[id].iframeSearch = { target: window.parent };
-    		}
-    		var obaId = id, data = this.data[id],target = data.iframeSearch.target; 
-    		$ADP.Message.send(target,$ADP.Message.types.pullOBA,id);
-    		data.iframeSearch.timeoutId = setTimeout(function() { $ADP.Registry.askNextParent(id);}, 300);
-    	},
+  	  
+  	/**
+  	 * @name $ADP.Registry#askParentForProvacyItems
+  	 * @function
+  	 * @description Will ask the current set target parent for the privacy item associated with the given Adplayer chain id 
+  	 * @param id The Adplayer chain id
+  	 */
+  	askParentForPrivacyItems: function (id) {
+  		if (this.data[id] && !this.data[id].iframeSearch) {
+  			this.data[id].iframeSearch = { target: window.parent };
+  		}
+  		var obaId = id, data = this.data[id],target = data.iframeSearch.target; 
+  		$ADP.Message.send(target,$ADP.Message.types.pullOBA,id);
+  		data.iframeSearch.timeoutId = setTimeout(function() { $ADP.Registry.askNextParent(id);}, 300);
+  	},
+  	
+    /**
+     * @name $ADP.Registry#askNextParent
+     * @function
+     * @description This method is run after a timeout and will ask the next parent for privacy items of the given id. 
+     * @param id  The Adplayer chain id
+     */
   	askNextParent: function(id) {
   	  if (this.data[id].iframeSearch.target != this.data[id].iframeSearch.target.parent ) {
     	    this.data[id].iframeSearch.target = this.data[id].iframeSearch.target.parent;
     		  $ADP.Registry.askParentForPrivacyItems(id);
   	    }
     	},
+    /**
+     * @name  $ADP.Regestry#registerParentItems
+     * @function
+     * @description The register parent items will add all the parent privacy items to the beginning 
+     *                of the current items list for the given id. This will also clear the timeout/delayed function
+     *                call for asking the next parent for privacy items.
+     *                has been found
+     * @param id     The id of the Adplayer chain
+     * @param items  The array of privacy items
+     */	
   	registerParentItems: function (id,items) {
     		if (!items) items = [];
     		if (!this.data[id]) return;
-    		if (this.data[id].iframeSearch) {
+    		if (this.data[id].iframeSearch && this.data[id].iframeSearch.timeoutId) {
     		  clearTimeout(this.data[id].iframeSearch.timeoutId);
     		}
     		items.reverse();
@@ -165,44 +202,51 @@ $ADP.Registry = {
         while(this.hasId(id));
         return id;
       },
-    /**
-     * ADP.Registry.postHandler - Post Message Handler 
-     * 
-     * this function will register as a postMessage listener and will assign return the 
-     * message handler
-     */ 
-    messageHandler: function (event) {
+      /**
+       * @name    $ADP.Registry#messageHandler
+       * @function
+       * @description This function will handle the pull and unregister requests made from other windows
+       * 
+       * @param event The window post message event object
+       */ 
+      messageHandler: function (event) {
         try {
           var msg = $ADP.Message.parse(event.data), src=event.source, result="";
           if (src == window) { return null;}
-
+        
           switch(msg.type) {
-          	case $ADP.Message.types.pullOBA:
-          		result = $ADP.Registry.getById(msg.data);
-          		$ADP.Message.send(src, $ADP.Message.types.pullOBA_ACK, {id: msg.data, items: result});
-          		break;
-          	case $ADP.Message.types.unRegOBA:
-          		result = $ADP.Registry.unregister(msg.data);
-          		$ADP.Message.send(src, $ADP.Message.types.unRegOBA_ACK, {id: msg.data, result: result});
-          		break;
+            case $ADP.Message.types.pullOBA:
+          	  result = $ADP.Registry.getById(msg.data);
+          	  $ADP.Message.send(src, $ADP.Message.types.pullOBA_ACK, {id: msg.data, items: result});
+          	  break;
+            case $ADP.Message.types.unRegOBA:
+          	  result = $ADP.Registry.unregister(msg.data);
+          	  $ADP.Message.send(src, $ADP.Message.types.unRegOBA_ACK, {id: msg.data, result: result});
+           	  break;
           	case $ADP.Message.types.pullOBA_ACK:
           		if (msg.data.id && msg.data.items && msg.data.items.length) {
           			$ADP.Registry.registerParentItems(msg.data.id, msg.data.items);
           			$ADP.Message.send(src, $ADP.Message.types.unRegOBA, msg.data.id);
           		}
-          		break;
-          	case $ADP.Message.types.unRegOBA_ACK:
-          		//nothing todo here really
-          		break;
+             break;
+            case $ADP.Message.types.unRegOBA_ACK:
+              break;
           }
         } catch (e) {}
       },
-    init: function() {
-      if (window.addEventListener) {
-        window.addEventListener("message", $ADP.Registry.messageHandler, false);  
-      } else if (window.attachEvent) {
-         window.attachEvent('onmessage', $ADP.Registry.messageHandler);
+      /**
+       * @name   $ADP.Registry#init
+       * @function
+       * @description The init method is called once the Adplayer library has been declared 
+       *                this allows events to be registered and the execution of functions that
+       *                require the complete library to have been declared and loaded.
+       */
+      init: function() {
+        if (window.addEventListener) {
+          window.addEventListener("message", $ADP.Registry.messageHandler, false);  
+        } else if (window.attachEvent) {
+          window.attachEvent('onmessage', $ADP.Registry.messageHandler);
+        }
       }
-    }
   };
 

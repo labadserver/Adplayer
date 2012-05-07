@@ -8,22 +8,23 @@ $ADP.Message = {
 	},
 	create: function(type,data) {
 		var msg = {
-			 type:type,
-		   data:data
-	       };
+		            type:type,
+		            data:data
+	            };
 		try {
-			return JSON.stringify(msg);
-		} catch(e) {
-			return '{"type":"NULL"}';
-	    }
-    },
+		  if(JSON && typeof JSON.stringify == 'function') {
+		    return JSON.stringify(msg);
+		 }
+		} catch(e) {}
+		return '{"type":"NULL"}';
+  },
 	parse: function(data) {
 		try {
-			var msg = JSON.parse(data);
-			return msg;
-		} catch (e) {
-			return $ADP.Message.create('NULL',{});
-		}
+		  if(JSON && typeof JSON.stringify == 'function') {
+		    return JSON.parse(data);
+		  }
+		} catch (e) {}
+		return $ADP.Message.create('NULL',{});
 	},
 	send: function(trgt,type,data) {
 		if (trgt && trgt.postMessage) {
