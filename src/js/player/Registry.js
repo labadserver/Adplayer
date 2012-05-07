@@ -87,6 +87,7 @@ $ADP.Registry = {
       },
       
     unregister: function(id) {
+        if(!this.data[id]) return;
         if (this.data[id].timeoutId)
           clearTimeout(this.data[id].timeoutId);
         delete this.data[id];
