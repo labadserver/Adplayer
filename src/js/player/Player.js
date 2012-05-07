@@ -96,15 +96,6 @@ $ADP.Player = function(id, args) {
               +   '<\/div>'
               + '<\/div>';
             
-//            container.innerHTML =
-//                '<div id="oba-wrapper-' + obaId + '" style="position:absolute;top:0px;' + aligned + ':0px;z-index:99999999;font-size:11px;line-height:1.2;font-family:Verdana;">'
-//              + '<img id="oba-button-' + obaId + '" src="./oba_icon_15x20.jpg" style="cursor:pointer;position:absolute;z-index:1;top:0px;' + aligned + ':0px;width:15px;height:20px;border-style:none;" />'
-//              + '<div id="oba-panel-' + obaId + '" style="display:none;white-space:nowrap;position:absolute;z-index:3;top:0px;' + aligned + ':0px;padding:10px 10px 5px 5px;background-color:#fff;border:2px solid black;">'
-//                + '<div id="oba-close-' + obaId + '" style="cursor:pointer;position:absolute;top:0px;right:0px;padding:1px;">X</div>'
-//                + privacy_info
-//              + '<\/div>'
-//              + '<\/div>';
-            
             // add event handler            
             var adMarkerIcon = document.getElementById('adp-admarker-icon-' + obaId);
             if (adMarkerIcon) adMarkerIcon.onclick = function() {
