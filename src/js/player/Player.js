@@ -35,13 +35,10 @@ $ADP.Player = function(id, args) {
           return this.position || 'top-right';
         };
       self.prototype.getHeader = function() {
-          return (this.header || 'Datenschutzbestimmungen')
-            + '<hr />';
+    	  return (this.header || 'Datenschutzbestimmungen');
         };
       self.prototype.getFooter = function() {
-          var footer = this.footer || '';
-          if (footer) footer = '<hr />' + footer;
-          return footer;
+          return (this.footer || '');
         };
       self.prototype.hasPrivacyInfo = function() {
           return this.items.length;
@@ -81,10 +78,12 @@ $ADP.Player = function(id, args) {
               }
               
             }
-            if (privacy_info) privacy_info = header + privacy_info + footer;
-
-            var aligned = position == 'top-right' ? 'right' : 'left';
             
+            var panelContent =
+                '<div class="adp-panel-header">' + header + '<\/div>'
+              + '<div class="adp-panel-info">' + privacy_info + '<\/div>'
+              + '<div class="adp-panel-footer">' + footer + '<\/div>';
+
             container.innerHTML =
                 '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;">'
               +   '<div id="adp-admarker-' + obaId + '" class="adp-admarker">'
@@ -93,7 +92,7 @@ $ADP.Player = function(id, args) {
               +   '<\/div>'
               +   '<div id="adp-panel-' + obaId + '" class="adp-panel adp-' + position + '" style="display:none;">'
               +     '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close">Schlie&szlig;en<\/div>'
-              +     privacy_info
+              +     panelContent
               +   '<\/div>'
               + '<\/div>';
             

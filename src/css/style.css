@@ -63,3 +63,27 @@
   top: -1px;
   right: -1px;
 }
+
+.adp-panel-header {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 11px;
+  text-align: justify;
+  
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+}
+
+.adp-panel-info {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 12px;
+  text-align: left;
+}
+
+.adp-panel-footer {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 10px;
+  text-align: justify;
+  
+  padding-top: 5px;
+  border-top: 1px solid #ccc;
+}
