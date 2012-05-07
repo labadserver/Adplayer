@@ -10,7 +10,6 @@
 
 .adp-wrapper {
   font-family: Arial, Verdana, Tahoma, sans-serif;
-  
   position: absolute;
 }
 
@@ -91,3 +90,9 @@
   padding-top: 5px;
   border-top: 1px solid #ccc;
 }
+
+.adp-panel a:link {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  text-decoration: underline;
+}
+
