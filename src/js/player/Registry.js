@@ -120,7 +120,7 @@ $ADP.Registry = {
   	  },
   	  
   	/**
-  	 * @name $ADP.Registry#askParentForProvacyItems
+  	 * @name $ADP.Registry#askParentForPrivacyItems
   	 * @function
   	 * @description Will ask the current set target parent for the privacy item associated with the given Adplayer chain id 
   	 * @param id The Adplayer chain id
