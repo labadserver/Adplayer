@@ -44,6 +44,11 @@ Latest version of AdPlayer: https://github.com/labadserver/Adplayer/downloads
 ChangeLog
 =================================================================================
 
+1.1.1
+------------------
+- Version separation added to build routine for version code integration.
+
+
 1.1.0
 ------------------
 - Folders added and build.xml updated for player/server separation.

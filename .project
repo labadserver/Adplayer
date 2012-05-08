@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
   <name>AdPlayer</name>
-  <version>1.1.0</version>
+  <major>1</major>
+  <minor>1</minor>
+  <patch>1</patch>
   <comment></comment>
   <projects></projects>
   <buildSpec></buildSpec>
