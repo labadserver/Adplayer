@@ -120,6 +120,18 @@ $ADP.Registry = {
   },
   
   /**
+   * @name $ADP.Registry#pullById
+   * @function
+   * @description Will return and unregister the privacy messages for the supplied oba is.
+   * @param {integer} id the oba id that is used to identify this adverts unique privacy messages.
+   * @return 
+   */
+  pullById: function (id) {
+    var items = this.getById(id);
+    this.unregister(id);
+    return items;
+  }
+  /**
    * @name $ADP.Registry#getDOMId
    * @function
    * @description  
@@ -214,7 +226,7 @@ $ADP.Registry = {
    * @function
    * @description Adds all the parent privacy items to the beginning of the current items list for
    *     the given id. This will also clear all invoked <code>askNextParent</code> methods that are
-   *     currently in progress.
+   *     currently in progress fir this Adplayer chain id.
    *
    * @param id     The id of the Adplayer chain.
    * @param items  The array of privacy items.
@@ -236,7 +248,7 @@ $ADP.Registry = {
   /**
    * @name  $ADP.Regestry#createPlayer
    * @function
-   * @description
+   * @description This method is used to create the player for the given player id 
    * 
    * @param id     The id of the Adplayer chain
    * @param items  The array of privacy items
