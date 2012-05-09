@@ -1,5 +1,5 @@
 /**
- * @name $ADP#version
+ * @name $ADP#getVersion
  * @function
  * @description Returns a map indicating the current version of the AdPlayer.
  *              This method should also be used for internal backwards compatibility.
