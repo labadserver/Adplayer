@@ -24,6 +24,6 @@ $ADP.getVersion = function() {
     minor: _@VERSION_MINOR@_,
     patch: _@VERSION_PATCH@_,
     stage: '_@VERSION_STAGE@_'
-  }
+  };
 };
 
