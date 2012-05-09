@@ -4,6 +4,7 @@
   <major>1</major>
   <minor>1</minor>
   <patch>1</patch>
+  <stage>ALPHA</stage> <!-- Possible values: ALPHA, BETA, RC, FINAL -->
   <comment></comment>
   <projects></projects>
   <buildSpec></buildSpec>

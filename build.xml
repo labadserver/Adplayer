@@ -5,12 +5,12 @@
   <property name="version-major" value="${projectDescription.major}"/>
   <property name="version-minor" value="${projectDescription.minor}"/>
   <property name="version-patch" value="${projectDescription.patch}"/>
+  <property name="version-stage" value="${projectDescription.stage}"/>
   <property name="version" value="${version-major}.${version-minor}.${version-patch}"/>
-  <property name="dist.revision" value="alpha"/>
   <tstamp>
     <format property="today" pattern="MMddyy" locale="en,UK"/>
   </tstamp>
-  <property name="version-detailed" value="v${version} (${dist.revision}.${today})"/>
+  <property name="version-detailed" value="v${version} (${version-stage}.${today})"/>
   <property name="jsfilename" value="adplayer-${version}"/>
   <property name="serverfilename" value="adplayer_server-${version}"/>
   <property name="cssfilename" value="adplayer-${version}"/>
@@ -51,6 +51,7 @@
         <file name="Player.js"/>
       	<file name="PrivacyInfo.js"/>
       	<file name="Message.js"/>
+      	<file name="Version.js"/>
       	<file name="Init.js"/>
       	<!-- END DEFINE Class list order -->
       </filelist>
@@ -63,6 +64,7 @@
     <replace dir="${build-dir}" token="_@VERSION_MAJOR@_" value="${version-major}" />
     <replace dir="${build-dir}" token="_@VERSION_MINOR@_" value="${version-minor}" />
     <replace dir="${build-dir}" token="_@VERSION_PATCH@_" value="${version-patch}" />
+    <replace dir="${build-dir}" token="_@VERSION_STAGE@_" value="${version-stage}" />
   </target>
   
   <target name="compress" depends="compile" description="Compresses js and css files.">
