@@ -2,9 +2,9 @@
   <description>AdPlayer build script.</description>
 	
   <xmlproperty file=".project" keeproot="true"/>
-	<property name="version-major" value="${projectDescription.major}"/>
-	<property name="version-minor" value="${projectDescription.minor}"/>
-	<property name="version-patch" value="${projectDescription.patch}"/>
+  <property name="version-major" value="${projectDescription.major}"/>
+  <property name="version-minor" value="${projectDescription.minor}"/>
+  <property name="version-patch" value="${projectDescription.patch}"/>
   <property name="version" value="${version-major}.${version-minor}.${version-patch}"/>
   <property name="dist.revision" value="alpha"/>
   <tstamp>
@@ -60,9 +60,9 @@
     <replace dir="${build-dir}" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}-style.css" />
     <replace dir="${build-dir}" token="_@ADPLAYER_CSS-IE_FILE@_" value="${cssfilename}-style-ie.css" />
     <replace dir="${build-dir}" token="_@VERSION@_" value="${version-detailed}" />
-  	<replace dir="${build-dir}" token="_@VERSION_MAJOR@_" value="${version-major}" />
-  	<replace dir="${build-dir}" token="_@VERSION_MINOR@_" value="${version-minor}" />
-  	<replace dir="${build-dir}" token="_@VERSION_PATCH@_" value="${version-patch}" />
+    <replace dir="${build-dir}" token="_@VERSION_MAJOR@_" value="${version-major}" />
+    <replace dir="${build-dir}" token="_@VERSION_MINOR@_" value="${version-minor}" />
+    <replace dir="${build-dir}" token="_@VERSION_PATCH@_" value="${version-patch}" />
   </target>
   
   <target name="compress" depends="compile" description="Compresses js and css files.">
@@ -91,9 +91,9 @@
     <copy todir="${build-dir}/tmp" file="gnu.txt" overwrite="true" />
     <replace file="${build-dir}/tmp/gnu.txt" token="_@VERSION@_" value="${version-detailed}" />
     
-  	<!-- TODO: Possibly loop through files, but will require ant-contrib -->
-  	
-  	<!-- JS/CSS Files -->
+    <!-- TODO: Possibly loop through files, but will require ant-contrib -->
+
+    <!-- JS/CSS Files -->
     <antcall target="gnu.me">
       <param name="filepath" value="${build-dir}/css/${cssfilename}-style.css" />
     </antcall>
