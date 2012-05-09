@@ -130,7 +130,8 @@ $ADP.Registry = {
     var items = this.getById(id);
     this.unregister(id);
     return items;
-  }
+  },
+  
   /**
    * @name $ADP.Registry#getDOMId
    * @function
