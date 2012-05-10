@@ -3,6 +3,12 @@
  * @class
  * @description The <code>$ADP.PrivacyInfo</code> class.
  *
+ * @param {object}  args           The Arguments.
+ * @param {string}  args.title     The title of the privacy information.
+ * @param {string}  args.text      The detailed information of the privacy information.
+ * @param {string}  args.url       The call-to-action URL for opting.
+ * @param {array}   args.linkText  The URL's text representation.
+ *
  * @example
  * TODO
  */
@@ -14,8 +20,7 @@ $ADP.PrivacyInfo = function (args) {
      * @private
      * @name $ADP.PrivacyInfo#init
      * @function
-     * @description
-     * @param args
+     * @description Class constructor.
      */
     self.prototype.init = function (args) {
       this.valid = args.title || args.text || args.linkText ? true : false;
@@ -28,18 +33,20 @@ $ADP.PrivacyInfo = function (args) {
     /**
      * @name $ADP.PrivacyInfo#getTitle
      * @function
-     * @description
-     * @return  
+     * @description Returns the title of the privacy information.
+     * 
+     * @return {string} The privacy information title. 
      */
     self.prototype.getTitle = function () {
       return this.title;
     };
 
     /**
-     * @name $ADP.PrivacyInfo#getTitle
+     * @name $ADP.PrivacyInfo#getText
      * @function
-     * @description
-     * @return  
+     * @description Returns the privacy information's detailed information. 
+     * 
+     * @return {string} The privacy information's detailed information. 
      */
     self.prototype.getText = function () {
       return this.text;
@@ -48,8 +55,9 @@ $ADP.PrivacyInfo = function (args) {
     /**
      * @name $ADP.PrivacyInfo#getURL
      * @function
-     * @description
-     * @return  
+     * @description Returns the privacy information's call-to-action URL.
+     * 
+     * @return {string} The privacy information's call-to-action URL. 
      */
     self.prototype.getURL = function () {
       return this.url;
@@ -58,8 +66,9 @@ $ADP.PrivacyInfo = function (args) {
     /**
      * @name $ADP.PrivacyInfo#getLinkText
      * @function
-     * @description
-     * @return  
+     * @description Returns the URL's text representation.
+     * 
+     * @return {string} The URL's text representation. 
      */
     self.prototype.getLinkText = function () {
       return this.linkText;
@@ -68,8 +77,8 @@ $ADP.PrivacyInfo = function (args) {
     /**
      * @name $ADP.PrivacyInfo#isValid
      * @function
-     * @description
-     * @return  
+     * @description Determines whether a title, text, or linkText has been defined.
+     * @return {boolean} <code>true</code> / <code>false</code>
      */
     self.prototype.isValid = function () {
       return this.valid ? true : false;
@@ -78,8 +87,13 @@ $ADP.PrivacyInfo = function (args) {
     /**
      * @name $ADP.PrivacyInfo#render
      * @function
-     * @description
-     * @return  
+     * @description Returns a HTML string representation of the privacy information.
+     * 
+     * @return {string} HTML wrapped string representation containing privacy information.
+     * 
+     * @example
+     * // returns string
+     * AdServer&lt;br/&gt;Opt-opt out of this ad server.&lt;br/&gt;&lt;a href=&quot;http://calltoaction.url&quot; target=&quot;_blank&quot;&gt;Opt Out&lt;/a&gt;
      */
     self.prototype.render = function () {
       var title = this.getTitle();
