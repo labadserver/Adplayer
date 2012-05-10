@@ -45,6 +45,7 @@ $ADP.Player = function (id, args) {
       this.domId = args.domId;
       this.header = args.header;
       this.footer = args.footer;
+      this.publisherInfo = args.publisherInfo;
       this.position = args.position || 'top-right';
       this.items = [];
       var items = args.items || [];
@@ -108,6 +109,17 @@ $ADP.Player = function (id, args) {
     self.prototype.getFooter = function () {
       return (this.footer || '');
     };
+    
+    /**
+     * @name $ADP.Player#getPublisherInfo
+     * @function
+     * @description Returns the player's publisher info message displayed in the privacy window.
+     *
+     * @returns {string}  The player's publisher message. <b>Default:</b> <i>empty string</i>
+     */
+    self.prototype.getPublisherInfo = function () {
+      return (this.publisherInfo || '');
+    };
 
     /**
      * @name $ADP.Player#hasPrivacyInfo
@@ -150,6 +162,7 @@ $ADP.Player = function (id, args) {
       var position = this.getPosition();
       var header = this.getHeader();
       var footer = this.getFooter();
+      var publisherInfo = this.getPublisherInfo();
       var items = this.getPrivacyInfos();
       if (!obaId) {
         // No obaId specified for $ADP.Play/er.inject into ' + domId
@@ -174,8 +187,13 @@ $ADP.Player = function (id, args) {
 
         }
 
-        var panelContent = '<div class="adp-panel-header">' + header + '<\/div>' + '<div class="adp-panel-info">' + privacy_info + '<\/div>' + '<div class="adp-panel-footer">' + footer + '<\/div>';
-
+        // generate panel content
+        var panelContent = '';
+        if(header != '') panelContent = panelContent.concat('<div class="adp-panel-header">' + header + '<\/div>');
+        if(publisherInfo != '') panelContent = panelContent.concat('<div class="adp-panel-publisherinfo">' + publisherInfo + '<\/div>');
+        panelContent = panelContent.concat('<div class="adp-panel-info">' + privacy_info + '<\/div>');
+        if(footer != '') panelContent = panelContent.concat('<div class="adp-panel-footer">' + footer + '<\/div>');
+        
         container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker">' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '">Datenschutzinfo<\/div>' + '<\/div>' + '<div id="adp-panel-' + obaId + '" class="adp-panel adp-' + position + '" style="display:none;">' + '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close">Schlie&szlig;en<\/div>' + panelContent + '<\/div>' + '<\/div>';
 
         // add event handler            

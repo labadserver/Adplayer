@@ -96,10 +96,10 @@ $ADP.PrivacyInfo = function (args) {
      * AdServer&lt;br/&gt;Opt-opt out of this ad server.&lt;br/&gt;&lt;a href=&quot;http://calltoaction.url&quot; target=&quot;_blank&quot;&gt;Opt Out&lt;/a&gt;
      */
     self.prototype.render = function () {
-      var title = this.getTitle();
-      var text = this.getText();
-      var linkText = this.getLinkText();
-      var url = this.getURL();
+      var title = $ADP.Util.safeString(this.getTitle());
+      var text = $ADP.Util.safeString(this.getText());
+      var linkText = $ADP.Util.safeString(this.getLinkText());
+      var url = $ADP.Util.safeString(this.getURL());
       var s = '';
       if (linkText) s += linkText;
       if (url) s = '<a href="' + url + '" target="_blank">' + s + '</a>';
