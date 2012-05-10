@@ -73,6 +73,15 @@
   border-bottom: 1px solid #ccc;
 }
 
+.adp-panel-publisherinfo {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 11px;
+  text-align: justify;
+  
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
+}
+
 .adp-panel-info {
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 12px;

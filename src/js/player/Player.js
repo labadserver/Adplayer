@@ -190,7 +190,7 @@ $ADP.Player = function (id, args) {
         // generate panel content
         var panelContent = '';
         if(header != '') panelContent = panelContent.concat('<div class="adp-panel-header">' + header + '<\/div>');
-        if(publisherInfo != '') panelContent = panelContent.concat('<div class="adp-panel-header">' + panelContent + '<\/div>');
+        if(publisherInfo != '') panelContent = panelContent.concat('<div class="adp-panel-publisherinfo">' + publisherInfo + '<\/div>');
         panelContent = panelContent.concat('<div class="adp-panel-info">' + privacy_info + '<\/div>');
         if(footer != '') panelContent = panelContent.concat('<div class="adp-panel-footer">' + footer + '<\/div>');
         
