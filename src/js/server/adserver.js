@@ -6,8 +6,8 @@ function checkADPScript() {
   if (window.$ADP) return true;
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  // FIXME: Update base on build file name.  Possibly separate to variable.
-  script.src = './adplayer.js';
+  //script.src = './_@ADPLAYER_JS_FILE_MIN@_';
+  script.src = './_@ADPLAYER_JS_FILE@_';
   try {
     document.body.insertBefore(script, document.body.firstChild)
   }
@@ -55,7 +55,9 @@ function registerPrivacyInfo(oba, args) {
     $ADP.Registry.register(oba, info);
   }
   catch(e) {
-    alert(e.message);
+    if (typeof console != 'undefined'){
+      console.log(e.message);
+    }
   }
 
   return oba;
@@ -85,6 +87,8 @@ function injectPrivacyInfo(oba, args) {
     $ADP.Registry.createPlayer(oba, {domId: domId, position: 'top-right', header: 'Datenschutz-Info', footer: 'Footer-Info'});
   }
   catch(e) {
-    alert(e.message);
+    if (typeof console != 'undefined'){
+      console.log(e.message);
+    }
   }
 }
