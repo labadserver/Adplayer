@@ -44,8 +44,8 @@ $ADP.Player = function (id, args) {
       this.id = id;
       this.domId = args.domId;
       this.header = args.header;
-      this.publisherInfo = args.publisherInfo;
       this.footer = args.footer;
+      this.publisherInfo = args.publisherInfo;
       this.position = args.position || 'top-right';
       this.items = [];
       var items = args.items || [];
@@ -98,17 +98,6 @@ $ADP.Player = function (id, args) {
     self.prototype.getHeader = function () {
       return (this.header || 'Datenschutzbestimmungen');
     };
-    
-    /**
-     * @name $ADP.Player#getPublisherInfo
-     * @function
-     * @description Returns the player's publisher info message displayed in the privacy window.
-     *
-     * @returns {string}  The player's publisher message. <b>Default:</b> <i>empty string</i>
-     */
-    self.prototype.getPublisherInfo = function () {
-      return (this.publisherInfo || '');
-    };
 
     /**
      * @name $ADP.Player#getFooter
@@ -119,6 +108,17 @@ $ADP.Player = function (id, args) {
      */
     self.prototype.getFooter = function () {
       return (this.footer || '');
+    };
+    
+    /**
+     * @name $ADP.Player#getPublisherInfo
+     * @function
+     * @description Returns the player's publisher info message displayed in the privacy window.
+     *
+     * @returns {string}  The player's publisher message. <b>Default:</b> <i>empty string</i>
+     */
+    self.prototype.getPublisherInfo = function () {
+      return (this.publisherInfo || '');
     };
 
     /**
@@ -161,8 +161,8 @@ $ADP.Player = function (id, args) {
       var domId = this.getDOMId();
       var position = this.getPosition();
       var header = this.getHeader();
-      var publisherInfo = this.getPublisherInfo();
       var footer = this.getFooter();
+      var publisherInfo = this.getPublisherInfo();
       var items = this.getPrivacyInfos();
       if (!obaId) {
         // No obaId specified for $ADP.Play/er.inject into ' + domId

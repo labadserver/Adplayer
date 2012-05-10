@@ -46,7 +46,7 @@
   margin: 0 0;
   text-align: left;
   min-height: 25px;
-  max-width: 200px;
+  width: 250px;
   
   position: absolute;
 }
