@@ -1,6 +1,6 @@
 <project name="AdPlayer" default="_default-build" basedir=".">
   <description>AdPlayer build script.</description>
-	
+
   <xmlproperty file=".project" keeproot="true"/>
   <property name="version-major" value="${projectDescription.major}"/>
   <property name="version-minor" value="${projectDescription.minor}"/>
@@ -20,13 +20,13 @@
   <property name="js-dir" location="src/js"/>
   <property name="css-dir" location="src/css"/>
   <property name="html-dir" location="src/html"/>  
-	
+
   <target name="prepare" description="Prepares the build directory.">
     <delete dir="${build-dir}" />
     <mkdir dir="${build-dir}"/>
-  	<copy todir="${build-dir}/css" overwrite="true">
+    <copy todir="${build-dir}/css" overwrite="true">
       <fileset dir="${css-dir}" includes="*">
-      	<exclude name="*.jpg"/>
+        <exclude name="*.jpg"/>
       </fileset>
       <mapper type="glob" from="*" to="${cssfilename}-*" />
     </copy>
@@ -41,13 +41,13 @@
     <copy file="README" todir="${build-dir}" />
     <copy file="${js-dir}/server/adserver.js" tofile="${build-dir}/js/${serverfilename}.js" />
   </target>
-  
+
   <target name="compile" depends="prepare" description="Compiles source and replaces all tokens.">
     <concat destfile="${build-dir}/js/${jsfilename}.js" fixlastline="true">  
       <filelist dir="${js-dir}/player">
         <!-- DEFINE Class list order -->
-      	<file name="Namespace.js"/>
-      	<file name="Registry.js"/>
+        <file name="Namespace.js"/>
+        <file name="Registry.js"/>
         <file name="Player.js"/>
       	<file name="PrivacyInfo.js"/>
       	<file name="Message.js"/>
@@ -66,7 +66,7 @@
     <replace dir="${build-dir}" token="_@VERSION_PATCH@_" value="${version-patch}" />
     <replace dir="${build-dir}" token="_@VERSION_STAGE@_" value="${version-stage}" />
   </target>
-  
+
   <target name="compress" depends="compile" description="Compresses js and css files.">
     <apply executable="java" parallel="false">
       <fileset dir="${build-dir}/js/" includes="*.js"/>
@@ -87,7 +87,7 @@
       <targetfile/>
     </apply>
   </target>
-	
+
   <target name="gnu" depends="compress" description="Appends GPL liscense to all build files.">
     <copy tofile="${build-dir}/gpl.txt" file="gpl.txt" overwrite="true" />
     <copy todir="${build-dir}/tmp" file="gnu.txt" overwrite="true" />
@@ -123,14 +123,14 @@
     <antcall target="gnu.me">
       <param name="filepath" value="${build-dir}/demo/example3.js" />
     </antcall>
-  	
+
     <!-- HTML Files -->
     <replace file="${build-dir}/tmp/gnu.txt" token="/*" value="&lt;!--" />
     <replace file="${build-dir}/tmp/gnu.txt" token="*/" value="--&gt;" />
     <loadfile property="gnulicense" srcfile="${build-dir}/tmp/gnu.txt" />
     <replace dir="${build-dir}" token="&lt;!--_@GNULICENSE@_--&gt;" value="${gnulicense}" />
   </target>
-	
+
   <target name="gnu.me">
     <concat destfile="${build-dir}/tmp/gnutemp.tmp" fixlastline="true">
       <header filtering="no" trimleading="no" file="${build-dir}/tmp/gnu.txt"></header>
@@ -143,7 +143,7 @@
     <delete dir="${build-dir}/tmp" />
     <echo>AdPlayer ${version-detailed} - Default Build Complete</echo>
   </target>
-	
+
   <target name="_jsdoc-build" depends="_default-build" description="Builds default and jsdoc output.">
     <taskdef name="jsdoctoolkit" classname="uk.co.darrenhurley.ant.tasks.JsDocToolkit" classpath="tools/jsdoc/jsdoc-toolkit-ant-task-1.1.2.jar;tools/jsdoc/jsrun.jar" />
     <jsdoctoolkit jsdochome="tools/jsdoc/" template="jsdoc" outputdir="${build-dir}/docs/">
@@ -151,7 +151,7 @@
     </jsdoctoolkit>
     <echo>AdPlayer ${version-detailed} - JSDoc Build Complete</echo>
   </target>
-	
+
   <target name="_release-build" depends="_jsdoc-build" description="Compiles and packages entire build to a zip.">
     <zip destfile="${build-dir}/adplayer-v${version}.zip">
       <zipfileset dir="${build-dir}" />

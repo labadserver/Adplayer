@@ -39,9 +39,9 @@ $ADP.Registry = {
   /**
    * @name $ADP.Registry#register
    * @function
-   * @description The register function is used to register the privacy item for an AdPlayer chain. 
+   * @description Registers the privacy item for an AdPlayer chain. 
    * 
-   * @param {integer} id The oba id that is used to identify this adverts unique privacy messages 
+   * @param {integer} id The OBA id that is used to identify this player's unique privacy messages 
    * @param {object}  args   The Arguments 
    * @param {string}  args.domId   The domId where the privacy button must be rendered
    * @param {string}  args.header  The header message to be displayed in the privacy window
@@ -97,8 +97,9 @@ $ADP.Registry = {
   /**
    * @name $ADP.Registry#unregister
    * @function
-   * @description Unregisters the privacy item for an AdPlayer chain. 
-   * @param {integer} id The oba id that is used to identify this adverts unique privacy messages.
+   * @description Unregisters the privacy item for an AdPlayer chain.
+   * 
+   * @param {integer} id The OBA id that is used to identify this player's unique privacy messages.
    */
   unregister: function (id) {
     if (!this.data[id]) return;
@@ -109,9 +110,11 @@ $ADP.Registry = {
   /**
    * @name $ADP.Registry#getById
    * @function
-   * @description  
-   * @param {integer} id The oba id that is used to identify this adverts unique privacy messages.
-   * @return 
+   * @description Returns the current list of registry item by id.
+   * 
+   * @param {integer} id  The OBA id that is used to identify this player's unique privacy messages.
+   * 
+   * @return {array} The current list of registry items.
    */
   getById: function (id) {
     var items = [];
@@ -120,11 +123,28 @@ $ADP.Registry = {
   },
   
   /**
+   * @name $ADP.Registry#pullById
+   * @function
+   * @description Will return and unregister the privacy messages for the supplied OBA id.
+   * 
+   * @param {integer} id the OBA id that is used to identify this player's unique privacy messages.
+   * 
+   * @return {array} The current list of registry items.
+   */
+  pullById: function (id) {
+    var items = this.getById(id);
+    this.unregister(id);
+    return items;
+  },
+  
+  /**
    * @name $ADP.Registry#getDOMId
    * @function
-   * @description  
-   * @param {integer} id The oba id that is used to identify this adverts unique privacy messages.
-   * @return 
+   * @description Returns the player's OBA DOM id.
+   * 
+   * @param {integer} id  The OBA DOM id that is used to identify this player's unique privacy messages.
+   * 
+   * @return {integer} The player's OBA DOM id.
    */
   getDOMId: function (id) {
     if (this.data[id]) {
@@ -135,9 +155,9 @@ $ADP.Registry = {
   /**
    * @name $ADP.Registry#hasId
    * @function
-   * @description  
-   * @param {integer} id The oba id that is used to identify this adverts unique privacy messages.
-   * @return 
+   * @description Returns a boolean that determines if an id has been set.
+   * @param {integer} id The OBA id that is used to identify this player's unique privacy messages.
+   * @return {boolean} <code>true</code> / <code>false</code>
    */
   hasId: function (id) {
     return this.data[id] ? true : false;
@@ -147,9 +167,7 @@ $ADP.Registry = {
    * @private
    * @name $ADP.Registry#locateParentRegistry
    * @function
-   * @description
-   *
-   * @param {integer} id The oba id that is used to identify this adverts unique privacy messages.
+   * @description Locates the top most parent registry in the delivery chain.
    */
   locateParentRegistry: function (id) {
     var parentWindow = window.parent,
@@ -210,16 +228,16 @@ $ADP.Registry = {
   
   /**
    * @private
-   * @name  $ADP.Regestry#registerParentItems
+   * @name  $ADP.Registry#registerParentItems
    * @function
    * @description Adds all the parent privacy items to the beginning of the current items list for
    *     the given id. This will also clear all invoked <code>askNextParent</code> methods that are
-   *     currently in progress.
+   *     currently in progress fir this Adplayer chain id.
    *
    * @param id     The id of the Adplayer chain.
    * @param items  The array of privacy items.
    * 
-   * @see $ADP.Regestry#askNextParent
+   * @see $ADP.Registry#askNextParent
    */
   registerParentItems: function (id, items) {
     if (!items) items = [];
@@ -234,9 +252,9 @@ $ADP.Registry = {
   },
 
   /**
-   * @name  $ADP.Regestry#createPlayer
+   * @name  $ADP.Registry#createPlayer
    * @function
-   * @description
+   * @description This method is used to create the player for the given player id 
    * 
    * @param id     The id of the Adplayer chain
    * @param items  The array of privacy items
@@ -269,7 +287,7 @@ $ADP.Registry = {
   /**
    * @name    $ADP.Registry#generateId
    * @function
-   * @description Generates a new and not used id.<br/><br/>
+   * @description Generates a new and unused id.<br/><br/>
    *        <b>Note:</b> This method does not register any data at $ADP.Registry.
    * 
    * @returns   {Integer} Returns the generated id.
@@ -301,28 +319,28 @@ $ADP.Registry = {
       }
 
       switch (msg.type) {
-      case $ADP.Message.types.pullOBA:
-        result = $ADP.Registry.getById(msg.data);
-        $ADP.Message.send(src, $ADP.Message.types.pullOBA_ACK, {
-          id: msg.data,
-          items: result
-        });
-        break;
-      case $ADP.Message.types.unRegOBA:
-        result = $ADP.Registry.unregister(msg.data);
-        $ADP.Message.send(src, $ADP.Message.types.unRegOBA_ACK, {
-          id: msg.data,
-          result: result
-        });
-        break;
-      case $ADP.Message.types.pullOBA_ACK:
-        if (msg.data.id && msg.data.items && msg.data.items.length) {
-          $ADP.Registry.registerParentItems(msg.data.id, msg.data.items);
-          $ADP.Message.send(src, $ADP.Message.types.unRegOBA, msg.data.id);
-        }
-        break;
-      case $ADP.Message.types.unRegOBA_ACK:
-        break;
+        case $ADP.Message.types.pullOBA:
+          result = $ADP.Registry.getById(msg.data);
+          $ADP.Message.send(src, $ADP.Message.types.pullOBA_ACK, {
+            id: msg.data,
+            items: result
+          });
+          break;
+        case $ADP.Message.types.unRegOBA:
+          result = $ADP.Registry.unregister(msg.data);
+          $ADP.Message.send(src, $ADP.Message.types.unRegOBA_ACK, {
+            id: msg.data,
+            result: result
+          });
+          break;
+        case $ADP.Message.types.pullOBA_ACK:
+          if (msg.data.id && msg.data.items && msg.data.items.length) {
+            $ADP.Registry.registerParentItems(msg.data.id, msg.data.items);
+            $ADP.Message.send(src, $ADP.Message.types.unRegOBA, msg.data.id);
+          }
+          break;
+        case $ADP.Message.types.unRegOBA_ACK:
+          break;
       }
     } catch (e) {}
   },

@@ -10,7 +10,15 @@ $ADP.Message = {
   /**
    * @name $ADP.Message#types
    * @field
-   * @description  
+   * @description Request types used to make requests across other browsers.<br/>
+   *     <ul>
+   *       <li><code>$ADP.Message.types.nomsg</code> - No message</li>
+   *       <li><code>$ADP.Message.types.pullOBA</code> - Request to pull OBA information.</li>
+   *       <li><code>$ADP.Message.types.pullOBA_ACK</code> - Return message for OBA information.</li>
+   *       <li><code>$ADP.Message.types.unRegOBA</code> - Request to unregister OBA information.</li>
+   *       <li><code>$ADP.Message.types.unRegOBA_ACK</code> - Return message for unregister request.</li>
+   *     </ul>
+   * @type object
    */
   types: {
     nomsg: 'NULL',
@@ -21,11 +29,17 @@ $ADP.Message = {
   },
 
   /**
+   * @private
    * @name $ADP.Message#create
    * @function
-   * @param type
-   * @param data
-   * @description  
+   * @description Prepares data for transport by convert to string.
+   * 
+   * @param type {string}  The type of request to send.
+   * @param data {object}  The data object to send.
+   * 
+   * @return String representation of object.
+   * 
+   * @see $ADP.Message#types
    */
   create: function (type, data) {
     var msg = {
@@ -41,14 +55,18 @@ $ADP.Message = {
   },
 
   /**
+   * @private
    * @name $ADP.Message#parse
    * @function
-   * @param data
-   * @description  
-   */
+   * @description Parses the data into a an object.
+   *   
+   * @param data {object}  The data to parse.
+   * 
+   * @return Object representation of the string message.
+   */ 
   parse: function (data) {
     try {
-      if (JSON && typeof JSON.stringify == 'function') {
+      if (JSON && typeof JSON.parse == 'function') {
         return JSON.parse(data);
       }
     } catch (e) {}
@@ -58,10 +76,13 @@ $ADP.Message = {
   /**
    * @name $ADP.Message#send
    * @function
-   * @param trgt
-   * @param typea
-   * @param data
-   * @description  
+   * @description Sends a message to a target window using <code>postMessage</code>.
+   *   
+   * @param trgt {window}  The target DOM window to send the message to.
+   * @param type {string}  The type of message to send.
+   * @param data {object}  The data object to send.
+   * 
+   * @see $ADP.Message#types
    */
   send: function (trgt, type, data) {
     if (trgt && trgt.postMessage) {

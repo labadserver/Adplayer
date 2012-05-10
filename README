@@ -47,6 +47,7 @@ ChangeLog
 1.1.1
 ------------------
 - Version separation added to build routine for version code integration.
+- 'getVersion' method added to $ADP namespace.
 
 
 1.1.0

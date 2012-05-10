@@ -3,6 +3,9 @@
  * @class
  * @description The <code>$ADP.Player</code> class.
  *
+ * @param id    See {@link $ADP.Registry#register}
+ * @param args  See {@link $ADP.Registry#register}
+ *
  * @example
  * TODO
  */
@@ -12,26 +15,30 @@ $ADP.Player = function (id, args) {
 
     /**
      * @private
-     * @name $ADP.Message#attempts
+     * @name $ADP.Player#attempts
      * @field
-     * @description  
+     * @description Used to keep track of current attempts being made.
+     * 
+     * @type integer 
      */
     self.prototype.attempts = 0;
 
     /**
-     * @name $ADP.Message#maxAttempts
+     * @name $ADP.Player#maxAttempts
      * @field
-     * @description  
+     * @description The maximum amount of attempts to wait for the <code>Player</code>'s container
+     *     to be available in the DOM.
+     *
+     * @default 50
+     * @type integer
      */
     self.prototype.maxAttempts = 50;
 
     /**
      * @private
-     * @name $ADP.Message#init
+     * @name $ADP.Player#init
      * @function
-     * @param id
-     * @param args
-     * @description  
+     * @description Class constructor.
      */
     self.prototype.init = function (id, args) {
       this.id = id;
@@ -48,79 +55,94 @@ $ADP.Player = function (id, args) {
     };
 
     /**
-     * @name $ADP.Message#getId
+     * @name $ADP.Player#getId
      * @function
-     * @description
-     * @returns  
+     * @description Returns the OBA id that is used to identify this player's unique privacy messages.
+     * 
+     * @returns {integer}  The player's OBA id.
      */
     self.prototype.getId = function () {
       return this.id;
     };
 
     /**
-     * @name $ADP.Message#getDOMId
+     * @name $ADP.Player#getDOMId
      * @function
-     * @description
-     * @returns  
+     * @description Returns the OBA DOM id that is used to identify this player's unique privacy messages.
+     *
+     * @returns {integer}  The player's OBA DOM id.
      */
     self.prototype.getDOMId = function () {
       return this.domId;
     };
 
     /**
-     * @name $ADP.Message#getPosition
+     * @name $ADP.Player#getPosition
      * @function
-     * @description
-     * @returns  
+     * @description Returns the position of the OBA button.
+     *
+     * @returns {string}  The OBA button position. <b>Default:</b> top-right
      */
     self.prototype.getPosition = function () {
       return this.position || 'top-right';
     };
 
     /**
-     * @name $ADP.Message#getHeader
+     * @name $ADP.Player#getHeader
      * @function
-     * @description
-     * @returns  
+     * @description Returns the player's header message displayed in the privacy window.
+     *
+     * @returns {string}  The player's header message. <b>Default:</b> Datenschutzbestimmungen
      */
     self.prototype.getHeader = function () {
       return (this.header || 'Datenschutzbestimmungen');
     };
 
     /**
-     * @name $ADP.Message#getFooter
+     * @name $ADP.Player#getFooter
      * @function
-     * @description
-     * @returns  
+     * @description Returns the player's footer message displayed in the privacy window.
+     *
+     * @returns {string} The player's footer message. <b>Default:</b> <i>empty string</i>
      */
     self.prototype.getFooter = function () {
       return (this.footer || '');
     };
 
     /**
-     * @name $ADP.Message#hasPrivacyInfo
+     * @name $ADP.Player#hasPrivacyInfo
      * @function
-     * @description
-     * @returns  
+     * @description Returns boolean determining whether the player contains any privacy information.
+     *
+     * @returns {boolean} <code>true</code> / <code>false</code> 
+     * 
+     * @see $ADP.PrivacyInfo
      */
     self.prototype.hasPrivacyInfo = function () {
-      return this.items.length;
+      return Boolean(this.items.length);
     };
 
     /**
-     * @name $ADP.Message#hasPrivacyInfo
+     * @name $ADP.Player#getPrivacyInfos
      * @function
-     * @description
-     * @returns  
+     * @description Returns a list containing the player's privacy information.
+     *
+     * @returns {array} The list containing privacy information. 
+     * 
+     * @see $ADP.PrivacyInfo
      */
     self.prototype.getPrivacyInfos = function () {
       return this.items;
     };
 
     /**
-     * @name $ADP.Message#inject
+     * @private
+     * @name $ADP.Player#inject
      * @function
-     * @description
+     * @description Assumes arguments have been predefined at instantiation and
+     *     initializes player setup when invoked.
+     * 
+     * @see $ADP.Registry#createPlayer
      */
     self.prototype.inject = function () {
       var obaId = this.getId();
