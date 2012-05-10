@@ -104,7 +104,7 @@ $ADP.Player = function (id, args) {
      * @function
      * @description Returns the player's publisher info message displayed in the privacy window.
      *
-     * @returns {string}  The player's header message. <b>Default:</b> <i>empty string</i>
+     * @returns {string}  The player's publisher message. <b>Default:</b> <i>empty string</i>
      */
     self.prototype.getPublisherInfo = function () {
       return (this.publisherInfo || '');
