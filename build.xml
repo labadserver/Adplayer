@@ -49,11 +49,12 @@
         <file name="Namespace.js"/>
         <file name="Registry.js"/>
         <file name="Player.js"/>
-        <file name="PrivacyInfo.js"/>
-        <file name="Message.js"/>
-        <file name="Version.js"/>
-        <file name="Init.js"/>
-        <!-- END DEFINE Class list order -->
+      	<file name="PrivacyInfo.js"/>
+      	<file name="Message.js"/>
+      	<file name="Util.js"/>
+      	<file name="Version.js"/>
+      	<file name="Init.js"/>
+      	<!-- END DEFINE Class list order -->
       </filelist>
     </concat>
     <replace dir="${build-dir}" token="_@ADPLAYER_JS_FILE@_" value="${jsfilename}.js" />

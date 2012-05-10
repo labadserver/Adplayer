@@ -22,5 +22,19 @@ $ADP.Util = {
     if(typeof console != 'undefined'){
       console.log(Array.prototype.slice.call(arguments));
     }
+  },
+  
+  /**
+   * @name $ADP.Util#safeString
+   * @function
+   * @description Replaces all &lt; and &gt; signs with &amp;lt; and &amp;gt; to prevent
+   *              interpretation by browser.
+   * @param {string} s The string to make safe.
+   */
+  safeString: function(s) {
+    var safeString = s;
+    safeString = safeString.split('<').join('&lt;');
+    safeString = safeString.split('>').join('&gt;');
+    return safeString;
   }
 }

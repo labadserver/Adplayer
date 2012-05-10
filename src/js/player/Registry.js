@@ -35,6 +35,10 @@
 $ADP.Registry = {
   data: {},
   wait: 2000,
+  
+  header: 'Diese Werbung basiert auf der anonymen Erhebung und Verarbeitung Ihres Nutzungsverhaltens. In der vorliegenden Anzeige werden Nutzungsdaten erhoben bzw. verwendet, um Werbung f&uuml;r Sie zu optimieren. Wenn Sie keine nutzungsbasierte Werbung mehr von den hier gelisteten Anbietern erhalten wollen, k&ouml;nnen Sie die Datenerhebung beim jeweiligen Anbieter direkt deaktivieren, falls sie nicht bereits bei dem/den unten genannten Anbieter(n) einen  Widerspruch vorgenommen haben. Eine Deaktivierung bedeutet aber nicht, dass Sie k&uuml;nftig keine Werbung mehr erhalten, sondern lediglich, dass die Auslieferung der konkreten Kampagne nicht anhand anonym erhobener Nutzungsdaten ausgerichtet ist.',
+  footer: 'Wenn Sie mehr &uuml;ber nutzungsbasierte Online-Werbung erfahren wollen, klicken Sie <a href="http://www.youronlinechoices.com/de/" target="_blank">hier</a>. Dort k&ouml;nnen Sie sich dar&uuml;ber hinaus auch bei weiteren Anbietern die Erhebung der Nutzungsinformationen deaktivieren bzw. aktivieren und den Status der Aktivierung bei unterschiedlichen Anbietern <a href="http://meine-cookies.org/cookies_verwalten/praeferenzmanager-beta.html" target="_blank">einsehen</a>.',
+  publisherInfo: undefined,
 
   /**
    * @name $ADP.Registry#register
@@ -44,8 +48,6 @@ $ADP.Registry = {
    * @param {integer} id The OBA id that is used to identify this player's unique privacy messages 
    * @param {object}  args   The Arguments 
    * @param {string}  args.domId   The domId where the privacy button must be rendered
-   * @param {string}  args.header  The header message to be displayed in the privacy window
-   * @param {string}  args.footer  The footer to be displayed in the information window
    * @param {array}   args.items   The array of privacy items 
    * @param {string}  args.items.title  The name of the privacy party
    * @param {string}  args.items.text   The short description 
@@ -72,8 +74,6 @@ $ADP.Registry = {
     for (var k in args) {
       switch (k) {
         case 'domId':
-        case 'header':
-        case 'footer':
           this.data[id][k] = args[k]; // last one wins
           break;
         case 'title':
@@ -161,6 +161,12 @@ $ADP.Registry = {
    */
   hasId: function (id) {
     return this.data[id] ? true : false;
+  },
+  
+  setPublisherInfo: function(info) {
+    if(typeof this.publisherInfo === 'undefined') {
+      this.publisherInfo = info;
+    }
   },
   
   /**
@@ -261,8 +267,9 @@ $ADP.Registry = {
    */
   createPlayer: function (id, args) {
     if (!args) args = {};
-    var header = args.header;
-    var footer = args.footer;
+    var header = this.header;
+    var footer = this.footer;
+    var publisherInfo = this.publisherInfo || '';
     var domId = args.domId;
     var position = args.position || 'top-right';
     if (this.data[id]) {
@@ -277,6 +284,7 @@ $ADP.Registry = {
       position: position,
       header: header,
       footer: footer,
+      publisherInfo: publisherInfo,
       items: items
     });
     player.inject();
