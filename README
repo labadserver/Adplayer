@@ -48,6 +48,8 @@ ChangeLog
 ------------------
 - Version separation added to build routine for version code integration.
 - 'getVersion' method added to $ADP namespace.
+- 'log' method added to $ADP.Util
+- Registry class supports window.name base64 encoded privacy items as fallback and for pop(up/under)s 
 
 
 1.1.0
