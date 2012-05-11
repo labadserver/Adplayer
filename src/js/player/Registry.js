@@ -36,7 +36,7 @@ $ADP.Registry = {
   data: {},
   wait: 2000,
   
-  header: 'Diese Werbung basiert auf der anonymen Erhebung und Verarbeitung Ihres Nutzungsverhaltens. In der vorliegenden Anzeige werden Nutzungsdaten erhoben bzw. verwendet, um Werbung f&uuml;r Sie zu optimieren. Wenn Sie keine nutzungsbasierte Werbung mehr von den hier gelisteten Anbietern erhalten wollen, k&ouml;nnen Sie die Datenerhebung beim jeweiligen Anbieter direkt deaktivieren, falls sie nicht bereits bei dem/den unten genannten Anbieter(n) einen  Widerspruch vorgenommen haben. Eine Deaktivierung bedeutet aber nicht, dass Sie k&uuml;nftig keine Werbung mehr erhalten, sondern lediglich, dass die Auslieferung der konkreten Kampagne nicht anhand anonym erhobener Nutzungsdaten ausgerichtet ist.',
+  header: '',//'Diese Werbung basiert auf der anonymen Erhebung und Verarbeitung Ihres Nutzungsverhaltens. In der vorliegenden Anzeige werden Nutzungsdaten erhoben bzw. verwendet, um Werbung f&uuml;r Sie zu optimieren. Wenn Sie keine nutzungsbasierte Werbung mehr von den hier gelisteten Anbietern erhalten wollen, k&ouml;nnen Sie die Datenerhebung beim jeweiligen Anbieter direkt deaktivieren, falls sie nicht bereits bei dem/den unten genannten Anbieter(n) einen  Widerspruch vorgenommen haben. Eine Deaktivierung bedeutet aber nicht, dass Sie k&uuml;nftig keine Werbung mehr erhalten, sondern lediglich, dass die Auslieferung der konkreten Kampagne nicht anhand anonym erhobener Nutzungsdaten ausgerichtet ist.',
   footer: 'Wenn Sie mehr &uuml;ber nutzungsbasierte Online-Werbung erfahren wollen, klicken Sie <a href="http://www.youronlinechoices.com/de/" target="_blank">hier</a>. Dort k&ouml;nnen Sie sich dar&uuml;ber hinaus auch bei weiteren Anbietern die Erhebung der Nutzungsinformationen deaktivieren bzw. aktivieren und den Status der Aktivierung bei unterschiedlichen Anbietern <a href="http://meine-cookies.org/cookies_verwalten/praeferenzmanager-beta.html" target="_blank">einsehen</a>.',
   publisherInfo: undefined,
 
@@ -58,6 +58,7 @@ $ADP.Registry = {
    *  
    */
   register: function (id, args, useUnshift) {
+    $ADP.Util.log('Register Privacy info.',id,args,useUnshift);
     if (!args) args = {};
     if (!this.data[id]) {
       this.data[id] = {
@@ -182,12 +183,20 @@ $ADP.Registry = {
       while (parentWindow != window.top && !parentWindow.$ADP) {
         parentWindow = parentWindow.parent;
       }
-      if (!parentWindow.$ADP) { //Non friendly IFrame 
-        $ADP.Registry.askParentForPrivacyItems(id);
+      if (!parentWindow.$ADP) { //Non friendly IFrame
+        if (!window.postMessage) {
+          $ADP.Registry.loadPrivacyItemsFromName(id);
+        } else {
+          $ADP.Registry.askParentForPrivacyItems(id);
+        }
       } else { //Friendly Iframe
         items = parentWindow.$ADP.Registry.getById(id);
-        $ADP.Registry.registerParentItems(id, items);
-        parentWindow.$ADP.Registry.unregister(id);
+        if(items.length) {
+          $ADP.Registry.registerParentItems(id, items);
+          parentWindow.$ADP.Registry.unregister(id);
+        } else {
+          $ADP.Registry.loadPrivacyItemsFromName(id);
+        }
       }
     }
   },
@@ -221,7 +230,8 @@ $ADP.Registry = {
    * @name $ADP.Registry#askNextParent
    * @function
    * @description Runs after a timeout and will ask the next parent for
-   *     privacy items of the given id.
+   *     privacy items of the given id. if no parent returns the required items then try load privacy information
+   *     from the window.name 
    * 
    * @param id  The AdPlayer chain id.
    */
@@ -229,6 +239,8 @@ $ADP.Registry = {
     if (this.data[id].iframeSearch.target != this.data[id].iframeSearch.target.parent) {
       this.data[id].iframeSearch.target = this.data[id].iframeSearch.target.parent;
       $ADP.Registry.askParentForPrivacyItems(id);
+    } else {
+      $ADP.Registry.loadPrivacyItemsFromName(id);
     }
   },
   
@@ -255,6 +267,21 @@ $ADP.Registry = {
     for (var k in items) {
       $ADP.Registry.register(id, items[k], true);
     }
+  },
+  /**
+   * @name $ADP.Registry#loadPrivacyItemsFromName
+   * @function
+   * @description The fallback method of retrieving the privacy information
+   * @param id
+   */
+  loadPrivacyItemsFromName: function (id) {
+    if (!window.name) return;
+    try {
+      var items = $ADP.Util.JSON.parse($ADP.Util.atob(window.name.replace(/^[^-]+\-([A-Za-z0-9\+\/]+=?=?=?)$/,'$1')));
+      if (items.length) {
+        this.registerParentItems(id,items);
+      }
+    } catch(e) {}
   },
 
   /**
