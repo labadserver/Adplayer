@@ -47,8 +47,8 @@ $ADP.Message = {
       data: data
     };
     try {
-      if (JSON && typeof JSON.stringify == 'function') {
-        return JSON.stringify(msg);
+      if ($ADP.Util.JSON && typeof $ADP.Util.JSON.stringify == 'function') {
+        return $ADP.Util.JSON && typeof $ADP.Util.JSON.stringify(msg);
       }
     } catch (e) {}
     return '{"type":"NULL"}';
@@ -66,8 +66,8 @@ $ADP.Message = {
    */ 
   parse: function (data) {
     try {
-      if (JSON && typeof JSON.parse == 'function') {
-        return JSON.parse(data);
+      if ($ADP.Util.JSON && typeof $ADP.Util.JSON.parse == 'function') {
+        return $ADP.Util.JSON.parse(data);
       }
     } catch (e) {}
     return $ADP.Message.create('NULL', {});

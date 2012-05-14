@@ -19,7 +19,8 @@
  *              title:    'title1',
  *              text:     'text1',
  *              url:      'url1',
- *              linkText: 'linkText1'
+ *              linkText: 'linkText1',
+ *              usePopupForPrivacyinfo: true
  *            },
  *            {
  *              title:    'title2',
@@ -53,6 +54,7 @@ $ADP.Registry = {
    * @param {string}  args.items.text   The short description 
    * @param {string}  args.items.url    The opt out or more information url
    * @param {string}  args.items.linkText  The text that should be displayed instead of the link url
+   * @param {boolean} args.items.usePopup  Boolean to display privacy info in a popup 
    * @param {boolean} useUnshift   The unShift variable is set when the item needs to be inserted in
    *     front of the current items, This occurs when one is adding items from a parent Registry object
    *  
@@ -81,6 +83,7 @@ $ADP.Registry = {
         case 'text':
         case 'url':
         case 'linkText':
+        case 'usePopup':
           item[k] = args[k];
           break;
         default:
@@ -219,6 +222,7 @@ $ADP.Registry = {
     var obaId = id,
       data = this.data[id],
       target = data.iframeSearch.target;
+
     $ADP.Message.send(target, $ADP.Message.types.pullOBA, id);
     data.iframeSearch.timeoutId = setTimeout(function () {
       $ADP.Registry.askNextParent(id);
@@ -283,7 +287,7 @@ $ADP.Registry = {
       }
     } catch(e) {}
   },
-
+  
   /**
    * @name  $ADP.Registry#createPlayer
    * @function
@@ -299,22 +303,31 @@ $ADP.Registry = {
     var publisherInfo = this.publisherInfo || '';
     var domId = args.domId;
     var position = args.position || 'top-right';
-    if (this.data[id]) {
-      if (this.data[id].timeoutId) clearTimeout(this.data[id].timeoutId);
-      if (domId) this.data[id].domId = domId; // last one wins
-      domId = this.getDOMId(id);
+    var usePopup = args.usePopup || false;
+    if (!this.data[id]) this.data[id]={domId: null, items:[]};
+    
+    if (this.data[id].timeoutId) clearTimeout(this.data[id].timeoutId);
+    if (domId) this.data[id].domId = domId; // last one wins
+    domId = this.getDOMId(id);
+    
+    var items = this.getById(id);
+    for (var k in items) {
+      if(items[k].usePopup && items[k].usePopup == true) {
+        usePopup = true; 
+      }
     }
 
-    var items = this.getById(id);
     var player = new $ADP.Player(id, {
       domId: domId,
       position: position,
       header: header,
       footer: footer,
       publisherInfo: publisherInfo,
-      items: items
+      items: items,
+      usePopup: usePopup
     });
     player.inject();
+    this.data[id].player = player;
 
     return player;
   },

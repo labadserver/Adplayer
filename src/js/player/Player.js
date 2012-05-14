@@ -1,4 +1,4 @@
-/**
+/** 
  * @name $ADP.Player
  * @class
  * @description The <code>$ADP.Player</code> class.
@@ -53,6 +53,7 @@ $ADP.Player = function (id, args) {
         var privacyInfo = new $ADP.PrivacyInfo(items[i]);
         if (privacyInfo.isValid()) this.items.push(privacyInfo);
       }
+      this.usePopup = !!args.usePopup;
     };
 
     /**
@@ -120,6 +121,17 @@ $ADP.Player = function (id, args) {
     self.prototype.getPublisherInfo = function () {
       return (this.publisherInfo || '');
     };
+    
+    /**
+     * @name $ADP.Player#usePopupForPrivacyInfo
+     * @function
+     * @description Returns whether the privacy info should be displayed in a popup window.
+     *
+     * @returns {boolean}  
+     */
+    self.prototype.usePopupForPrivacyInfo = function () {
+      return this.usePopup ? true : false;
+    };
 
     /**
      * @name $ADP.Player#hasPrivacyInfo
@@ -164,6 +176,8 @@ $ADP.Player = function (id, args) {
       var footer = this.getFooter();
       var publisherInfo = this.getPublisherInfo();
       var items = this.getPrivacyInfos();
+      var usePopup = this.usePopupForPrivacyInfo();
+      $ADP.Util.log("usePopup",obaId,usePopup);
       if (!obaId) {
         // No obaId specified for $ADP.Play/er.inject into ' + domId
         return;
@@ -194,24 +208,8 @@ $ADP.Player = function (id, args) {
         panelContent = panelContent.concat('<div class="adp-panel-info">' + privacy_info + '<\/div>');
         if(footer != '') panelContent = panelContent.concat('<div class="adp-panel-footer">' + footer + '<\/div>');
         
-        container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker">' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '">Datenschutzinfo<\/div>' + '<\/div>' + '<div id="adp-panel-' + obaId + '" class="adp-panel adp-' + position + '" style="display:none;">' + '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close">Schlie&szlig;en<\/div>' + panelContent + '<\/div>' + '<\/div>';
-
-        // add event handler            
-        var adMarkerIcon = document.getElementById('adp-admarker-icon-' + obaId);
-        if (adMarkerIcon) adMarkerIcon.onclick = function () {
-          var panel = document.getElementById('adp-panel-' + obaId);
-          if (panel) panel.style.display = 'block';
-        }
-        var adMarkerText = document.getElementById('adp-admarker-text-' + obaId);
-        if (adMarkerText) adMarkerText.onclick = function () {
-          var panel = document.getElementById('adp-panel-' + obaId);
-          if (panel) panel.style.display = 'block';
-        };
-        var close = document.getElementById('adp-panel-close-' + obaId);
-        if (close) close.onclick = function () {
-          var panel = document.getElementById('adp-panel-' + obaId);
-          if (panel) panel.style.display = 'none';
-        };
+        container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker" >' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '" onClick="$ADP.Player.showPrivacyInfo('+obaId+');"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '"  onClick="$ADP.Player.showPrivacyInfo('+obaId+');">Datenschutzinfo<\/div>' + '<\/div>' + '<div id="adp-panel-' + obaId + '" class="adp-panel adp-' + position + '" style="display:none;">' + '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="$ADP.Player.hidePrivacyInfo('+obaId+');">Schlie&szlig;en<\/div>' + panelContent + '<\/div>' + '<\/div>';
+        
       } else {
         if (this.attempts > this.maxAttempts) {
           //Too many attempts for ' + obaId + ', ' + domId
@@ -231,3 +229,24 @@ $ADP.Player = function (id, args) {
   this.init(id, args);
 };
 
+/**
+ * @name $ADP.Player.showPrivacyInfo
+ * @function
+ * @description Will show the privacy information
+ * @param {integer} obaid
+ */
+$ADP.Player.showPrivacyInfo = function (obaid,use) {
+  var panel = document.getElementById('adp-panel-' + obaid);
+  if (panel) panel.style.display = 'block';
+};
+
+/**
+ * @name $ADP.Player.hidePrivacyInfo
+ * @function
+ * @description hides the privacy information
+ * @param {integer} obaid
+ */
+$ADP.Player.hidePrivacyInfo = function (obaid) {
+  var panel = document.getElementById('adp-panel-' + obaid);
+  if (panel) panel.style.display = 'none';
+};

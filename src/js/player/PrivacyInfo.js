@@ -8,6 +8,7 @@
  * @param {string}  args.text      The detailed information of the privacy information.
  * @param {string}  args.url       The call-to-action URL for opting.
  * @param {array}   args.linkText  The URL's text representation.
+ * @param {boolean} args.usePopup  default is layer and if set then popup should be used
  *
  * @example
  * TODO
@@ -28,6 +29,7 @@ $ADP.PrivacyInfo = function (args) {
       this.text = args.text;
       this.url = args.url;
       this.linkText = args.linkText;
+      this.usePopup = !!args.usePopup;
     };
 
     /**
@@ -83,7 +85,17 @@ $ADP.PrivacyInfo = function (args) {
     self.prototype.isValid = function () {
       return this.valid ? true : false;
     };
-
+    
+    /**
+     * @name $ADP.PrivacyInfo#usePopup
+     * @function
+     * @description returns whether privacy items should be rendered in popup
+     * @returns {boolean} 
+     */ 
+     self.prototype.usePopup = function () {
+       return this.usePopup ? true : false;
+     };
+     
     /**
      * @name $ADP.PrivacyInfo#render
      * @function
