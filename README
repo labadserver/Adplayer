@@ -51,14 +51,12 @@ ChangeLog
 - 'log' method added to $ADP.Util
 - Registry class supports window.name base64 encoded privacy items as fallback and for pop(up/under)s 
 
-
 1.1.0
 ------------------
 - Folders added and build.xml updated for player/server separation.
 - Namespace updated to specification; $ADP.
 - Registry class updated with 'generateId' method.
 - Registry class supports IFrame privacy item fetching (postMessage and parent crawling)
-- json2 library added, required by post message 
 
 
 1.0.0
