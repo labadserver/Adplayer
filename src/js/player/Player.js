@@ -54,6 +54,7 @@ $ADP.Player = function (id, args) {
         if (privacyInfo.isValid()) this.items.push(privacyInfo);
       }
       this.usePopup = !!args.usePopup;
+      $ADP.Util.log(id,'Popup: '+this.usePopup);
     };
 
     /**
@@ -172,11 +173,6 @@ $ADP.Player = function (id, args) {
       var obaId = this.getId();
       var domId = this.getDOMId();
       var position = this.getPosition();
-      var header = this.getHeader();
-      var footer = this.getFooter();
-      var publisherInfo = this.getPublisherInfo();
-      var items = this.getPrivacyInfos();
-      var usePopup = this.usePopupForPrivacyInfo();
       if (!obaId) {
         // No obaId specified for $ADP.Play/er.inject into ' + domId
         return;
@@ -191,27 +187,10 @@ $ADP.Player = function (id, args) {
       }
       var container = iframeButton || document.getElementById(domId);
       if (container) {
-        var privacy_info = '';
-        for (var i = 0; i < items.length; i++) {
-          var item = items[i];
-          try {
-            privacy_info += item.render() + '<br />\n';
-          } catch (e) {}
-
-        }
-
-        // generate panel content
-        var panelContent = '';
-        if(header != '') panelContent = panelContent.concat('<div class="adp-panel-header">' + header + '<\/div>');
-        if(publisherInfo != '') panelContent = panelContent.concat('<div class="adp-panel-publisherinfo">' + publisherInfo + '<\/div>');
-        panelContent = panelContent.concat('<div class="adp-panel-info">' + privacy_info + '<\/div>');
-        if(footer != '') panelContent = panelContent.concat('<div class="adp-panel-footer">' + footer + '<\/div>');
-        
-        container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker" >' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '" onClick="$ADP.Player.showPrivacyInfo('+obaId+');"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '"  onClick="$ADP.Player.showPrivacyInfo('+obaId+');">Datenschutzinfo<\/div>' + '<\/div>' + '<div id="adp-panel-' + obaId + '" class="adp-panel adp-' + position + '" style="display:none;">' + '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="$ADP.Player.hidePrivacyInfo('+obaId+');">Schlie&szlig;en<\/div>' + panelContent + '<\/div>' + '<\/div>';
-        
+        container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker" >' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '" onClick="$ADP.Registry.playerCmd('+obaId+',\'showPrivacy\');"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '"  onClick="$ADP.Registry.playerCmd('+obaId+',\'showPrivacy\');">Datenschutzinfo<\/div>' + '<\/div>';
       } else {
         if (this.attempts > this.maxAttempts) {
-          //Too many attempts for ' + obaId + ', ' + domId
+          $ADP.Util.log('Too many attempts for ' + obaId + ', ' + domId);
           return;
         } else {
           ++this.attempts;
@@ -222,30 +201,83 @@ $ADP.Player = function (id, args) {
         }
       }
     };
+    
+    self.prototype.getPanelHTML = function() {
+      var obaId = this.getId();
+      var position = this.getPosition();
+      var header = this.getHeader();
+      var footer = this.getFooter();
+      var publisherInfo = this.getPublisherInfo();
+      var items = this.getPrivacyInfos();
+      var usePopup = this.usePopupForPrivacyInfo();
+      var closeAction = !usePopup ?"$ADP.Registry.playerCmd("+obaId+",'hidePrivacy');":'window.close();';
+      var privacy_info = '';
+      for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        try {
+          privacy_info += item.render() + '<br />\n';
+        } catch (e) {}
+      }
+      
+      var panelContent = '';
+      if(header != '') panelContent = panelContent.concat('<div class="adp-panel-header">' + header + '<\/div>');
+      if(publisherInfo != '') panelContent = panelContent.concat('<div class="adp-panel-publisherinfo">' + publisherInfo + '<\/div>');
+      panelContent = panelContent.concat('<div class="adp-panel-info">' + privacy_info + '<\/div>');
+      if(footer != '') panelContent = panelContent.concat('<div class="adp-panel-footer">' + footer + '<\/div>');
+      
+      var HTML = '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="'+closeAction+'">Close<\/div>' + panelContent + '<\/div>';
+      return HTML;
+    };
+    
+    /**
+     * @name $ADP.Player#showPrivacy
+     * @function
+     * @description Will show the privacy information
+     * @param {integer} obaid
+     */
+    self.prototype.showPrivacy = function() {
+      var position = this.getPosition();
+      var obaId = this.getId();
+      var usePopup = this.usePopupForPrivacyInfo();
+      if (!usePopup) {
+        var panel = document.getElementById('adp-panel-' + obaId);
+        if (!panel) {
+          var wrapper = document.getElementById('adp-wrapper-'+obaId);
+          if(!wrapper) return;
+          var panel = document.createElement('DIV');
+          panel.id='adp-panel-' + obaId;
+          panel.className='adp-panel adp-' + position;
+          panel.display='block';
+          panel.innerHTML = this.getPanelHTML();
+          wrapper.appendChild(panel);
+        } else panel.style.display = 'block';
+      } else {
+        var title = "Privacy Information";
+        var styles = document.styleSheets;
+        var popwin = window.open("about:blank");
+        var popdoc = popwin.document;
+        popdoc.write('<html><head><title>'+title+'</title>');
+        for (var k in styles)
+          if (styles[k].href) popdoc.write('<link rel="stylesheet" href="'+styles[k].href+'">');
+        popdoc.write('</head><body>');
+        popdoc.write(this.getPanelHTML());
+        popdoc.write('</body></html>');
+        popdoc.close();        
+      }
+    };
 
+    /**
+     * @name $ADP.Player#hidePrivacy
+     * @function
+     * @description hides the privacy information
+     * @param {integer} obaid
+     */
+    self.prototype.hidePrivacy = function() {
+      var obaId = this.getId();
+      var panel = document.getElementById('adp-panel-' + obaId);
+      if (panel) panel.style.display = 'none';
+    };    
   }
 
   this.init(id, args);
-};
-
-/**
- * @name $ADP.Player.showPrivacyInfo
- * @function
- * @description Will show the privacy information
- * @param {integer} obaid
- */
-$ADP.Player.showPrivacyInfo = function (obaid,use) {
-  var panel = document.getElementById('adp-panel-' + obaid);
-  if (panel) panel.style.display = 'block';
-};
-
-/**
- * @name $ADP.Player.hidePrivacyInfo
- * @function
- * @description hides the privacy information
- * @param {integer} obaid
- */
-$ADP.Player.hidePrivacyInfo = function (obaid) {
-  var panel = document.getElementById('adp-panel-' + obaid);
-  if (panel) panel.style.display = 'none';
 };
