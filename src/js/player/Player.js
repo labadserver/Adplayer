@@ -177,7 +177,6 @@ $ADP.Player = function (id, args) {
       var publisherInfo = this.getPublisherInfo();
       var items = this.getPrivacyInfos();
       var usePopup = this.usePopupForPrivacyInfo();
-      $ADP.Util.log("usePopup",obaId,usePopup);
       if (!obaId) {
         // No obaId specified for $ADP.Play/er.inject into ' + domId
         return;

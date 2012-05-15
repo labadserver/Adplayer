@@ -37,7 +37,6 @@
       <fileset dir="${html-dir}/demo" />
     </copy>
     <copy file="${html-dir}/apstub.html" todir="${build-dir}" />
-    <copy file="${lib-dir}/json2.min.js" todir="${build-dir}" />
     <copy file="README" todir="${build-dir}" />
     <copy file="${js-dir}/server/adserver.js" tofile="${build-dir}/js/${serverfilename}.js" />
   </target>

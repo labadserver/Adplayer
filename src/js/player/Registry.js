@@ -37,7 +37,7 @@ $ADP.Registry = {
   data: {},
   wait: 2000,
   
-  header: '',//'Diese Werbung basiert auf der anonymen Erhebung und Verarbeitung Ihres Nutzungsverhaltens. In der vorliegenden Anzeige werden Nutzungsdaten erhoben bzw. verwendet, um Werbung f&uuml;r Sie zu optimieren. Wenn Sie keine nutzungsbasierte Werbung mehr von den hier gelisteten Anbietern erhalten wollen, k&ouml;nnen Sie die Datenerhebung beim jeweiligen Anbieter direkt deaktivieren, falls sie nicht bereits bei dem/den unten genannten Anbieter(n) einen  Widerspruch vorgenommen haben. Eine Deaktivierung bedeutet aber nicht, dass Sie k&uuml;nftig keine Werbung mehr erhalten, sondern lediglich, dass die Auslieferung der konkreten Kampagne nicht anhand anonym erhobener Nutzungsdaten ausgerichtet ist.',
+  header: 'Diese Werbung basiert auf der anonymen Erhebung und Verarbeitung Ihres Nutzungsverhaltens. In der vorliegenden Anzeige werden Nutzungsdaten erhoben bzw. verwendet, um Werbung f&uuml;r Sie zu optimieren. Wenn Sie keine nutzungsbasierte Werbung mehr von den hier gelisteten Anbietern erhalten wollen, k&ouml;nnen Sie die Datenerhebung beim jeweiligen Anbieter direkt deaktivieren, falls sie nicht bereits bei dem/den unten genannten Anbieter(n) einen  Widerspruch vorgenommen haben. Eine Deaktivierung bedeutet aber nicht, dass Sie k&uuml;nftig keine Werbung mehr erhalten, sondern lediglich, dass die Auslieferung der konkreten Kampagne nicht anhand anonym erhobener Nutzungsdaten ausgerichtet ist.',
   footer: 'Wenn Sie mehr &uuml;ber nutzungsbasierte Online-Werbung erfahren wollen, klicken Sie <a href="http://www.youronlinechoices.com/de/" target="_blank">hier</a>. Dort k&ouml;nnen Sie sich dar&uuml;ber hinaus auch bei weiteren Anbietern die Erhebung der Nutzungsinformationen deaktivieren bzw. aktivieren und den Status der Aktivierung bei unterschiedlichen Anbietern <a href="http://meine-cookies.org/cookies_verwalten/praeferenzmanager-beta.html" target="_blank">einsehen</a>.',
   publisherInfo: undefined,
 
@@ -60,7 +60,6 @@ $ADP.Registry = {
    *  
    */
   register: function (id, args, useUnshift) {
-    $ADP.Util.log('Register Privacy info.',id,args,useUnshift);
     if (!args) args = {};
     if (!this.data[id]) {
       this.data[id] = {
