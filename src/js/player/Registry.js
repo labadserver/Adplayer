@@ -49,12 +49,11 @@ $ADP.Registry = {
    * @param {integer} id The OBA id that is used to identify this player's unique privacy messages 
    * @param {object}  args   The Arguments 
    * @param {string}  args.domId   The domId where the privacy button must be rendered
-   * @param {array}   args.items   The array of privacy items 
-   * @param {string}  args.items.title  The name of the privacy party
-   * @param {string}  args.items.text   The short description 
-   * @param {string}  args.items.url    The opt out or more information url
-   * @param {string}  args.items.linkText  The text that should be displayed instead of the link url
-   * @param {boolean} args.items.usePopup  Boolean to display privacy info in a popup 
+   * @param {string}  args.title  The name of the privacy party
+   * @param {string}  args.text   The short description 
+   * @param {string}  args.url    The opt out or more information url
+   * @param {string}  args.linkText  The text that should be displayed instead of the link url
+   * @param {boolean} args.usePopup  Boolean to display privacy info in a popup 
    * @param {boolean} useUnshift   The unShift variable is set when the item needs to be inserted in
    *     front of the current items, This occurs when one is adding items from a parent Registry object
    *  
