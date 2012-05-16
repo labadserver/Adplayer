@@ -264,7 +264,7 @@ $ADP.Player = function (id, args) {
       var position = this.getPosition();
       var obaId = this.getId();
       var usePopup = this.usePopupForPrivacyInfo();
-      if (!usePopup) {
+      function renderInLayer() {
         var panel = document.getElementById('adp-panel-' + obaId);
         if (!panel) {
           var wrapper = document.getElementById('adp-wrapper-'+obaId);
@@ -276,18 +276,29 @@ $ADP.Player = function (id, args) {
           panel.innerHTML = this.getPanelHTML();
           wrapper.appendChild(panel);
         } else panel.style.display = 'block';
+      }
+      if (!usePopup) {
+        renderInLayer.apply(this);
       } else {
         var title = "Privacy Information";
         var styles = document.styleSheets;
-        var popwin = window.open("about:blank");
-        var popdoc = popwin.document;
-        popdoc.write('<html><head><title>'+title+'</title>');
-        for (var k in styles)
-          if (styles[k].href) popdoc.write('<link rel="stylesheet" href="'+styles[k].href+'">');
-        popdoc.write('</head><body>');
-        popdoc.write(this.getPanelHTML());
-        popdoc.write('</body></html>');
-        popdoc.close();        
+        var popwin = "";
+        try{ 
+          popwin = window.open('',title,'width=400,height=400');
+        } catch(e) {popwin = window.open('about:blank');}
+        if(!popwin) { renderInLayer.apply(this); }
+        else {
+          popwin.resizeTo(400,400);
+          var popdoc = popwin.document;
+          window.popwin = popwin;
+          popdoc.write('<html><head><title>'+title+'</title>');
+          for (var k in styles)
+            if (styles[k].href) popdoc.write('<link rel="stylesheet" href="'+styles[k].href+'">');
+          popdoc.write('</head><body>');
+          popdoc.write(this.getPanelHTML());
+          popdoc.write('</body></html>');
+          popdoc.close();        
+        }
       }
     };
 
