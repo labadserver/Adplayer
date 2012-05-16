@@ -6,7 +6,7 @@
   <property name="version-minor" value="${projectDescription.minor}"/>
   <property name="version-patch" value="${projectDescription.patch}"/>
   <property name="version-stage" value="${projectDescription.stage}"/>
-  <property name="version" value="${version-major}.${version-minor}.${version-patch}"/>
+  <property name="version" value="${version-major}.${version-minor}.${version-patch}.${version-stage}"/>
   <tstamp>
     <format property="today" pattern="MMddyy" locale="en,UK"/>
   </tstamp>
