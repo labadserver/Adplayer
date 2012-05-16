@@ -154,7 +154,12 @@
 
   <target name="_release-build" depends="_jsdoc-build" description="Compiles and packages entire build to a zip.">
     <zip destfile="${build-dir}/adplayer-v${version}.zip">
-      <zipfileset dir="${build-dir}" />
+      <zipfileset dir="${build-dir}">
+      	<exclude name="**/docs/**" />
+      </zipfileset>
+    </zip>
+    <zip destfile="${build-dir}/apidocs_adplayer-v${version}.zip">
+      <zipfileset dir="${build-dir}/docs" />
     </zip>
     <echo>AdPlayer ${version-detailed} - Release Build Complete</echo>
   </target>
