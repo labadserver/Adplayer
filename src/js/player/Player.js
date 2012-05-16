@@ -124,6 +124,30 @@ $ADP.Player = function (id, args) {
     };
     
     /**
+     * @name $ADP.Player#getPrivacyButtonText
+     * @function
+     * @description Returns the text displayed when hovering the privacy button.
+     * @todo: localization still has to be done, decission about dealing with special html characters
+     * 
+     * @returns {string}  The player's privacy button text. <b>Default:</b> <i>Datenschutzinfo</i>
+     */
+    self.prototype.getPrivacyButtonText = function () {
+      return 'Datenschutzinfo';
+    };
+    
+    /**
+     * @name $ADP.Player#getCloseButtonText
+     * @function
+     * @description Returns the text displayed inside the privacy panel.
+     * @todo: localization still has to be done, decission about dealing with special html characters
+     * 
+     * @returns {string}  The privacy panel's close button text. <b>Default:</b> <i>Schlie&szlig;en</i>
+     */
+    self.prototype.getCloseButtonText = function () {
+      return 'Schlie&szlig;en';
+    };
+    
+    /**
      * @name $ADP.Player#usePopupForPrivacyInfo
      * @function
      * @description Returns whether the privacy info should be displayed in a popup window.
@@ -187,7 +211,7 @@ $ADP.Player = function (id, args) {
       }
       var container = iframeButton || document.getElementById(domId);
       if (container) {
-        container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker" >' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '" onClick="$ADP.Registry.playerCmd('+obaId+',\'showPrivacy\');"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '"  onClick="$ADP.Registry.playerCmd('+obaId+',\'showPrivacy\');">Datenschutzinfo<\/div>' + '<\/div>';
+        container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker" >' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '" onClick="$ADP.Registry.playerCmd('+obaId+',\'showPrivacy\');"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '"  onClick="$ADP.Registry.playerCmd('+obaId+',\'showPrivacy\');">' + this.getPrivacyButtonText() + '<\/div>' + '<\/div>';
       } else {
         if (this.attempts > this.maxAttempts) {
           $ADP.Util.log('Too many attempts for ' + obaId + ', ' + domId);
@@ -208,6 +232,7 @@ $ADP.Player = function (id, args) {
       var header = this.getHeader();
       var footer = this.getFooter();
       var publisherInfo = this.getPublisherInfo();
+      var closeButtonText = this.getCloseButtonText();
       var items = this.getPrivacyInfos();
       var usePopup = this.usePopupForPrivacyInfo();
       var closeAction = !usePopup ?"$ADP.Registry.playerCmd("+obaId+",'hidePrivacy');":'window.close();';
@@ -225,7 +250,7 @@ $ADP.Player = function (id, args) {
       panelContent = panelContent.concat('<div class="adp-panel-info">' + privacy_info + '<\/div>');
       if(footer != '') panelContent = panelContent.concat('<div class="adp-panel-footer">' + footer + '<\/div>');
       
-      var HTML = '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="'+closeAction+'">Close<\/div>' + panelContent + '<\/div>';
+      var HTML = '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="'+closeAction+'">' + closeButtonText + '<\/div>' + panelContent + '<\/div>';
       return HTML;
     };
     
