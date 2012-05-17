@@ -179,12 +179,12 @@ $ADP.Registry = {
    */
   locateParentRegistry: function (id) {
     var parentWindow = window.parent,
-      data;
+      data, adpAccess = function(win){ try { return Boolean(win.$ADP) } catch(e) { return false; } };
     if (parentWindow != window) {
-      while (parentWindow != window.top && !parentWindow.$ADP) {
+      while (parentWindow != window.top && !adpAccess(parentWindow)) {
         parentWindow = parentWindow.parent;
       }
-      if (!parentWindow.$ADP) { //Non friendly IFrame
+      if (!adpAccess(parentWindow)) { //Non friendly IFrame
         if (!window.postMessage) {
           $ADP.Registry.loadPrivacyItemsFromName(id);
         } else {
