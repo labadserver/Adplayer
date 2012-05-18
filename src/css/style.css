@@ -45,8 +45,9 @@
   padding: 18px 5px 5px 5px;
   margin: 0 0;
   text-align: left;
+  line-height: 1em;
   min-height: 25px;
-  width: 250px;
+  width: 300px;
   
   position: absolute;
 }
