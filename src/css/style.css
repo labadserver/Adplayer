@@ -45,8 +45,9 @@
   padding: 18px 5px 5px 5px;
   margin: 0 0;
   text-align: left;
+  line-height: 1em;
   min-height: 25px;
-  width: 250px;
+  width: 300px;
   
   position: absolute;
 }
@@ -71,6 +72,14 @@
   
   padding-bottom: 5px;
   border-bottom: 1px solid #ccc;
+}
+
+.adp-header-strong {
+  font-weight: bold;
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 11px;
+  text-align: justify;
+  line-height: 1em;
 }
 
 .adp-panel-publisherinfo {
@@ -100,8 +109,12 @@
   border-top: 1px solid #ccc;
 }
 
-.adp-panel a:link {
+.adp-panel a:link, .adp-panel a:active, .adp-panel a:hover, .adp-panel a:visited {
   font-family: Arial, Verdana, Tahoma, sans-serif;
+  color: #0088CC;
   text-decoration: underline;
+}
+.adp-panel a:hover {
+  color: #005580;
 }
 
