@@ -74,6 +74,14 @@
   border-bottom: 1px solid #ccc;
 }
 
+.adp-header-strong {
+  font-weight: bold;
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 11px;
+  text-align: justify;
+  line-height: 1em;
+}
+
 .adp-panel-publisherinfo {
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 11px;
@@ -101,8 +109,12 @@
   border-top: 1px solid #ccc;
 }
 
-.adp-panel a:link {
+.adp-panel a:link, .adp-panel a:active, .adp-panel a:hover, .adp-panel a:visited {
   font-family: Arial, Verdana, Tahoma, sans-serif;
+  color: #0088CC;
   text-decoration: underline;
+}
+.adp-panel a:hover {
+  color: #005580;
 }
 
