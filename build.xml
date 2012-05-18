@@ -103,12 +103,6 @@
       <param name="filepath" value="${build-dir}/css/${cssfilename}-style.min.css" />
     </antcall>
     <antcall target="gnu.me">
-      <param name="filepath" value="${build-dir}/css/${cssfilename}-style-ie.css" />
-    </antcall>
-    <antcall target="gnu.me">
-      <param name="filepath" value="${build-dir}/css/${cssfilename}-style-ie.min.css" />
-    </antcall>
-    <antcall target="gnu.me">
       <param name="filepath" value="${build-dir}/js/${jsfilename}.js" />
     </antcall>
     <antcall target="gnu.me">
