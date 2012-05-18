@@ -193,8 +193,8 @@ $ADP.Registry = {
       } else { //Friendly Iframe
         items = parentWindow.$ADP.Registry.getById(id);
         if(items.length) {
-          $ADP.Registry.registerParentItems(id, items);
           parentWindow.$ADP.Registry.unregister(id);
+          $ADP.Registry.registerParentItems(id, items);
         } else {
           $ADP.Registry.loadPrivacyItemsFromName(id);
         }
