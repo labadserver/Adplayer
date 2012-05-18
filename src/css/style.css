@@ -69,6 +69,7 @@
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 11px;
   text-align: justify;
+  margin: 18px 5px 0 5px;
   
   padding-bottom: 5px;
   border-bottom: 1px solid #ccc;
@@ -96,6 +97,7 @@
   font-size: 12px;
   text-align: left;
   white-space: nowrap;
+  margin: 0 5px;
   
   padding: 5px 0;
 }
@@ -104,6 +106,7 @@
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 10px;
   text-align: justify;
+  margin: 0 5px 5px 5px;
   
   padding-top: 5px;
   border-top: 1px solid #ccc;
