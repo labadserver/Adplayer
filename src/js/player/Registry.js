@@ -296,8 +296,8 @@ $ADP.Registry = {
    */
   createPlayer: function (id, args) {
     if (!args) args = {};
-    var header = this.header;
-    var footer = this.footer;
+    var header = args.header || this.header;
+    var footer = args.footer || this.footer;
     var publisherInfo = this.publisherInfo || '';
     var domId = args.domId;
     var position = args.position || 'top-right';
