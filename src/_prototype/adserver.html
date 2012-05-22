@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!--
-	$Revision: 1.1 $Date: 2012/04/25 09:35:48 $
+	$Revision: 1.3 $Date: 2012/05/02 08:08:20 $
 	Author: ingrid.graefen@sevenonemedia.de
 -->
 	<title>IFrame Sample with AdPlayer Dummy</title>
@@ -19,20 +19,20 @@
 		(function() {
 			// Retrieve current iframe params
 			var sz;
-			var oba;
-			var chain     = 1;
-			var publisher = 0;
-			var iframe    = false;
+			var obaId;
+			var chain = 1;
+			var party = 0;
+			var iframe = false;
 			var search = String(window.location.search.substr(1));
 			var pairs = search.split(/[&;]/);
 			for (var i = 0; i < pairs.length; i++) {
 				var data = pairs[i].split(/=/);
 				switch (data[0]) {
-					case 'publisher':
-						publisher = data[1];
+					case 'party':
+						party = data[1];
 						break;
 					case 'oba':
-						oba = data[1];
+						obaId = data[1];
 						break;
 					case 'sz':
 						sz = data[1];
@@ -46,11 +46,11 @@
 				}
 			}
 
-			var next = Number(publisher) + 2 < chain ? Number(publisher) + 1 : 'N';
+			var next = Number(party) + 2 < chain ? Number(party) + 1 : 'N';
 			var params = 'sz=' + sz + ';'
-				+ 'publisher=' + next + ';';
+				+ 'party=' + next + ';';
 			if (chain) params += 'chain=' + chain + ';'
-			if (oba) params += 'oba=' + oba + ';';
+			if (obaId) params += 'oba=' + obaId + ';';
 			document.write('<script type="text/javascript" src="./adserver.js?' + params + '"><\/script>');
 		}());
 	</script>
