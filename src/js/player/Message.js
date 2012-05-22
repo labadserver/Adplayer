@@ -48,7 +48,7 @@ $ADP.Message = {
     };
     try {
       if ($ADP.Util.JSON && typeof $ADP.Util.JSON.stringify == 'function') {
-        return $ADP.Util.JSON && typeof $ADP.Util.JSON.stringify(msg);
+        return $ADP.Util.JSON.stringify(msg);
       }
     } catch (e) {}
     return '{"type":"NULL"}';
