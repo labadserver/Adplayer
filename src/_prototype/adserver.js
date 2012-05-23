@@ -1,16 +1,102 @@
 /*
-	$Revision: 1.4 $Date: 2012/04/25 11:41:19 $
+	$Revision: 1.7 $Date: 2012/05/02 08:24:02 $
 	Author: ingrid.graefen@sevenonemedia.de
 */
 
-(function() {
-	// Retrieve current script params
-	var sz;
-	var oba;
-	var chain     = 1;
-	var publisher = 0;
-	var iframe    = false;
+/*
+	Remarks
 
+	- Iframe or popup case:
+	If script is loaded asynchronously,
+	there is no guaranteed order of registered info items,
+	e.g. 0 2 1 3 N is possible
+	This cannot be prevented (and does not matter anyway).
+
+	- If party in iframe retrieves params but forgets to display button,
+	No fallback button is created outside of iframe,
+	i.e. privacy info is lost on all levels.
+	This is a "feature", not a bug.
+*/
+
+(function() {
+	var config = getConfig();
+	var sz     = config.sz;
+	var party  = config.party;
+	var iframe = config.iframe;
+
+	var obaId  = config.obaId;
+	var isStart = false;
+	if (!obaId) {
+		// generate unique value for obaId
+		obaId = config.obaId = parseInt(Math.random() * 100000000);
+		isStart = true;
+	}
+	
+	/************************************************************************/
+	// Party 0 ... N iff privacy item must be added
+	registerPrivacyInfo(
+			obaId,
+			{
+				isStart:  isStart, // => create container for fallback button
+				header:   'Header set by party ' + party, // optional
+				footer:   'Footer set by party ' + party, // optional
+				position: 'top-right', // optional
+				display:  'layer', // optional
+				title:    sz + ': party ' + party,
+				text:     'OBA ' + obaId,
+				url:      'http://www.w3.org',
+				linkText: 'Mehr'
+			}
+		);
+	/************************************************************************/
+
+	/************************************************************************/
+	var properties = getAdProperties(sz);
+
+	// Party N only: add privacy button *before* ad code (=> top position correct without explicit setting)
+	if (config.lastParty && obaId && !config.forgetful) {
+		injectPrivacyInfo(
+				obaId,
+				{
+					domId:    'my-oba-' + sz, // fresh domId(!) unique id,
+					width:    properties.width,
+					height:   properties.height,
+					zindex:   properties.zindex,
+					position: 'top-right',
+					header:   'Datenschutz-Info',
+					footer:   'Footer-Info'
+				}
+			);
+	}
+	/************************************************************************/
+
+	// Generate ad code via document.write
+	// iframe, redirect or physical as appropriate
+	var ad_code = generateAdCode(config, properties);
+	document.write(ad_code);
+}())
+
+/**********************************************************************************/
+
+/*
+	Functions for test suite
+*/
+
+// Merge script params and url params
+function getConfig() {
+	var config = retrieveScriptParams();
+	var params = retrieveURLParams();
+	// Merge
+	for (var k in params) config[k] = params[k];
+
+	simulateForgetfulParty(config);
+
+	return config || {};
+}
+
+// Retrieve parameters of current script
+function retrieveScriptParams() {
+	var params = {};
 	var scripts = document.getElementsByTagName('script');
 	for (var i = scripts.length - 1; i >= 0; i--) {
 		var script = scripts[i];
@@ -22,27 +108,41 @@
 		for (var j = 0; j < pairs.length; j++) {
 			var data = pairs[j].split(/=/);
 			switch (data[0]) {
-				case 'publisher':
-					publisher = data[1];
+				case 'party':
+					params.party = data[1];
 					break;
 				case 'oba':
-					oba = data[1];
+					params.obaId = data[1];
 					break;
 				case 'sz':
-					sz = data[1];
+					params.sz = data[1];
 					break;
 				case 'chain':
-					chain = Number(data[1]) || 0;
+					params.chain = Number(data[1]) || 0;
 					break;
 				case 'iframe':
-					iframe = Number(data[1]) ? true : false;
+					params.iframe = Number(data[1]) ? true : false;
 					break;
 			}
 		}
 		break;
 	}
+	if (!params.chain)  params.chain = 1;
+	if (!params.party)  params.party = 0;
+	if (!params.iframe) params.iframe = false;
 
-	// Retrieve url params for various test scenarios
+	params.lastParty = params.party == 'N'
+		|| (params.party == 0 && params.chain < 2 && !params.iframe) ?
+			true : false;
+
+	params.do_redirect = !params.lastParty && !params.iframe ?
+		true : false;
+
+	return params;
+}
+
+// Retrieve url params for various test scenarios
+function retrieveURLParams() {
 	var config = {};
 	try {
 		var search = String(top.location.search.substr(1));
@@ -54,51 +154,58 @@
 		config.forgetful = Number(config.forgetful) || 0;
 	}
 	catch (e) {}
+	return config;
+}
 
-	/************************************************************************/
-	// Publisher 0 ... N if privacy info must be added (oba might be undefined)
-	// returns fresh oba if oba was undefined
-	oba = registerPrivacyInfo(
-			oba,
-			{
-				title:    sz + ': publisher ' + publisher,
-				text:     'OBA',
-				url:      'http://www.w3.org',
-				linkText: 'Mehr'
-			}
-		);
-	/************************************************************************/
-	
-	var do_redirect = chain > 1 && publisher != 'N' && !iframe ? true : false;
-
-	// Simulation of forgetful publisher who is not passing oba param,
-	// or not creating privacy button
+// Simulation of randomly forgetful parties
+function simulateForgetfulParty(config) {
 	var forgetful = Math.random() < config.forgetful / 10 ? true : false;
+
+	// Pink info panel
 	if (forgetful) {
-		var messages = document.getElementById('messages');
+		var messages = parent.document.getElementById('messages');
 		if (messages) {
 			if (!messages.innerHTML) {
-				messages.innerHTML += '<b>Publisher inserted buttons are in top-right position.<br />'
-					+ 'Emergency buttons appear after 2 secs in top-left position.</b><br /><br />';
+				messages.innerHTML += '<b>Buttons explictly inserted by a party are in top-right position.<br />'
+					+ 'Fallback buttons appear after 2 secs in top-left position.</b><br /><br />';
 				messages.style.backgroundColor = 'pink';
 			}
-			messages.innerHTML += sz + ': publisher ' + publisher + ' from ' + chain + ' forgets '
-				+ (do_redirect ? 'to pass oba parameter' : 'to create privacy button')
+			messages.innerHTML += config.sz + ': party ' + config.party + ' from ' + config.chain + ' forgets '
+				+ (config.lastParty ? 'to create privacy button' : 'to pass oba parameter')
 				+ '<br />';
 		}
 	}
 
-	var params = '';
-	if (do_redirect || iframe) {
-		// Publisher X [0...N-1] - Redirect
-		var next = Number(publisher) + 2 < chain ? Number(publisher) + 1 : 'N';
-		params = 'sz=' + sz + ';'
-			+ 'publisher=' + next + ';';
-		if (chain) params += 'chain=' + chain + ';'
-		if (oba && !forgetful) params += 'oba=' + oba + ';';
+	config.forgetful = forgetful;
+}
+
+function getNextParams(config) {
+	if (config.lastParty) return '';
+
+	// Party X [0...N-1] - Redirect
+	var party = Number(config.party) || 0;
+	var next;
+	if (config.iframe) {
+		next = party; // CAVEAT: never add recursive iframes
+	}
+	else if (party + 2 < config.chain) {
+		next = party + 1
+	}
+	else {
+		next = 'N';
 	}
 
-	// Define ad dimensions
+	var params = 'sz=' + config.sz + ';'
+		+ 'party=' + next + ';';
+	if (config.chain) params += 'chain=' + config.chain + ';'
+	if (config.obaId && !config.forgetful)
+		params += 'oba=' + config.obaId + ';';
+
+	return params;
+}
+
+// Define dimension and z-index for a given ad slot
+function getAdProperties(sz) {
 	var w;
 	var h;
 	var z;
@@ -133,118 +240,167 @@
 			break;
 	}
 
-	// Ad code - iframe, redirect or physical
-	if (iframe) {
-		// Iframe
-		document.write('<iframe id="ad-' + sz + '-iframe" src="./adserver.html?' + params + '" style="margin:0px;padding:0px;width:' + w + 'px;height:' + h + 'px;" scrolling="no"></iframe>');
+	return {
+			width:  w,
+			height: h,
+			zindex: z
+		};
+}
+
+function generateAdCode(config, properties) {
+	var sz = config.sz;
+
+	var w = properties.width;
+	var h = properties.height;
+	var z = properties.zindex;
+
+	var code = '';
+	if (config.lastParty) {
+		// Party N => Physical Ad
+		var style = 'position:relative;'
+			+ 'z-index:' + z + ';'
+			+ 'background-color:seagreen;'
+			+ 'width:' + w + 'px;'
+			+ 'height:' + h + 'px;';
+		code = '<div id="ad-' + sz + '" style="' + style + '"></div>';
 	}
 	else {
-		// Redirect or physical
-		if (do_redirect) {
-			document.write('<script type="text/javascript" src="./adserver.js?' + params + '"></script>');
+		var params = getNextParams(config);
+
+		if (config.do_redirect) {
+			// Redirect
+			code = '<script type="text/javascript" src="./adserver.js?' + params + '"></script>';
 		}
-		else {
-			// Publisher N - Physical Ad
-
-			/************************************************************************/
-			// Privacy info before ad code
-			// FIXME: not yet working in iframe
-			if (window == parent && !forgetful && oba)
-				injectPrivacyInfo(oba, {sz: sz, w: w, z: z + 1});
-			/************************************************************************/
-
-			// physical ad
-			document.write('<div id="ad-' + sz + '" style="position:relative;z-index:' + z + ';background-color:seagreen;width:' + w + 'px;height:' + h + 'px;"></div>')
+		else if (config.iframe) {
+			// Iframe
+			var style = 'margin:0px;'
+				+ 'padding:0px;'
+				+ 'width:' + w + 'px;'
+				+ 'height:' + h + 'px;';
+			code = '<iframe id="ad-' + sz + '-iframe" src="./adserver.html?' + params + '"'
+				+ ' style="' + style + '" frameborder="0" scrolling="no"></iframe>';
 		}
 	}
-}())
+	return code;
+}
+
+/**********************************************************************************/
 
 /*
-	Functions to be defined by publishers
+	Functions to be defined by parties
 */
 
-function checkADPScript() {
-	if (window.$ADP) return true;
+/*
+	- p(0) must load adplayer scripts
+	- p(0) should
+		- generate unique obaId (regardless of a need to pass privacy info)
+		- provide container for fallback button with unique domId
+		- register instance obaId with domId
+	- p(0) may pass privacy info when registering instance
+	- p(0) must pass obaId to next party if existent
+
+	- p(x) may generate unique obaId iff non-existent
+	- p(x) may register privacy info for obaId
+	- p(x) must pass obaId to next party if existent
+	- p(x) should provide container for fallback button with unique domId
+		iff obaId was created by p(x)
+		If so, domId must be passed to register method
+
+	- p(n) may generate unique obaId iff non-existent
+	- p(n) may register privacy info for obaId
+	- p(n) must
+		- provide final container for privacy button (id fresh and unique)
+		- must inject privacy button into this container
+		- must take responsibility for this button (hide, show, move, ...)
+*/
+
+function loadADPScript() {
+	if (window.$ADP) return;
 
 	var script = document.createElement('script');
 	script.type = 'text/javascript';
 	script.src = './adplayer.js';
 	try {
-		document.body.insertBefore(script, document.body.firstChild)
+		document.body.insertBefore(script, document.body.firstChild);
 	}
 	catch(e) {}
-
-	return false;
 }
 
-// Publisher 0 ... N
-// returns the oba id used for registration (passed as first argument, or fresh)
-function registerPrivacyInfo(oba, args) {
-	var domId;
-	if (!oba) {
-		oba = parseInt(Math.random() * 100000000);
-		domId = 'publisher-oba-emergency-' + oba;
-		// Must have position relative, height 0, high z-index
-		// FIXME: not working yet in iframe case
-		document.write('<div id="' + domId + '" style="position:relative;z-index:99999999;height:0px;"></div>');
+// Party 0 ... N
+function registerPrivacyInfo(obaId, args) {
+	if (args.isStart) {
+		delete args.isStart;
+
+		// Container for fallback button iff fresh obaId was created
+		args.domId = 'my-oba-fallback-' + obaId; // some arbitrary unique value
+
+		// Must have position relative(!), height 0,
+		// and a "good guess" for a sufficiently high z-index
+		var style = 'position:relative;'
+			+ 'z-index:1000;'
+			+ 'height:0px;';
+
+		// Only create fallback button for fresh obaId
+		// => no fallback button within iframe if obaId was passed (!!)
+		document.write('<div id="' + args.domId + '" style="' + style + '"></div>');
 	}
 
-	if (!window.$ADP) {
-		var ok = checkADPScript();
-		if (!ok) {
-			if (!arguments.callee.attempts) arguments.callee.attempts = 0;
-			++arguments.callee.attempts;
-			if (arguments.callee.attempts < 50) {
-				setTimeout(function() {registerPrivacyInfo(oba, args)}, 100);
-			}
-			return oba;
+	if (window.$ADP) {
+		try {
+			$ADP.Registry.register(obaId, args);
+		}
+		catch(e) {
+			alert('Error with registerPrivacyInfo for ' + args.title + ': ' + e.message);
 		}
 	}
+	else {
+		if (!arguments.callee.loading) {
+			arguments.callee.loading = true;
+			loadADPScript();
+		}
 
-	var info = {
-			title:    args.title,
-			text:     args.text,
-			url:      args.url,
-			linkText: args.linkText
-		};
-	if (domId) info.domId = domId;
+		if (!arguments.callee.attempts) arguments.callee.attempts = 0;
+		++arguments.callee.attempts;
+		if (arguments.callee.attempts < 100) {
+			// 0 interval important for correct order of subsequent registrations
+			setTimeout(function() {registerPrivacyInfo(obaId, args)}, 0);
+		}
 
-	// For testing only
-	info.text += ' ' + oba;
-
-	try {
-		$ADP.Registry.register(oba, info);
+		return;
 	}
-	catch(e) {
-		alert(e.message);
-	}
-
-	return oba;
 }
 
-// Publisher N
-function injectPrivacyInfo(oba, args) {
-	if (!window.$ADP) {
-		var ok = checkADPScript();
-		if (!ok) {
-			if (!arguments.callee.attempts) arguments.callee.attempts = 0;
-			++arguments.callee.attempts;
-			if (arguments.callee.attempts < 50) {
-				setTimeout(function() {injectPrivacyInfo(oba, args)}, 100);
-			}
-			return;
+// Party N
+function injectPrivacyInfo(obaId, args) {
+	if (window.$ADP) {
+		// Last party might also set position absolute if this is safe
+		// Or - for small ads or in iframes - create an outer container with position relative,
+		// and an inner container with position absolute, full height and overflow auto
+		var style = 'position:relative;'
+			+ 'z-index:' + ((args.zindex || 0) + 1) + ';' // lowest possible z-index
+			+ 'height:0px;';
+		if (args.width) style += 'width:' + args.width + 'px;';
+
+		document.write('<div id="' + args.domId + '" style="' + style + '"></div>');
+
+		try {
+			$ADP.Registry.createInstance(obaId, args);
+		}
+		catch(e) {
+			alert('Error with injectPrivacyInfo: ' + e.message);
 		}
 	}
+	else {
+		if (!arguments.callee.loading) {
+			arguments.callee.loading = true;
+			loadADPScript();
+		}
 
-	var sz  = args.sz;
-	var z   = args.z;
-	var w   = args.w;
-	var domId = 'publisher-oba-' + sz; // this publisher knows that this id is unique
-	document.write('<div id="' + domId + '" style="position:relative;z-index:' + z + ';width:' + w + 'px;height:0px;"></div>');
-	try {
-		$ADP.Registry.createPlayer(oba, {domId: domId, position: 'top-right', header: 'Datenschutz-Info', footer: 'Footer-Info'});
-	}
-	catch(e) {
-		alert(e.message);
+		if (!arguments.callee.attempts) arguments.callee.attempts = 0;
+		++arguments.callee.attempts;
+		if (arguments.callee.attempts < 100) {
+			// 0 interval important for correct order of subsequent registrations
+			setTimeout(function() {injectPrivacyInfo(obaId, args)}, 0);
+		}
 	}
 }

@@ -54,7 +54,6 @@ $ADP.Player = function (id, args) {
         if (privacyInfo.isValid()) this.items.push(privacyInfo);
       }
       this.usePopup = !!args.usePopup;
-      $ADP.Util.log(id,'Popup: '+this.usePopup);
     };
 
     /**
