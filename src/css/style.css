@@ -124,6 +124,8 @@
 
 .adp-panel a:link, .adp-panel a:active, .adp-panel a:hover, .adp-panel a:visited {
   font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: inherit;
+  font-style: normal;
   color: #0088CC;
   text-decoration: underline;
 }
