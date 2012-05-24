@@ -45,7 +45,7 @@
   border: 1px solid #ccc;
   margin: 0 0;
   text-align: left;
-  line-height: 1em;
+  line-height: 1.3em;
   min-height: 25px;
   width: 300px;
   
@@ -69,6 +69,7 @@
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 11px;
   text-align: left;
+  line-height: 1.3em;
   color: #000;
   margin: 18px 5px 0 5px;
   
@@ -80,6 +81,7 @@
   font-weight: bold;
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 11px;
+  line-height: 1.3em;
   color: #000;
   text-align: left;
   line-height: 1em;
@@ -89,6 +91,7 @@
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 11px;
   text-align: left;
+  line-height: 1.3em;
   color: #000;
   
   padding: 5px 0;
@@ -99,6 +102,7 @@
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 12px;
   text-align: left;
+  line-height: 1.3em;
   color: #000;
   white-space: nowrap;
   margin: 0 5px;
@@ -110,6 +114,7 @@
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 10px;
   text-align: left;
+  line-height: 1.3em;
   color: #000;
   margin: 0 5px 5px 5px;
   
