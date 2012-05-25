@@ -19,7 +19,7 @@ $ADP.Util = {
      * @param c function variable
      * @returns {string}
      */
-    stringify: function s(a,b,c){
+    stringify: function (obj,replacer){
       function m(a) {
   		  var o= new Array(a.length);
 			  for (var i= 0, n=a.length; i<n; i++) o[i]= s(a[i]);
