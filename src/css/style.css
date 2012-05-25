@@ -29,6 +29,7 @@
 .adp-admarker-text {
   background: #ccc;
   font-size: 10px;
+  color: #000;
   line-height: 15px;
   padding: 0 5px;
   
@@ -44,9 +45,9 @@
   border: 1px solid #ccc;
   margin: 0 0;
   text-align: left;
-  line-height: 1em;
+  line-height: 1.3em;
   min-height: 25px;
-  width: 300px;
+  width: 310px;
   
   position: absolute;
 }
@@ -67,7 +68,9 @@
 .adp-panel-header {
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 11px;
-  text-align: justify;
+  text-align: left;
+  line-height: 1.3em;
+  color: #000;
   margin: 18px 5px 0 5px;
   
   padding-bottom: 5px;
@@ -78,14 +81,18 @@
   font-weight: bold;
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 11px;
-  text-align: justify;
+  line-height: 1.3em;
+  color: #000;
+  text-align: left;
   line-height: 1em;
 }
 
 .adp-panel-publisherinfo {
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 11px;
-  text-align: justify;
+  text-align: left;
+  line-height: 1.3em;
+  color: #000;
   
   padding: 5px 0;
   border-bottom: 1px solid #ccc;
@@ -95,6 +102,8 @@
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 12px;
   text-align: left;
+  line-height: 1.3em;
+  color: #000;
   white-space: nowrap;
   margin: 0 5px;
   
@@ -104,7 +113,9 @@
 .adp-panel-footer {
   font-family: Arial, Verdana, Tahoma, sans-serif;
   font-size: 10px;
-  text-align: justify;
+  text-align: left;
+  line-height: 1.3em;
+  color: #000;
   margin: 0 5px 5px 5px;
   
   padding-top: 5px;
@@ -113,6 +124,8 @@
 
 .adp-panel a:link, .adp-panel a:active, .adp-panel a:hover, .adp-panel a:visited {
   font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: inherit;
+  font-style: normal;
   color: #0088CC;
   text-decoration: underline;
 }

@@ -20,9 +20,18 @@ $ADP.Util = {
      * @returns {string}
      */
     stringify: function s(a,b,c){
-      for(b in(c=a==''+{}&&[])&&a)
-        c.push(s(b)+':'+s(a[b]));
-      return ''+a===a?'"'+a.replace(/[\x00-\x19\\]/g,function(x){return'\\x'+x.charCodeAt().toString(16)})+'"':a&&a.map?'['+a.map(s)+']':c?'{'+c+'}':a
+      function m(a) {
+  		  var o= new Array(a.length);
+			  for (var i= 0, n=a.length; i<n; i++) o[i]= s(a[i]);
+			  return o;
+	    }
+	   
+     function s(a,b,c){
+		    for(b in(c=a==''+{}&&[])&&a)
+			    c.push(s(b)+':'+s(a[b]));
+		    return ''+a===a?'"'+a.replace(/[\x00-\x19\\]/g,function(x){return'\\x'+x.charCodeAt().toString(16)})+'"':a&&a.length?'['+m(a)+']':c?'{'+c+'}':a
+	    }
+      return s(obj);
     },
     /**
      * @name $ADP.Util.#JSON.stringify

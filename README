@@ -20,17 +20,6 @@ Building AdPlayer Project
 2) A new "build" directory will be created containing the Ant build output.
 3) Note: Eclipse may require you to refresh the project folder's view. This can
    be done easily by right clicking the project folder and clicking "Refresh."
-	
-
-Testing
------------------------------------------
-1) Open the generated demo.html file from the demo directory in your 
-   favorite browser.
-	
-   Note:
-     - The demo.html file in the demo folder can not be used for
-       testing directly. Use the one in the build folder instead!
-     - The test page (demo.html) currently uses static ADTECH test tags.
 
 
 =================================================================================

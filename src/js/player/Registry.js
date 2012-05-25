@@ -37,6 +37,12 @@ $ADP.Registry = {
   data: {},
   wait: 2000,
   
+  MAIN: 'MAIN',
+  POPUP: 'POPUP',
+  FRIENDLY_IFRAME: 'FRIENDLY_IFRAME',
+  FOREIGN_IFRAME: 'FOREIGN_IFRAME',
+  POSTMESSAGE_SEARCH: 'POSTMESSAGE_SEARCH',
+  
   header: '<strong class="adp-header-strong">Informationen zu nutzungsbasierter Online-Werbung</strong><br/>In der vorliegenden Anzeige werden Ihre Nutzungsdaten anonym erhoben bzw. verwendet, um Werbung f&uuml;r Sie zu optimieren. Wenn Sie keine nutzungsbasierte Werbung mehr von den hier gelisteten Anbietern erhalten wollen, k&ouml;nnen Sie die Datenerhebung beim jeweiligen Anbieter direkt deaktivieren. Eine Deaktivierung bedeutet nicht, dass Sie künftig keine Werbung mehr erhalten, sondern lediglich, dass die Auslieferung der konkreten Kampagne nicht anhand anonym erhobener Nutzungsdaten ausgerichtet ist.',
   footer: 'Wenn Sie mehr &uuml;ber nutzungsbasiere Online-Werbung erfahren wollen, klicken Sie <a href="http://meine-cookies.org" target="_blank">hier</a>. Dort k&ouml;nnen Sie dar&uuml;ber hinaus auch bei weiteren Anbietern die Erhebung der Nutzungsinformationen deaktivieren bzw. aktivieren und den Status der Aktivierung bei unterschiedlichen Anbietern <a href="http://meine-cookies.org/cookies_verwalten/praeferenzmanager-beta.html" target="_blank">einsehen</a>.',
   publisherInfo: undefined,
@@ -47,7 +53,9 @@ $ADP.Registry = {
    * @description Registers the privacy item for an AdPlayer chain. 
    * 
    * @param {integer} id The OBA id that is used to identify this player's unique privacy messages 
-   * @param {object}  args   The Arguments 
+   * @param {object}  args   The Arguments
+   * @param {string}  args.header   The header text
+   * @param {string}  args.footer   The footer text 
    * @param {string}  args.domId   The domId where the privacy button must be rendered
    * @param {string}  args.title  The name of the privacy party
    * @param {string}  args.text   The short description 
@@ -69,7 +77,7 @@ $ADP.Registry = {
           position: 'top-left'
         })
       }, this.wait);
-      $ADP.Registry.locateParentRegistry(id);
+      $ADP.Registry.initFromMaster(id);
     }
     var item = {};
     for (var k in args) {
@@ -77,6 +85,8 @@ $ADP.Registry = {
         case 'domId':
           this.data[id][k] = args[k]; // last one wins
           break;
+        case 'header':
+        case 'footer':
         case 'title':
         case 'text':
         case 'url':
@@ -173,76 +183,155 @@ $ADP.Registry = {
   
   /**
    * @private
-   * @name $ADP.Registry#locateParentRegistry
+   * @name $ADP.Registry#initFromMaster
    * @function
    * @description Locates the top most parent registry in the delivery chain.
    */
-  locateParentRegistry: function (id) {
-    var parentWindow = window.parent,
-      data, adpAccess = function(win){ try { return Boolean(win.$ADP) } catch(e) { return false; } };
-    if (parentWindow != window) {
-      while (parentWindow != window.top && !adpAccess(parentWindow)) {
-        parentWindow = parentWindow.parent;
-      }
-      if (!adpAccess(parentWindow)) { //Non friendly IFrame
-        if (!window.postMessage) {
-          $ADP.Registry.loadPrivacyItemsFromName(id);
-        } else {
-          $ADP.Registry.askParentForPrivacyItems(id);
-        }
-      } else { //Friendly Iframe
-        items = parentWindow.$ADP.Registry.getById(id);
-        if(items.length) {
-          parentWindow.$ADP.Registry.unregister(id);
-          $ADP.Registry.registerParentItems(id, items);
-        } else {
-          $ADP.Registry.loadPrivacyItemsFromName(id);
-        }
-      }
-    }
-  },
+  initFromMaster: function (id) {
+    var windowInfo = this.getWindowInfo();
 
+    switch (windowInfo.type) {
+      case this.FRIENDLY_IFRAME:
+      case this.POPUP:
+        this.initByCopyFromParent(id,windowInfo);
+        break;
+      case this.FOREIGN_IFRAME:
+      case this.POSTMESSAGE_SEARCH:
+        this.initByPostMessageFromParent(id,windowInfo);
+        break;
+    };
+  },
+  
+  /**
+   * @name
+   * @function
+   * @description
+   * 
+   * @return object
+   */
+  getWindowInfo: function() {   
+    if (!this.windowInfo) {
+      var info = {type: this.MAIN, parent: window.parent},
+          adpAccess = function(win){ try { return Boolean(win.$ADP) } catch(e) { return false; } };
+        
+      if (window == info.parent) {
+        if (window.opener) {
+          info.parent = window.opener;
+          if (adpAccess(window.opener)) {
+            info.type = this.POPUP;
+          } else {
+            info.type = this.POSTMESSAGE_SEARCH;
+          }
+        }
+      } else {
+        try {
+
+          if( typeof(parent.location.href)=="undefined" ) { // dies if foreign
+            throw new Error('FOREIGN_IFRAME'); 
+          }
+          
+          while (info.parent != window.top && !adpAccess(info.parent)) {
+            info.parent = info.parent.parent;
+          };
+          if (adpAccess(info.parent)) {
+            info.type = this.FRIENDLY_IFRAME;
+          } else {
+            info.type = this.POSTMESSAGE_SEARCH;
+            info.parent = window.parent;
+          }
+        }
+        catch(e) {
+          info.type = this.FOREIGN_IFRAME;
+          info.parent = window.parent; 
+        }
+      }
+      this.windowInfo = info;
+    }
+    return this.windowInfo;
+  },
+  
+  /**
+   * @name $ADP.Registry#initByCopyFromParent
+   * @function
+   * @description Pulls the parent privacy items and pre-appends them to the local registry
+   * 
+   * @param id   The OBA id
+   * @param windowInfo The Window information object that specifies the parent and type of parent window 
+   */
+  initByCopyFromParent: function(id, windowInfo) {
+    try {
+      if (!windowInfo && !windowInfo.parent) return;
+      var parentWindow = windowInfo.parent,
+          items = parentWindow.$ADP.Registry.getById(id);
+      if(items.length) {
+        parentWindow.$ADP.Registry.unregister(id);
+        $ADP.Registry.registerParentItems(id, items);
+      } else {
+        $ADP.Registry.initByWindowName(id);
+      }
+    } catch(e) { $ADP.Util.log('Failed to copy from parent: ',id); }
+  },
+  
   /**
    * @private
-   * @name $ADP.Registry#askParentForPrivacyItems
+   * @name $ADP.Registry#initByPostMessageFromParent
    * @function
-   * @description Asks the current set target parent for the privacy item associated
-   *     with the given Adplayer chain id.
+   * @description iterates through parents to try locate the Master repository and pull the entries for the given Adplayer chain id
    * 
    * @param id  The Adplayer chain id.
+   * @param windowInfo The window information object
    */
-  askParentForPrivacyItems: function (id) {
+  initByPostMessageFromParent: function (id, windowInfo) {
+
+    
     if (this.data[id] && !this.data[id].iframeSearch) {
+      if (!windowInfo && !windowInfo.parent) return;
+      
       this.data[id].iframeSearch = {
-        target: window.parent
+        target: windowInfo.parent
       };
     }
+    
     var obaId = id,
       data = this.data[id],
       target = data.iframeSearch.target;
-
     $ADP.Message.send(target, $ADP.Message.types.pullOBA, id);
     data.iframeSearch.timeoutId = setTimeout(function () {
-      $ADP.Registry.askNextParent(id);
-    }, 300);
+      $ADP.Registry.tryNextParent(id);
+    }, 20);
+  },
+  
+  /**
+   * @name $ADP.Registry#initByWindowName
+   * @function
+   * @description The fallback method of retrieving the privacy information
+   * @param id
+   */
+  initByWindowName: function (id) {
+    if (!window.name) return;
+    try {
+      var items = $ADP.Util.JSON.parse($ADP.Util.atob(window.name.replace(/^[^-]+\-([A-Za-z0-9\+\/]+=?=?=?)$/,'$1')));
+      if (items.length) {
+        this.registerParentItems(id,items);
+      }
+    } catch(e) {}
   },
 
   /**
    * @private
-   * @name $ADP.Registry#askNextParent
+   * @name $ADP.Registry#tryNextParent
    * @function
-   * @description Runs after a timeout and will ask the next parent for
-   *     privacy items of the given id. if no parent returns the required items then try load privacy information
-   *     from the window.name 
+   * @description After a timeout will request privacy information from the next parent. 
+   *     initByWindowName is the fallback if no privacy items are rceived
    * 
    * @param id  The AdPlayer chain id.
    */
-  askNextParent: function (id) {
+  tryNextParent: function (id) {
     if (this.data[id].iframeSearch.target != this.data[id].iframeSearch.target.parent) {
       this.data[id].iframeSearch.target = this.data[id].iframeSearch.target.parent;
-      $ADP.Registry.askParentForPrivacyItems(id);
+      $ADP.Registry.initByPostmessageFromParent(id);
     } else {
-      $ADP.Registry.loadPrivacyItemsFromName(id);
+      $ADP.Registry.initByWindowName(id);
     }
   },
   
@@ -251,13 +340,13 @@ $ADP.Registry = {
    * @name  $ADP.Registry#registerParentItems
    * @function
    * @description Adds all the parent privacy items to the beginning of the current items list for
-   *     the given id. This will also clear all invoked <code>askNextParent</code> methods that are
+   *     the given id. This will also clear all invoked <code>tryNextParent</code> methods that are
    *     currently in progress fir this Adplayer chain id.
    *
    * @param id     The id of the Adplayer chain.
    * @param items  The array of privacy items.
    * 
-   * @see $ADP.Registry#askNextParent
+   * @see $ADP.Registry#tryNextParent
    */
   registerParentItems: function (id, items) {
     if (!items) items = [];
@@ -269,22 +358,7 @@ $ADP.Registry = {
     for (var k in items) {
       $ADP.Registry.register(id, items[k], true);
     }
-  },
-  /**
-   * @name $ADP.Registry#loadPrivacyItemsFromName
-   * @function
-   * @description The fallback method of retrieving the privacy information
-   * @param id
-   */
-  loadPrivacyItemsFromName: function (id) {
-    if (!window.name) return;
-    try {
-      var items = $ADP.Util.JSON.parse($ADP.Util.atob(window.name.replace(/^[^-]+\-([A-Za-z0-9\+\/]+=?=?=?)$/,'$1')));
-      if (items.length) {
-        this.registerParentItems(id,items);
-      }
-    } catch(e) {}
-  },
+  },  
   
   /**
    * @name  $ADP.Registry#createPlayer
@@ -388,9 +462,19 @@ $ADP.Registry = {
         case $ADP.Message.types.unRegOBA_ACK:
           break;
       }
-    } catch (e) {}
+    } catch (e) {$ADP.Util.log("Received Message",event," Rejected ",e);}
   },
   
+  /**
+   * @name
+   * @function
+   * @description
+   * 
+   * @param id
+   * @param cmd
+   * @param args
+   * 
+   */
   playerCmd: function(id,cmd,args) {
     if(!cmd) return;
     if(!this.data[id] && !this.data[id].player) return;
