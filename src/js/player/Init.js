@@ -3,8 +3,10 @@
  * @function
  * @description The initializer method for the ADP sub classes 
  */
-$ADP.init = function() {
-  $ADP.Registry.init();
-};
+if (!$ADP.init) {
+  $ADP.init = function() {
+    $ADP.Registry.init();
+  };
 
-$ADP.init();
+  $ADP.init();
+}

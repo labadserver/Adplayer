@@ -33,7 +33,7 @@
  *  }
  *
  */
-$ADP.Registry = {
+$ADP.Registry = $ADP.Registry || {
   data: {},
   wait: 2000,
   
