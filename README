@@ -21,6 +21,24 @@ Building AdPlayer Project
 3) Note: Eclipse may require you to refresh the project folder's view. This can
    be done easily by right clicking the project folder and clicking "Refresh."
 
+Demo Test
+------------------------------------------
+A demo test page still needs to be created. This will be created soon. 
+The Demo test will demonstrate the main Advert serving scenarios:
+- Javascript Tag Delivery
+- Friendly IFrame Delivery
+- Non-Friendly IFrame Delivery 
+
+QUnit Testing
+-----------------------------------------
+The Adplayer methods needs to be tested in different browsers. The current qunit 
+test test the following:
+- $ADP.Util.JSON   The JSON object will use the native or a fallback JSON class 
+  and this needs to be tested as it is used for browser messaging
+  
+1) Execute "ant tests" in the project directory, this will buils and create a 
+   symlink to the built Adplayer-x.x.x.js file
+2) Open tests/index.html in your browser and view the result of the qunit test
 
 =================================================================================
 Additional Info

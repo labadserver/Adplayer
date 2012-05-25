@@ -15,6 +15,7 @@
   <property name="serverfilename" value="adplayer_server-${version}"/>
   <property name="cssfilename" value="adplayer-${version}"/>
   <property name="build-dir" location="build"/>
+  <property name="test-dir" location="tests"/>
   <property name="lib-dir" location="lib"/>
   <property name="src-dir" location="src"/>
   <property name="js-dir" location="src/js"/>
@@ -136,6 +137,11 @@
   <target name="_default-build" depends="gnu" description="Processes default and cleans up all temp files.">
     <delete dir="${build-dir}/tmp" />
     <echo>AdPlayer ${version-detailed} - Default Build Complete</echo>
+  </target>
+  
+  <target name="tests" depends="_default-build" description="prepares the the test directory">
+      <symlink action="delete" link="${test-dir}/adplayer.js"/>
+      <symlink link="${test-dir}/adplayer.js" resource="${build-dir}/js/${jsfilename}.js"/>
   </target>
 
   <target name="_jsdoc-build" depends="_default-build" description="Builds default and jsdoc output.">
