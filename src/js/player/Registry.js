@@ -395,7 +395,7 @@ $ADP.Registry = {
           }
     }
     
-  var player = new $ADP.Player(id, {
+  var player = $ADP.Player(id, {
     domId: domId,
     position: position,
     header: header,
