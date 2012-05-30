@@ -77,7 +77,10 @@ $ADP.Util = {
    * @param x function variable
    * @returns
    */
-  atob: function(d,b,c,u,r,q,x) {for(r=q=x='',b="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";c=d.charAt(x++);~c&&(u=q%4?u*64+c:c,q++%4)?r+=String.fromCharCode(255&u>>(-2*q&6)):0)c=b.indexOf(c);return r},
+  atob: function(d,b,c,u,r,q,x) {
+  	for(r=q=x='',b="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";c=d.charAt(x++);~c&&(u=q%4?u*64+c:c,q++%4)?r+=String.fromCharCode(255&u>>(-2*q&6)):0)c=b.indexOf(c);
+  	return r
+  },
   
   /**
    * @name $ADP.Util#log

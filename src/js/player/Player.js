@@ -9,11 +9,14 @@
  * @example
  * TODO
  */
-$ADP.Player = function (id, args) {
-  var self = arguments.callee;
-  if (!self.prototype.init) {
 
-    /**
+$ADP.Player = function (id, args) {
+	return this instanceof $ADP.Player ? this.init(id, args) : new $ADP.Player(id, args);
+}
+
+$ADP.Player.prototype = {
+	
+	/**
      * @private
      * @name $ADP.Player#attempts
      * @field
@@ -21,7 +24,7 @@ $ADP.Player = function (id, args) {
      * 
      * @type integer 
      */
-    self.prototype.attempts = 0;
+    attempts: 0,
 
     /**
      * @name $ADP.Player#maxAttempts
@@ -32,7 +35,7 @@ $ADP.Player = function (id, args) {
      * @default 50
      * @type integer
      */
-    self.prototype.maxAttempts = 50;
+    maxAttempt: 50,
 
     /**
      * @private
@@ -40,7 +43,7 @@ $ADP.Player = function (id, args) {
      * @function
      * @description Class constructor.
      */
-    self.prototype.init = function (id, args) {
+    init: function (id, args) {
       this.id = id;
       this.domId = args.domId;
       this.header = args.header;
@@ -50,11 +53,12 @@ $ADP.Player = function (id, args) {
       this.items = [];
       var items = args.items || [];
       for (var i = 0; i < items.length; i++) {
-        var privacyInfo = new $ADP.PrivacyInfo(items[i]);
+        var privacyInfo = $ADP.PrivacyInfo(items[i]);
         if (privacyInfo.isValid()) this.items.push(privacyInfo);
       }
       this.usePopup = !!args.usePopup;
-    };
+      this.renderCloseButton = !!args.renderCloseButton;
+    },
 
     /**
      * @name $ADP.Player#getId
@@ -63,9 +67,9 @@ $ADP.Player = function (id, args) {
      * 
      * @returns {integer}  The player's OBA id.
      */
-    self.prototype.getId = function () {
+    getId: function () {
       return this.id;
-    };
+    },
 
     /**
      * @name $ADP.Player#getDOMId
@@ -74,9 +78,9 @@ $ADP.Player = function (id, args) {
      *
      * @returns {integer}  The player's OBA DOM id.
      */
-    self.prototype.getDOMId = function () {
+    getDOMId: function () {
       return this.domId;
-    };
+    },
 
     /**
      * @name $ADP.Player#getPosition
@@ -85,9 +89,9 @@ $ADP.Player = function (id, args) {
      *
      * @returns {string}  The OBA button position. <b>Default:</b> top-right
      */
-    self.prototype.getPosition = function () {
+    getPosition: function () {
       return this.position || 'top-right';
-    };
+    },
 
     /**
      * @name $ADP.Player#getHeader
@@ -96,9 +100,9 @@ $ADP.Player = function (id, args) {
      *
      * @returns {string}  The player's header message. <b>Default:</b> Datenschutzbestimmungen
      */
-    self.prototype.getHeader = function () {
+    getHeader: function () {
       return (this.header || 'Datenschutzbestimmungen');
-    };
+    },
 
     /**
      * @name $ADP.Player#getFooter
@@ -107,9 +111,9 @@ $ADP.Player = function (id, args) {
      *
      * @returns {string} The player's footer message. <b>Default:</b> <i>empty string</i>
      */
-    self.prototype.getFooter = function () {
+    getFooter: function () {
       return (this.footer || '');
-    };
+    },
     
     /**
      * @name $ADP.Player#getPublisherInfo
@@ -118,9 +122,9 @@ $ADP.Player = function (id, args) {
      *
      * @returns {string}  The player's publisher message. <b>Default:</b> <i>empty string</i>
      */
-    self.prototype.getPublisherInfo = function () {
+    getPublisherInfo: function () {
       return (this.publisherInfo || '');
-    };
+    },
     
     /**
      * @name $ADP.Player#getPrivacyButtonText
@@ -130,9 +134,9 @@ $ADP.Player = function (id, args) {
      * 
      * @returns {string}  The player's privacy button text. <b>Default:</b> <i>Datenschutzinfo</i>
      */
-    self.prototype.getPrivacyButtonText = function () {
+    getPrivacyButtonText: function () {
       return 'Datenschutzinfo';
-    };
+    },
     
     /**
      * @name $ADP.Player#getCloseButtonText
@@ -142,9 +146,9 @@ $ADP.Player = function (id, args) {
      * 
      * @returns {string}  The privacy panel's close button text. <b>Default:</b> <i>Schlie&szlig;en</i>
      */
-    self.prototype.getCloseButtonText = function () {
+    getCloseButtonText: function () {
       return 'Schlie&szlig;en';
-    };
+    },
     
     /**
      * @name $ADP.Player#usePopupForPrivacyInfo
@@ -153,9 +157,20 @@ $ADP.Player = function (id, args) {
      *
      * @returns {boolean}  
      */
-    self.prototype.usePopupForPrivacyInfo = function () {
+    usePopupForPrivacyInfo: function () {
       return this.usePopup ? true : false;
-    };
+    },
+    
+    /**
+     * @name $ADP.Player#renderCloseButtonForPrivacyInfo
+     * @function
+     * @description Returns whether the close button should be displayed (in a popup window).
+     *
+     * @returns {boolean}  
+     */
+    renderCloseButtonForPrivacyInfo: function () {
+      return this.renderCloseButton ? true : false;
+    },
 
     /**
      * @name $ADP.Player#hasPrivacyInfo
@@ -166,9 +181,9 @@ $ADP.Player = function (id, args) {
      * 
      * @see $ADP.PrivacyInfo
      */
-    self.prototype.hasPrivacyInfo = function () {
+    hasPrivacyInfo: function () {
       return Boolean(this.items.length);
-    };
+    },
 
     /**
      * @name $ADP.Player#getPrivacyInfos
@@ -179,9 +194,9 @@ $ADP.Player = function (id, args) {
      * 
      * @see $ADP.PrivacyInfo
      */
-    self.prototype.getPrivacyInfos = function () {
+    getPrivacyInfos: function () {
       return this.items;
-    };
+    },
 
     /**
      * @private
@@ -192,7 +207,7 @@ $ADP.Player = function (id, args) {
      * 
      * @see $ADP.Registry#createPlayer
      */
-    self.prototype.inject = function () {
+    inject: function () {
       var obaId = this.getId();
       var domId = this.getDOMId();
       var position = this.getPosition();
@@ -219,13 +234,13 @@ $ADP.Player = function (id, args) {
           ++this.attempts;
           var that = this;
           setTimeout(function () {
-            that.inject()
+            that.inject();
           }, 100);
         }
       }
-    };
+    },
     
-    self.prototype.getPanelHTML = function() {
+    getPanelHTML: function() {
       var obaId = this.getId();
       var position = this.getPosition();
       var header = this.getHeader();
@@ -235,6 +250,7 @@ $ADP.Player = function (id, args) {
       var items = this.getPrivacyInfos();
       var usePopup = this.usePopupForPrivacyInfo();
       var closeAction = !usePopup ?"$ADP.Registry.playerCmd("+obaId+",'hidePrivacy');":'window.close();';
+      var renderCloseButton = this.renderCloseButtonForPrivacyInfo();
       var privacy_info = '';
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
@@ -248,10 +264,12 @@ $ADP.Player = function (id, args) {
       if(publisherInfo != '') panelContent = panelContent.concat('<div class="adp-panel-publisherinfo">' + publisherInfo + '<\/div>');
       panelContent = panelContent.concat('<div class="adp-panel-info">' + privacy_info + '<\/div>');
       if(footer != '') panelContent = panelContent.concat('<div class="adp-panel-footer">' + footer + '<\/div>');
-      
-      var HTML = '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="'+closeAction+'">' + closeButtonText + '<\/div>' + panelContent + '<\/div>';
+     
+      var HTML = '';
+      if(!usePopup || (usePopup && renderCloseButton)) HTML += '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="'+closeAction+'">' + closeButtonText + '<\/div>'
+      HTML += panelContent + '<\/div>';
       return HTML;
-    };
+    },
     
     /**
      * @name $ADP.Player#showPrivacy
@@ -259,7 +277,7 @@ $ADP.Player = function (id, args) {
      * @description Will show the privacy information
      * @param {integer} obaid
      */
-    self.prototype.showPrivacy = function() {
+    showPrivacy: function() {
       var position = this.getPosition();
       var obaId = this.getId();
       var usePopup = this.usePopupForPrivacyInfo();
@@ -283,7 +301,7 @@ $ADP.Player = function (id, args) {
         var styles = document.styleSheets;
         var popwin = "";
         try{ 
-          popwin = window.open('',title,'width=400,height=400');
+          popwin = window.open('','privacy_information','width=400,height=400,scrollbars=yes,location=0,menubar=0,toolbar=0,status=0');
         } catch(e) {popwin = window.open('about:blank');}
         if(!popwin) { renderInLayer.apply(this); }
         else {
@@ -296,10 +314,10 @@ $ADP.Player = function (id, args) {
           popdoc.write('</head><body>');
           popdoc.write(this.getPanelHTML());
           popdoc.write('</body></html>');
-          popdoc.close();        
+          popdoc.close();
         }
       }
-    };
+    },
 
     /**
      * @name $ADP.Player#hidePrivacy
@@ -307,12 +325,9 @@ $ADP.Player = function (id, args) {
      * @description hides the privacy information
      * @param {integer} obaid
      */
-    self.prototype.hidePrivacy = function() {
+    hidePrivacy: function() {
       var obaId = this.getId();
       var panel = document.getElementById('adp-panel-' + obaId);
       if (panel) panel.style.display = 'none';
-    };    
-  }
-
-  this.init(id, args);
+    }
 };
