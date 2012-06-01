@@ -43,7 +43,7 @@ $ADP.Util = {
     parse: function (jsonstr){
       var JSON_object = null;
       try {
-        JSON_object = !(/[^,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]/.test(text.replace(/"(\\.|[^"\\])*"/g, ''))) && eval('(' + text + ')');
+        JSON_object = !(/[^,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]/.test(jsonstr.replace(/"(\\.|[^"\\])*"/g, ''))) && eval('(' + jsonstr + ')');
       } catch(e) {}
       return JSON_object;
     }
