@@ -110,5 +110,20 @@ $ADP.Util = {
     safeString = safeString.split('<').join('&lt;');
     safeString = safeString.split('>').join('&gt;');
     return safeString;
+  },
+
+  
+  /**
+   * @name $ADP.Util#createIframeName
+   * @function
+   * @description Creates an base64-String from the registry-items
+   * @param id The obaId.
+   */
+  createIframeName: function (id) {
+	  var iframeName = '';
+	  if(!window.postMessage) {
+	    iframeName = $ADP.Util.btoa( $ADP.Util.JSON.stringify( $ADP.Registry.pullById(id)));
+	  }
+	  return iframeName;
   }
 }
