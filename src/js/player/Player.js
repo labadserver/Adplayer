@@ -219,8 +219,6 @@ $ADP.Player.prototype = {
         if (window == window.top && document.body) return;
         var iframeButton = document.createElement('DIV');
         iframeButton.id = domId = 'iframe-button-' + Math.round(Math.random() * 9999);
-        iframeButton.style.height = '0px';
-        iframeButton.style.position = 'relative';
         document.body.insertBefore(iframeButton, document.body.firstChild);
       }
       var container = iframeButton || document.getElementById(domId);
