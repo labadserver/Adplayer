@@ -198,6 +198,13 @@ $ADP.Registry = {
         this.initByCopyFromParent(id,windowInfo);
         break;
       case this.FOREIGN_IFRAME:
+    	  if(window.postMessage) {
+		    this.initByPostMessageFromParent(id,windowInfo);
+		  }
+		  else {
+		    this.initByWindowName(id);
+		  }
+    	break;
       case this.POSTMESSAGE_SEARCH:
         this.initByPostMessageFromParent(id,windowInfo);
         break;
@@ -332,8 +339,6 @@ $ADP.Registry = {
     if (this.data[id].iframeSearch.target != this.data[id].iframeSearch.target.parent) {
       this.data[id].iframeSearch.target = this.data[id].iframeSearch.target.parent;
       $ADP.Registry.initByPostmessageFromParent(id);
-    } else {
-      $ADP.Registry.initByWindowName(id);
     }
   },
   
