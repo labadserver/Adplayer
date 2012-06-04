@@ -9,6 +9,7 @@
  * @example
  * TODO
  */
+
 $ADP.Player = function (id, args) {
   var self = arguments.callee;
   if (!self.prototype.init) {
@@ -54,6 +55,7 @@ $ADP.Player = function (id, args) {
         if (privacyInfo.isValid()) this.items.push(privacyInfo);
       }
       this.usePopup = !!args.usePopup;
+      this.renderCloseButton = !!args.renderCloseButton;
     };
 
     /**
@@ -158,6 +160,17 @@ $ADP.Player = function (id, args) {
     };
 
     /**
+     * @name $ADP.Player#renderCloseButtonForPrivacyInfo
+     * @function
+     * @description Returns whether the close button should be displayed (in a popup window).
+     *
+     * @returns {boolean}
+     */
+    self.prototype.renderCloseButtonForPrivacyInfo = function () {
+      return this.renderCloseButton ? true : false;
+    };
+
+    /**
      * @name $ADP.Player#hasPrivacyInfo
      * @function
      * @description Returns boolean determining whether the player contains any privacy information.
@@ -235,6 +248,7 @@ $ADP.Player = function (id, args) {
       var items = this.getPrivacyInfos();
       var usePopup = this.usePopupForPrivacyInfo();
       var closeAction = !usePopup ?"$ADP.Registry.playerCmd("+obaId+",'hidePrivacy');":'window.close();';
+      var renderCloseButton = this.renderCloseButtonForPrivacyInfo();
       var privacy_info = '';
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
@@ -248,8 +262,10 @@ $ADP.Player = function (id, args) {
       if(publisherInfo != '') panelContent = panelContent.concat('<div class="adp-panel-publisherinfo">' + publisherInfo + '<\/div>');
       panelContent = panelContent.concat('<div class="adp-panel-info">' + privacy_info + '<\/div>');
       if(footer != '') panelContent = panelContent.concat('<div class="adp-panel-footer">' + footer + '<\/div>');
-      
-      var HTML = '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="'+closeAction+'">' + closeButtonText + '<\/div>' + panelContent + '<\/div>';
+
+      var HTML = '';
+      if(!usePopup || (usePopup && renderCloseButton)) HTML += '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="'+closeAction+'">' + closeButtonText + '<\/div>'
+      HTML += panelContent + '<\/div>';
       return HTML;
     };
     
@@ -283,7 +299,7 @@ $ADP.Player = function (id, args) {
         var styles = document.styleSheets;
         var popwin = "";
         try{ 
-          popwin = window.open('',title,'width=400,height=400');
+          popwin = window.open('','privacy_information','width=400,height=400,scrollbars=yes,location=0,menubar=0,toolbar=0,status=0');
         } catch(e) {popwin = window.open('about:blank');}
         if(!popwin) { renderInLayer.apply(this); }
         else {
@@ -296,7 +312,7 @@ $ADP.Player = function (id, args) {
           popdoc.write('</head><body>');
           popdoc.write(this.getPanelHTML());
           popdoc.write('</body></html>');
-          popdoc.close();        
+          popdoc.close();
         }
       }
     };

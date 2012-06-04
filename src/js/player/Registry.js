@@ -33,7 +33,7 @@
  *  }
  *
  */
-$ADP.Registry = $ADP.Registry || {
+$ADP.Registry = {
   data: {},
   wait: 2000,
   
@@ -43,7 +43,7 @@ $ADP.Registry = $ADP.Registry || {
   FOREIGN_IFRAME: 'FOREIGN_IFRAME',
   POSTMESSAGE_SEARCH: 'POSTMESSAGE_SEARCH',
   
-  header: '<strong class="adp-header-strong">Informationen zu nutzungsbasierter Online-Werbung</strong><br/>In der vorliegenden Anzeige werden Ihre Nutzungsdaten anonym erhoben bzw. verwendet, um Werbung f&uuml;r Sie zu optimieren. Wenn Sie keine nutzungsbasierte Werbung mehr von den hier gelisteten Anbietern erhalten wollen, k&ouml;nnen Sie die Datenerhebung beim jeweiligen Anbieter direkt deaktivieren. Eine Deaktivierung bedeutet nicht, dass Sie kÃ¼nftig keine Werbung mehr erhalten, sondern lediglich, dass die Auslieferung der konkreten Kampagne nicht anhand anonym erhobener Nutzungsdaten ausgerichtet ist.',
+  header: '<strong class="adp-header-strong">Informationen zu nutzungsbasierter Online-Werbung</strong><br/>In der vorliegenden Anzeige werden Ihre Nutzungsdaten anonym erhoben bzw. verwendet, um Werbung f&uuml;r Sie zu optimieren. Wenn Sie keine nutzungsbasierte Werbung mehr von den hier gelisteten Anbietern erhalten wollen, k&ouml;nnen Sie die Datenerhebung beim jeweiligen Anbieter direkt deaktivieren. Eine Deaktivierung bedeutet nicht, dass Sie künftig keine Werbung mehr erhalten, sondern lediglich, dass die Auslieferung der konkreten Kampagne nicht anhand anonym erhobener Nutzungsdaten ausgerichtet ist.',
   footer: 'Wenn Sie mehr &uuml;ber nutzungsbasiere Online-Werbung erfahren wollen, klicken Sie <a href="http://meine-cookies.org" target="_blank">hier</a>. Dort k&ouml;nnen Sie dar&uuml;ber hinaus auch bei weiteren Anbietern die Erhebung der Nutzungsinformationen deaktivieren bzw. aktivieren und den Status der Aktivierung bei unterschiedlichen Anbietern <a href="http://meine-cookies.org/cookies_verwalten/praeferenzmanager-beta.html" target="_blank">einsehen</a>.',
   publisherInfo: undefined,
 
@@ -61,7 +61,8 @@ $ADP.Registry = $ADP.Registry || {
    * @param {string}  args.text   The short description 
    * @param {string}  args.url    The opt out or more information url
    * @param {string}  args.linkText  The text that should be displayed instead of the link url
-   * @param {boolean} args.usePopup  Boolean to display privacy info in a popup 
+   * @param {boolean} args.usePopup  Boolean to display privacy info in a popup
+   * @param {boolean} args.renderCloseButton  Boolean to display close-button in a popup 
    * @param {boolean} useUnshift   The unShift variable is set when the item needs to be inserted in
    *     front of the current items, This occurs when one is adding items from a parent Registry object
    *  
@@ -92,6 +93,7 @@ $ADP.Registry = $ADP.Registry || {
         case 'url':
         case 'linkText':
         case 'usePopup':
+        case 'renderCloseButton':
           item[k] = args[k];
           break;
         default:
@@ -376,6 +378,7 @@ $ADP.Registry = $ADP.Registry || {
     var domId = args.domId;
     var position = args.position || 'top-right';
     var usePopup = args.usePopup || false;
+    var renderCloseButton = args.renderCloseButton == false ? false : true;
     if (!this.data[id]) this.data[id]={domId: null, items:[]};
     
     if (this.data[id].timeoutId) clearTimeout(this.data[id].timeoutId);
@@ -384,24 +387,28 @@ $ADP.Registry = $ADP.Registry || {
     
     var items = this.getById(id);
     for (var k in items) {
-      if(items[k].usePopup && items[k].usePopup == true) {
-        usePopup = true; 
-      }
+        if(items[k].usePopup && items[k].usePopup == true) {
+            usePopup = true;
+          }
+        if(items[k].renderCloseButton == false) {
+        	renderCloseButton = false;
+          }
     }
+    
+  var player = new $ADP.Player(id, {
+    domId: domId,
+    position: position,
+    header: header,
+    footer: footer,
+    publisherInfo: publisherInfo,
+    items: items,
+    usePopup: usePopup,
+    renderCloseButton: renderCloseButton
+  });
+  player.inject();
+  this.data[id].player = player;
 
-    var player = new $ADP.Player(id, {
-      domId: domId,
-      position: position,
-      header: header,
-      footer: footer,
-      publisherInfo: publisherInfo,
-      items: items,
-      usePopup: usePopup
-    });
-    player.inject();
-    this.data[id].player = player;
-
-    return player;
+  return player;
   },
 
   /**
