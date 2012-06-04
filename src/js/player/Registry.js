@@ -457,6 +457,8 @@ $ADP.Registry = $ADP.Registry || {
           if (msg.data.id && msg.data.items && msg.data.items.length) {
             $ADP.Registry.registerParentItems(msg.data.id, msg.data.items);
             $ADP.Message.send(src, $ADP.Message.types.unRegOBA, msg.data.id);
+          } else {
+            $ADP.Registry.initByWindowName(msg.data.id);
           }
           break;
         case $ADP.Message.types.unRegOBA_ACK:
