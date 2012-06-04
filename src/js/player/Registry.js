@@ -477,7 +477,7 @@ $ADP.Registry = $ADP.Registry || {
    */
   playerCmd: function(id,cmd,args) {
     if(!cmd) return;
-    if(!this.data[id] && !this.data[id].player) return;
+    if(!this.data[id] || !this.data[id].player) return;
     if(!args) args=[];
     if (typeof this.data[id].player[cmd] == 'function') {
       this.data[id].player[cmd].apply(this.data[id].player,args);
