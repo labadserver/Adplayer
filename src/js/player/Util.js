@@ -43,7 +43,7 @@ $ADP.Util = {
     parse: function (jsonstr){
       var JSON_object = null;
       try {
-        JSON_object = !(/[^,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]/.test(text.replace(/"(\\.|[^"\\])*"/g, ''))) && eval('(' + text + ')');
+        JSON_object = !(/[^,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]/.test(jsonstr.replace(/"(\\.|[^"\\])*"/g, ''))) && eval('(' + jsonstr + ')');
       } catch(e) {}
       return JSON_object;
     }
@@ -77,7 +77,10 @@ $ADP.Util = {
    * @param x function variable
    * @returns
    */
-  atob: function(d,b,c,u,r,q,x) {for(r=q=x='',b="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";c=d.charAt(x++);~c&&(u=q%4?u*64+c:c,q++%4)?r+=String.fromCharCode(255&u>>(-2*q&6)):0)c=b.indexOf(c);return r},
+  atob: function(d,b,c,u,r,q,x) {
+  	for(r=q=x='',b="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";c=d.charAt(x++);~c&&(u=q%4?u*64+c:c,q++%4)?r+=String.fromCharCode(255&u>>(-2*q&6)):0)c=b.indexOf(c);
+  	return r
+  },
   
   /**
    * @name $ADP.Util#log
@@ -107,5 +110,20 @@ $ADP.Util = {
     safeString = safeString.split('<').join('&lt;');
     safeString = safeString.split('>').join('&gt;');
     return safeString;
+  },
+
+  
+  /**
+   * @name $ADP.Util#createIframeName
+   * @function
+   * @description Creates an base64-String from the registry-items
+   * @param id The obaId.
+   */
+  createIframeName: function (id) {
+	  var iframeName = '';
+	  if(!window.postMessage) {
+	    iframeName = $ADP.Util.btoa( $ADP.Util.JSON.stringify( $ADP.Registry.pullById(id)));
+	  }
+	  return iframeName;
   }
 }

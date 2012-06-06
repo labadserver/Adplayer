@@ -14,8 +14,10 @@
  * TODO
  */
 $ADP.PrivacyInfo = function (args) {
-  var self = arguments.callee;
-  if (!self.prototype.init) {
+	return this instanceof $ADP.PrivacyInfo ? this.init(args) : new $ADP.PrivacyInfo(args);
+}
+
+$ADP.PrivacyInfo.prototype = {
 
     /**
      * @private
@@ -23,14 +25,14 @@ $ADP.PrivacyInfo = function (args) {
      * @function
      * @description Class constructor.
      */
-    self.prototype.init = function (args) {
+    init: function (args) {
       this.valid = args.title || args.text || args.linkText ? true : false;
       this.title = args.title;
       this.text = args.text;
       this.url = args.url;
       this.linkText = args.linkText;
       this.usePopup = !!args.usePopup;
-    };
+    },
 
     /**
      * @name $ADP.PrivacyInfo#getTitle
@@ -39,9 +41,9 @@ $ADP.PrivacyInfo = function (args) {
      * 
      * @return {string} The privacy information title. 
      */
-    self.prototype.getTitle = function () {
+    getTitle: function () {
       return this.title;
-    };
+    },
 
     /**
      * @name $ADP.PrivacyInfo#getText
@@ -50,9 +52,9 @@ $ADP.PrivacyInfo = function (args) {
      * 
      * @return {string} The privacy information's detailed information. 
      */
-    self.prototype.getText = function () {
+    getText: function () {
       return this.text;
-    };
+    },
 
     /**
      * @name $ADP.PrivacyInfo#getURL
@@ -61,9 +63,9 @@ $ADP.PrivacyInfo = function (args) {
      * 
      * @return {string} The privacy information's call-to-action URL. 
      */
-    self.prototype.getURL = function () {
+    getURL: function () {
       return this.url;
-    };
+    },
 
     /**
      * @name $ADP.PrivacyInfo#getLinkText
@@ -72,9 +74,9 @@ $ADP.PrivacyInfo = function (args) {
      * 
      * @return {string} The URL's text representation. 
      */
-    self.prototype.getLinkText = function () {
+    getLinkText: function () {
       return this.linkText;
-    };
+    },
 
     /**
      * @name $ADP.PrivacyInfo#isValid
@@ -82,9 +84,9 @@ $ADP.PrivacyInfo = function (args) {
      * @description Determines whether a title, text, or linkText has been defined.
      * @return {boolean} <code>true</code> / <code>false</code>
      */
-    self.prototype.isValid = function () {
+    isValid: function () {
       return this.valid ? true : false;
-    };
+    },
     
     /**
      * @name $ADP.PrivacyInfo#usePopup
@@ -92,9 +94,9 @@ $ADP.PrivacyInfo = function (args) {
      * @description returns whether privacy items should be rendered in popup
      * @returns {boolean} 
      */ 
-     self.prototype.usePopup = function () {
+     usePopup: function () {
        return this.usePopup ? true : false;
-     };
+     },
      
     /**
      * @name $ADP.PrivacyInfo#render
@@ -107,7 +109,7 @@ $ADP.PrivacyInfo = function (args) {
      * // returns string
      * AdServer&lt;br/&gt;Opt-opt out of this ad server.&lt;br/&gt;&lt;a href=&quot;http://calltoaction.url&quot; target=&quot;_blank&quot;&gt;Opt Out&lt;/a&gt;
      */
-    self.prototype.render = function () {
+    render: function () {
       var title = $ADP.Util.safeString(this.getTitle());
       var text = $ADP.Util.safeString(this.getText());
       var linkText = $ADP.Util.safeString(this.getLinkText());
@@ -119,10 +121,7 @@ $ADP.PrivacyInfo = function (args) {
       if (text) s = text + '<br />' + s;
       if (title) s = title + '<br />' + s;
       return s;
-    };
+    }
 
-  }
-
-  this.init(args);
 };
 

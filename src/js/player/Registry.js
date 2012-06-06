@@ -61,7 +61,8 @@ $ADP.Registry = $ADP.Registry || {
    * @param {string}  args.text   The short description 
    * @param {string}  args.url    The opt out or more information url
    * @param {string}  args.linkText  The text that should be displayed instead of the link url
-   * @param {boolean} args.usePopup  Boolean to display privacy info in a popup 
+   * @param {boolean} args.usePopup  Boolean to display privacy info in a popup
+   * @param {boolean} args.renderCloseButton  Boolean to display close-button in a popup 
    * @param {boolean} useUnshift   The unShift variable is set when the item needs to be inserted in
    *     front of the current items, This occurs when one is adding items from a parent Registry object
    *  
@@ -92,6 +93,7 @@ $ADP.Registry = $ADP.Registry || {
         case 'url':
         case 'linkText':
         case 'usePopup':
+        case 'renderCloseButton':
           item[k] = args[k];
           break;
         default:
@@ -196,6 +198,13 @@ $ADP.Registry = $ADP.Registry || {
         this.initByCopyFromParent(id,windowInfo);
         break;
       case this.FOREIGN_IFRAME:
+    	  if(window.postMessage) {
+		    this.initByPostMessageFromParent(id,windowInfo);
+		  }
+		  else {
+		    this.initByWindowName(id);
+		  }
+    	break;
       case this.POSTMESSAGE_SEARCH:
         this.initByPostMessageFromParent(id,windowInfo);
         break;
@@ -376,6 +385,7 @@ $ADP.Registry = $ADP.Registry || {
     var domId = args.domId;
     var position = args.position || 'top-right';
     var usePopup = args.usePopup || false;
+    var renderCloseButton = args.renderCloseButton == false ? false : true;
     if (!this.data[id]) this.data[id]={domId: null, items:[]};
     
     if (this.data[id].timeoutId) clearTimeout(this.data[id].timeoutId);
@@ -384,22 +394,26 @@ $ADP.Registry = $ADP.Registry || {
     
     var items = this.getById(id);
     for (var k in items) {
-      if(items[k].usePopup && items[k].usePopup == true) {
-        usePopup = true; 
-      }
+        if(items[k].usePopup && items[k].usePopup == true) {
+            usePopup = true;
+          }
+        if(items[k].renderCloseButton == false) {
+        	renderCloseButton = false;
+          }
     }
 
     var player = new $ADP.Player(id, {
-      domId: domId,
-      position: position,
-      header: header,
-      footer: footer,
-      publisherInfo: publisherInfo,
-      items: items,
-      usePopup: usePopup
-    });
-    player.inject();
-    this.data[id].player = player;
+    domId: domId,
+    position: position,
+    header: header,
+    footer: footer,
+    publisherInfo: publisherInfo,
+    items: items,
+    usePopup: usePopup,
+    renderCloseButton: renderCloseButton
+  });
+  player.inject();
+  this.data[id].player = player;
 
     return player;
   },
@@ -479,7 +493,7 @@ $ADP.Registry = $ADP.Registry || {
    */
   playerCmd: function(id,cmd,args) {
     if(!cmd) return;
-    if(!this.data[id] || !this.data[id].player) return;
+    if(!this.data[id] && !this.data[id].player) return;
     if(!args) args=[];
     if (typeof this.data[id].player[cmd] == 'function') {
       this.data[id].player[cmd].apply(this.data[id].player,args);
