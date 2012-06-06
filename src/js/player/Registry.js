@@ -63,11 +63,33 @@ $ADP.Registry = $ADP.Registry || {
    * @param {string}  args.linkText  The text that should be displayed instead of the link url
    * @param {boolean} args.usePopup  Boolean to display privacy info in a popup
    * @param {boolean} args.renderCloseButton  Boolean to display close-button in a popup 
-   * @param {boolean} useUnshift   The unShift variable is set when the item needs to be inserted in
-   *     front of the current items, This occurs when one is adding items from a parent Registry object
    *  
    */
-  register: function (id, args, useUnshift) {
+  register: function (id, args) {
+    this._register(id, args, false);
+  },
+  
+  /**
+   * @name $ADP.Registry#_register
+   * @function
+   * @description Internal register function that registers the privacy item for an AdPlayer chain. 
+   * 
+   * @param {integer} id The OBA id that is used to identify this player's unique privacy messages 
+   * @param {object}  args   The Arguments
+   * @param {string}  args.header   The header text
+   * @param {string}  args.footer   The footer text 
+   * @param {string}  args.domId   The domId where the privacy button must be rendered
+   * @param {string}  args.title  The name of the privacy party
+   * @param {string}  args.text   The short description 
+   * @param {string}  args.url    The opt out or more information url
+   * @param {string}  args.linkText  The text that should be displayed instead of the link url
+   * @param {boolean} args.usePopup  Boolean to display privacy info in a popup
+   * @param {boolean} args.renderCloseButton  Boolean to display close-button in a popup 
+   * @param {boolean} useUnshift   The unShift variable is set when the item needs to be inserted in
+   *     front of the current items, This occurs when one is adding items from a parent Registry object
+   * 
+   */
+  _register: function (id, args, useUnshift) {
     if (!args) args = {};
     if (!this.data[id]) {
       this.data[id] = {
@@ -365,7 +387,7 @@ $ADP.Registry = $ADP.Registry || {
     }
     items.reverse();
     for (var k in items) {
-      $ADP.Registry.register(id, items[k], true);
+      $ADP.Registry._register(id, items[k], true);
     }
   },  
   
