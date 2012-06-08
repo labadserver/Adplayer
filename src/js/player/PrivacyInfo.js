@@ -26,7 +26,7 @@ $ADP.PrivacyInfo.prototype = {
      * @description Class constructor.
      */
     init: function (args) {
-      this.valid = args.title || args.text || args.linkText ? true : false;
+      this.valid = args.title && args.linkText && args.url ? true : false;
       this.title = args.title;
       this.text = args.text;
       this.url = args.url;
