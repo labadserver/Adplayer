@@ -104,10 +104,12 @@
   text-align: left;
   line-height: 1.3em;
   color: #000;
-  white-space: nowrap;
-  margin: 0 5px;
-  
+  margin: 0 5px;  
   padding: 5px 0;
+}
+
+.adp-info-header {
+	font-weight: bold;
 }
 
 .adp-panel-footer {
