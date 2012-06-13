@@ -119,7 +119,7 @@ $ADP.PrivacyInfo.prototype = {
       if (url) s = '<a href="' + url + '" target="_blank">' + s + '</a>';
       if (s) s += '<br />';
       if (text) s = text + '<br />' + s;
-      if (title) s = title + '<br />' + s;
+      if (title) s = '<div class="adp-info-header">' + title + '</div>' + s;
       return s;
     }
 
