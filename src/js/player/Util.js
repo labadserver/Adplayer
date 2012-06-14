@@ -91,11 +91,15 @@ $ADP.Util = {
    *  $ADP.Util.log('This is a log output');  
    */
   log: function() {
-    $ADP.Util.log.history = $ADP.Util.log.history || [];
-    $ADP.Util.log.history.push(arguments);
-    if(typeof console != 'undefined'){
-      console.log(Array.prototype.slice.call(arguments));
-    }
+	try {
+		if(window.top.location.search && window.top.location.search.match(/adpdebug/)) {
+		    $ADP.Util.log.history = $ADP.Util.log.history || [];
+		    $ADP.Util.log.history.push(arguments);
+		    if(typeof console != 'undefined'){
+		      console.log(Array.prototype.slice.call(arguments));
+		    }
+		}
+	} catch (e) {}
   },
   
   /**
