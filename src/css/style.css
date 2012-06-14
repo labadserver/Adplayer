@@ -42,8 +42,9 @@ body.adp-popup {
   display: none;
   cursor: pointer;
 }
-.adp-admarker-text.adp-top-right { right: 15px; }
-.adp-admarker-text.adp-top-left { left: 15px; }
+
+.adp-top-right .adp-admarker-text { right: 15px; }
+.adp-top-left .adp-admarker-text { left: 15px; }
 
 .adp-panel {
   background: #fff;
