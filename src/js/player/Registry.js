@@ -36,7 +36,8 @@
 $ADP.Registry = $ADP.Registry || {
   data: {},
   wait: 2000,
-  
+
+  LAST: 'LAST',
   MAIN: 'MAIN',
   POPUP: 'POPUP',
   FRIENDLY_IFRAME: 'FRIENDLY_IFRAME',
@@ -95,12 +96,6 @@ $ADP.Registry = $ADP.Registry || {
       this.data[id] = {
         items: []
       };
-      this.data[id].timeoutId = setTimeout(function () {
-        $ADP.Registry.createPlayer(id, {
-          position: 'top-left'
-        })
-      }, this.wait);
-      $ADP.Registry.initFromMaster(id);
     }
     var item = {};
     for (var k in args) {
@@ -139,7 +134,6 @@ $ADP.Registry = $ADP.Registry || {
    */
   unregister: function (id) {
     if (!this.data[id]) return;
-    if (this.data[id].timeoutId) clearTimeout(this.data[id].timeoutId);
     delete this.data[id];
   },
   
@@ -204,166 +198,94 @@ $ADP.Registry = $ADP.Registry || {
       this.publisherInfo = info;
     }
   },
-  
-  /**
-   * @private
-   * @name $ADP.Registry#initFromMaster
-   * @function
-   * @description Locates the top most parent registry in the delivery chain.
-   */
-  initFromMaster: function (id) {
-    var windowInfo = this.getWindowInfo();
 
-    switch (windowInfo.type) {
-      case this.FRIENDLY_IFRAME:
-      case this.POPUP:
-        this.initByCopyFromParent(id,windowInfo);
-        break;
-      case this.FOREIGN_IFRAME:
-    	  if(window.postMessage) {
-		    this.initByPostMessageFromParent(id,windowInfo);
+  /**
+   * @name  $ADP.Registry#checkParentAccess
+   * @function
+   * @description Check how we can access to given window
+   *
+   * @param window
+   */
+  checkParentAccess: function (window) {
+	  var type;
+      var adpAccess = function(win) { try { return Boolean(win.$ADP) } catch(e) { return false; } };
+	  try {
+		  if(window.parent.location.href == undefined) {
+			  type = this.FOREIGN_IFRAME;
 		  }
-		  else {
-		    this.initByWindowName(id);
+		  else
+		  {
+			  if (adpAccess(window.parent)) {
+		        type = this.FRIENDLY_IFRAME;
+		      } else {
+		        type = this.POSTMESSAGE_SEARCH;
+		      }
 		  }
-    	break;
-      case this.POSTMESSAGE_SEARCH:
-        this.initByPostMessageFromParent(id,windowInfo);
-        break;
-    };
+  	  } catch (e) {
+		  type = this.FOREIGN_IFRAME;
+  	  }
+  	  return type;
   },
-  
-  /**
-   * @name
-   * @function
-   * @description
-   * 
-   * @return object
-   */
-  getWindowInfo: function() {   
-    if (!this.windowInfo) {
-      var info = {type: this.MAIN, parent: window.parent},
-          adpAccess = function(win){ try { return Boolean(win.$ADP) } catch(e) { return false; } };
-        
-      if (window == info.parent) {
-        if (window.opener) {
-          info.parent = window.opener;
-          if (adpAccess(window.opener)) {
-            info.type = this.POPUP;
-          } else {
-            info.type = this.POSTMESSAGE_SEARCH;
-          }
-        }
-      } else {
-        try {
 
-          if( typeof(parent.location.href)=="undefined" ) { // dies if foreign
-            throw new Error('FOREIGN_IFRAME'); 
-          }
-          
-          while (info.parent != window.top && !adpAccess(info.parent)) {
-            info.parent = info.parent.parent;
-          };
-          if (adpAccess(info.parent)) {
-            info.type = this.FRIENDLY_IFRAME;
-          } else {
-            info.type = this.POSTMESSAGE_SEARCH;
-            info.parent = window.parent;
-          }
-        }
-        catch(e) {
-          info.type = this.FOREIGN_IFRAME;
-          info.parent = window.parent; 
-        }
-      }
-      this.windowInfo = info;
-    }
-    return this.windowInfo;
-  },
-  
   /**
-   * @name $ADP.Registry#initByCopyFromParent
+   * @name  $ADP.Registry#getWindowChain
    * @function
-   * @description Pulls the parent privacy items and pre-appends them to the local registry
-   * 
-   * @param id   The OBA id
-   * @param windowInfo The Window information object that specifies the parent and type of parent window 
-   */
-  initByCopyFromParent: function(id, windowInfo) {
-    try {
-      if (!windowInfo && !windowInfo.parent) return;
-      var parentWindow = windowInfo.parent,
-          items = parentWindow.$ADP.Registry.getById(id);
-      if(items.length) {
-        parentWindow.$ADP.Registry.unregister(id);
-        $ADP.Registry.registerParentItems(id, items);
-      } else {
-        $ADP.Registry.initByWindowName(id);
-      }
-    } catch(e) { $ADP.Util.log('Failed to copy from parent: ',id); }
-  },
-  
-  /**
-   * @private
-   * @name $ADP.Registry#initByPostMessageFromParent
-   * @function
-   * @description iterates through parents to try locate the Master repository and pull the entries for the given Adplayer chain id
-   * 
-   * @param id  The Adplayer chain id.
-   * @param windowInfo The window information object
-   */
-  initByPostMessageFromParent: function (id, windowInfo) {
-
-    
-    if (this.data[id] && !this.data[id].iframeSearch) {
-      if (!windowInfo && !windowInfo.parent) return;
-      
-      this.data[id].iframeSearch = {
-        target: windowInfo.parent
-      };
-    }
-    
-    var obaId = id,
-      data = this.data[id],
-      target = data.iframeSearch.target;
-    $ADP.Message.send(target, $ADP.Message.types.pullOBA, id);
-    data.iframeSearch.timeoutId = setTimeout(function () {
-      $ADP.Registry.tryNextParent(id);
-    }, 20);
-  },
-  
-  /**
-   * @name $ADP.Registry#initByWindowName
-   * @function
-   * @description The fallback method of retrieving the privacy information
+   * @description Collect Informations from all Parents in the Chain
+   *
    * @param id
    */
-  initByWindowName: function (id) {
-    if (!window.name) return;
-    try {
-      var items = $ADP.Util.JSON.parse($ADP.Util.atob(window.name.replace(/^[^-]+\-([A-Za-z0-9\+\/]+=?=?=?)$/,'$1')));
-      if (items.length) {
-        this.registerParentItems(id,items);
-      }
-    } catch(e) {}
+  getWindowChain: function(id) {
+	  if(!this.data[id].windowChain) {
+		  var type = this.checkParentAccess(window.parent);
+	      var chain = {1: {type: type, window: window, parent: window.parent}};
+		  
+	      if(window != window.parent) {
+	    	  var doLoop = true;
+	    	  var i = 2;
+	    	  var nextWindow = window.parent;
+	    	  var type;
+	    	  while(doLoop) {
+		    	  if(nextWindow == nextWindow.parent) {
+		    		  type = this.checkParentAccess(nextWindow.parent);
+		    		  chain[i] = {type:type, window: nextWindow};
+		    		  doLoop = false;
+		    	  }  
+		    	  else
+		    	  {
+		    		  type = this.checkParentAccess(nextWindow.parent);
+		    		  chain[i] = {type: type, window: nextWindow, parent:nextWindow.parent};
+			          nextWindow = nextWindow.parent;
+		    	  }
+		    	  i++;
+	    	  }
+	    	  if(window.opener) {
+	    		  type = this.checkParentAccess(window.opener);
+	    		  chain[i] = {type: type, window: window, parent:window.opener};
+	    	  }
+	      }
+	      else if(window.opener) {
+    		  type = this.checkParentAccess(window.opener);
+    		  chain[2] = {type: type, window: window, parent:window.opener};	    	  
+	      }
+	      this.data[id].windowChain = chain;
+	  }
+	  return this.data[id].windowChain;
   },
-
+  
   /**
-   * @private
-   * @name $ADP.Registry#tryNextParent
+   * @name  $ADP.Registry#checkAndReducePostMessageCounter
    * @function
-   * @description After a timeout will request privacy information from the next parent. 
-   *     initByWindowName is the fallback if no privacy items are rceived
-   * 
-   * @param id  The AdPlayer chain id.
+   * @description Reduce the postMessageCounter. Calls $ADP.Registry.submitPrivacy() if Counter == 0
+   *
+   * @param id
    */
-  tryNextParent: function (id) {
-    if (this.data[id].iframeSearch.target != this.data[id].iframeSearch.target.parent) {
-      this.data[id].iframeSearch.target = this.data[id].iframeSearch.target.parent;
-      $ADP.Registry.initByPostmessageFromParent(id);
-    } else {
-      $ADP.Registry.initByWindowName(id);
-    }
+  checkAndReducePostMessageCounter: function(id) {
+	  this.data[id].postMessageCounter--;
+
+	  if(this.data[id].postMessageCounter == 0) {
+		  clearTimeout(this.data[id].postMessageTimeout);
+	      this.submitPrivacy(id);
+      }
   },
   
   /**
@@ -389,7 +311,7 @@ $ADP.Registry = $ADP.Registry || {
     for (var k in items) {
       $ADP.Registry._register(id, items[k], true);
     }
-  },  
+  },
   
   /**
    * @name  $ADP.Registry#createPlayer
@@ -406,38 +328,26 @@ $ADP.Registry = $ADP.Registry || {
     var publisherInfo = this.publisherInfo || '';
     var domId = args.domId;
     var position = args.position || 'top-right';
-    var usePopup = args.usePopup || false;
+    var usePopup = args.usePopup || true;
     var renderCloseButton = args.renderCloseButton == false ? false : true;
     if (!this.data[id]) this.data[id]={domId: null, items:[]};
     
-    if (this.data[id].timeoutId) clearTimeout(this.data[id].timeoutId);
     if (domId) this.data[id].domId = domId; // last one wins
     domId = this.getDOMId(id);
     
-    var items = this.getById(id);
-    for (var k in items) {
-        if(items[k].usePopup && items[k].usePopup == true) {
-            usePopup = true;
-          }
-        if(items[k].renderCloseButton == false) {
-        	renderCloseButton = false;
-          }
-    }
-
-    var player = new $ADP.Player(id, {
+  var player = $ADP.Player(id, {
     domId: domId,
     position: position,
     header: header,
     footer: footer,
     publisherInfo: publisherInfo,
-    items: items,
     usePopup: usePopup,
     renderCloseButton: renderCloseButton
   });
   player.inject();
   this.data[id].player = player;
-
-    return player;
+  
+  return player;
   },
 
   /**
@@ -484,23 +394,170 @@ $ADP.Registry = $ADP.Registry || {
           break;
         case $ADP.Message.types.unRegOBA:
           result = $ADP.Registry.unregister(msg.data);
-          $ADP.Message.send(src, $ADP.Message.types.unRegOBA_ACK, {
-            id: msg.data,
-            result: result
-          });
+//          $ADP.Message.send(src, $ADP.Message.types.unRegOBA_ACK, {
+//            id: msg.data,
+//            result: result
+//          });
           break;
         case $ADP.Message.types.pullOBA_ACK:
-          if (msg.data.id && msg.data.items && msg.data.items.length) {
-            $ADP.Registry.registerParentItems(msg.data.id, msg.data.items);
-            $ADP.Message.send(src, $ADP.Message.types.unRegOBA, msg.data.id);
-          } else {
-            $ADP.Registry.initByWindowName(msg.data.id);
-          }
+            if (msg.data.id && msg.data.items && msg.data.items.length) {
+	          $ADP.Registry.registerParentItems(msg.data.id, msg.data.items);
+	          $ADP.Message.send(src, $ADP.Message.types.unRegOBA, msg.data.id);
+	          
+	          $ADP.Registry.checkAndReducePostMessageCounter(msg.data.id);
+	        }
           break;
-        case $ADP.Message.types.unRegOBA_ACK:
-          break;
+//        case $ADP.Message.types.unRegOBA_ACK:     	
+//            break;
       }
     } catch (e) {$ADP.Util.log("Received Message",event," Rejected ",e);}
+  },
+  
+  /**
+   * @name $ADP.Registry#getItems
+   * @function
+   * @description Convertes items in $ADP.PrivacyInfo() an return these
+   * 
+   * @param id
+   * 
+   */
+  getItems: function(id) {
+	  var rawItems = this.data[id].items;
+	  var items = [];
+      for (var i = 0; i < rawItems.length; i++) {
+    	  
+    	if(rawItems[i].usePopup == false) {
+    	  this.data[id].player.usePopup = false;
+    	}
+    	if(rawItems[i].renderCloseButton == false) {
+    	  this.data[id].player.renderCloseButton = false;
+      	}
+    	
+        var privacyInfo = $ADP.PrivacyInfo(rawItems[i]);
+        if (privacyInfo.isValid()) items.push(privacyInfo);
+      }
+      return items;
+  },
+  
+  /**
+   * @name $ADP.Registry#collectPrivacy
+   * @function
+   * @description Collect Privacy Information from parents
+   * 
+   * @param id
+   * 
+   */
+  collectPrivacy: function (id) {
+	  var usePopup = true;
+	  if(this.data[id].items && this.data[id].items.length) {
+		  for(var i in this.data[id].items) {
+			  if(this.data[id].items[i].usePopup == false) {
+				  usePopup = false;
+			  }
+		  }
+	  }
+	  
+	  if(usePopup) {
+		if(this.data[id].player.popup) { this.data[id].player.popup.close() }
+		
+		try{
+		  var randomPopupName = 'adp_info_' + Math.floor(Math.random()*100001);
+		  popwin = window.open('',randomPopupName,'width=400,height=500,scrollbars=yes,location=0,menubar=0,toolbar=0,status=0');
+		} catch(e) {popwin = window.open('about:blank');}
+		
+		this.data[id].player.popup = popwin;
+	  }
+		
+	  if(this.data[id].player.items && this.data[id].player.items.length) {
+		this.submitPrivacy(id);
+	  } else {
+		var chain = this.getWindowChain(id);
+		
+		var windowsInitWithPostMessage = [];
+		
+		for(var k in chain) {
+			var items;
+			if(!chain[k].parent || chain[k].parent == window) {}
+			else if(chain[k].type == this.FOREIGN_IFRAME || chain[k].type == this.POSTMESSAGE_SEARCH) {
+				  windowsInitWithPostMessage.push(chain[k]);
+			}
+			else {
+				if(chain[k].window && chain[k].window.name) {
+					try {
+						items = $ADP.Util.JSON.parse($ADP.Util.atob(chain[k].window.name.replace(/^[^-]+\-([A-Za-z0-9\+\/]+=?=?=?)$/,'$1')));
+					} catch (e) {}
+				}
+				
+				if(!items) {
+					try {
+						items = chain[k].parent.$ADP.Registry.getById(id);
+					} catch (e) {}
+				}
+				
+				if(items.length) {
+					$ADP.Registry.registerParentItems(id, items);
+				}
+			}
+		}
+		
+		if(windowsInitWithPostMessage && windowsInitWithPostMessage.length) {
+			if(window.postMessage) {
+			  this.initByPostMessage(id, windowsInitWithPostMessage);
+			} else {
+			  this.initByWindowName(id, windowsInitWithPostMessage);
+			}
+		}
+		else {
+			this.submitPrivacy(id);
+		}
+	}
+  },
+  
+  initByPostMessage: function(id, windows) {
+    for(k in windows) {
+	  if(this.data[id].postMessageCounter) {
+    	this.data[id].postMessageCounter++;
+	  }
+      else {
+    	this.data[id].postMessageCounter = 1;
+      }
+      $ADP.Message.send(windows[k].parent, $ADP.Message.types.pullOBA, id);
+	}
+	
+    this.data[id].postMessageTimeout = setTimeout(function () {
+  	  $ADP.Registry.submitPrivacy(id);
+    }, 1000);	
+  },
+  
+  initByWindowName: function(id, windows) {
+	for(k in windows) {
+	  if(!windows[k].window.name) return;
+	    try {
+		  var items = $ADP.Util.JSON.parse($ADP.Util.atob(windows[k].window.name.replace(/^[^-]+\-([A-Za-z0-9\+\/]+=?=?=?)$/,'$1')));
+		  if (items.length) {
+		    this.registerParentItems(id,items);
+		  }
+	  } catch(e) {}
+	}
+	this.submitPrivacy(id);
+  },
+  
+  /**
+   * @name $ADP.Registry#submitPrivacy
+   * @function
+   * @description submit PrivacyInformations to the Player
+   * 
+   * @param id
+   * 
+   */
+  submitPrivacy: function (id) {
+    if(!this.data[id] && !this.data[id].player) return;
+    
+
+	if(!this.data[id].player.items || this.data[id].player.items.length) {
+	  this.data[id].player.items = this.getItems(id);
+	}
+    this.data[id].player['showPrivacy'].apply(this.data[id].player,[]);
   },
   
   /**
@@ -517,6 +574,9 @@ $ADP.Registry = $ADP.Registry || {
     if(!cmd) return;
     if(!this.data[id] && !this.data[id].player) return;
     if(!args) args=[];
+    
+    this.data[id].player.items = this.getItems(id);
+    
     if (typeof this.data[id].player[cmd] == 'function') {
       this.data[id].player[cmd].apply(this.data[id].player,args);
     }
@@ -531,11 +591,11 @@ $ADP.Registry = $ADP.Registry || {
    *     executed once the library has completely loaded.
    */
   init: function () {
-    if (window.addEventListener) {
-      window.addEventListener("message", $ADP.Registry.messageHandler, false);
-    } else if (window.attachEvent) {
-      window.attachEvent('onmessage', $ADP.Registry.messageHandler);
-    }
+	if (window.addEventListener) {
+	  window.addEventListener("message", $ADP.Registry.messageHandler, false);
+	} else if (window.attachEvent) {
+	  window.attachEvent('onmessage', $ADP.Registry.messageHandler);
+	}
   }
 };
 
