@@ -1,3 +1,8 @@
+body.adp-popup {
+  margin:0;
+  padding:10px;
+}
+
 .adp-top-right {
   top: 0;
   right: 0;
@@ -52,6 +57,12 @@
   position: absolute;
 }
 
+.adp-popup .adp-panel-wrapper {
+  width:100%;
+  max-width:380px;
+  margin:0 auto;
+}
+
 .adp-panel-close {
   background: #ccc;
   font-family: Arial, Verdana, Tahoma, sans-serif;
@@ -104,7 +115,7 @@
   text-align: left;
   line-height: 1.3em;
   color: #000;
-  margin: 0 5px;  
+  margin: 0 5px;
   padding: 5px 0;
 }
 
