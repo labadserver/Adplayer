@@ -50,14 +50,9 @@ $ADP.Player.prototype = {
       this.footer = args.footer;
       this.publisherInfo = args.publisherInfo;
       this.position = args.position || 'top-right';
-      this.items = [];
-      var items = args.items || [];
-      for (var i = 0; i < items.length; i++) {
-        var privacyInfo = $ADP.PrivacyInfo(items[i]);
-        if (privacyInfo.isValid()) this.items.push(privacyInfo);
-      }
       this.usePopup = !!args.usePopup;
       this.renderCloseButton = !!args.renderCloseButton;
+      this.popup = !!args.popup;
     },
 
     /**
@@ -158,7 +153,7 @@ $ADP.Player.prototype = {
      * @returns {boolean}  
      */
     usePopupForPrivacyInfo: function () {
-      return this.usePopup ? true : false;
+      return this.usePopup == false ? false : true;
     },
     
     /**
@@ -183,6 +178,23 @@ $ADP.Player.prototype = {
      */
     hasPrivacyInfo: function () {
       return Boolean(this.items.length);
+    },
+
+    /**
+     * @name $ADP.Player#getPrivacyInfos
+     * @function
+     * @description Returns a list containing the player's privacy information.
+     *
+     * @returns {array} The list containing privacy information. 
+     * 
+     * @see $ADP.PrivacyInfo
+     */
+    getPrivacyInfos: function () {
+      return this.items;
+    },
+
+    getPopup: function () {
+      return this.popup;
     },
 
     /**
@@ -223,7 +235,7 @@ $ADP.Player.prototype = {
       }
       var container = iframeButton || document.getElementById(domId);
       if (container) {
-        container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker" >' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '" onClick="$ADP.Registry.playerCmd('+obaId+',\'showPrivacy\');"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '"  onClick="$ADP.Registry.playerCmd('+obaId+',\'showPrivacy\');">' + this.getPrivacyButtonText() + '<\/div>' + '<\/div>';
+        container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker" >' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '" onClick="$ADP.Registry.collectPrivacy('+obaId+');"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '"  onClick="$ADP.Registry.collectPrivacy('+obaId+');">' + this.getPrivacyButtonText() + '<\/div>' + '<\/div>';
       } else {
         if (this.attempts > this.maxAttempts) {
           $ADP.Util.log('Too many attempts for ' + obaId + ', ' + domId);
@@ -258,14 +270,15 @@ $ADP.Player.prototype = {
       }
       
       var panelContent = '';
+      panelContent = panelContent.concat('<div class="adp-panel-wrapper">');
       if(header != '') panelContent = panelContent.concat('<div class="adp-panel-header">' + header + '<\/div>');
       if(publisherInfo != '') panelContent = panelContent.concat('<div class="adp-panel-publisherinfo">' + publisherInfo + '<\/div>');
       panelContent = panelContent.concat('<div class="adp-panel-info">' + privacy_info + '<\/div>');
       if(footer != '') panelContent = panelContent.concat('<div class="adp-panel-footer">' + footer + '<\/div>');
-     
+      panelContent = panelContent.concat('<\/div>');
       var HTML = '';
       if(!usePopup || (usePopup && renderCloseButton)) HTML += '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="'+closeAction+'">' + closeButtonText + '<\/div>'
-      HTML += panelContent + '<\/div>';
+      HTML += panelContent;
       return HTML;
     },
     
@@ -293,26 +306,25 @@ $ADP.Player.prototype = {
         } else panel.style.display = 'block';
       }
       if (!usePopup) {
+    	var popup = this.getPopup();
+    	if (popup) { popup.close() }
         renderInLayer.apply(this);
       } else {
         var title = "Privacy Information";
         var styles = document.styleSheets;
-        var popwin = "";
-        try{ 
-          popwin = window.open('','privacy_information','width=400,height=400,scrollbars=yes,location=0,menubar=0,toolbar=0,status=0');
-        } catch(e) {popwin = window.open('about:blank');}
+        var popwin = this.getPopup();
         if(!popwin) { renderInLayer.apply(this); }
         else {
-          popwin.resizeTo(400,400);
           var popdoc = popwin.document;
           window.popwin = popwin;
-          popdoc.write('<html><head><title>'+title+'</title>');
+          popdoc.write('<!doctype html><html><head><title>'+title+'</title>');
           for (var k in styles)
             if (styles[k].href) popdoc.write('<link rel="stylesheet" href="'+styles[k].href+'">');
-          popdoc.write('</head><body>');
+          popdoc.write('</head><body class="adp-popup">');
           popdoc.write(this.getPanelHTML());
           popdoc.write('</body></html>');
           popdoc.close();
+          popwin.focus();
         }
       }
     },

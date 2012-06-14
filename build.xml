@@ -11,9 +11,8 @@
     <format property="today" pattern="MMddyy" locale="en,UK"/>
   </tstamp>
   <property name="version-detailed" value="v${version} (${version-stage}.${today})"/>
-  <property name="jsfilename" value="adplayer-${version}"/>
-  <property name="serverfilename" value="adplayer_server-${version}"/>
-  <property name="cssfilename" value="adplayer-${version}"/>
+  <property name="jsfilename" value="adplayer"/>
+  <property name="cssfilename" value="adplayer"/>
   <property name="build-dir" location="build"/>
   <property name="test-dir" location="tests"/>
   <property name="lib-dir" location="lib"/>
@@ -27,19 +26,17 @@
     <mkdir dir="${build-dir}"/>
     <copy todir="${build-dir}/css" overwrite="true">
       <fileset dir="${css-dir}" includes="*">
-        <exclude name="*.jpg"/>
+        <exclude name="*.png"/>
       </fileset>
-      <mapper type="glob" from="*" to="${cssfilename}-*" />
+      <mapper type="glob" from="*" to="${cssfilename}.css" />
     </copy>
     <copy todir="${build-dir}/css" overwrite="true">
-      <fileset dir="${css-dir}" includes="*.jpg, *.png" />
+      <fileset dir="${css-dir}" includes="*.png" />
     </copy>
-    <copy todir="${build-dir}/demo" overwrite="true">
-      <fileset dir="${html-dir}/demo" />
-    </copy>
-    <copy file="${html-dir}/apstub.html" todir="${build-dir}" />
+<!--    <copy todir="${build-dir}/demo" overwrite="true"> -->
+<!--      <fileset dir="${html-dir}/demo" /> -->
+<!--    </copy> -->
     <copy file="README" todir="${build-dir}" />
-    <copy file="${js-dir}/server/adserver.js" tofile="${build-dir}/js/${serverfilename}.js" />
   </target>
 
   <target name="compile" depends="prepare" description="Compiles source and replaces all tokens.">
@@ -59,8 +56,7 @@
     </concat>
     <replace dir="${build-dir}" token="_@ADPLAYER_JS_FILE@_" value="${jsfilename}.js" />
     <replace dir="${build-dir}" token="_@ADPLAYER_JS_FILE_MIN@_" value="${jsfilename}.min.js" />
-    <replace dir="${build-dir}" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}-style.css" />
-    <replace dir="${build-dir}" token="_@ADPLAYER_CSS-IE_FILE@_" value="${cssfilename}-style-ie.css" />
+    <replace dir="${build-dir}" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}.css" />
     <replace dir="${build-dir}" token="_@VERSION@_" value="${version-detailed}" />
     <replace dir="${build-dir}" token="_@VERSION_MAJOR@_" value="${version-major}" />
     <replace dir="${build-dir}" token="_@VERSION_MINOR@_" value="${version-minor}" />
@@ -98,10 +94,10 @@
 
     <!-- JS/CSS Files -->
     <antcall target="gnu.me">
-      <param name="filepath" value="${build-dir}/css/${cssfilename}-style.css" />
+      <param name="filepath" value="${build-dir}/css/${cssfilename}.css" />
     </antcall>
     <antcall target="gnu.me">
-      <param name="filepath" value="${build-dir}/css/${cssfilename}-style.min.css" />
+      <param name="filepath" value="${build-dir}/css/${cssfilename}.min.css" />
     </antcall>
     <antcall target="gnu.me">
       <param name="filepath" value="${build-dir}/js/${jsfilename}.js" />
@@ -109,15 +105,15 @@
     <antcall target="gnu.me">
       <param name="filepath" value="${build-dir}/js/${jsfilename}.min.js" />
     </antcall>
-    <antcall target="gnu.me">
-      <param name="filepath" value="${build-dir}/demo/example1.js" />
-    </antcall>
-    <antcall target="gnu.me">
-      <param name="filepath" value="${build-dir}/demo/example2.js" />
-    </antcall>
-    <antcall target="gnu.me">
-      <param name="filepath" value="${build-dir}/demo/example3.js" />
-    </antcall>
+<!--    <antcall target="gnu.me"> -->
+<!--      <param name="filepath" value="${build-dir}/demo/example1.js" /> -->
+<!--    </antcall> -->
+<!--    <antcall target="gnu.me"> -->
+<!--      <param name="filepath" value="${build-dir}/demo/example2.js" /> -->
+<!--    </antcall> -->
+<!--    <antcall target="gnu.me"> -->
+<!--      <param name="filepath" value="${build-dir}/demo/example3.js" /> -->
+<!--    </antcall> -->
 
     <!-- HTML Files -->
     <replace file="${build-dir}/tmp/gnu.txt" token="/*" value="&lt;!--" />

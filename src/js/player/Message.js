@@ -85,10 +85,12 @@ $ADP.Message = {
    * @see $ADP.Message#types
    */
   send: function (trgt, type, data) {
-    if (trgt && trgt.postMessage) {
-      var msg = $ADP.Message.create(type, data);
-      trgt.postMessage(msg, '*');
-    }
-  }
+	  try {
+		if (trgt && trgt.postMessage) {
+		  var msg = $ADP.Message.create(type, data);
+		  trgt.postMessage(msg, '*');
+		}
+	  } catch (e) {}
+	}
 }
 
