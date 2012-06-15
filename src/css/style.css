@@ -9,8 +9,35 @@
 }
 
 .adp-wrapper {
-  font-family: Arial, Verdana, Tahoma, sans-serif;
   position: absolute;
+}
+
+div.adp-wrapper div.adp-panel {
+  background: #fff;
+  border: 1px solid #ccc;
+  margin: 0;
+  padding: 13px 8px 3px 8px;
+  min-height: 25px;
+  width: 310px;
+  position: absolute;
+}
+div.adp-wrapper div.adp-panel,
+div.adp-wrapper div.adp-admarker  {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: normal;
+  font-style: normal;
+  text-align: left;
+  color: #000;
+}
+
+div.adp-wrapper div.adp-panel .adp-panel-header,
+div.adp-wrapper div.adp-panel .adp-panel-info,
+div.adp-wrapper div.adp-panel .adp-panel-publisherinfo,
+div.adp-wrapper div.adp-panel .adp-panel-footer  {
+  margin: 0;
+  padding: 5px 0;
 }
 
 .adp-admarker:hover .adp-admarker-text {
@@ -21,117 +48,62 @@
   background: url('oba_icon.png') no-repeat top left #ccc;
   width: 19px;
   height: 15px;
-  
+  position: absolute;
+  cursor: pointer;
+}
+
+div.adp-wrapper div.adp-admarker .adp-admarker-text,
+div.adp-wrapper div.adp-panel .adp-panel-close {
+  background: #ccc;
+  font-size: 10px;
+  line-height: 15px;
+  padding: 0 5px;
   position: absolute;
   cursor: pointer;
 }
 
 .adp-admarker-text {
-  background: #ccc;
-  font-size: 10px;
-  color: #000;
-  line-height: 15px;
-  padding: 0 5px;
-  
-  position: absolute;
   display: none;
-  cursor: pointer;
 }
-.adp-admarker-text.adp-top-right { right: 15px; }
-.adp-admarker-text.adp-top-left { left: 15px; }
 
-.adp-panel {
-  background: #fff;
-  border: 1px solid #ccc;
-  margin: 0 0;
-  text-align: left;
-  line-height: 1.3em;
-  min-height: 25px;
-  width: 310px;
-  
-  position: absolute;
-}
+.adp-top-right .adp-admarker-text { right: 15px; }
+.adp-top-left .adp-admarker-text { left: 15px; }
 
 .adp-panel-close {
-  background: #ccc;
-  font-family: Arial, Verdana, Tahoma, sans-serif;
-  font-size: 10px;
-  padding: 0 5px;
-  line-height: 15px;
-  
-  position: absolute;
-  cursor: pointer;
   top: 0px;
   right: 0px;
 }
 
-.adp-panel-header {
-  font-family: Arial, Verdana, Tahoma, sans-serif;
-  font-size: 11px;
-  text-align: left;
-  line-height: 1.3em;
-  color: #000;
-  margin: 18px 5px 0 5px;
-  
-  padding-bottom: 5px;
+.adp-panel-header,
+.adp-panel-publisherinfo {
   border-bottom: 1px solid #ccc;
 }
 
+.adp-info-header,
 .adp-header-strong {
   font-weight: bold;
-  font-family: Arial, Verdana, Tahoma, sans-serif;
-  font-size: 11px;
-  line-height: 1.3em;
-  color: #000;
-  text-align: left;
-  line-height: 1em;
 }
 
-.adp-panel-publisherinfo {
-  font-family: Arial, Verdana, Tahoma, sans-serif;
-  font-size: 11px;
-  text-align: left;
-  line-height: 1.3em;
-  color: #000;
-  
-  padding: 5px 0;
-  border-bottom: 1px solid #ccc;
-}
-
-.adp-panel-info {
-  font-family: Arial, Verdana, Tahoma, sans-serif;
+div.adp-wrapper div.adp-panel .adp-panel-info {
   font-size: 12px;
-  text-align: left;
-  line-height: 1.3em;
-  color: #000;
-  margin: 0 5px;  
-  padding: 5px 0;
 }
 
-.adp-info-header {
-	font-weight: bold;
-}
-
-.adp-panel-footer {
-  font-family: Arial, Verdana, Tahoma, sans-serif;
+div.adp-wrapper div.adp-panel .adp-panel-footer {
   font-size: 10px;
-  text-align: left;
-  line-height: 1.3em;
-  color: #000;
-  margin: 0 5px 5px 5px;
-  
-  padding-top: 5px;
   border-top: 1px solid #ccc;
 }
 
-.adp-panel a:link, .adp-panel a:active, .adp-panel a:hover, .adp-panel a:visited {
-  font-family: Arial, Verdana, Tahoma, sans-serif;
+div.adp-wrapper div.adp-panel a:link,
+div.adp-wrapper div.adp-panel a:active,
+div.adp-wrapper div.adp-panel a:hover,
+div.adp-wrapper div.adp-panel a:visited {
+  font-family: inherit;
   font-size: inherit;
   font-style: normal;
+  font-weight: normal;
   color: #0088CC;
   text-decoration: underline;
 }
-.adp-panel a:hover {
+div.adp-wrapper div.adp-panel a:hover {
   color: #005580;
 }
-
