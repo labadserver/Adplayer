@@ -259,8 +259,7 @@ $ADP.Player.prototype = {
       var closeButtonText = this.getCloseButtonText();
       var items = this.getPrivacyInfos();
       var usePopup = this.usePopupForPrivacyInfo();
-      var closeAction = !usePopup ?"$ADP.Registry.playerCmd("+obaId+",'hidePrivacy');":'window.close();';
-      var renderCloseButton = this.renderCloseButtonForPrivacyInfo();
+      var closeAction = "$ADP.Registry.playerCmd("+obaId+",'hidePrivacy');";
       var privacy_info = '';
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
@@ -277,7 +276,7 @@ $ADP.Player.prototype = {
       if(footer != '') panelContent = panelContent.concat('<div class="adp-panel-footer">' + footer + '<\/div>');
       panelContent = panelContent.concat('<\/div>');
       var HTML = '';
-      if(!usePopup || (usePopup && renderCloseButton)) HTML += '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="'+closeAction+'">' + closeButtonText + '<\/div>'
+      if(!usePopup) HTML += '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="'+closeAction+'">' + closeButtonText + '<\/div>'
       HTML += panelContent;
       return HTML;
     },
@@ -315,14 +314,18 @@ $ADP.Player.prototype = {
         var popwin = this.getPopup();
         if(!popwin) { renderInLayer.apply(this); }
         else {
+          var renderCloseButton = this.renderCloseButtonForPrivacyInfo();
+          var closeButtonText = this.getCloseButtonText();
           var popdoc = popwin.document;
           window.popwin = popwin;
           popdoc.write('<!doctype html><html><head><title>'+title+'</title>');
           for (var k in styles)
             if (styles[k].href) popdoc.write('<link rel="stylesheet" href="'+styles[k].href+'">');
           popdoc.write('</head><body class="adp-popup">');
+          if(usePopup && renderCloseButton) popdoc.write('<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="window.close();">' + closeButtonText + '<\/div>');
+          popdoc.write('<div class="adp-wrapper"><div class="adp-panel">');
           popdoc.write(this.getPanelHTML());
-          popdoc.write('</body></html>');
+          popdoc.write('</div></div></body></html>');
           popdoc.close();
           popwin.focus();
         }

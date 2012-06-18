@@ -17,6 +17,10 @@ body.adp-popup {
   position: absolute;
 }
 
+.adp-popup .adp-wrapper {
+  position: relative;
+}
+
 div.adp-wrapper div.adp-panel {
   background: #fff;
   border: 1px solid #ccc;
@@ -26,6 +30,15 @@ div.adp-wrapper div.adp-panel {
   width: 310px;
   position: absolute;
 }
+
+.adp-popup div.adp-wrapper div.adp-panel {
+	border: 0;
+	width:100%;
+	max-width:380px;
+	position:relative;
+	padding:0;
+}
+
 div.adp-wrapper div.adp-panel,
 div.adp-wrapper div.adp-admarker  {
   font-family: Arial, Verdana, Tahoma, sans-serif;
@@ -59,13 +72,18 @@ div.adp-wrapper div.adp-panel .adp-panel-footer  {
 }
 
 div.adp-wrapper div.adp-admarker .adp-admarker-text,
-div.adp-wrapper div.adp-panel .adp-panel-close {
+div.adp-wrapper div.adp-panel .adp-panel-close,
+body.adp-popup .adp-panel-close {
   background: #ccc;
   font-size: 10px;
   line-height: 15px;
   padding: 0 5px;
   position: absolute;
   cursor: pointer;
+}
+
+body.adp-popup .adp-panel-close {
+	z-index: 99;
 }
 
 .adp-admarker-text {
