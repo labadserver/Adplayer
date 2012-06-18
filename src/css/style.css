@@ -45,7 +45,8 @@ div.adp-wrapper div.adp-panel .adp-panel-footer  {
   padding: 5px 0;
 }
 
-.adp-admarker:hover .adp-admarker-text {
+.adp-admarker:hover .adp-admarker-text,
+.adp-admarker.hover .adp-admarker-text {
   display: block;
 }
 
