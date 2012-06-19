@@ -33,9 +33,9 @@
     <copy todir="${build-dir}/css" overwrite="true">
       <fileset dir="${css-dir}" includes="*.png" />
     </copy>
-<!--    <copy todir="${build-dir}/demo" overwrite="true"> -->
-<!--      <fileset dir="${html-dir}/demo" /> -->
-<!--    </copy> -->
+    <copy todir="${build-dir}/demo" overwrite="true">
+      <fileset dir="${html-dir}/demo" />
+    </copy>
     <copy file="README" todir="${build-dir}" />
   </target>
 
