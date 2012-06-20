@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>Title</title>
+    <script type="text/javascript" src="../js/_@ADPLAYER_JS_FILE@_"></script>
+    <link rel="stylesheet" type="text/css" href="../css/_@ADPLAYER_CSS_FILE@_" />
+    <style type="text/css">
+      * {
+        margin:0;
+        padding:0;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+	    var obaId = '54322'   // Pulled by the Ad-Server
+			var domId = 'adp_container_'+obaId;
+			
+			document.write('<div id="'+domId+'"></div>');
+			
+			var obaInformation = {
+			    title: 'Targeter II',
+			    text: 'Description',
+			    url: 'http://www.targeter-ii.com',
+			    linkText: 'More',
+			    domId: domId
+			}
+			
+			$ADP.Registry.register(obaId, obaInformation);
+			
+			$ADP.Registry.createPlayer(obaId);
+			
+			// Your Ad-Code
+			
+			document.write('<img src="http://placehold.it/728x90" />');
+		</script>
+  
+  </body>
+</html>

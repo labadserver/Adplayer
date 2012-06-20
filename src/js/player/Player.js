@@ -235,7 +235,7 @@ $ADP.Player.prototype = {
       }
       var container = iframeButton || document.getElementById(domId);
       if (container) {
-        container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker" >' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '" onClick="$ADP.Registry.collectPrivacy('+obaId+');"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '"  onClick="$ADP.Registry.collectPrivacy('+obaId+');">' + this.getPrivacyButtonText() + '<\/div>' + '<\/div>';
+        container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;" onmouseover="this.className += \' hover\';" onmouseout="this.className = this.className.replace(/hover/, \'\');">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker" >' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '" onClick="$ADP.Registry.collectPrivacy('+obaId+');"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '"  onClick="$ADP.Registry.collectPrivacy('+obaId+');">' + this.getPrivacyButtonText() + '<\/div>' + '<\/div>';
       } else {
         if (this.attempts > this.maxAttempts) {
           $ADP.Util.log('Too many attempts for ' + obaId + ', ' + domId);
@@ -259,8 +259,7 @@ $ADP.Player.prototype = {
       var closeButtonText = this.getCloseButtonText();
       var items = this.getPrivacyInfos();
       var usePopup = this.usePopupForPrivacyInfo();
-      var closeAction = !usePopup ?"$ADP.Registry.playerCmd("+obaId+",'hidePrivacy');":'window.close();';
-      var renderCloseButton = this.renderCloseButtonForPrivacyInfo();
+      var closeAction = "$ADP.Registry.playerCmd("+obaId+",'hidePrivacy');";
       var privacy_info = '';
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
@@ -277,7 +276,7 @@ $ADP.Player.prototype = {
       if(footer != '') panelContent = panelContent.concat('<div class="adp-panel-footer">' + footer + '<\/div>');
       panelContent = panelContent.concat('<\/div>');
       var HTML = '';
-      if(!usePopup || (usePopup && renderCloseButton)) HTML += '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="'+closeAction+'">' + closeButtonText + '<\/div>'
+      if(!usePopup) HTML += '<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="'+closeAction+'">' + closeButtonText + '<\/div>'
       HTML += panelContent;
       return HTML;
     },
@@ -315,14 +314,18 @@ $ADP.Player.prototype = {
         var popwin = this.getPopup();
         if(!popwin) { renderInLayer.apply(this); }
         else {
+          var renderCloseButton = this.renderCloseButtonForPrivacyInfo();
+          var closeButtonText = this.getCloseButtonText();
           var popdoc = popwin.document;
           window.popwin = popwin;
           popdoc.write('<!doctype html><html><head><title>'+title+'</title>');
           for (var k in styles)
             if (styles[k].href) popdoc.write('<link rel="stylesheet" href="'+styles[k].href+'">');
           popdoc.write('</head><body class="adp-popup">');
+          if(usePopup && renderCloseButton) popdoc.write('<div id="adp-panel-close-' + obaId + '" class="adp-panel-close" onClick="window.close();">' + closeButtonText + '<\/div>');
+          popdoc.write('<div class="adp-wrapper"><div class="adp-panel">');
           popdoc.write(this.getPanelHTML());
-          popdoc.write('</body></html>');
+          popdoc.write('</div></div></body></html>');
           popdoc.close();
           popwin.focus();
         }
