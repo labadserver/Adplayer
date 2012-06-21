@@ -28,7 +28,7 @@
       <fileset dir="${css-dir}" includes="*">
         <exclude name="*.png"/>
       </fileset>
-      <mapper type="glob" from="*" to="${cssfilename}.css" />
+      <mapper type="regexp" from=".*" to="${cssfilename}.css" />
     </copy>
     <copy todir="${build-dir}/css" overwrite="true">
       <fileset dir="${css-dir}" includes="*.png" />
