@@ -235,7 +235,7 @@ $ADP.Player.prototype = {
       }
       var container = iframeButton || document.getElementById(domId);
       if (container) {
-        container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;" onmouseover="this.className += \' hover\';" onmouseout="this.className = this.className.replace(/hover/, \'\');">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker" >' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '" onClick="$ADP.Registry.collectPrivacy('+obaId+');"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '"  onClick="$ADP.Registry.collectPrivacy('+obaId+');">' + this.getPrivacyButtonText() + '<\/div>' + '<\/div>';
+        container.innerHTML = '<div id="adp-wrapper-' + obaId + '" class="adp-wrapper adp-' + position + '" style="z-index:99999999;" onmouseover="this.className += \' adp-admarker-hover\';" onmouseout="this.className = this.className.replace(/adp-admarker-hover/, \'\');">' + '<div id="adp-admarker-' + obaId + '" class="adp-admarker" >' + '<div id="adp-admarker-icon-' + obaId + '" class="adp-admarker-icon adp-' + position + '" onClick="$ADP.Registry.collectPrivacy('+obaId+');"><\/div>' + '<div id="adp-admarker-text-' + obaId + '" class="adp-admarker-text adp-' + position + '"  onClick="$ADP.Registry.collectPrivacy('+obaId+');">' + this.getPrivacyButtonText() + '<\/div>' + '<\/div>';
       } else {
         if (this.attempts > this.maxAttempts) {
           $ADP.Util.log('Too many attempts for ' + obaId + ', ' + domId);
