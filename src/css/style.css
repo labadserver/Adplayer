@@ -59,7 +59,7 @@ div.adp-wrapper div.adp-panel .adp-panel-footer {
 }
 
 .adp-admarker:hover .adp-admarker-text,
-.adp-admarker.hover .adp-admarker-text {
+.adp-admarker-hover .adp-admarker-text {
   display: block;
 }
 
