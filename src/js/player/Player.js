@@ -1,3 +1,5 @@
+if(!$ADP.Player) {
+
 /** 
  * @name $ADP.Player
  * @class
@@ -9,7 +11,6 @@
  * @example
  * TODO
  */
-
 $ADP.Player = function (id, args) {
 	return this instanceof $ADP.Player ? this.init(id, args) : new $ADP.Player(id, args);
 }
@@ -341,3 +342,5 @@ $ADP.Player.prototype = {
       if (panel) panel.style.display = 'none';
     }
 };
+
+} // closing if(!$ADP.Player)
