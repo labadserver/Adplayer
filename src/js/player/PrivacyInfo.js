@@ -1,3 +1,5 @@
+if(!$ADP.PrivacyInfo) {
+
 /**
  * @name $ADP.PrivacyInfo
  * @class
@@ -125,3 +127,4 @@ $ADP.PrivacyInfo.prototype = {
 
 };
 
+} // closing if(!$ADP.PrivacyInfo)

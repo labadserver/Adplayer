@@ -6,7 +6,7 @@
  * @example
  * TODO
  */
-$ADP.Message = {
+$ADP.Message = $ADP.Message || {
   /**
    * @name $ADP.Message#types
    * @field

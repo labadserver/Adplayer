@@ -18,7 +18,7 @@
  * // Patch: _@VERSION_PATCH@_
  * // Stage: _@VERSION_STAGE@_
  */
-$ADP.getVersion = function() {
+$ADP.getVersion = $ADP.getVersion || function() {
   return {
     major: _@VERSION_MAJOR@_,
     minor: _@VERSION_MINOR@_,

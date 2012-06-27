@@ -3,7 +3,7 @@
  * @class
  * @description The Required Util methods that could be used across the various classes 
  */
-$ADP.Util = {
+$ADP.Util = $ADP.Util || {
   /**
    * @name $ADP.Util.JSON
    * @class
