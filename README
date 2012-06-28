@@ -51,6 +51,16 @@ Latest version of AdPlayer: https://github.com/labadserver/Adplayer/downloads
 ChangeLog
 =================================================================================
 
+1.6.0
+-----------------
+- Official release version
+- Popup privacy information is now the default
+- The Privacy button can be positioned in the four corners top-right, 
+  top-left, bottom-right, bottom-left
+- Supports friendly and non-friendly iframe redirect delivery
+- Supports JS redirect Delivery
+ 
+
 1.5.2
 ------------------
 - Various style adjustments.
