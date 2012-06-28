@@ -58,7 +58,7 @@ ChangeLog
 - The Privacy button can be positioned in the four corners top-right, 
   top-left, bottom-right, bottom-left
 - Supports friendly and non-friendly iframe redirect delivery
-- Supports JS redirect Delivery
+- Supports JS redirect delivery
  
 
 1.5.2
