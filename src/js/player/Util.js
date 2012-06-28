@@ -11,7 +11,7 @@ $ADP.Util = $ADP.Util || {
    */
   JSON: window.JSON || {
     /**
-     * @name $ADP.Util.#JSON.stringify
+     * @name $ADP.Util.JSON#stringify
      * @function
      * @description returns a json string for a supplied object
      * @param a Object to be stringified
@@ -34,11 +34,11 @@ $ADP.Util = $ADP.Util || {
       return s(obj);
     },
     /**
-     * @name $ADP.Util.#JSON.stringify
+     * @name $ADP.Util.JSON#parse
      * @function
      * @description returns the JSON object for the JSON string
      * @param jsonstr The JSON string to be evaluated
-     * @returns 
+     * @returns {object}
      */
     parse: function (jsonstr){
       var JSON_object = null;
@@ -50,7 +50,7 @@ $ADP.Util = $ADP.Util || {
   },
   
   /**
-   * @name ADP.Util#btoa
+   * @name $ADP.Util#btoa
    * @function
    * @description Converts from base string to base64 encoded string
    * @param a The string the be encoded
@@ -65,7 +65,7 @@ $ADP.Util = $ADP.Util || {
     return e
   },
   /**
-   * @name ADP.Util#atob
+   * @name $ADP.Util#atob
    * @function
    * @description Converts base64 encoded string into a string.
    * @param d base64 encoded string

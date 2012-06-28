@@ -513,6 +513,13 @@ $ADP.Registry = $ADP.Registry || {
 	}
   },
   
+  /**
+   * @name $ADP.Registry#initByPostMessage
+   * @function
+   * @description This function will attempt to load the privacy information from its parents. This is used for non-friendly IFrames
+   * @param {integer} id  the oba id
+   * @param {DOMElement} windows  The current window thats parent will be sent the post message request
+   */
   initByPostMessage: function(id, windows) {
     for(k in windows) {
 	  if(this.data[id].postMessageCounter) {
@@ -561,13 +568,13 @@ $ADP.Registry = $ADP.Registry || {
   },
   
   /**
-   * @name
+   * @name $ADP.Registry#playerCmd
    * @function
-   * @description
+   * @description This is used to execute a function call on the player created for obaid 
    * 
-   * @param id
-   * @param cmd
-   * @param args
+   * @param id The oba id
+   * @param cmd The function to be executed
+   * @param args The array of arguments to be passed to the function
    * 
    */
   playerCmd: function(id,cmd,args) {

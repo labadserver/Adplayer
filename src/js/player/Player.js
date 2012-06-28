@@ -182,18 +182,14 @@ $ADP.Player.prototype = {
     },
 
     /**
-     * @name $ADP.Player#getPrivacyInfos
+     * @name $ADP.Player#getPopup
      * @function
-     * @description Returns a list containing the player's privacy information.
+     * @description Returns this popup reference
      *
-     * @returns {array} The list containing privacy information. 
+     * @returns {object} The list containing privacy information. 
      * 
      * @see $ADP.PrivacyInfo
      */
-    getPrivacyInfos: function () {
-      return this.items;
-    },
-
     getPopup: function () {
       return this.popup;
     },
@@ -250,7 +246,12 @@ $ADP.Player.prototype = {
         }
       }
     },
-    
+    /**
+     * @name $ADP.Player#getPanelHTML
+     * @function
+     * @description This compiles the html to be displayed in the privacy panel
+     * @return {string} The panel HTML string
+     */
     getPanelHTML: function() {
       var obaId = this.getId();
       var position = this.getPosition();

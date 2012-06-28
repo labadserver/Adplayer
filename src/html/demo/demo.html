@@ -98,8 +98,7 @@ $ADP.Registry.createPlayer(obaId);
 	      
 	      $ADP.Registry.register(obaId, obaInformation);
 	      
-	      var iframeName = $ADP.Util.createIframeName();
-	      document.write('<iframe name="'+iframeName+'" src="ad.html?obaId='+obaId+'" width="728" height="90" frameborder="0"></iframe>');
+	      document.write('<iframe src="ad.html?obaId='+obaId+'" width="728" height="90" frameborder="0"></iframe>');
 	    </script>
 	  </div>
   
@@ -119,8 +118,7 @@ $ADP.Registry.createPlayer(obaId);
   $ADP.Registry.register(obaId, obaInformation);
           
   // The Ad-Redirect
-  var iframeName = $ADP.Util.createIframeName(); // Required for older Browsers
-  document.write('&lt;iframe name="'+iframeName+'" src="ad.html?obaId='+obaId+'" width="728" height="90" frameborder="0"&gt;&lt;/iframe&gt;');
+  document.write('&lt;iframe src="ad.html?obaId='+obaId+'" width="728" height="90" frameborder="0"&gt;&lt;/iframe&gt;');
 
 &lt;/script&gt;
       </pre>
