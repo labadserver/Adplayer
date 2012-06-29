@@ -13,7 +13,7 @@ body.adp-popup {
   left: 0;
 }
 
-adp-bottom-right {
+.adp-bottom-right {
   bottom: 0;
   right: 0;
 }
@@ -100,8 +100,8 @@ body.adp-popup div.adp-wrapper div.adp-panel .adp-panel-close {
   display: none;
 }
 
-.adp-top-right .adp-admarker-text .adp-bottom-right { right: 15px; }
-.adp-top-left .adp-admarker-text .adp-bottom-left { left: 15px; }
+.adp-top-right .adp-admarker-text, .adp-bottom-right .adp-admarker-text { right: 15px; }
+.adp-top-left .adp-admarker-text, .adp-bottom-left .adp-admarker-text { left: 15px; }
 
 .adp-panel-close {
   top: 0px;
