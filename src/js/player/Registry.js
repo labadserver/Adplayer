@@ -35,6 +35,7 @@
  */
 $ADP.Registry = $ADP.Registry || {
   data: {},
+  translationFile: false,
   wait: 2000,
 
   LAST: 'LAST',
@@ -44,8 +45,6 @@ $ADP.Registry = $ADP.Registry || {
   FOREIGN_IFRAME: 'FOREIGN_IFRAME',
   POSTMESSAGE_SEARCH: 'POSTMESSAGE_SEARCH',
   
-  header: '<strong class="adp-header-strong">Informationen zu nutzungsbasierter Online-Werbung</strong><br/>In der vorliegenden Anzeige werden Ihre Nutzungsdaten anonym erhoben bzw. verwendet, um Werbung f&uuml;r Sie zu optimieren. Wenn Sie keine nutzungsbasierte Werbung mehr von den hier gelisteten Anbietern erhalten wollen, k&ouml;nnen Sie die Datenerhebung beim jeweiligen Anbieter direkt deaktivieren. Eine Deaktivierung bedeutet nicht, dass Sie k&uuml;nftig keine Werbung mehr erhalten, sondern lediglich, dass die Auslieferung der konkreten Kampagne nicht anhand anonym erhobener Nutzungsdaten ausgerichtet ist.',
-  footer: 'Wenn Sie mehr &uuml;ber nutzungsbasierte Online-Werbung erfahren wollen, klicken Sie <a href="http://meine-cookies.org" target="_blank">hier</a>. Dort k&ouml;nnen Sie dar&uuml;ber hinaus auch bei weiteren Anbietern die Erhebung der Nutzungsinformationen deaktivieren bzw. aktivieren und den Status der Aktivierung bei unterschiedlichen Anbietern <a href="http://meine-cookies.org/cookies_verwalten/praeferenzmanager-beta.html" target="_blank">einsehen</a>.',
   publisherInfo: undefined,
 
   /**
@@ -123,6 +122,9 @@ $ADP.Registry = $ADP.Registry || {
     } else {
       this.data[id].items.unshift(item);
     }
+    
+    $ADP.Util.log('Registered item with title "' + args['title'] + '" for ID ' + id);
+    
   },
 
   /**
@@ -322,9 +324,10 @@ $ADP.Registry = $ADP.Registry || {
    * @param items  The array of privacy items
    */
   createPlayer: function (id, args) {
+	$ADP.Util.log('$ADP.Registry.createPlayer called for ID ' + id);
     if (!args) args = {};
-    var header = args.header || this.header;
-    var footer = args.footer || this.footer;
+    var header = args.header || undefined; //TODO: Testen was rauskommt wenn nix �bergeben wird. Evt. kann man sich das undefined hier sparen
+    var footer = args.footer || undefined;
     var publisherInfo = this.publisherInfo || '';
     var domId = args.domId;
     var position = args.position || 'top-right';
@@ -335,19 +338,20 @@ $ADP.Registry = $ADP.Registry || {
     if (domId) this.data[id].domId = domId; // last one wins
     domId = this.getDOMId(id);
     
-  var player = $ADP.Player(id, {
-    domId: domId,
-    position: position,
-    header: header,
-    footer: footer,
-    publisherInfo: publisherInfo,
-    usePopup: usePopup,
-    renderCloseButton: renderCloseButton
-  });
-  player.inject();
-  this.data[id].player = player;
-  
-  return player;
+	  var player = $ADP.Player(id, {
+	    domId: domId,
+	    position: position,
+	    header: header,
+	    footer: footer,
+	    publisherInfo: publisherInfo,
+	    usePopup: usePopup,
+	    renderCloseButton: renderCloseButton
+	  });
+	  player.inject();
+	  this.data[id].player = player;
+
+	  $ADP.Util.log('AdPlayer created for ID ' + id);
+	  return player;
   },
 
   /**
@@ -363,7 +367,10 @@ $ADP.Registry = $ADP.Registry || {
     do {
       id = parseInt(Math.random() * 100000000);
     }
-    while (this.hasId(id));
+    while (this.hasId(id)); 
+    
+    $ADP.Util.log('Adplayer generated ID ' + id);
+    
     return id;
   },
   
@@ -588,6 +595,12 @@ $ADP.Registry = $ADP.Registry || {
       this.data[id].player[cmd].apply(this.data[id].player,args);
     }
   },
+  
+  setTranslation: function(src) {
+	  if(!this.translationFile && src['href']) {
+		  this.translationFile = src['href'];
+	  }
+  },
 
   /**
    * @private
@@ -605,4 +618,3 @@ $ADP.Registry = $ADP.Registry || {
 	}
   }
 };
-
