@@ -2,7 +2,12 @@
 <html>
 <head>
   <title>Adplayer Demo</title>
-  <script type="text/javascript" src="../js/_@ADPLAYER_JS_FILE@_"></script>
+  <script type="text/javascript" src="../js/_@ADPLAYER_JS_FILE@_" charset="utf-8"></script>
+  <script type="text/javascript">
+  	$ADP.Registry.setTranslation({
+  		href: '../js/_@ADPLAYER_TRANSLATION_FILE@_'
+  	});
+  </script>
   <link rel="stylesheet" type="text/css" href="../css/_@ADPLAYER_CSS_FILE@_" />
   <style type="text/css">
     .wrapper { width: 800px; margin:0 auto; border:1px dashed #666; padding:10px; }
@@ -24,7 +29,7 @@
   
   
 	  <div style="position:relative; width:728px; height:90px" class="banner">
-	    <script type="text/javascript">
+	    <script type="text/javascript" charset="utf-8">
 	      var obaId = '54321';        // A unique random ID. Delivered from the Adserver or can generated via $ADP.Register.generateId();
 	      var obaInformation = {
 	    		  title: 'Targeter',
@@ -35,7 +40,7 @@
 	      
 	      $ADP.Registry.register(obaId, obaInformation);
 	      
-	      document.write('<scr'+'ipt type="text/javascript" src="ad.js?obaId='+obaId+'"></scr'+'ipt>');
+	      document.write('<scr'+'ipt type="text/javascript" src="ad.js?obaId='+obaId+'" charset="utf-8"></scr'+'ipt>');
 	    </script>
 	  </div>
   
@@ -43,7 +48,7 @@
     <div class="code">
       <h3>Adplayer Script from the First Party <span>(e.g. Publisher)</span></h3>
       <pre>
-&lt;script type="text/javascript"&gt;
+&lt;script type="text/javascript" charset="utf-8"&gt;
   var obaId = '54321';        // A unique random ID. Delivered from the Adserver or can generated via $ADP.Register.generateId();
   var obaInformation = {
     title: 'Targeter',
@@ -55,7 +60,7 @@
   $ADP.Registry.register(obaId, obaInformation);
 	        
   // The Ad-Redirect
-  document.write('&lt;scr'+'ipt type="text/javascript" src="ad.js?obaId='+obaId+'"&gt;&lt;/scr'+'ipt&gt;');
+  document.write('&lt;scr'+'ipt type="text/javascript" src="ad.js?obaId='+obaId+'" charset="utf-8"&gt;&lt;/scr'+'ipt&gt;');
 &lt;/script&gt;
       </pre>
       <h3>Adplayer Script from the Last Party <span>(deliver the physical ad)</span></h3>
@@ -71,12 +76,15 @@ var obaInformation = {
     url: 'http://www.targeter-ii.com',
     linkText: 'More',
 	usePopup: false, // ONLY set this attribute if you want to display the Ad in a layer instead of a popup. This can leads to display-errors
-    domId: domId
 }
 
 $ADP.Registry.register(obaId, obaInformation);
 
-$ADP.Registry.createPlayer(obaId);
+var playerInformation = {
+    domId: domId
+}
+
+$ADP.Registry.createPlayer(obaId, playerInformation);
 
 // The physical Ad
       </pre>
@@ -87,7 +95,7 @@ $ADP.Registry.createPlayer(obaId);
   
   
 	  <div style="position:relative; width:728px; height:90px" class="banner">
-	    <script type="text/javascript">
+	    <script type="text/javascript" charset="utf-8">
 	      var obaId = '54322';        // A unique random ID. Delivered from the Adserver or can generated via $ADP.Register.generateId();
 	      var obaInformation = {
 	          title: 'Targeter',
@@ -106,7 +114,7 @@ $ADP.Registry.createPlayer(obaId);
     <div class="code">
       <h3>Adplayer Script from the First Party <span>(e.g. Publisher)</span></h3>
       <pre>
-&lt;script type="text/javascript"&gt;
+&lt;script type="text/javascript" charset="utf-8"&gt;
   var obaId = '54322"';        // A unique random ID. Delivered from the Adserver or can generated via $ADP.Register.generateId();
   var obaInformation = {
     title: 'Targeter',
@@ -133,13 +141,17 @@ var obaInformation = {
     title: 'Targeter II',
     text: 'Description',
     url: 'http://www.targeter-ii.com',
-    linkText: 'More',
-    domId: domId
+    linkText: 'More'
 }
 
 $ADP.Registry.register(obaId, obaInformation);
 
-$ADP.Registry.createPlayer(obaId);
+
+var playerInformation = {
+    domId: domId
+}
+
+$ADP.Registry.createPlayer(obaId, playerInformation);
 
 // The physical Ad
       </pre>

@@ -1,7 +1,12 @@
 <html>
   <head>
     <title>Title</title>
-    <script type="text/javascript" src="../js/_@ADPLAYER_JS_FILE@_"></script>
+    <script type="text/javascript" src="../js/_@ADPLAYER_JS_FILE@_" charset="utf-8"></script>
+    <script type="text/javascript">
+        $ADP.Registry.setTranslation({
+            href: '../js/_@ADPLAYER_TRANSLATION_FILE@_'
+        });
+	</script>
     <link rel="stylesheet" type="text/css" href="../css/_@ADPLAYER_CSS_FILE@_" />
     <style type="text/css">
       * {
@@ -11,7 +16,7 @@
     </style>
   </head>
   <body>
-    <script type="text/javascript">
+    <script type="text/javascript" charset="utf-8">
 	    var obaId = '54322'   // Pulled by the Ad-Server
 			var domId = 'adp_container_'+obaId;
 			
@@ -21,13 +26,16 @@
 			    title: 'Targeter II',
 			    text: 'Description',
 			    url: 'http://www.targeter-ii.com',
-			    linkText: 'More',
-			    domId: domId
+			    linkText: 'More'
 			}
 			
 			$ADP.Registry.register(obaId, obaInformation);
 			
-			$ADP.Registry.createPlayer(obaId);
+            var playerInformation = {
+                domId: domId
+            }
+            
+            $ADP.Registry.createPlayer(obaId, playerInformation);
 			
 			// Your Ad-Code
 			
