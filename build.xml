@@ -12,6 +12,7 @@
   </tstamp>
   <property name="version-detailed" value="v${version} (${version-stage}.${today})"/>
   <property name="jsfilename" value="adplayer"/>
+  <property name="translationfilename" value="adplayer-translation"/>
   <property name="cssfilename" value="adplayer"/>
   <property name="build-dir" location="build"/>
   <property name="test-dir" location="tests"/>
@@ -46,16 +47,24 @@
         <file name="Namespace.js"/>
         <file name="Registry.js"/>
         <file name="Player.js"/>
-      	<file name="PrivacyInfo.js"/>
-      	<file name="Message.js"/>
-      	<file name="Util.js"/>
-      	<file name="Version.js"/>
-      	<file name="Init.js"/>
-      	<!-- END DEFINE Class list order -->
+        <file name="PrivacyInfo.js"/>
+        <file name="Message.js"/>
+        <file name="Util.js"/>
+        <file name="Version.js"/>
+        <file name="Init.js"/>
+        <!-- END DEFINE Class list order -->
+      </filelist>
+    </concat>
+    <concat destfile="${build-dir}/js/${translationfilename}.js" fixlastline="true">  
+      <filelist dir="${js-dir}/player">
+        <!-- DEFINE Class list order -->
+        <file name="Translation.js"/>
+        <!-- END DEFINE Class list order -->
       </filelist>
     </concat>
     <replace dir="${build-dir}" token="_@ADPLAYER_JS_FILE@_" value="${jsfilename}.js" />
-    <replace dir="${build-dir}" token="_@ADPLAYER_JS_FILE_MIN@_" value="${jsfilename}.min.js" />
+    <replace dir="${build-dir}" token="_@ADPLAYER_TRANSLATION_FILE@_" value="${translationfilename}.js" />
+    <!-- replace dir="${build-dir}" token="_@ADPLAYER_JS_FILE_MIN@_" value="${jsfilename}.min.js" / -->
     <replace dir="${build-dir}" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}.css" />
     <replace dir="${build-dir}" token="_@VERSION@_" value="${version-detailed}" />
     <replace dir="${build-dir}" token="_@VERSION_MAJOR@_" value="${version-major}" />
