@@ -92,7 +92,7 @@ $ADP.Util = $ADP.Util || {
    */
   log: function() {
 	try {
-		if(window.top.location.search && window.top.location.search.match(/adpdebug/)) {
+		if(window.top.location && window.top.location.search && window.top.location.search.match(/adpdebug/)) {
 		    $ADP.Util.log.history = $ADP.Util.log.history || [];
 		    $ADP.Util.log.history.push(arguments);
 		    if(typeof console != 'undefined'){
@@ -129,5 +129,27 @@ $ADP.Util = $ADP.Util || {
 	    iframeName = $ADP.Util.btoa( $ADP.Util.JSON.stringify( $ADP.Registry.pullById(id)));
 	  }
 	  return iframeName;
+  },
+  
+  /**
+   * @name $ADP.Util#getBrowserLanguage
+   * @function
+   * @description Returns the browser language
+   */
+  getBrowserLanguage: function () {
+	  var browserLanguage;
+	  if(navigator.language) {
+		  browserLanguage = navigator.language;
+	  } else if (navigator.browserLanguage) {
+		  browserLanguage = navigator.browserLanguage;
+	  } else {
+		  browserLanguage = 'en';
+	  }
+	  
+	  browserLanguage = /[a-z]+/i.exec(browserLanguage)[0];
+	  
+	  $ADP.Util.log('Detected Browser Language is: ' + browserLanguage);
+	  
+	  return browserLanguage ? browserLanguage : 'en';
   }
 }
