@@ -4,6 +4,10 @@
  * @description The Required Util methods that could be used across the various classes 
  */
 $ADP.Util = $ADP.Util || {
+	
+  browserLanguage: null,
+  documentCharset: null,
+  
   /**
    * @name $ADP.Util.JSON
    * @class
@@ -137,19 +141,38 @@ $ADP.Util = $ADP.Util || {
    * @description Returns the browser language
    */
   getBrowserLanguage: function () {
-	  var browserLanguage;
-	  if(navigator.language) {
-		  browserLanguage = navigator.language;
-	  } else if (navigator.browserLanguage) {
-		  browserLanguage = navigator.browserLanguage;
-	  } else {
-		  browserLanguage = 'en';
+	  if(!this.browserLanguage) {
+		  if(navigator.language) {
+			  this.browserLanguage = navigator.language;
+		  } else if (navigator.browserLanguage) {
+			  this.browserLanguage = navigator.browserLanguage;
+		  } else {
+			  this.browserLanguage = 'en';
+		  }
+		  this.browserLanguage = /[a-z]+/i.exec(this.browserLanguage)[0];
+		  
+		  $ADP.Util.log('Detected Browser Language is: ' + this.browserLanguage);
 	  }
-	  
-	  browserLanguage = /[a-z]+/i.exec(browserLanguage)[0];
-	  
-	  $ADP.Util.log('Detected Browser Language is: ' + browserLanguage);
-	  
-	  return browserLanguage ? browserLanguage : 'en';
+	  return this.browserLanguage ? this.browserLanguage : 'en';
+  },
+  
+  /**
+   * @name $ADP.Util#getDocumentCharset
+   * @function
+   * @description Returns the document charste
+   */
+  getDocumentCharset: function () {
+	  if(!this.documentCharset) {
+		  if(document.characterSet) {
+			  this.documentCharset = document.characterSet;
+		  } else if (document.charset) {
+			  this.documentCharset = document.charset;
+		  } else if (document.defaultCharset) {
+			  this.documentCharset = document.defaultCharset;
+		  }
+		  
+		  $ADP.Util.log('Detected document charset is: ' + this.documentCharset);
+	  }
+	  return this.documentCharset;
   }
 }
