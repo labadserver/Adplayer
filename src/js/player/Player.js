@@ -34,8 +34,9 @@ if(!$ADP.Player) {
 		 * @type integer
 		 */
 	    maxAttempt: 50,
-	    
+
 	    browserLanguage: undefined,
+	    documentCharset: undefined,
 	
 	    /**
 		 * @name $ADP.Player#adChoicesTranslation
@@ -51,8 +52,8 @@ if(!$ADP.Player) {
 	    	},
 			'en' : {
 				'adchoices' : 'AdChoices',
-				'header' : 'Headertext in English',
-				'footer' : 'Headertext in English'
+	    		'header' : '<strong class="adp-header-strong">Information about Online Behavioural Advertising</strong><br/>In the current ad your usage (behavioural) data are collected anonymously and used to optimize advertising for you. If you do not want to receive any more behavior-based advertising by the vendors listed here, you can “turn off”  the collection of data at the providers level directly. “Turn off” does not mean that you will not receive any advertisements in the future. It means that the current campaign is not delivered on the basis of behaviour data, collected on an anonymous way.',
+	    		'footer' : 'If you wish to learn more about online behavioural advertising, click <a href="http://www.youronlinechoices.eu/" target="_blank">here</a>. There you can also “turn off”  or “turn on” the collection from other providers. Furthermore you can check the status of data collection from different <a href="http://www.youronlinechoices.com/uk/your-ad-choices" target="_blank">providers</a>.'
 			},
 			'fr' : {
 				'adchoices': 'Choisir sa pub'
@@ -119,6 +120,7 @@ if(!$ADP.Player) {
 	      this.renderCloseButton = !!args.renderCloseButton;
 	      this.popup = !!args.popup;
 	      this.browserLanguage = $ADP.Util.getBrowserLanguage();
+	      this.documentCharset = $ADP.Util.getDocumentCharset();
 	    },
 	
 	    /**
@@ -445,15 +447,19 @@ if(!$ADP.Player) {
 		  	           $ADP.Util.log('Try to load translation file: ' + this.getTranslationFile())
 		  		   } catch (e) { $ADP.Util.log('Failed to load translation file: ' + e.message); }
 				}
-		  		
-		  		$ADP.Util.log('UTF8 Check (greek): ' + this.translation['el']['adchoices']);
+				
+		  		var translatedText;
 		  		
 	  			if(this.translation[this.browserLanguage] && this.translation[this.browserLanguage][args['type']]) {
-		  			return this.translation[this.browserLanguage][args['type']];
+		  			translatedText = this.translation[this.browserLanguage][args['type']];
 		  		}
 		  		else if($ADP.Player.adpTranslation && $ADP.Player.adpTranslation[this.browserLanguage] && $ADP.Player.adpTranslation[this.browserLanguage][args['type']]) {
-		  			return $ADP.Player.adpTranslation[this.browserLanguage][args['type']];
+		  			translatedText = $ADP.Player.adpTranslation[this.browserLanguage][args['type']];
 		  		}
+	  			
+	  			if(translatedText && (this.documentCharset == 'UTF-8' || /\u0100-\uffff/.test(translatedText))) {
+	  				return translatedText;
+	  			}
 		  		else {
 		  			return this.translation['en'][args['type']];
 		  		}
