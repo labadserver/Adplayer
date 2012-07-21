@@ -1,6 +1,8 @@
 body.adp-popup {
   margin:0;
   padding:10px;
+  background-color: #FFFFFF;
+  color: #000000;
 }
 
 .adp-top-right {
@@ -33,6 +35,7 @@ body.adp-popup {
 
 div.adp-wrapper div.adp-panel {
   background: #fff;
+  color: #000000;
   border: 1px solid #ccc;
   margin: 0;
   padding: 13px 8px 3px 8px;
