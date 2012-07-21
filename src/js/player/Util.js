@@ -4,6 +4,10 @@
  * @description The Required Util methods that could be used across the various classes 
  */
 $ADP.Util = $ADP.Util || {
+	
+  browserLanguage: null,
+  documentCharset: null,
+  
   /**
    * @name $ADP.Util.JSON
    * @class
@@ -92,7 +96,7 @@ $ADP.Util = $ADP.Util || {
    */
   log: function() {
 	try {
-		if(window.top.location.search && window.top.location.search.match(/adpdebug/)) {
+		if(window.top.location && window.top.location.search && window.top.location.search.match(/adpdebug/)) {
 		    $ADP.Util.log.history = $ADP.Util.log.history || [];
 		    $ADP.Util.log.history.push(arguments);
 		    if(typeof console != 'undefined'){
@@ -129,5 +133,46 @@ $ADP.Util = $ADP.Util || {
 	    iframeName = $ADP.Util.btoa( $ADP.Util.JSON.stringify( $ADP.Registry.pullById(id)));
 	  }
 	  return iframeName;
+  },
+  
+  /**
+   * @name $ADP.Util#getBrowserLanguage
+   * @function
+   * @description Returns the browser language
+   */
+  getBrowserLanguage: function () {
+	  if(!this.browserLanguage) {
+		  if(navigator.language) {
+			  this.browserLanguage = navigator.language;
+		  } else if (navigator.browserLanguage) {
+			  this.browserLanguage = navigator.browserLanguage;
+		  } else {
+			  this.browserLanguage = 'en';
+		  }
+		  this.browserLanguage = /[a-z]+/i.exec(this.browserLanguage)[0];
+		  
+		  $ADP.Util.log('Detected Browser Language is: ' + this.browserLanguage);
+	  }
+	  return this.browserLanguage ? this.browserLanguage : 'en';
+  },
+  
+  /**
+   * @name $ADP.Util#getDocumentCharset
+   * @function
+   * @description Returns the document charste
+   */
+  getDocumentCharset: function () {
+	  if(!this.documentCharset) {
+		  if(document.characterSet) {
+			  this.documentCharset = document.characterSet;
+		  } else if (document.charset) {
+			  this.documentCharset = document.charset;
+		  } else if (document.defaultCharset) {
+			  this.documentCharset = document.defaultCharset;
+		  }
+		  
+		  $ADP.Util.log('Detected document charset is: ' + this.documentCharset);
+	  }
+	  return this.documentCharset;
   }
 }
