@@ -6,8 +6,8 @@ try {
 		 
 /*
 		'fr' : {
-			'header': 'Headertext in Französisch',
-			'footer': 'Footertext in Französisch'
+			'header': 'Headertext in French',
+			'footer': 'Footertext in French'
 		}
 */
 	}
