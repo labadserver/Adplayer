@@ -8,13 +8,16 @@ var obaInformation = {
 		text: 'Description',
 		url: 'http://www.targeter-ii.com',
 		linkText: 'More',
-		usePopup: false, // ONLY set this attribute if you want to display the Ad in a layer instead of a popup. This can leads to display-errors
-		domId: domId
+		usePopup: false // ONLY set this attribute if you want to display the Ad in a layer instead of a popup. This can leads to display-errors
 }
 
 $ADP.Registry.register(obaId, obaInformation);
 
-$ADP.Registry.createPlayer(obaId);
+var playerInformation = {
+    domId: domId
+}
+
+$ADP.Registry.createPlayer(obaId, playerInformation);
 
 // Your Ad-Code
 
