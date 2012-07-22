@@ -96,7 +96,7 @@ $ADP.Util = $ADP.Util || {
    */
   log: function() {
 	try {
-		if(window.top.location && window.top.location.search && window.top.location.search.match(/adpdebug/)) {
+		if(window.location && window.location.search && window.location.search.match(/adpdebug/)) {
 		    $ADP.Util.log.history = $ADP.Util.log.history || [];
 		    $ADP.Util.log.history.push(arguments);
 		    if(typeof console != 'undefined'){
@@ -159,7 +159,7 @@ $ADP.Util = $ADP.Util || {
   /**
    * @name $ADP.Util#getDocumentCharset
    * @function
-   * @description Returns the document charste
+   * @description Returns the document charset
    */
   getDocumentCharset: function () {
 	  if(!this.documentCharset) {
