@@ -64,7 +64,6 @@
     </concat>
     <replace dir="${build-dir}" token="_@ADPLAYER_JS_FILE@_" value="${jsfilename}.js" />
     <replace dir="${build-dir}" token="_@ADPLAYER_TRANSLATION_FILE@_" value="${translationfilename}.js" />
-    <!-- replace dir="${build-dir}" token="_@ADPLAYER_JS_FILE_MIN@_" value="${jsfilename}.min.js" / -->
     <replace dir="${build-dir}" token="_@ADPLAYER_CSS_FILE@_" value="${cssfilename}.css" />
     <replace dir="${build-dir}" token="_@VERSION@_" value="${version-detailed}" />
     <replace dir="${build-dir}" token="_@VERSION_MAJOR@_" value="${version-major}" />
