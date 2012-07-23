@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
   <name>AdPlayer</name>
-  <major>1</major>
-  <minor>6</minor>
+  <major>2</major>
+  <minor>0</minor>
   <patch>0</patch>
   <stage>RC1</stage> <!-- Possible values: ALPHA, BETA, RC*, FINAL -->
   <comment></comment>

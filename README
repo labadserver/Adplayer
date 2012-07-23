@@ -51,6 +51,16 @@ Latest version of AdPlayer: https://github.com/labadserver/Adplayer/downloads
 ChangeLog
 =================================================================================
 
+2.0.0
+------------------
+- Translation support 
+-- detects browser language
+-- English and German supported by default 
+-- Other Languages support by self created adplayer-translations.js files
+- Minor look and feel fixes and changes.
+- Prevent AdPlayer objects from being overwritten by lazyloaded AdPlayer javascript includes.
+
+
 1.6.0
 -----------------
 - Official release version
