@@ -45,61 +45,61 @@ if(!$ADP.Player) {
 		 */
 	    
 	    translation: {
-	    	'de' : {
-	    		'adchoices' : 'Datenschutzinfo',
-	    		'header' : '<strong class="adp-header-strong">Informationen zu nutzungsbasierter Online-Werbung</strong><br/>In der vorliegenden Anzeige werden Ihre Nutzungsdaten anonym erhoben bzw. verwendet, um Werbung f&uuml;r Sie zu optimieren. Wenn Sie keine nutzungsbasierte Werbung mehr von den hier gelisteten Anbietern erhalten wollen, k&ouml;nnen Sie die Datenerhebung beim jeweiligen Anbieter direkt deaktivieren. Eine Deaktivierung bedeutet nicht, dass Sie k&uuml;nftig keine Werbung mehr erhalten, sondern lediglich, dass die Auslieferung der konkreten Kampagne nicht anhand anonym erhobener Nutzungsdaten ausgerichtet ist.',
-	    		'footer' : 'Wenn Sie mehr &uuml;ber nutzungsbasierte Online-Werbung erfahren wollen, klicken Sie <a href="http://meine-cookies.org" target="_blank">hier</a>. Dort k&ouml;nnen Sie dar&uuml;ber hinaus auch bei weiteren Anbietern die Erhebung der Nutzungsinformationen deaktivieren bzw. aktivieren und den Status der Aktivierung bei unterschiedlichen Anbietern <a href="http://meine-cookies.org/cookies_verwalten/praeferenzmanager-beta.html" target="_blank">einsehen</a>.'
+	    	de: {
+	    		adchoices: "Datenschutzinfo",
+	    		header: '<strong class="adp-header-strong">Informationen zu nutzungsbasierter Online-Werbung</strong><br/>In der vorliegenden Anzeige werden Ihre Nutzungsdaten anonym erhoben bzw. verwendet, um Werbung f&uuml;r Sie zu optimieren. Wenn Sie keine nutzungsbasierte Werbung mehr von den hier gelisteten Anbietern erhalten wollen, k&ouml;nnen Sie die Datenerhebung beim jeweiligen Anbieter direkt deaktivieren. Eine Deaktivierung bedeutet nicht, dass Sie k&uuml;nftig keine Werbung mehr erhalten, sondern lediglich, dass die Auslieferung der konkreten Kampagne nicht anhand anonym erhobener Nutzungsdaten ausgerichtet ist.',
+	    		footer: 'Wenn Sie mehr &uuml;ber nutzungsbasierte Online-Werbung erfahren wollen, klicken Sie <a href="http://meine-cookies.org" target="_blank">hier</a>. Dort k&ouml;nnen Sie dar&uuml;ber hinaus auch bei weiteren Anbietern die Erhebung der Nutzungsinformationen deaktivieren bzw. aktivieren und den Status der Aktivierung bei unterschiedlichen Anbietern <a href="http://meine-cookies.org/cookies_verwalten/praeferenzmanager-beta.html" target="_blank">einsehen</a>.'
 	    	},
-			'en' : {
-				'adchoices' : 'AdChoices',
-	    		'header' : '<strong class="adp-header-strong">Information about Online Behavioural Advertising</strong><br/>In the current ad your usage (behavioural) data are collected anonymously and used to optimize advertising for you. If you do not want to receive any more behavior-based advertising by the vendors listed here, you can “turn off”  the collection of data at the providers level directly. “Turn off” does not mean that you will not receive any advertisements in the future. It means that the current campaign is not delivered on the basis of behaviour data, collected on an anonymous way.',
-	    		'footer' : 'If you wish to learn more about online behavioural advertising, click <a href="http://www.youronlinechoices.eu/" target="_blank">here</a>. There you can also “turn off”  or “turn on” the collection from other providers. Furthermore you can check the status of data collection from different <a href="http://www.youronlinechoices.com/uk/your-ad-choices" target="_blank">providers</a>.'
-			},
-			'fr' : {
-				'adchoices': 'Choisir sa pub'
-			},
-			'nl' : {
-				'adchoices': 'Info reclamekeuze'
-			},
-			'bg' : {
-				'adchoices': 'Вашият избор'
-			},
-			'cs' : {
-				'adchoices': 'Volby reklamy'
-			},
-			'da' : {
-				'adchoices': 'Annoncevalg'
-			},
-			'fi' : {
-				'adchoices': 'Mainokseni'
-			},
-			'el' : {
-				'adchoices': 'Οι διαφημίσεις μου'
-			},
-			'it' : {
-				'adchoices': 'Scegli tu!'
-			},
-			'nl' : {
-				'adchoices': 'Info'
-			},
-			'no' : {
-				'adchoices': 'Annonsevalg'
-			},
-			'pl' : {
-				'adchoices': 'Informacja'
-			},
-			'ro' : {
-				'adchoices': 'Optiuni'
-			},
-			'sk' : {
-				'adchoices': 'Vaša voľba'
-			},
-			'es' : {
-				'adchoices': 'Gestión anuncios'
-			},
-			'sv' : {
-				'adchoices': 'Annonsval'
-			}
+	    	en: {
+	    		adchoices: "AdChoices",
+	    		header: '<strong class="adp-header-strong">Information about Online Behavioural Advertising</strong><br/>In the current ad your usage (behavioural) data are collected anonymously and used to optimize advertising for you. If you do not want to receive any more behavior-based advertising by the vendors listed here, you can &#8220;turn off&#8221;  the collection of data at the providers level directly. &#8220;Turn off&#8221; does not mean that you will not receive any advertisements in the future. It means that the current campaign is not delivered on the basis of behaviour data, collected on an anonymous way.',
+	    		footer: 'If you wish to learn more about online behavioural advertising, click <a href="http://www.youronlinechoices.eu/" target="_blank">here</a>. There you can also &#8220;turn off&#8221;  or &#8220;turn on&#8221; the collection from other providers. Furthermore you can check the status of data collection from different <a href="http://www.youronlinechoices.com/uk/your-ad-choices" target="_blank">providers</a>.'
+	    	},
+	    	fr: {
+	    		adchoices: "Choisir sa pub"
+	    	},
+	    	nl: {
+	    		adchoices: "Info reclamekeuze"
+	    	},
+	    	bg:{
+	    		adchoices: "&#1042;&#1072;&#1096;&#1080;&#1103;&#1090; &#1080;&#1079;&#1073;&#1086;&#1088;"
+	    	},
+	    	cs:{
+	    		adchoices: "Volby reklamy"
+	    	},
+	    	da:{
+	    		adchoices: "Annoncevalg"
+	    	},
+	    	fi:{
+	    		adchoices: "Mainokseni"
+	    	},
+	    	el:{
+	    		adchoices: "&#927;&#953; &#948;&#953;&#945;&#966;&#951;&#956;&#943;&#963;&#949;&#953;&#962; &#956;&#959;&#965;"
+	    	},
+	    	it:{
+	    		adchoices: "Scegli tu!"
+	    	},
+	    	nl:{
+	    		adchoices: "Info"
+	    	},
+	    	no:{
+	    		adchoices: "Annonsevalg"
+	    	},
+	    	pl:{
+	    		adchoices: "Informacja"
+	    	},
+	    	ro:{
+	    		adchoices: "Optiuni"
+	    	},
+	    	sk:{
+	    		adchoices: "Va&#353;a vo&#318;ba"
+	    	},
+	    	es:{
+	    		adchoices: "Gesti&#243;n anuncios"
+	    	},
+	    	sv:{
+	    		adchoices: "Annonsval"
+	    	}
 	    },
 	
 	    /**
@@ -456,8 +456,8 @@ if(!$ADP.Player) {
 		  		else if($ADP.Player.adpTranslation && $ADP.Player.adpTranslation[this.browserLanguage] && $ADP.Player.adpTranslation[this.browserLanguage][args['type']]) {
 		  			translatedText = $ADP.Player.adpTranslation[this.browserLanguage][args['type']];
 		  		}
-	  			
-	  			if(translatedText && (this.documentCharset == 'UTF-8' || /\u0100-\uffff/.test(translatedText))) {
+
+	  			if(translatedText && (this.documentCharset == 'UTF-8' || /^[\u0000-\u0080]+$/.test(translatedText))) {
 	  				return translatedText;
 	  			}
 		  		else {

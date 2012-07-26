@@ -1,6 +1,8 @@
 try {
 	$ADP.Player.adpTranslation = {
 		/*
+		 * Important: Texts should be entity-encoded
+		 * 
 		 * Example
 		 */
 		 
