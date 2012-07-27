@@ -31,7 +31,7 @@
   
 	  <div style="position:relative; width:728px; height:90px" class="banner">
 	    <script type="text/javascript">
-	      var obaId = '54321';        // A unique random ID. Delivered from the Adserver or can generated via $ADP.Register.generateId();
+	      var obaId = '54321';        // A unique random ID. Generated via $ADP.Register.generateId();
 	      var obaInformation = {
 	    		  title: 'Targeter',
 	    		  text: 'Description',
@@ -41,7 +41,7 @@
 	      
 	      $ADP.Registry.register(obaId, obaInformation);
 	      
-	      document.write('<scr'+'ipt type="text/javascript" src="ad.js?obaId='+obaId+'"></scr'+'ipt>');
+	      document.write('<scr'+'ipt type="text/javascript" src="ad.js?oba='+obaId+'"></scr'+'ipt>');
 	    </script>
 	  </div>
   
@@ -50,7 +50,7 @@
       <h3>Adplayer Script from the First Party <span>(e.g. Publisher)</span></h3>
       <pre>
 &lt;script type="text/javascript"&gt;
-  var obaId = '54321';        // A unique random ID. Delivered from the Adserver or can generated via $ADP.Register.generateId();
+  var obaId = $ADP.Register.generateId();   // A unique random ID. Generated via $ADP.Register.generateId();
   var obaInformation = {
     title: 'Targeter',
     text: 'Description',
@@ -61,12 +61,12 @@
   $ADP.Registry.register(obaId, obaInformation);
 	        
   // The Ad-Redirect
-  document.write('&lt;scr'+'ipt type="text/javascript" src="ad.js?obaId='+obaId+'"&gt;&lt;/scr'+'ipt&gt;');
+  document.write('&lt;scr'+'ipt type="text/javascript" src="ad.js?oba='+obaId+'"&gt;&lt;/scr'+'ipt&gt;');
 &lt;/script&gt;
       </pre>
       <h3>Adplayer Script from the Last Party <span>(deliver the physical ad)</span></h3>
       <pre>
-var obaId = '54321'   // Have to selected from the URL-Param and write into the Code
+var obaId = '%oba%'   // Pulled by the Ad-Server
 var domId = 'adp_container_'+obaId;
 
 document.write('&lt;div id="'+domId+'"&gt;&lt;/div&gt;');
@@ -107,7 +107,7 @@ $ADP.Registry.createPlayer(obaId, playerInformation);
 	      
 	      $ADP.Registry.register(obaId, obaInformation);
 	      
-	      document.write('<iframe src="ad.html?obaId='+obaId+'" width="728" height="90" frameborder="0"></iframe>');
+	      document.write('<iframe src="ad.html?oba='+obaId+'" width="728" height="90" frameborder="0"></iframe>');
 	    </script>
 	  </div>
   
@@ -116,7 +116,7 @@ $ADP.Registry.createPlayer(obaId, playerInformation);
       <h3>Adplayer Script from the First Party <span>(e.g. Publisher)</span></h3>
       <pre>
 &lt;script type="text/javascript"&gt;
-  var obaId = '54322"';        // A unique random ID. Delivered from the Adserver or can generated via $ADP.Register.generateId();
+  var obaId = $ADP.Register.generateId();        // A unique random ID. Delivered from the Adserver or can generated via $ADP.Register.generateId();
   var obaInformation = {
     title: 'Targeter',
     text: 'Description',
@@ -127,13 +127,13 @@ $ADP.Registry.createPlayer(obaId, playerInformation);
   $ADP.Registry.register(obaId, obaInformation);
           
   // The Ad-Redirect
-  document.write('&lt;iframe src="ad.html?obaId='+obaId+'" width="728" height="90" frameborder="0"&gt;&lt;/iframe&gt;');
+  document.write('&lt;iframe src="ad.html?oba='+obaId+'" width="728" height="90" frameborder="0"&gt;&lt;/iframe&gt;');
 
 &lt;/script&gt;
       </pre>
       <h3>Adplayer Script from the Last Party <span>(deliver the physical ad)</span></h3>
       <pre>
-var obaId = '54322'   // Have to selected from the URL-Param and write into the Code
+var obaId = '%oba%'   // Pulled by the Ad-Server
 var domId = 'adp_container_'+obaId;
 
 document.write('&lt;div id="'+domId+'"&gt;&lt;/div&gt;');
