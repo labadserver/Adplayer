@@ -393,14 +393,14 @@ if(!$ADP.Player) {
 	    	if (popup) { popup.close() }
 	        renderInLayer.apply(this);
 	      } else {
-	        var title = "Privacy Information";
+	        var title = this.getText({type: 'adchoices'});
 	        var styles = document.styleSheets;
 	        var popwin = this.getPopup();
 	        if(!popwin) { renderInLayer.apply(this); }
 	        else {
 	          var popdoc = popwin.document;
 	          window.popwin = popwin;
-	          popdoc.write('<!doctype html><html><head><title>'+title+'</title>');
+	          popdoc.write('<!doctype html><html><head><meta charset="utf-8" /><title>'+title+'</title>');
 	          for (var k in styles)
 	            if (styles[k].href) popdoc.write('<link rel="stylesheet" href="'+styles[k].href+'">');
 	          popdoc.write('</head><body class="adp-popup"><div class="adp-wrapper"><div class="adp-panel">');
