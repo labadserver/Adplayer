@@ -3,8 +3,8 @@
   <name>AdPlayer</name>
   <major>2</major>
   <minor>0</minor>
-  <patch>0</patch>
-  <stage>RC1</stage> <!-- Possible values: ALPHA, BETA, RC*, FINAL -->
+  <patch>1</patch>
+  <stage>FINAL</stage> <!-- Possible values: ALPHA, BETA, RC*, FINAL -->
   <comment></comment>
   <projects></projects>
   <buildSpec></buildSpec>
