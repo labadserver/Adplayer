@@ -51,6 +51,13 @@ Latest version of AdPlayer: https://github.com/labadserver/Adplayer/downloads
 ChangeLog
 =================================================================================
 
+2.0.1
+------------------
+- Updated the demo page
+- Popup updated to support utf-8
+- Html encoding of special characters
+  
+  
 2.0.0
 ------------------
 - Translation support 
