@@ -458,10 +458,12 @@ $ADP.Registry = $ADP.Registry || {
 	  var usePopup = true;
 	  if(this.data[id].items && this.data[id].items.length) {
 		  for(var i in this.data[id].items) {
-			  if(this.data[id].items[i].usePopup == false) {
-				  usePopup = false;
-			  }
-		  }
+        try{
+          if(this.data[id].items[i].usePopup == false) {
+            usePopup = false;
+          }
+        } catch(e){}
+      }
 	  }
 	  
 	  if(usePopup) {
