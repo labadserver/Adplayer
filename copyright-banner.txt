@@ -1,1 +1,1 @@
-/*! AdPlayer _@VERSION@_ | (c) ADITION Technologies and other contributors | GNU General Public License http://www.gnu.org/licenses/ */
+/*! AdPlayer _@VERSION@_ | Authors: ADTECH, SevenOne Media, Bauer Media, Adition, raumobil | GNU General Public License http://www.gnu.org/licenses/ */
