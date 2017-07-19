@@ -1,0 +1,1 @@
+/*! AdPlayer _@VERSION@_ | (c) ADITION Technologies and other contributors | GNU General Public License http://www.gnu.org/licenses/ */

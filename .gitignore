@@ -1,0 +1,6 @@
+# Build folder
+build/
+
+# Idea configs
+*.iml
+.idea/
