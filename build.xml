@@ -95,8 +95,12 @@
 
   <target name="gnu" depends="compress" description="Appends GPL liscense to all build files.">
     <copy tofile="${build-dir}/gpl.txt" file="gpl.txt" overwrite="true" />
-    <copy todir="${build-dir}/tmp" file="gnu.txt" overwrite="true" />
-    <replace file="${build-dir}/tmp/gnu.txt" token="_@VERSION@_" value="${version-detailed}" />
+
+    <copy todir="${build-dir}" file="gnu.txt" overwrite="true" />
+    <replace file="${build-dir}/gnu.txt" token="_@VERSION@_" value="${version-detailed}" />
+
+    <copy todir="${build-dir}/tmp" file="copyright-banner.txt" overwrite="true" />
+    <replace file="${build-dir}/tmp/copyright-banner.txt" token="_@VERSION@_" value="${version-detailed}" />
     
     <!-- TODO: Possibly loop through files, but will require ant-contrib -->
 
@@ -124,18 +128,18 @@
 <!--    </antcall> -->
 
     <!-- HTML Files -->
-    <replace file="${build-dir}/tmp/gnu.txt" token="/*" value="&lt;!--" />
-    <replace file="${build-dir}/tmp/gnu.txt" token="*/" value="--&gt;" />
-    <loadfile property="gnulicense" srcfile="${build-dir}/tmp/gnu.txt" />
+    <replace file="${build-dir}/tmp/copyright-banner.txt" token="/*" value="&lt;!--" />
+    <replace file="${build-dir}/tmp/copyright-banner.txt" token="*/" value="--&gt;" />
+    <loadfile property="gnulicense" srcfile="${build-dir}/tmp/copyright-banner.txt" />
     <replace dir="${build-dir}" token="&lt;!--_@GNULICENSE@_--&gt;" value="${gnulicense}" />
   </target>
 
   <target name="gnu.me">
-    <concat destfile="${build-dir}/tmp/gnutemp.tmp" fixlastline="true">
-      <header filtering="no" trimleading="no" file="${build-dir}/tmp/gnu.txt"></header>
+    <concat destfile="${build-dir}/tmp/concated-file.tmp" fixlastline="true">
+      <header filtering="no" trimleading="no" file="${build-dir}/tmp/copyright-banner.txt"></header>
       <path path="${filepath}"/>
     </concat>
-    <move overwrite="true" file="${build-dir}/tmp/gnutemp.tmp" tofile="${filepath}"></move>
+    <move overwrite="true" file="${build-dir}/tmp/concated-file.tmp" tofile="${filepath}"></move>
   </target>
 
   <target name="_default-build" depends="gnu" description="Processes default and cleans up all temp files.">
