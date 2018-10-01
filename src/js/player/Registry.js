@@ -471,7 +471,7 @@ $ADP.Registry = $ADP.Registry || {
 		
 		try{
 		  var randomPopupName = 'adp_info_' + Math.floor(Math.random()*100001);
-		  popwin = window.open('',randomPopupName);
+		  popwin = window.open('',randomPopupName,'width=400,height=500,scrollbars=yes,location=0,menubar=0,toolbar=0,status=0');
 		} catch(e) {popwin = window.open('about:blank');}
 		
 		this.data[id].player.popup = popwin;
